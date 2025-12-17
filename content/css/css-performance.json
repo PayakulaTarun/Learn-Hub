@@ -1,0 +1,62 @@
+{
+    "title": "CSS Performance Optimization",
+    "slug": "css-performance",
+    "subject": "CSS",
+    "category": "Web Development",
+    "level": "Advanced",
+    "estimated_read_time": "15 mins",
+    "prerequisites": [
+        "CSS Animations",
+        "CSS Best Practices"
+    ],
+    "learning_objectives": [
+        "Repaint vs Reflow",
+        "Containing block performance",
+        "will-change property",
+        "CSS Minification",
+        "Critical CSS"
+    ],
+    "theory": "CSS affects how fast your page loads and renders.\n\n*   **Reflow (Layout)**: Calculating positions and geometries. Expensive.\n*   **Repaint (Paint)**: Changing colors/visibility. Less expensive.\n*   **Compositing**: Handled by GPU. Cheapest (Transforms, Opacity).\n\nGoal: Eliminate reflows during animations. Stick to transforming and opacity.",
+    "syntax": ".box {\n  will-change: transform;\n}",
+    "examples": [
+        {
+            "code": "/* Bad Animation (Triggers Reflow) */\n@keyframes move { from { left: 0; } to { left: 100px; } }\n\n/* Good Animation (GPU only) */\n@keyframes move { from { transform: translateX(0); } to { transform: translateX(100px); } }",
+            "output": "Visuals are same, but the second one is much smoother on mobile.",
+            "explanation": "Always prefer transform/opacity for animations."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Using @import",
+            "correction": "Avoid `@import` in CSS files. It blocks parallel downloads. Use multiple `<link>` tags in HTML instead.",
+            "example": ""
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "What is Critical CSS?",
+            "answer": "Extracting the CSS required for the above-the-fold content and inlining it in the HTML <head> to render the page immediately.",
+            "difficulty": "Hard"
+        }
+    ],
+    "practice_problems": [
+        {
+            "problem": "Identify the property that triggers layout calculation: width, color, or transform?",
+            "hint": "Changing geometry.",
+            "solution": "width",
+            "difficulty": "Medium"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "60FPS Animations",
+            "description": "To achieve smooth 60fps scrolling and animations, developers optimize stylesheets to avoid layout thrashing.",
+            "code": ""
+        }
+    ],
+    "exam_notes": [
+        "Reflow is also called Layout.",
+        "Universal selector * is technically slow but usually negligible in modern browsers."
+    ],
+    "summary": "Fast CSS means a fast website. optimizing rendering paths is what separates juniors from seniors."
+}
