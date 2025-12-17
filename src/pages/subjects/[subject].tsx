@@ -1,8 +1,9 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import Header from '../../components/Header';
 import { Tutorial, TutorialExample, CommonMistake, InterviewQuestion, PracticeProblem, RealWorldUseCase } from '../../types/content';
-import { getAllTutorialSlugs, getTutorialBySlug } from '../../lib/contentLoader';
+import { getAllTutorials, getAllTutorialSlugs, getTutorialBySlug } from '../../lib/contentLoader';
 import { useState, useMemo } from 'react';
 import { BookOpen, ChevronRight, Menu, X, ArrowLeft, ArrowRight, Code, AlertTriangle, HelpCircle, GraduationCap, Briefcase } from 'lucide-react';
 import Link from 'next/link';
@@ -10,6 +11,8 @@ import ReactMarkdown from 'react-markdown';
 
 interface SubjectPageProps {
   tutorial: Tutorial;
+  prevTutorial?: { slug: string; title: string } | null;
+  nextTutorial?: { slug: string; title: string } | null;
 }
 
 interface UISection {
@@ -20,8 +23,9 @@ interface UISection {
   data?: any;
 }
 
-export default function SubjectPage({ tutorial }: SubjectPageProps) {
+export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: SubjectPageProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const router = useRouter();
 
   // Transform raw tutorial data into navigable sections
   const sections: UISection[] = useMemo(() => {
@@ -64,21 +68,32 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
 
   const [activeSection, setActiveSection] = useState<UISection>(sections[0] || { id: 'none', title: '', type: 'theory' });
 
+  // Reset active section when tutorial changes (client-side navigation)
+  useMemo(() => {
+     if (sections.length > 0) {
+         setActiveSection(sections[0]);
+     }
+  }, [tutorial.slug]);
+
   const currentIndex = sections.findIndex(s => s.id === activeSection.id);
-  const hasPrevious = currentIndex > 0;
-  const hasNext = currentIndex < sections.length - 1;
+  const hasPreviousSection = currentIndex > 0;
+  const hasNextSection = currentIndex < sections.length - 1;
 
   const goToPrevious = () => {
-    if (hasPrevious) {
+    if (hasPreviousSection) {
       setActiveSection(sections[currentIndex - 1]);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (prevTutorial) {
+       router.push(`/subjects/${prevTutorial.slug}`);
     }
   };
 
   const goToNext = () => {
-    if (hasNext) {
+    if (hasNextSection) {
       setActiveSection(sections[currentIndex + 1]);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (nextTutorial) {
+       router.push(`/subjects/${nextTutorial.slug}`);
     }
   };
 
@@ -292,15 +307,15 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
             <div className="mt-16 pt-8 border-t border-ui-border flex justify-between items-center">
               <button
                 onClick={goToPrevious}
-                disabled={!hasPrevious}
+                disabled={!hasPreviousSection && !prevTutorial}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition ${
-                  hasPrevious
+                  hasPreviousSection || prevTutorial
                     ? 'bg-ui-dark text-text-primary hover:bg-ui-border border border-ui-border'
                     : 'bg-ui-dark text-text-muted cursor-not-allowed opacity-50'
                 }`}
               >
                 <ArrowLeft size={20} />
-                Previous
+                {hasPreviousSection ? 'Previous Section' : (prevTutorial ? `Prev: ${prevTutorial.title.substring(0, 15)}...` : 'Previous')}
               </button>
 
               <div className="text-sm text-text-muted hidden sm:block">
@@ -309,14 +324,14 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
 
               <button
                 onClick={goToNext}
-                disabled={!hasNext}
+                disabled={!hasNextSection && !nextTutorial}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition ${
-                  hasNext
+                  hasNextSection || nextTutorial
                     ? 'bg-accent text-primary hover:bg-highlight hover:shadow-glow'
                     : 'bg-ui-dark text-text-muted cursor-not-allowed opacity-50'
                 }`}
               >
-                Next
+                {hasNextSection ? 'Next Section' : (nextTutorial ? `Next: ${nextTutorial.title.substring(0, 15)}...` : 'Next')}
                 <ArrowRight size={20} />
               </button>
             </div>
@@ -352,7 +367,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return { notFound: true };
   }
 
+  const allTutorials = getAllTutorials();
+  // Filter by subject to keep navigation contextual
+  const courseTutorials = allTutorials.filter(t => t.subject === tutorial.subject);
+  // Re-sort just in case, though getAllTutorials should be sorted
+  courseTutorials.sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
+
+  const currentIndex = courseTutorials.findIndex(t => t.slug === tutorial.slug);
+  
+  const prevTutorial = currentIndex > 0 ? courseTutorials[currentIndex - 1] : null;
+  const nextTutorial = currentIndex < courseTutorials.length - 1 ? courseTutorials[currentIndex + 1] : null;
+
   return {
-    props: { tutorial },
+    props: { 
+      tutorial,
+      prevTutorial: prevTutorial ? { slug: prevTutorial.slug, title: prevTutorial.title } : null,
+      nextTutorial: nextTutorial ? { slug: nextTutorial.slug, title: nextTutorial.title } : null,
+    },
   };
 };
