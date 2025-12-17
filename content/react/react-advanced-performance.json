@@ -1,0 +1,48 @@
+{
+  "title": "Advanced Performance Optimization",
+  "slug": "react-advanced-performance",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Advanced",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Performance Optimization Basics"
+  ],
+  "learning_objectives": [
+    "Virtualization",
+    "Concurrency",
+    "useTransition",
+    "useDeferredValue"
+  ],
+  "theory": "## Handling Scale\n\n### Virtualization\nRendering 10,000 items? DOM will choke. Use **Virtualization** (React Window) to render only the 10 items visible on screen.\n\n### React 18 Concurrency\nInterruptible rendering allows the UI to stay responsive during heavy updates.\n1. **useTransition**: Mark state updates as non-urgent (e.g., search filtering).\n2. **useDeferredValue**: Defer updating a part of the UI.",
+  "syntax": "const [isPending, startTransition] = useTransition();",
+  "examples": [
+    {
+      "code": "const [query, setQuery] = useState('');\nconst deferredQuery = useDeferredValue(query);\n\nreturn (\n  <>\n    <input value={query} onChange={e => setQuery(e.target.value)} />\n    <HeavyList query={deferredQuery} />\n  </>\n);",
+      "output": "Input stays responsive while list lags slightly behind.",
+      "explanation": "Prioritizes typing over list rendering."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "What is Concurrent Mode?",
+      "answer": "A set of features in React 18 that help apps stay responsive by adjusting to the user's device capabilities and network speed.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Autocomplete",
+      "description": "Typing is Prio 1. Filtering list is Prio 2. useTransition makes typing smooth.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "React.window or react-virtualized.",
+    "Concurrent features are opt-in via hooks."
+  ],
+  "summary": "Advanced React ensures 60FPS even with heavy data loads.",
+  "order": 43
+}

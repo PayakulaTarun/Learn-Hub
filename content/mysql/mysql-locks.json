@@ -14,11 +14,11 @@
     "Optimistic vs Pessimistic Locking",
     "Isolation Levels"
   ],
-  "theory": "## Managing Concurrent Access\\nWhen thousands of users access a database simultaneously, **Locking** prevents them from overwriting each other's work.\\n\\n### Lock Types\\n1. **Shared Lock (Read Lock)**: Allows others to read, but no one to write.\\n2. **Exclusive Lock (Write Lock)**: Allows no one else to read or write.\\n\\n### Locking Levels\\n* **Table Lock**: Locks entire table (MyISAM default). Fast but poor concurrency.\\n* **Row Lock**: Locks only specific rows (InnoDB default). Slower overhead but high concurrency.\\n\\n### Deadlock\\nA situation where Transaction A waits for B, and B waits for A. MySQL detects this and kills one transaction.",
-  "syntax": "SELECT * FROM table WHERE id=1 FOR UPDATE; -- Exclusive Lock\\nLOCK TABLES table WRITE;",
+  "theory": "## Managing Concurrent Access\nWhen thousands of users access a database simultaneously, **Locking** prevents them from overwriting each other's work.\n\n### Lock Types\n1. **Shared Lock (Read Lock)**: Allows others to read, but no one to write.\n2. **Exclusive Lock (Write Lock)**: Allows no one else to read or write.\n\n### Locking Levels\n* **Table Lock**: Locks entire table (MyISAM default). Fast but poor concurrency.\n* **Row Lock**: Locks only specific rows (InnoDB default). Slower overhead but high concurrency.\n\n### Deadlock\nA situation where Transaction A waits for B, and B waits for A. MySQL detects this and kills one transaction.",
+  "syntax": "SELECT * FROM table WHERE id=1 FOR UPDATE; -- Exclusive Lock\nLOCK TABLES table WRITE;",
   "examples": [
     {
-      "code": "START TRANSACTION;\\nSELECT * FROM seats WHERE id=5 FOR UPDATE;\\n-- Seat 5 is now locked. No one else can book it.\\nUPDATE seats SET status='booked' WHERE id=5;\\nCOMMIT;",
+      "code": "START TRANSACTION;\nSELECT * FROM seats WHERE id=5 FOR UPDATE;\n-- Seat 5 is now locked. No one else can book it.\nUPDATE seats SET status='booked' WHERE id=5;\nCOMMIT;",
       "output": "Seat booked safely.",
       "explanation": "Prevents double-booking via Row Locking."
     }
@@ -51,5 +51,5 @@
     "Deadlock = Circular wait."
   ],
   "summary": "Locking is essential for isolation (The 'I' in ACID). Row-level locking makes InnoDB superior for high-concurrency apps.",
-  "order": 32
+  "order": 33
 }

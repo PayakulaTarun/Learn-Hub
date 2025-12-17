@@ -14,12 +14,12 @@
     "Understand the Query Cache and Parser",
     "Learn about Pluggable Storage Engines"
   ],
-  "theory": "## MySQL Logical Architecture\\nMySQL's architecture is unique because of its **Pluggable Storage Engine** design. It consists of three main layers:\\n\\n### 1. Connection/Client Layer\\nThe topmost layer that handles connection requests. It includes:\\n* **Connectors**: JDBC, ODBC, .NET, PHP, Python drivers.\\n* **Connection Manager**: Handles authentication, security, and connection pooling.\\n\\n### 2. Server Layer (SQL Layer)\\nThe brains of MySQL. It processes the SQL queries.\\n* **SQL Interface**: Accepts SQL commands.\\n* **Parser**: Checks for syntax errors and builds a parse tree.\\n* **Optimizer**: Determines the most efficient way to execute the query (using indexes, etc.).\\n* **Caches & Buffers**: stores caches of previous queries (deprecated in newer versions 8.0+ but historically significant).\\n\\n### 3. Storage Engine Layer\\nThis is where data is actually stored and retrieved. MySQL allows you to choose different engines for different tables.\\n* **InnoDB**: The default (since 5.5). Supports Transactions (ACID), Foreign Keys, and Row-level locking.\\n* **MyISAM**: Older default. Fast for reads but NO transaction support. Table-level locking.\\n* **Memory**: Stores data in RAM for speed (volatile).\\n* **CSV**: Stores data in CSV files.",
+  "theory": "## MySQL Logical Architecture\nMySQL's architecture is unique because of its **Pluggable Storage Engine** design. It consists of three main layers:\n\n### 1. Connection/Client Layer\nThe topmost layer that handles connection requests. It includes:\n* **Connectors**: JDBC, ODBC, .NET, PHP, Python drivers.\n* **Connection Manager**: Handles authentication, security, and connection pooling.\n\n### 2. Server Layer (SQL Layer)\nThe brains of MySQL. It processes the SQL queries.\n* **SQL Interface**: Accepts SQL commands.\n* **Parser**: Checks for syntax errors and builds a parse tree.\n* **Optimizer**: Determines the most efficient way to execute the query (using indexes, etc.).\n* **Caches & Buffers**: stores caches of previous queries (deprecated in newer versions 8.0+ but historically significant).\n\n### 3. Storage Engine Layer\nThis is where data is actually stored and retrieved. MySQL allows you to choose different engines for different tables.\n* **InnoDB**: The default (since 5.5). Supports Transactions (ACID), Foreign Keys, and Row-level locking.\n* **MyISAM**: Older default. Fast for reads but NO transaction support. Table-level locking.\n* **Memory**: Stores data in RAM for speed (volatile).\n* **CSV**: Stores data in CSV files.",
   "syntax": "SHOW ENGINES;",
   "examples": [
     {
       "code": "SHOW ENGINES;",
-      "output": "+--------------------+---------+--------------+------+\\n| Engine             | Support | Transactions | XA   |\\n+--------------------+---------+--------------+------+\\n| InnoDB             | DEFAULT | YES          | YES  |\\n| MyISAM             | YES     | NO           | NO   |\\n| MEMORY             | YES     | NO           | NO   |\\n...",
+      "output": "+--------------------+---------+--------------+------+\n| Engine             | Support | Transactions | XA   |\n+--------------------+---------+--------------+------+\n| InnoDB             | DEFAULT | YES          | YES  |\n| MyISAM             | YES     | NO           | NO   |\n| MEMORY             | YES     | NO           | NO   |\n...",
       "explanation": "This command lists all storage engines supported by your server and shows which one is dominant (InnoDB)."
     }
   ],
@@ -57,5 +57,5 @@
     "Parser checks syntax."
   ],
   "summary": "MySQL's layered architecture separates the client handling, SQL processing, and physical data storage. The Pluggable Storage Engine architecture (InnoDB vs MyISAM) is its defining feature.",
-  "order": 4
+  "order": 3
 }

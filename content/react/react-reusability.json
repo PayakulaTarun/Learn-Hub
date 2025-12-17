@@ -1,0 +1,48 @@
+{
+  "title": "Component Reusability",
+  "slug": "react-reusability",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Beginner",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "Props",
+    "Components in React"
+  ],
+  "learning_objectives": [
+    "Configuring Props",
+    "Children Prop",
+    "Composition"
+  ],
+  "theory": "## DRY (Don't Repeat Yourself)\nThe goal of React is to create a library of reusable Lego blocks.\n\n### The `children` Prop\nReact automatically passes special prop `children` for content nested *inside* your component tag.\n`<Card>I am child</Card>` -> `props.children` equals 'I am child'.\n\n### Composition\nInstead of Inheritance (creating sub-classes), React prefers Composition (wrapping components).",
+  "syntax": "{props.children}",
+  "examples": [
+    {
+      "code": "function FancyBorder(props) {\n  return (\n    <div className={'FancyBorder FancyBorder-' + props.color}>\n      {props.children}\n    </div>\n  );\n}\n\nfunction WelcomeDialog() {\n  return (\n    <FancyBorder color=\"blue\">\n      <h1>Welcome</h1>\n      <p>Thank you for visiting.</p>\n    </FancyBorder>\n  );\n}",
+      "output": "Blue box with content inside.",
+      "explanation": "FancyBorder doesn't know what's inside it. It just renders {props.children}."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "Composition vs Inheritance in React?",
+      "answer": "React recommends Composition. There are very few (if any) cases where component inheritance is needed.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Layout Component",
+      "description": "<Layout><PageContent /></Layout>. The Layout contains header/footer, and renders children in the middle.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "props.children is key.",
+    "Specialization via props (e.g. <PrimaryButton> wraps <Button color='blue'>)."
+  ],
+  "summary": "Mastering the children prop opens the door to creating powerful container components.",
+  "order": 15
+}

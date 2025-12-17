@@ -1,0 +1,54 @@
+{
+  "title": "useRef Hook",
+  "slug": "react-useref",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "React Hooks Introduction"
+  ],
+  "learning_objectives": [
+    "Mutable Values",
+    "Accessing DOM",
+    "No Re-render"
+  ],
+  "theory": "## Escape Hatch\n`useRef` returns a mutable ref object whose `.current` property is initialized to the passed argument. \n\n### Key Features\n1. **Does NOT trigger re-render** when changed.\n2. **Persists** between renders.\n3. **DOM Access**: Used to interact with native elements (focus, scroll).",
+  "syntax": "const ref = useRef(initial);",
+  "examples": [
+    {
+      "code": "function TextInput() {\n  const inputEl = useRef(null);\n  const onButtonClick = () => {\n    inputEl.current.focus();\n  };\n  return (\n    <>\n      <input ref={inputEl} type=\"text\" />\n      <button onClick={onButtonClick}>Focus the input</button>\n    </>\n  );\n}",
+      "output": "Focuses input on click.",
+      "explanation": "Direct DOM manipulation."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using refs for data flow.",
+      "correction": "Don't use refs for things that can be done with State. Refs bypass the React data flow and make UI inconsistent.",
+      "example": "Reading input value via ref instead of state."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Difference between useRef and createRef?",
+      "answer": "`createRef` creates a new ref on *every* render. `useRef` creates it once and reuses same object (persists).",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Timers",
+      "description": "Storing `setInterval` ID to clear it later (since ID is just a number, not UI state).",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "useRef().current is the value.",
+    "Changing it does NOT re-render.",
+    "Commonly used efficiently focused inputs."
+  ],
+  "summary": "useRef is for imperative actions and storing mutable data that doesn't affect visual output.",
+  "order": 25
+}

@@ -1,0 +1,44 @@
+{
+  "title": "API Calls in React",
+  "slug": "react-api-calls",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "useEffect",
+    "Lists & Keys"
+  ],
+  "learning_objectives": [
+    "Fetch API",
+    "Axios",
+    "Loading State",
+    "Error State"
+  ],
+  "theory": "## Getting Data\nReact components usually fetch data on mount using `useEffect`.\n\n### Pattern\n1. **Loading State**: `true` initially.\n2. **Fetch**: Inside `useEffect`.\n3. **Success**: Update data, set loading false.\n4. **Error**: Catch error, set error state, set loading false.",
+  "syntax": "useEffect(() => { fetch('/api').then(...) }, [])",
+  "examples": [
+    {
+      "code": "const [data, setData] = useState(null);\nconst [loading, setLoading] = useState(true);\n\nuseEffect(() => {\n  fetch('https://api.example.com/items')\n    .then(res => res.json())\n    .then(data => {\n       setData(data);\n       setLoading(false);\n    });\n}, []);\n\nif (loading) return <Spinner />;",
+      "output": "Spinner -> content.",
+      "explanation": "Standard data fetching pattern."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Setting state on unmounted component.",
+      "correction": "If fetching takes time and user leaves page, setting state causes warning. (Fixed in recent React versions mostly, but good conceptual knowledge).",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Fetch inside useEffect.",
+    "Empty dependency [] for 'on mount' only.",
+    "Axios is a popular alternative library."
+  ],
+  "summary": "Connecting to backends turns a static UI into a real application.",
+  "order": 29
+}

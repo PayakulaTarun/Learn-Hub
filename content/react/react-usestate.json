@@ -1,0 +1,48 @@
+{
+  "title": "useState Hook",
+  "slug": "react-usestate",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "React Hooks Introduction"
+  ],
+  "learning_objectives": [
+    "Declaring state",
+    "Updating state",
+    "Previous state"
+  ],
+  "theory": "## Managing Local State\n`useState` is the most common hook.\n\n### Functional Updates\nIf the new state depends on the old state, pass a function to the setter.\n`setCount(prev => prev + 1)`\n\n### Objects in State\n`useState` does not merge objects automatically (unlike `this.setState` in classes). You must copy existing fields.\n`setUser({...user, name: 'New'})`",
+  "syntax": "const [state, setState] = useState(initialState);",
+  "examples": [
+    {
+      "code": "const [count, setCount] = useState(0);\n// Safe increment\nconst increment = () => setCount(c => c + 1);",
+      "output": "Guarantees latest value usage.",
+      "explanation": "Using callback form prevents stale closures issues."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Mutating object state.",
+      "correction": "`user.name = 'Bob'; setUser(user)` won't trigger re-render because the object reference hasn't changed. Use `setUser({...user, name: 'Bob'})`.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What happens if I pass a function to useState initial value?",
+      "answer": "`useState(() => expensiveComputation())`. This is lazy initialization. It runs only on the first render.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Returns [current, setter].",
+    "Lazy init available.",
+    "Does not auto-merge objects."
+  ],
+  "summary": "The bread and butter of React state management.",
+  "order": 22
+}

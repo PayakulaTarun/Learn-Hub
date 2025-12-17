@@ -1,0 +1,54 @@
+{
+  "title": "Lifting State Up",
+  "slug": "react-lifting-state-up",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Beginner",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "State",
+    "Props"
+  ],
+  "learning_objectives": [
+    "Sharing state",
+    "Parent as Source of Truth",
+    "Data Flow"
+  ],
+  "theory": "## Sharing Data Between Siblings\nReact data flows down. Siblings cannot pass data to each other directly.\n\n### Solution\n1. Move the State up to the closest **Common Parent**.\n2. Pass the state DOWN to both children as props.\n3. Pass a 'setter' function DOWN to children so they can update the parent's state.",
+  "syntax": "N/A (Concept)",
+  "examples": [
+    {
+      "code": "function Parent() {\n  const [temp, setTemp] = useState(0);\n  return (\n    <>\n      <Thermometer celsius={temp} />\n      <Input value={temp} onChange={setTemp} />\n    </>\n  );\n}",
+      "output": "Input updates Thermometer.",
+      "explanation": "Input tells Parent to change. Parent tells Thermometer new value."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Duplicating state.",
+      "correction": "Trying to sync two states in two components is buggy. Single Source of Truth is key.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the problem with Lifting State Up?",
+      "answer": "It can lead to 'Prop Drilling' if the tree is deep. This is where Context API or Redux becomes useful.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Currency Converter",
+      "description": "Input USD, Input EUR. Both reflect same value converted. State lives in Converter parent.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "Single Source of Truth.",
+    "Find closest common ancestor."
+  ],
+  "summary": "Lifting state up ensures consistency across your application.",
+  "order": 18
+}

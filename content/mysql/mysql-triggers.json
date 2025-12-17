@@ -14,16 +14,16 @@
     "INSERT / UPDATE / DELETE triggers",
     "OLD and NEW values"
   ],
-  "theory": "## Automatic Execution\\nA **Trigger** is a set of SQL statements that automatically executes (fires) in response to certain events on a particular table.\\n\\n### Events\\n* **INSERT**\\n* **UPDATE**\\n* **DELETE**\\n\\n### Timing\\n* **BEFORE**: Fires before the row is modified. Good for validation or modifying data before save.\\n* **AFTER**: Fires after the row is modified. Good for logging or updating related tables.\\n\\n### Keywords\\n* **NEW**: Access value being inserted/updated.\\n* **OLD**: Access value before update/delete.",
-  "syntax": "CREATE TRIGGER trigger_name\\nBEFORE INSERT ON table_name\\nFOR EACH ROW\\nBEGIN\\n  -- logic\\nEND;",
+  "theory": "## Automatic Execution\nA **Trigger** is a set of SQL statements that automatically executes (fires) in response to certain events on a particular table.\n\n### Events\n* **INSERT**\n* **UPDATE**\n* **DELETE**\n\n### Timing\n* **BEFORE**: Fires before the row is modified. Good for validation or modifying data before save.\n* **AFTER**: Fires after the row is modified. Good for logging or updating related tables.\n\n### Keywords\n* **NEW**: Access value being inserted/updated.\n* **OLD**: Access value before update/delete.",
+  "syntax": "CREATE TRIGGER trigger_name\nBEFORE INSERT ON table_name\nFOR EACH ROW\nBEGIN\n  -- logic\nEND;",
   "examples": [
     {
-      "code": "CREATE TRIGGER before_user_insert\\nBEFORE INSERT ON users\\nFOR EACH ROW\\nBEGIN\\n  SET NEW.created_at = NOW();\\nEND;",
+      "code": "CREATE TRIGGER before_user_insert\nBEFORE INSERT ON users\nFOR EACH ROW\nBEGIN\n  SET NEW.created_at = NOW();\nEND;",
       "output": "Trigger Created",
       "explanation": "Automatically sets the creation date."
     },
     {
-      "code": "CREATE TRIGGER audit_log\\nAFTER DELETE ON users\\nFOR EACH ROW\\nBEGIN\\n  INSERT INTO log_table VALUES ('User deleted', OLD.id);\\nEND;",
+      "code": "CREATE TRIGGER audit_log\nAFTER DELETE ON users\nFOR EACH ROW\nBEGIN\n  INSERT INTO log_table VALUES ('User deleted', OLD.id);\nEND;",
       "output": "Trigger Created",
       "explanation": "Logs deletions."
     }
@@ -57,5 +57,5 @@
     "FOR EACH ROW."
   ],
   "summary": "Triggers are powerful for enforcing rules and logging at the database level, ensuring data consistency regardless of client application behavior.",
-  "order": 29
+  "order": 30
 }

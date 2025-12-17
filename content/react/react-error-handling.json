@@ -1,0 +1,54 @@
+{
+  "title": "Error Handling in React",
+  "slug": "react-error-handling",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "Components in React"
+  ],
+  "learning_objectives": [
+    "Error Boundaries",
+    "componentDidCatch",
+    "Fallback UI"
+  ],
+  "theory": "## Graceful Degradation\nIf a JavaScript error occurs inside a component, it breaks the entire app (White Screen of Death) unless handled.\n\n### Error Boundaries\nA Class Component that implements `static getDerivedStateFromError()` or `componentDidCatch()`. It catches errors in its child tree and renders a fallback UI.\n\n*Note*: There is currently no direct Hook for Error Boundaries.",
+  "syntax": "N/A (Class syntax)",
+  "examples": [
+    {
+      "code": "<ErrorBoundary>\n  <MyWidget />\n</ErrorBoundary>",
+      "output": "If MyWidget crashes, ErrorBoundary shows 'Something went wrong'.",
+      "explanation": "Isolates crashes to specific widgets."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Trying to use Try/Catch for render errors.",
+      "correction": "Try/Catch works for imperative code (event handlers), but NOT for declarative rendering. You MUST use Error Boundaries.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Can functional components be Error Boundaries?",
+      "answer": "Not yet. You must use a Class component or a library like `react-error-boundary`.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Production Reliability",
+      "description": "Preventing one buggy ad sidebar from crashing the entire news feed.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "Must be Class Component.",
+    "Catches render, lifecycle, and constructor errors.",
+    "Does NOT catch event handlers or async code (use try-catch there)."
+  ],
+  "summary": "Error Boundaries are the safety net of React applications.",
+  "order": 30
+}

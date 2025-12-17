@@ -14,12 +14,12 @@
     "RANK()",
     "Running Totals"
   ],
-  "theory": "## Analytics within SQL\\nIntroduced in MySQL 8.0, **Window Functions** perform calculations across a set of table rows that are related to the current row.\\n\\n### Difference from Group By\\nGROUP BY collapses rows into a single summary. Window Functions keep the original rows but add a calculation (like a Running Total or Rank) to each.\\n\\n### Common Functions\\n* `ROW_NUMBER()`: Assigns 1, 2, 3...\\n* `RANK()`: 1, 2, 2, 4... (Skip on tie)\\n* `DENSE_RANK()`: 1, 2, 2, 3... (No skip)\\n* `LAG()` / `LEAD()`: Access previous/next row value.",
+  "theory": "## Analytics within SQL\nIntroduced in MySQL 8.0, **Window Functions** perform calculations across a set of table rows that are related to the current row.\n\n### Difference from Group By\nGROUP BY collapses rows into a single summary. Window Functions keep the original rows but add a calculation (like a Running Total or Rank) to each.\n\n### Common Functions\n* `ROW_NUMBER()`: Assigns 1, 2, 3...\n* `RANK()`: 1, 2, 2, 4... (Skip on tie)\n* `DENSE_RANK()`: 1, 2, 2, 3... (No skip)\n* `LAG()` / `LEAD()`: Access previous/next row value.",
   "syntax": "SELECT col, FUNC() OVER (PARTITION BY col ORDER BY col) FROM t;",
   "examples": [
     {
-      "code": "SELECT name, salary,\\nRANK() OVER (ORDER BY salary DESC) as Rank\\nFROM employees;",
-      "output": "Bob | 5000 | 1\\nAlice | 4000 | 2",
+      "code": "SELECT name, salary,\nRANK() OVER (ORDER BY salary DESC) as Rank\nFROM employees;",
+      "output": "Bob | 5000 | 1\nAlice | 4000 | 2",
       "explanation": "Ranks employees by salary without collapsing them."
     }
   ],

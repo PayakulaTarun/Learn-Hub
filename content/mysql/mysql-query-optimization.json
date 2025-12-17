@@ -14,11 +14,11 @@
     "Optimizing LIMIT",
     "JOIN optimization"
   ],
-  "theory": "## Writing Better SQL\\nEven with indexes, bad SQL can be slow.\\n\\n### SARGABLE (Search ARGument ABLE)\\nA query is SARGABLE if it can use an index. The most common breaker is applying a function to a column.\\n* Bad: `WHERE YEAR(date) = 2023` (Index ignored).\\n* Good: `WHERE date BETWEEN '2023-01-01' AND '2023-12-31'` (Index used).\\n\\n### Optimizing LIKE\\n* Bad: `LIKE '%abc'` (Leading wildcard prevents index usage).\\n* Good: `LIKE 'abc%'` (Can use index).",
+  "theory": "## Writing Better SQL\nEven with indexes, bad SQL can be slow.\n\n### SARGABLE (Search ARGument ABLE)\nA query is SARGABLE if it can use an index. The most common breaker is applying a function to a column.\n* Bad: `WHERE YEAR(date) = 2023` (Index ignored).\n* Good: `WHERE date BETWEEN '2023-01-01' AND '2023-12-31'` (Index used).\n\n### Optimizing LIKE\n* Bad: `LIKE '%abc'` (Leading wildcard prevents index usage).\n* Good: `LIKE 'abc%'` (Can use index).",
   "syntax": "N/A",
   "examples": [
     {
-      "code": "Bad: SELECT * FROM t WHERE id + 1 = 5;\\nGood: SELECT * FROM t WHERE id = 4;",
+      "code": "Bad: SELECT * FROM t WHERE id + 1 = 5;\nGood: SELECT * FROM t WHERE id = 4;",
       "output": "N/A",
       "explanation": "Math on the column side prevents index usage. Math on value side is fine."
     }

@@ -1,0 +1,41 @@
+{
+  "title": "Security in React",
+  "slug": "react-security",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Advanced",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "React API Calls"
+  ],
+  "learning_objectives": [
+    "XSS (Cross Site Scripting)",
+    "dangerouslySetInnerHTML",
+    "Auth Tokens"
+  ],
+  "theory": "## Staying Safe\nReact is secure by default against XSS because it escapes values embedded in JSX.\n\n### Vulnerabilities\n1. **dangerouslySetInnerHTML**: bypassing React's escaping. Only use for trusted content.\n2. **URL Injection**: `<a href={userProvidedLink}>` can execute 'javascript:alert()'.\n3. **JSON Injection**: Hydrating state directly into HTML script tags.",
+  "syntax": "dangerouslySetInnerHTML={{ __html: html }}",
+  "examples": [
+    {
+      "code": "// Vulnerable\n<a href={user.website}>Profile</a>\n// Safe\nconst href = validateUrl(user.website);",
+      "output": "Prevents javascript: execution.",
+      "explanation": "Sanitize inputs."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Storing tokens in LocalStorage.",
+      "correction": "LocalStorage is accessible by JS (so XSS attacks can read tokens). HttpOnly Cookies are safer.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "React escapes strings automatically.",
+    "Never trust user input."
+  ],
+  "summary": "React protects you from most basics, but developer diligence is required for advanced vectors.",
+  "order": 46
+}

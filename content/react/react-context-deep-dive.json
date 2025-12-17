@@ -1,0 +1,35 @@
+{
+  "title": "Context API Deep Dive",
+  "slug": "react-context-deep-dive",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Advanced",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "useContext"
+  ],
+  "learning_objectives": [
+    "Pattern: Multiple Contexts",
+    "Pattern: Split State/Dispatch",
+    "Optimization"
+  ],
+  "theory": "## Optimizing Context\nA large single Context causes performance issues because ANY change re-renders ALL consumers.\n\n### Split Context Pattern\nInstead of `<UserContext value={{ user, setUser }}>`, split it into:\n1. `UserValueContext` (Holds data)\n2. `UserDispatchContext` (Holds setters)\n\nComponents that only need to *update* data (SubmitButton) won't re-render when data changes.",
+  "syntax": "N/A",
+  "examples": [],
+  "common_mistakes": [
+    {
+      "mistake": "Unstable value reference.",
+      "correction": "`<Provider value={{ user }}>` creates a new object every render, forcing consumers to update. Wrap value in `useMemo`.",
+      "example": "value={useMemo(() => ({ user }), [user])}"
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Always memoize Provider values.",
+    "Split contexts by domain (Auth, Theme, Data)."
+  ],
+  "summary": "Context is powerful but requires discipline to scale without lag.",
+  "order": 42
+}

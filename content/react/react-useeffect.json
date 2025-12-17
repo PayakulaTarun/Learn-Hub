@@ -1,0 +1,54 @@
+{
+  "title": "useEffect Hook",
+  "slug": "react-useeffect",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "React Hooks Introduction"
+  ],
+  "learning_objectives": [
+    "Side Effects",
+    "Dependency Array",
+    "Cleanup Function"
+  ],
+  "theory": "## LifeCycle Replacement\n`useEffect` lets you perform side effects (data fetching, subscriptions, DOM manipulation).\n\n### Dependency Array (`[]`)\n* **No array**: Runs after *every* render.\n* **Empty array `[]`**: Runs only once (on mount).\n* **`[prop]`**: Runs on mount AND when `prop` changes.\n\n### Cleanup\nReturn a function to clean up effects (e.g., remove listener) before component unmounts or before re-running effect.",
+  "syntax": "useEffect(() => { ... return cleanup }, [deps]);",
+  "examples": [
+    {
+      "code": "useEffect(() => {\n  const timer = setInterval(() => console.log('Tick'), 1000);\n  return () => clearInterval(timer);\n}, []);",
+      "output": "Logs 'Tick' every second.",
+      "explanation": "Cleanup function stops the timer when component unmounts."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Missing dependencies.",
+      "correction": "If you use a variable inside useEffect, include it in the dependency array. Otherwise, you get stale data.",
+      "example": "ESLint warning: react-hooks/exhaustive-deps."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Does useEffect run after or before paint?",
+      "answer": "References run *after* the browser paints (asynchronously), so it doesn't block UI.",
+      "difficulty": "Hard"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Fetch Data",
+      "description": "Call API on load (mount).",
+      "code": "useEffect(() => { fetch()... }, [])"
+    }
+  ],
+  "exam_notes": [
+    "Replaces componentDidMount, componentDidUpdate, componentWillUnmount.",
+    "Always clean up listeners/intervals.",
+    "Dependency array controls execution."
+  ],
+  "summary": "useEffect synchronizes your component with external systems.",
+  "order": 23
+}

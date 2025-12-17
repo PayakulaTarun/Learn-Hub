@@ -1,0 +1,48 @@
+{
+  "title": "useCallback Hook",
+  "slug": "react-usecallback",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "Memoization (React.memo, useMemo)"
+  ],
+  "learning_objectives": [
+    "Referential Equality",
+    "Function Stability",
+    "Dependency for useEffect"
+  ],
+  "theory": "## Caching Functions\nEvery time a component re-renders, all functions inside it are recreated (new reference in memory).\n\n### The Problem\nIf you pass a function to a `React.memo` child, the child sees a 'new' prop every time and re-renders anyway, defeating memoization.\n\n### The Solution\n`useCallback` caches the function instance itself.\n`const handleClick = useCallback(() => { ... }, []);`",
+  "syntax": "useCallback(fn, deps)",
+  "examples": [
+    {
+      "code": "const handleDelete = useCallback((id) => {\n  setList(l => l.filter(i => i.id !== id));\n}, []);\n\n// Now passing handleDelete to <Child /> won't trigger Child re-render.",
+      "output": "Stable function reference.",
+      "explanation": "Crucial for optimized child components."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using it without React.memo children.",
+      "correction": "If the child isn't memoized, useCallback does nothing useful (and actually costs more).",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Difference between useMemo and useCallback?",
+      "answer": "`useMemo` caches the *result* of a function. `useCallback` caches the *function itself*.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Maintains referential equality.",
+    "Used often with event handlers passed to children.",
+    "Dependencies must be correct."
+  ],
+  "summary": "useCallback is the glue that makes React.memo work effectively with callback props.",
+  "order": 34
+}

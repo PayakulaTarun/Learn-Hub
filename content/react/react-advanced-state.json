@@ -1,0 +1,42 @@
+{
+  "title": "Advanced State Management",
+  "slug": "react-advanced-state",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Advanced",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "Redux Toolkit",
+    "Context API"
+  ],
+  "learning_objectives": [
+    "Jotai/Zustand",
+    "Server State (React Query)",
+    "Normalization"
+  ],
+  "theory": "## Beyond Redux\nWhile Redux is standard, modern React has evolved.\n\n### Atomic State (Zustand/Jotai)\nFor global client state (like Theme, Sidebar, Cart), lightweight libraries like Zustand are growing in popularity because they are simpler than Redux.\n\n### Server State (TanStack Query)\nMost 'global state' is actually just cache from the database. Libraries like **React Query** replace the need for Redux fetch thunks entirely by handling caching, deduping, and background refetching.",
+  "syntax": "const { data } = useQuery(['user'], fetchUser);",
+  "examples": [
+    {
+      "code": "import { useQuery } from '@tanstack/react-query';\n\nfunction App() {\n  const { isPending, error, data } = useQuery({\n    queryKey: ['repoData'],\n    queryFn: () =>\n      fetch('https://api.github.com/repos/tannerlinsley/react-query').then(\n        (res) => res.json(),\n      ),\n  })\n  if (isPending) return 'Loading...'\n}",
+      "output": "Handles loading/error/cache auto-magically.",
+      "explanation": "No useEffect needed."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "Client State vs Server State?",
+      "answer": "Client state is local/temporary (UI state). Server state is persisted remotely (DB data). They have different needs (Sync vs Cache).",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "React Query allows removing 90% of Redux boilerplate.",
+    "Zustand uses hooks directly (no provider)."
+  ],
+  "summary": "Modern apps often separate Server Cache (React Query) from UI State (Zustand/Context).",
+  "order": 41
+}

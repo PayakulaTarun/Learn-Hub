@@ -1,0 +1,42 @@
+{
+  "title": "Lazy Loading",
+  "slug": "react-lazy-loading",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "Code Splitting"
+  ],
+  "learning_objectives": [
+    "React.lazy",
+    "Suspense",
+    "Fallback UI"
+  ],
+  "theory": "## On-Demand Components\nReact provides a built-in way to render dynamic imports as regular components.\n\n### React.lazy\n`const OtherComponent = React.lazy(() => import('./OtherComponent'));`\n\n### Suspense\nSince the code is loading over the network, React needs to show something meanwhile. Wrap lazy components in `<Suspense fallback={<Spinner />}>`.",
+  "syntax": "<Suspense fallback={...}><LazyComp /></Suspense>",
+  "examples": [
+    {
+      "code": "import React, { Suspense } from 'react';\nconst About = React.lazy(() => import('./About'));\n\nfunction App() {\n  return (\n    <Suspense fallback={<div>Loading...</div>}>\n      <About />\n    </Suspense>\n  );\n}",
+      "output": "Shows 'Loading...' until About.js downloads.",
+      "explanation": "Seamless async loading."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Lazy loading everything.",
+      "correction": "Don't lazy load incidental UI (like buttons/icons). Use it for Routes or heavy Modals.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Requires Suspense boundary.",
+    "Only default exports supported by default.",
+    "Great for Routes."
+  ],
+  "summary": "Lazy loading dramatically improves the 'Time to Interactive' metric.",
+  "order": 36
+}

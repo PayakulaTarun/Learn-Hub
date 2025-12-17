@@ -14,12 +14,12 @@
     "Caching",
     "Schema Optimization"
   ],
-  "theory": "## Making it Fast\\nPerformance tuning involves optimizing hardware, configuration, schema, and queries.\\n\\n### The EXPLAIN Command\\nPrefix any SELECT statement with `EXPLAIN` to see how MySQL executes it. Look for:\\n* **type**: `ALL` is bad (Full Table Scan). `ref` or `range` is good (Index usage).\\n* **rows**: How many rows scanned.\\n* **key**: Which index was used.\\n\\n### Slow Query Log\\nA log file that records queries taking longer than `long_query_time` (e.g., 2 seconds). Analyzing this log helps identify bottlenecks.",
+  "theory": "## Making it Fast\nPerformance tuning involves optimizing hardware, configuration, schema, and queries.\n\n### The EXPLAIN Command\nPrefix any SELECT statement with `EXPLAIN` to see how MySQL executes it. Look for:\n* **type**: `ALL` is bad (Full Table Scan). `ref` or `range` is good (Index usage).\n* **rows**: How many rows scanned.\n* **key**: Which index was used.\n\n### Slow Query Log\nA log file that records queries taking longer than `long_query_time` (e.g., 2 seconds). Analyzing this log helps identify bottlenecks.",
   "syntax": "EXPLAIN SELECT * FROM table WHERE ...;",
   "examples": [
     {
       "code": "EXPLAIN SELECT * FROM users WHERE email = 'test@test.com';",
-      "output": "id | select_type | table | type | key | rows...\\n1 | SIMPLE | users | const | idx_email | 1",
+      "output": "id | select_type | table | type | key | rows...\n1 | SIMPLE | users | const | idx_email | 1",
       "explanation": "Shows that 'idx_email' index was used and only 1 row was scanned (Very fast)."
     }
   ],
@@ -45,5 +45,5 @@
     "Check type column in EXPLAIN output."
   ],
   "summary": "Performance tuning often revolves around reducing the amount of data MySQL needs to scan. Indexes and Query Analysis (EXPLAIN) are your main tools.",
-  "order": 38
+  "order": 37
 }

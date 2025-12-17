@@ -14,8 +14,8 @@
     "List Partitioning",
     "Hash Partitioning"
   ],
-  "theory": "## Splitting Tables\\n**Partitioning** allows you to distribute portions of individual tables across the file system based on rules. Effectively, it splits one big table into smaller physical pieces.\\n\\n### Types\\n1. **RANGE**: Split by value ranges (e.g., Year 2020, 2021).\\n2. **LIST**: Split by specific value lists (e.g., Region: North, South).\\n3. **HASH**: Split data evenly based on a hash of a key.\\n\\n### Benefits\\n* **Performance**: Scan only relevant partitions (Pruning).\\n* **Management**: Drop old data instantly by dropping a partition.",
-  "syntax": "CREATE TABLE t (id INT, date DATE)\\nPARTITION BY RANGE (YEAR(date)) (\\n  PARTITION p0 VALUES LESS THAN (2020),\\n  PARTITION p1 VALUES LESS THAN (2021)\\n);",
+  "theory": "## Splitting Tables\n**Partitioning** allows you to distribute portions of individual tables across the file system based on rules. Effectively, it splits one big table into smaller physical pieces.\n\n### Types\n1. **RANGE**: Split by value ranges (e.g., Year 2020, 2021).\n2. **LIST**: Split by specific value lists (e.g., Region: North, South).\n3. **HASH**: Split data evenly based on a hash of a key.\n\n### Benefits\n* **Performance**: Scan only relevant partitions (Pruning).\n* **Management**: Drop old data instantly by dropping a partition.",
+  "syntax": "CREATE TABLE t (id INT, date DATE)\nPARTITION BY RANGE (YEAR(date)) (\n  PARTITION p0 VALUES LESS THAN (2020),\n  PARTITION p1 VALUES LESS THAN (2021)\n);",
   "examples": [
     {
       "code": "SELECT * FROM t WHERE date BETWEEN '2020-01-01' AND '2020-01-31';",

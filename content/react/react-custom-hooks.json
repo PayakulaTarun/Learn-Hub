@@ -1,0 +1,49 @@
+{
+  "title": "Custom Hooks",
+  "slug": "react-custom-hooks",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "useEffect",
+    "useState"
+  ],
+  "learning_objectives": [
+    "Extracting Logic",
+    "Naming Convention",
+    "Sharing State Logic"
+  ],
+  "theory": "## Build Your Own\nCustom Hooks are JavaScript functions whose names start with `use`. They can call other Hooks.\n\n### Purpose\nTo extract component logic into reusable functions, just like you extract common code into utility functions. It allows you to share *logic*, not *state* (each call has independent state).",
+  "syntax": "function useFriendStatus(friendID) { ... }",
+  "examples": [
+    {
+      "code": "import { useState, useEffect } from 'react';\n\nfunction useWindowWidth() {\n  const [width, setWidth] = useState(window.innerWidth);\n  useEffect(() => {\n    const handleResize = () => setWidth(window.innerWidth);\n    window.addEventListener('resize', handleResize);\n    return () => window.removeEventListener('resize', handleResize);\n  }, []);\n  return width;\n}",
+      "output": "Returns current width.",
+      "explanation": "Components can now just call useWindowWidth()."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Assuming state is shared.",
+      "correction": "If two components use `useCounter`, they each get their OWN count. To share state, use Context.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "useFetch",
+      "description": "Abstracts fetch, loading, and error state into one line.",
+      "code": "const {data, loading} = useFetch('/api/user');"
+    }
+  ],
+  "exam_notes": [
+    "Must start with 'use'.",
+    "Can call other hooks.",
+    "Used for logic reuse."
+  ],
+  "summary": "Custom hooks are the most powerful feature of React for code organization.",
+  "order": 26
+}

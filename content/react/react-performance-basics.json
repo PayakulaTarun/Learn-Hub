@@ -1,0 +1,42 @@
+{
+  "title": "Performance Optimization Basics",
+  "slug": "react-performance-basics",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "React DevTools"
+  ],
+  "learning_objectives": [
+    "Re-render triggers",
+    "Keys",
+    "State colocation"
+  ],
+  "theory": "## Why is my app slow?\nReact is fast by default, but excessive re-rendering kills performance.\n\n### Triggers\n1. State change.\n2. Parent re-renders (causes all children to re-render recursively).\n3. Context change.\n\n### Colocation\nMove state down. If only the 'Like Button' needs `isLiked`, don't put that state in `App` root. This prevents the whole App from re-rendering on click.",
+  "syntax": "N/A",
+  "examples": [
+    {
+      "code": "// Bad\nfunction App() {\n  const [text, setText] = useState('');\n  return <><SlowComponent /><input onChange.../></>\n}\n// Good\nfunction InputWrapper() {\n  const [text, setText] = useState('');\n  return <input.../>\n}\nfunction App() { return <><SlowComponent /><InputWrapper /></> }",
+      "output": "SlowComponent does not re-render when typing.",
+      "explanation": "State isolation."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "Does a child re-render when parent re-renders?",
+      "answer": "Yes, by default, recursively down the tree.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Push state down.",
+    "Use production build.",
+    "Use Keys correctly."
+  ],
+  "summary": "Structure your state correctly before reaching for memoization tools.",
+  "order": 32
+}

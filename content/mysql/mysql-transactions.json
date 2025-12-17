@@ -14,11 +14,11 @@
     "ROLLBACK",
     "AUTOCOMMIT"
   ],
-  "theory": "## All or Nothing\\nA **Transaction** is a sequential group of database manipulation operations, which is performed as if it were one single work unit.\\n\\n### Lifecycle\\n1. **START TRANSACTION**: Begin the block.\\n2. **Execute Queries**: Run your INSERT/UPDATE/DELETEs.\\n3. **COMMIT**: Save changes permanently.\\n4. **ROLLBACK**: Undo all changes if an error occurs.\\n\\n### Default Behavior\\nMySQL runs in `AUTOCOMMIT` mode by default, meaning every single statement is treated as a committed transaction immediately.",
-  "syntax": "START TRANSACTION;\\nUPDATE accounts SET balance = balance - 100 WHERE id = 1;\\nUPDATE accounts SET balance = balance + 100 WHERE id = 2;\\nCOMMIT;",
+  "theory": "## All or Nothing\nA **Transaction** is a sequential group of database manipulation operations, which is performed as if it were one single work unit.\n\n### Lifecycle\n1. **START TRANSACTION**: Begin the block.\n2. **Execute Queries**: Run your INSERT/UPDATE/DELETEs.\n3. **COMMIT**: Save changes permanently.\n4. **ROLLBACK**: Undo all changes if an error occurs.\n\n### Default Behavior\nMySQL runs in `AUTOCOMMIT` mode by default, meaning every single statement is treated as a committed transaction immediately.",
+  "syntax": "START TRANSACTION;\nUPDATE accounts SET balance = balance - 100 WHERE id = 1;\nUPDATE accounts SET balance = balance + 100 WHERE id = 2;\nCOMMIT;",
   "examples": [
     {
-      "code": "START TRANSACTION;\\nDELETE FROM orders WHERE id = 10;\\n-- Wait, mistake!\\nROLLBACK;",
+      "code": "START TRANSACTION;\nDELETE FROM orders WHERE id = 10;\n-- Wait, mistake!\nROLLBACK;",
       "output": "Data restored.",
       "explanation": "The delete is undone."
     }
@@ -52,5 +52,5 @@
     "Requires InnoDB."
   ],
   "summary": "Transactions ensure data integrity. In complex operations, they guarantee that the database never enters an inconsistent state.",
-  "order": 30
+  "order": 29
 }

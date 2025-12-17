@@ -1,0 +1,54 @@
+{
+  "title": "useContext Hook",
+  "slug": "react-usecontext",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "Lifting State Up"
+  ],
+  "learning_objectives": [
+    "Context API",
+    "Provider",
+    "Consumption",
+    "Avoiding Prop Drilling"
+  ],
+  "theory": "## Teleporting Data\nContext provides a way to pass data through the component tree without having to pass props down manually at every level.\n\n### Steps\n1. **Create**: `const MyContext = createContext(default);`\n2. **Provide**: `<MyContext.Provider value={...}>`\n3. **Consume**: `const value = useContext(MyContext);`",
+  "syntax": "const val = useContext(MyContext);",
+  "examples": [
+    {
+      "code": "const ThemeContext = createContext('light');\n\nfunction ThemedButton() {\n  const theme = useContext(ThemeContext);\n  return <button className={theme}>I am {theme}</button>;\n}\n\nfunction App() {\n  return (\n    <ThemeContext.Provider value=\"dark\">\n      <ThemedButton />\n    </ThemeContext.Provider>\n  );\n}",
+      "output": "Dark button.",
+      "explanation": "Button reads 'dark' directly, skipping intermediate layers."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Overusing Context.",
+      "correction": "Context makes component reuse harder (dependent on provider). Use Composition or Props for simple cases.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Dark/Light Mode",
+      "description": "Theme state available everywhere.",
+      "code": "N/A"
+    },
+    {
+      "scenario": "Auth User",
+      "description": "Logged in user data accessible in Navbar, Profile, Settings.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "Solves Prop Drilling.",
+    "Provider needs a value prop.",
+    "Updating Provider re-renders all consumers."
+  ],
+  "summary": "Context is built for global data like themes, user auth, and language.",
+  "order": 24
+}

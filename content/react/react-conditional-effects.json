@@ -1,0 +1,41 @@
+{
+  "title": "Conditional Side Effects",
+  "slug": "react-conditional-effects",
+  "subject": "React",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "useEffect"
+  ],
+  "learning_objectives": [
+    "Effect Dependencies",
+    "Breaking Infinite Loops",
+    "Conditional Logic inside Effect"
+  ],
+  "theory": "## Controlling Execution\nYou cannot put `useEffect` inside an `if` statement. But you can put `if` statements inside `useEffect`.\n\n### Logic\nIf you want an effect to run only when `user.isAdmin` is true:\n`useEffect(() => { if (!isAdmin) return; ... }, [isAdmin])`.",
+  "syntax": "useEffect(() => { if (cond) doWork() }, [cond]);",
+  "examples": [
+    {
+      "code": "useEffect(() => {\n  if (searchQuery.length > 2) {\n    fetchResults(searchQuery);\n  }\n}, [searchQuery]);",
+      "output": "Fetches only when user types 3+ chars.",
+      "explanation": "Optimizes network calls."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Omitting dependency.",
+      "correction": "If you use `searchQuery` inside, it MUST be in dependency array. Use the 'if' check to prevent execution, not the array omission.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Rules of Hooks apply.",
+    "Logic goes inside the function."
+  ],
+  "summary": "Precise control of side effects prevents bugs and performance issues.",
+  "order": 31
+}
