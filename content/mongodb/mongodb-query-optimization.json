@@ -1,0 +1,40 @@
+{
+  "title": "MongoDB Query Optimization",
+  "slug": "mongodb-query-optimization",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "MongoDB Performance Tuning"
+  ],
+  "learning_objectives": [
+    "Covered Queries",
+    "Hinting Indexes",
+    "Reducing Scans"
+  ],
+  "theory": "Optimizing queries often means ensuring they are 'covered' (projection includes only indexed fields), so MongoDB returns data directly from RAM (index) without touching the disk (heap).",
+  "syntax": "db.coll.find(query).hint({ idx: 1 })",
+  "examples": [
+    {
+      "code": "db.users.createIndex({user: 1})\ndb.users.find({user: \"Alice\"}, {_id: 0, user: 1})",
+      "output": "Covered Query",
+      "explanation": "Since we only return 'user' and 'user' is indexed, no document fetch is needed."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "What is a covered query?",
+      "answer": "A query where the index contains all fields needed to satisfy the query and projection, so no document lookup is required.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Covered queries are huge wins.",
+    "Hint forces index usage."
+  ],
+  "summary": "Optimization is about doing less work: scanning fewer keys, fetching fewer documents."
+}

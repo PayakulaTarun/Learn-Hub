@@ -1,0 +1,52 @@
+{
+  "title": "Lookup & Joins in MongoDB",
+  "slug": "mongodb-lookup-joins",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "Aggregation Pipeline"
+  ],
+  "learning_objectives": [
+    "$lookup operator",
+    "Left Outer Join",
+    "Unwinding arrays"
+  ],
+  "theory": "While MongoDB is non-relational, the `$lookup` aggregation stage lets you perform left outer joins to other collections in the same database.",
+  "syntax": "{ $lookup: { from: 'other', localField: 'id', foreignField: 'fk', as: 'newField' } }",
+  "examples": [
+    {
+      "code": "db.users.aggregate([\n  {\n    $lookup: {\n      from: \"orders\",\n      localField: \"_id\",\n      foreignField: \"user_id\",\n      as: \"user_orders\"\n    }\n  }\n])",
+      "output": "Users with an array of their orders",
+      "explanation": "Accesses 'orders' collection where users._id matches orders.user_id."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Assuming $lookup is as fast as SQL JOIN",
+      "correction": "It is generally slower. Data modeling (embedding) is preferred over joins in MongoDB often.",
+      "example": "Joins across sharded collections have limitations."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What type of join does $lookup perform?",
+      "answer": "Left Outer Join.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Reports",
+      "description": "Joining Customers and Reviews only for infrequent analysis reports, keeping them separate otherwise.",
+      "code": "$lookup"
+    }
+  ],
+  "exam_notes": [
+    "Requires from, localField, foreignField, as.",
+    "$unwind often follows $lookup."
+  ],
+  "summary": "$lookup bridges the gap when relational-style data is necessary."
+}

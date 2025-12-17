@@ -1,0 +1,52 @@
+{
+  "title": "Authentication & Authorization",
+  "slug": "mongodb-auth",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "MongoDB Security Basics"
+  ],
+  "learning_objectives": [
+    "createUser",
+    "Built-in Roles",
+    "RBAC"
+  ],
+  "theory": "MongoDB uses Role-Based Access Control (RBAC). You create users and assign them roles (e.g., read, readWrite, dbAdmin) on specific databases.",
+  "syntax": "db.createUser({ user: \"bob\", pwd: \"abc\", roles: [ \"readWrite\" ] })",
+  "examples": [
+    {
+      "code": "use admin\ndb.createUser({\n  user: \"admin\",\n  pwd: \"secret\",\n  roles: [ { role: \"userAdminAnyDatabase\", db: \"admin\" } ]\n})",
+      "output": "Creates Root Admin",
+      "explanation": "This user can now create other users."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Creating user in wrong DB",
+      "correction": "Authentication is DB-scoped. If you create 'bob' in 'test', he must authenticate against 'test'.",
+      "example": "auth source error"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the difference between specific roles and built-in roles?",
+      "answer": "Built-in roles (read, readWrite) cover common cases. You can define custom roles for fine-grained privileges.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Microservices",
+      "description": "Each microservice has its own DB user restricted only to its specific database.",
+      "code": "Role: readWrite on 'order-db' only"
+    }
+  ],
+  "exam_notes": [
+    "SCRAM is default mechanism.",
+    "RBAC manages permissions."
+  ],
+  "summary": "RBAC ensures the principle of least privilege is applied."
+}

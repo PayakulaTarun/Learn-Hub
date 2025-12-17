@@ -1,0 +1,57 @@
+{
+  "title": "Projection",
+  "slug": "mongodb-projection",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Beginner",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "Find Queries"
+  ],
+  "learning_objectives": [
+    "Including fields",
+    "Excluding fields",
+    "Suppressing _id"
+  ],
+  "theory": "Projection determines which fields are returned in the matching documents. This reduces network overhead by returning only necessary data.",
+  "syntax": "db.coll.find(query, { field: 1, _id: 0 })",
+  "examples": [
+    {
+      "code": "db.users.find({}, { name: 1, email: 1 })",
+      "output": "Returns only _id, name, and email",
+      "explanation": "_id is included by default unless explicitly excluded."
+    },
+    {
+      "code": "db.users.find({}, { password: 0 })",
+      "output": "Returns everything EXCEPT password",
+      "explanation": "0 means exclude."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Mixing inclusion and exclusion",
+      "correction": "You cannot mix 0 and 1 in projection, EXCEPT for _id.",
+      "example": "{ name: 1, age: 0 } // Error. either include specific or exclude specific."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Can you exclude fields in a projection?",
+      "answer": "Yes, using { field: 0 }.",
+      "difficulty": "Easy"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Public API",
+      "description": "Never returning sensitive 'password_hash' or internal flags to the client.",
+      "code": "{ password: 0, internal_flag: 0 }"
+    }
+  ],
+  "exam_notes": [
+    "_id: 0 to hide ID.",
+    "1 = include, 0 = exclude."
+  ],
+  "summary": "Projection is key for performance (bandwidth) and security (hiding sensitive fields)."
+}

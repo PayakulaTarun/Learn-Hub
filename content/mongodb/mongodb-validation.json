@@ -1,0 +1,52 @@
+{
+  "title": "MongoDB Validation Rules",
+  "slug": "mongodb-validation",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Create/Delete Database"
+  ],
+  "learning_objectives": [
+    "Schema Validation",
+    "$jsonSchema",
+    "Validation Levels"
+  ],
+  "theory": "Although schema-flexible, MongoDB allows enforcing schema validation rules during updates and insertions. This ensures data quality.",
+  "syntax": "db.createCollection('users', { validator: { ... } })",
+  "examples": [
+    {
+      "code": "db.createCollection(\"students\", {\n   validator: {\n      $jsonSchema: {\n         bsonType: \"object\",\n         required: [ \"name\", \"year\" ],\n         properties: {\n            name: { bsonType: \"string\" },\n            year: { bsonType: \"int\", minimum: 2017, maximum: 3017 }\n         }\n      }\n   }\n})",
+      "output": "Enforces rules",
+      "explanation": "Inserts failing these rules will throw an error."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Adding validation to existing data causes breaks",
+      "correction": "Set validationLevel to 'warn' or 'moderate' if migrating existing messy data.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Can you enforce a schema in MongoDB?",
+      "answer": "Yes, using Schema Validation ($jsonSchema) natively in the database engine.",
+      "difficulty": "Easy"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Strict Typing",
+      "description": "Ensuring 'price' is always a double and not a string.",
+      "code": "bsonType: 'double'"
+    }
+  ],
+  "exam_notes": [
+    "Levels: strict (default) or moderate.",
+    "Action: error or warn."
+  ],
+  "summary": "Validation offers the best of both worlds: flexibility by default, strictness where defined."
+}

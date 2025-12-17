@@ -1,0 +1,52 @@
+{
+  "title": "Geospatial Indexes",
+  "slug": "mongodb-geospatial",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Indexes Introduction"
+  ],
+  "learning_objectives": [
+    "2dsphere index",
+    "GeoJSON",
+    "$near, $geoWithin"
+  ],
+  "theory": "MongoDB supports geospatial data. You can store GeoJSON objects (Points, Polygons) and query for proximity or containment.",
+  "syntax": "db.coll.createIndex({ loc: \"2dsphere\" })",
+  "examples": [
+    {
+      "code": "db.places.find({\n  loc: {\n    $near: {\n      $geometry: { type: \"Point\", coordinates: [ -73.9, 40.7 ] },\n      $maxDistance: 1000\n    }\n  }\n})",
+      "output": "Places within 1000m",
+      "explanation": "Finds locations near the specified coordinates."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Wrong coordinate order",
+      "correction": "GeoJSON uses [Longitude, Latitude]. Google Maps often uses Lat, Lng. Do not mix them up.",
+      "example": "Store as [lng, lat]."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Difference between 2d and 2dsphere indexes?",
+      "answer": "2d is for flat planes (legacy). 2dsphere is for Earth-like spheres (standard GeoJSON).",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Ride Sharing",
+      "description": "Finding nearest drivers to a user.",
+      "code": "$near operator"
+    }
+  ],
+  "exam_notes": [
+    "GeoJSON format mandatory for 2dsphere.",
+    "[Long, Lat]."
+  ],
+  "summary": "Built-in geospatial support eliminates the need for external GIS extensions."
+}

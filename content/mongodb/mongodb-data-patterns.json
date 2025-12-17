@@ -1,0 +1,45 @@
+{
+  "title": "Data Modeling Patterns",
+  "slug": "mongodb-data-patterns",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "MongoDB Schema Design"
+  ],
+  "learning_objectives": [
+    "Bucket Pattern",
+    "Computed Pattern",
+    "Attribute Pattern"
+  ],
+  "theory": "Specific design patterns solve common NoSQL problems. \n1. Bucket: Grouping streams of data (IoT) into time buckets.\n2. Computed: Storing calculated sums (e.g., total_sales) to avoid aggregation on read.\n3. Attribute: Handling highly variable fields.",
+  "syntax": "N/A",
+  "examples": [
+    {
+      "code": "// Computed Pattern\n{\n  customer: \"Alice\",\n  total_spent: 500, // Updated on every purchase\n  orders: [...]\n}",
+      "output": "Fast Read",
+      "explanation": "We don't need to sum orders array every time we display profile."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "Explain the Bucket Pattern.",
+      "answer": "Instead of 1 doc per sensor reading, store 1 doc per hour containing an array of readings. Reduces index size and number of documents.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "IoT Sensor",
+      "description": "Storing temperature readings every minute. Using Bucketing prevents creating millions of tiny documents.",
+      "code": "Bucket Size: 60"
+    }
+  ],
+  "exam_notes": [
+    "Subset pattern (keep recent data in doc, move old to another collection)."
+  ],
+  "summary": "Patterns like Bucket, Computed, and Subset let you scale widely used features efficiently."
+}

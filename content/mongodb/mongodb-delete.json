@@ -1,0 +1,52 @@
+{
+  "title": "Delete Operations",
+  "slug": "mongodb-delete",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Beginner",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "Update Operations"
+  ],
+  "learning_objectives": [
+    "deleteOne()",
+    "deleteMany()",
+    "remove() (deprecated)"
+  ],
+  "theory": "Delete operations remove documents from a collection. You specify a filter to determine which documents to remove.",
+  "syntax": "db.coll.deleteOne(filter)",
+  "examples": [
+    {
+      "code": "db.users.deleteOne({ _id: 1 })",
+      "output": "{ acknowledged: true, deletedCount: 1 }",
+      "explanation": "Removes the document with _id 1."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using deleteMany({}) by accident",
+      "correction": "Passing an empty filter removes ALL documents. Be extremely careful.",
+      "example": "db.users.deleteMany({}) // WIPES COLLECTION"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Is deleting documents faster than dropping a collection?",
+      "answer": "No. db.collection.drop() is much faster to remove all data than deleting documents one by one.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Data Retention Policy",
+      "description": "Deleting logs older than 30 days.",
+      "code": "deleteMany({ date: { $lt: thirtyDaysAgo } })"
+    }
+  ],
+  "exam_notes": [
+    "Returns deletedCount.",
+    "Atomic operation."
+  ],
+  "summary": "Removing old or unwanted data is essential for database hygiene."
+}

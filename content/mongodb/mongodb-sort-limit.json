@@ -1,0 +1,53 @@
+{
+  "title": "Sorting & Limiting",
+  "slug": "mongodb-sort-limit",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Beginner",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "Find Queries"
+  ],
+  "learning_objectives": [
+    "sort()",
+    "limit()",
+    "skip()",
+    "Pagination"
+  ],
+  "theory": "You can control the order and number of results. sort() takes an object with fields mapped to 1 (ascending) or -1 (descending). limit() restricts count. skip() bypasses a number of results.",
+  "syntax": "cursor.sort({ age: -1 }).limit(5)",
+  "examples": [
+    {
+      "code": "db.posts.find().sort({ date: -1 }).limit(10)",
+      "output": "10 most recent posts",
+      "explanation": "-1 sorts date descending (newest first)."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using skip() for deep pagination",
+      "correction": "skip() scans all skipped documents. For large offsets, it is slow. Use range-based queries (keyset pagination) instead.",
+      "example": "skip(1000000) // Performance disaster"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the order of execution for sort, skip, limit?",
+      "answer": "Regardless of chain order in code, MongoDB executes Sort -> Skip -> Limit.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Leaderboard",
+      "description": "Top 10 players by score.",
+      "code": "sort({ score: -1 }).limit(10)"
+    }
+  ],
+  "exam_notes": [
+    "1 = Ascending, -1 = Descending.",
+    "skip() + limit() = Pagination."
+  ],
+  "summary": "Sorting and limiting are essential for presenting data effectively in UIs."
+}

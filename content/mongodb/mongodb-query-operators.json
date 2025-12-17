@@ -1,0 +1,54 @@
+{
+  "title": "MongoDB Query Operators",
+  "slug": "mongodb-query-operators",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Beginner",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "Find Queries"
+  ],
+  "learning_objectives": [
+    "Comparison ($eq, $gt, $lt)",
+    "Logical ($or, $and, $not)",
+    "Element ($exists, $type)"
+  ],
+  "theory": "Query operators provide functionality far beyond simple equality. You can compare values, combine conditions logically, and check for the existence of fields.",
+  "syntax": "{ field: { $gt: value } }\n{ $or: [ {a:1}, {b:2} ] }",
+  "examples": [
+    {
+      "code": "db.products.find({\n  price: { $gt: 100 },\n  category: { $in: [\"Electronics\", \"Furniture\"] }\n})",
+      "output": "Expensive electronics or furniture",
+      "explanation": "$gt is greater than. $in checks if value is in array."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Syntax errors in $or",
+      "correction": "$or takes an ARRAY of objects.",
+      "example": "{ $or: { a:1, b:2 } } // Wrong. Needs brackets []"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the implicit logical operator between fields in a query?",
+      "answer": "AND. { a:1, b:2 } means a=1 AND b=2.",
+      "difficulty": "Easy"
+    }
+  ],
+  "practice_problems": [
+    {
+      "problem": "Find students with age > 20 OR grade 'A'.",
+      "difficulty": "Medium",
+      "hint": "Use $or.",
+      "solution": "{ $or: [ { age: { $gt: 20 } }, { grade: 'A' } ] }"
+    }
+  ],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "$gt, $gte, $lt, $lte, $ne.",
+    "$in for array of values.",
+    "$and is implicit but explicit version exists."
+  ],
+  "summary": "Operators unlock the full potential of the MongoDB query language."
+}

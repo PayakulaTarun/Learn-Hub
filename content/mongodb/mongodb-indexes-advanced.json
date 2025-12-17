@@ -1,0 +1,46 @@
+{
+  "title": "MongoDB Indexes Deep Dive",
+  "slug": "mongodb-indexes-advanced",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "Indexes Introduction"
+  ],
+  "learning_objectives": [
+    "Compound Indexes",
+    "Index Prefixes",
+    "ESR Rule"
+  ],
+  "theory": "Compound indexes index multiple fields. The order of fields matters. The ESR (Equality, Sort, Range) rule helps in designing efficient compound indexes.",
+  "syntax": "db.coll.createIndex({ a: 1, b: -1 })",
+  "examples": [
+    {
+      "code": "db.users.createIndex({ lastname: 1, firstname: 1 })",
+      "output": "Compound Index",
+      "explanation": "Good for queries on 'lastname' OR 'lastname + firstname'. NOT good for just 'firstname'."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Ignoring index prefix rule",
+      "correction": "Index {a:1, b:1} supports finding by {a} but NOT by {b} alone.",
+      "example": "Query {b:5} will perform a collection scan."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the ESR rule?",
+      "answer": "Equality, Sort, Range. Place fields used for exact matches first, then sorting, then range filters.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Compound index order matters.",
+    "Covered queries (index contains all projected fields) are super fast."
+  ],
+  "summary": "Proper indexing strategy is the difference between a sub-millisecond query and a timeout."
+}

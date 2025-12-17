@@ -1,0 +1,46 @@
+{
+  "title": "MongoDB Schema Design",
+  "slug": "mongodb-schema-design",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "30 mins",
+  "prerequisites": [
+    "Introduction to NoSQL"
+  ],
+  "learning_objectives": [
+    "Embedding vs Referencing",
+    "One-to-One",
+    "One-to-Many",
+    "Many-to-Many"
+  ],
+  "theory": "Schema design in MongoDB relies on the access patterns of your application. The key decision is always Embed (nesting data) vs Reference (linking data). Embed is better for read performance; Reference is better for data consistency and large datasets.",
+  "syntax": "N/A",
+  "examples": [
+    {
+      "code": "// Embedded (One-to-Few)\n{\n  name: \"Alice\",\n  addresses: [ { city: \"NY\" }, { city: \"LA\" } ]\n}\n\n// Referenced (One-to-Many)\n{ name: \"Alice\", address_ids: [101, 102] }",
+      "output": "Modeling choices",
+      "explanation": "Addresses are usually embedded because they belong to the user and are viewed with the user."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Deep nesting",
+      "correction": "Don't nest too deep. Queries become complex and document size limits hit.",
+      "example": "User -> Posts -> Comments -> Likes -> User (Circular/Deep)"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "When should you use referencing over embedding?",
+      "answer": "When the 'many' side is large (unbounded growth), frequently updated individually, or accessed typically without the parent.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Design for Usage (Read/Write patterns), not for SQL normalization."
+  ],
+  "summary": "Good schema design is critical. In NoSQL, data structures are optimized for specific application queries."
+}

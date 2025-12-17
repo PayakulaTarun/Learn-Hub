@@ -1,0 +1,53 @@
+{
+  "title": "MongoDB Replication",
+  "slug": "mongodb-replication",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Advanced",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "MongoDB Architecture"
+  ],
+  "learning_objectives": [
+    "Replica Sets",
+    "Primary/Secondary",
+    "Oplog",
+    "Failover"
+  ],
+  "theory": "Replication provides high availability and redundancy. A replica set contains one Primary node (accepts writes) and multiple Secondaries (replicate data via Oplog). If primary fails, an election promotes a secondary.",
+  "syntax": "rs.initiate()",
+  "examples": [
+    {
+      "code": "rs.add(\"host2:27017\")",
+      "output": "Extends the cluster",
+      "explanation": "Adding a new member to an existing replica set."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Writing to secondary",
+      "correction": "Secondaries are Read-Only by default. You can enable 'slaveOk' (legacy) or Read Preference, but never writes.",
+      "example": "Error: not master"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the Oplog?",
+      "answer": "Operations Log. A capped collection that keeps a rolling record of all operations that modify the data, used for replication.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Disaster Recovery",
+      "description": "Keeping a secondary in a different AWS region.",
+      "code": "Priority: 0 (Hidden member)"
+    }
+  ],
+  "exam_notes": [
+    "Primary = Writes.",
+    "Election needs majority."
+  ],
+  "summary": "Replication is mandatory for production systems to survive server failures."
+}

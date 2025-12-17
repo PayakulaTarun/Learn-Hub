@@ -1,0 +1,40 @@
+{
+  "title": "MongoDB Performance Tuning",
+  "slug": "mongodb-performance",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "MongoDB Indexes Deep Dive"
+  ],
+  "learning_objectives": [
+    "Explain Plans",
+    "WiredTiger Cache",
+    "Finding Slow Queries"
+  ],
+  "theory": "Performance tuning involves identifying bottlenecks. The Database Profiler collects data on slow operations. `cursor.explain()` reveals if a query uses an index or scans the collection.",
+  "syntax": "db.coll.find().explain(\"executionStats\")",
+  "examples": [
+    {
+      "code": "db.users.find({age: 30}).explain()",
+      "output": "Json showing 'COLLSCAN' or 'IXSCAN'",
+      "explanation": "IXSCAN means index used (Good). COLLSCAN means full scan (Bad)."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "What is the difference between IXSCAN and COLLSCAN?",
+      "answer": "IXSCAN is an index scan. COLLSCAN is a full collection scan (checking every document).",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "explain() is the primary tool.",
+    "Look for totalKeysExamined vs totalDocsExamined."
+  ],
+  "summary": "Proactive tuning ensures scalability as user counts grow."
+}

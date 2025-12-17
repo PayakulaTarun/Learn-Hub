@@ -1,0 +1,59 @@
+{
+  "title": "Insert Operations",
+  "slug": "mongodb-insert",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Beginner",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MongoDB CRUD Operations"
+  ],
+  "learning_objectives": [
+    "insertOne()",
+    "insertMany()",
+    "Ordered vs Unordered"
+  ],
+  "theory": "Insert operations add new documents to a collection. You can insert one or multiple documents. If the collection does not exist, insert operations create the collection.",
+  "syntax": "db.coll.insertOne({ x: 1 })\ndb.coll.insertMany([{ x: 1 }, { x: 2 }])",
+  "examples": [
+    {
+      "code": "try {\n  db.users.insertOne( { _id: 1, name: \"Alice\" } );\n} catch (e) {\n  print(e);\n}",
+      "output": "{ \"acknowledged\" : true, \"insertedId\" : 1 }",
+      "explanation": "Inserts a single document. If _id 1 exists, throws duplicate key error."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Duplicate Key Error",
+      "correction": "Ensure _id is unique. Using the default ObjectId prevents this.",
+      "example": "Inserting { _id: 1 } twice."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What happens if one document fails in insertMany({ ordered: false })?",
+      "answer": "MongoDB continues to insert the remaining documents. Default is true (stop on error).",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [
+    {
+      "problem": "Insert three distinct products into a 'products' collection.",
+      "difficulty": "Easy",
+      "hint": "Use insertMany with an array.",
+      "solution": "db.products.insertMany([...])"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "Log Ingestion",
+      "description": "Rapidly inserting thousands of log entries using unordered bulk insert for performance.",
+      "code": "insertMany(logs, { ordered: false })"
+    }
+  ],
+  "exam_notes": [
+    "Default ordered: true.",
+    "Returns acknowledged status and insertedIds."
+  ],
+  "summary": "Efficiently adding data is the first interaction with any database system."
+}

@@ -1,0 +1,46 @@
+{
+  "title": "MongoDB Change Streams",
+  "slug": "mongodb-change-streams",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Advanced",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "MongoDB Replication"
+  ],
+  "learning_objectives": [
+    "Real-time updates",
+    "watch()",
+    "Resume Token"
+  ],
+  "theory": "Change Streams allow applications to access real-time data changes without polling. They rely on the Oplog.",
+  "syntax": "const changeStream = collection.watch();\nchangeStream.on('change', next => { ... });",
+  "examples": [
+    {
+      "code": "const collection = db.collection('inventory');\nconst changeStream = collection.watch();\nchangeStream.on('change', next => {\n  console.log('Detected change:', next.operationType);\n});",
+      "output": "Real-time log",
+      "explanation": "Fires events on insert, update, replace, delete."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Watching standalone",
+      "correction": "Change Streams require a Replica Set (because they read the Oplog).",
+      "example": "Error: simple mongod doesn't support watch."
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Live Notifications",
+      "description": "Updating a user's UI instantly when a notification document is inserted.",
+      "code": "WebSocket push on change"
+    }
+  ],
+  "exam_notes": [
+    "Uses aggregation pipeline filtering.",
+    "Resumable."
+  ],
+  "summary": "Change Streams enable reactive, event-driven architectures."
+}

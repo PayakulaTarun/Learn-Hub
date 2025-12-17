@@ -1,0 +1,52 @@
+{
+  "title": "MongoDB Transactions",
+  "slug": "mongodb-transactions",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "MongoDB CRUD Operations"
+  ],
+  "learning_objectives": [
+    "When to use Transactions",
+    "Start/Commit/Abort",
+    "ACID guarantees"
+  ],
+  "theory": "Since v4.0, MongoDB supports multi-document ACID transactions. While atomic operations on single documents are usually sufficient, transactions are needed when updating multiple documents/collections ensuring all-or-nothing.",
+  "syntax": "withTransaction(callback)",
+  "examples": [
+    {
+      "code": "const session = client.startSession();\nsession.startTransaction();\ntry {\n  users.updateOne(..., { session });\n  orders.insertOne(..., { session });\n  session.commitTransaction();\n} catch (e) {\n  session.abortTransaction();\n}",
+      "output": "Safe transfer",
+      "explanation": "Both writes happen, or neither does."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Overusing transactions",
+      "correction": "Transactions incur performance cost. Prefer modeling data (embedding) so updates affect a single document (atomic) naturally.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Are MongoDB transactions ACID compliant?",
+      "answer": "Yes, for multi-document operations since v4.0 (Replica Sets) and v4.2 (Sharded Clusters).",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Bank Transfer",
+      "description": "Debit Account A and Credit Account B must happen together.",
+      "code": "Transaction"
+    }
+  ],
+  "exam_notes": [
+    "Requires Replica Set or Sharded Cluster.",
+    "Not available in Standalone."
+  ],
+  "summary": "Transactions bring the safety of SQL to the flexibility of NoSQL when absolutely needed."
+}

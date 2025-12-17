@@ -1,0 +1,53 @@
+{
+  "title": "Indexes Introduction",
+  "slug": "mongodb-indexes-intro",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Beginner",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Find Queries"
+  ],
+  "learning_objectives": [
+    "What is an Index?",
+    "createIndex()",
+    "_id default index"
+  ],
+  "theory": "Indexes support the efficient execution of queries. Without indexes, MongoDB must perform a collection scan (scan every document) to find matches. Indexes are special data structures that store a small portion of the data set in an easy-to-traverse form.",
+  "syntax": "db.coll.createIndex({ field: 1 })",
+  "examples": [
+    {
+      "code": "db.users.createIndex({ email: 1 }, { unique: true })",
+      "output": "Creates unique index",
+      "explanation": "Ensures no two documents can have the same email instantly."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Indexing everything",
+      "correction": "Indexes consume RAM and slow down writes (every insert must update index). Index only query-heavy fields.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the default index in every collection?",
+      "answer": "The index on the _id field.",
+      "difficulty": "Easy"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Login",
+      "description": "Looking up user by username requires an index on 'username' for speed.",
+      "code": "createIndex({ username: 1 })"
+    }
+  ],
+  "exam_notes": [
+    "Speeds up Reads.",
+    "Slows down Writes.",
+    "Unique indexes enforce constraint."
+  ],
+  "summary": "Indexes are the single most important performance optimization in MongoDB."
+}

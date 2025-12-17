@@ -1,0 +1,40 @@
+{
+  "title": "MongoDB Error Handling",
+  "slug": "mongodb-error-handling",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MongoDB with Node.js"
+  ],
+  "learning_objectives": [
+    "Duplicate Key Error",
+    "Network Errors",
+    "Write Concerns"
+  ],
+  "theory": "Handling errors robustly is key. Common errors include Code 11000 (Duplicate Key). Network errors require retry logic.",
+  "syntax": "try { ... } catch (e) { if (e.code === 11000) ... }",
+  "examples": [
+    {
+      "code": "if (error instanceof MongoNetworkError) {\n  retry();\n}",
+      "output": "Resilience",
+      "explanation": "Transient network glitches should not crash the app."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "What is Error Code 11000?",
+      "answer": "Duplicate Key Error. Attempting to insert a duplicate value into a unique index field.",
+      "difficulty": "Easy"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Check error.code.",
+    "WriteConcern errors mean data might not constitute a consensus."
+  ],
+  "summary": "Anticipating failure modes leads to resilient applications."
+}

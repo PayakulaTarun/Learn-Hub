@@ -1,0 +1,47 @@
+{
+  "title": "MongoDB Sharding",
+  "slug": "mongodb-sharding",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Advanced",
+  "estimated_read_time": "30 mins",
+  "prerequisites": [
+    "MongoDB Replication"
+  ],
+  "learning_objectives": [
+    "Horizontal Scaling",
+    "Shard Key",
+    "Mongos",
+    "Config Servers"
+  ],
+  "theory": "Sharding distributes data across multiple machines. A sharded cluster consists of shards (replica sets), config servers (metadata), and mongos (routers). Choosing the right Shard Key is critical for even distribution.",
+  "syntax": "sh.enableSharding(\"db\")\nsh.shardCollection(\"db.coll\", { key: 1 })",
+  "examples": [],
+  "common_mistakes": [
+    {
+      "mistake": "Monotonically increasing shard key",
+      "correction": "Using timestamps as shard keys leads to hotspots (all writes go to the last shard). Hash the key or use a different one.",
+      "example": "Shard Key: { timestamp: 1 } -> Hotspot."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the role of mongos?",
+      "answer": "It acts as a query router, directing client requests to the appropriate shard(s) based on the shard key.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Big Data",
+      "description": "Storing 50TB of data. A single server cannot hold this. Sharding splits it across 20 servers.",
+      "code": "Hashed Sharding"
+    }
+  ],
+  "exam_notes": [
+    "Shard Key is immutable.",
+    "Range based vs Hash based sharding."
+  ],
+  "summary": "Sharding allows MongoDB to scale infinitely horizontally."
+}

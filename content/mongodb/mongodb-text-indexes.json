@@ -1,0 +1,46 @@
+{
+  "title": "Text Indexes",
+  "slug": "mongodb-text-indexes",
+  "subject": "MongoDB",
+  "category": "NoSQL Database",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Indexes Introduction"
+  ],
+  "learning_objectives": [
+    "Create Text Index",
+    "$text operator",
+    "$search operator"
+  ],
+  "theory": "Text indexes support search queries on string content. They enable text search features like stop words and stemming.",
+  "syntax": "db.coll.createIndex({ content: \"text\" })\ndb.coll.find({ $text: { $search: \"coffee\" } })",
+  "examples": [
+    {
+      "code": "db.articles.find(\n  { $text: { $search: \"mongodb\" } },\n  { score: { $meta: \"textScore\" } }\n).sort({ score: { $meta: \"textScore\" } })",
+      "output": "Articles sorted by relevance",
+      "explanation": "Returns docs containing 'mongodb', sorted by match quality."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Multiple text indexes per collection",
+      "correction": "A collection can have at most ONE text index (which can cover multiple fields).",
+      "example": "Error: text index already exists."
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Blog Search",
+      "description": "Searching titles and bodies of articles.",
+      "code": "createIndex({ title: 'text', body: 'text' })"
+    }
+  ],
+  "exam_notes": [
+    "Only one text index allowed.",
+    "Supports logical OR of terms by default."
+  ],
+  "summary": "Text indexes provide basic full-text search capabilities within MongoDB."
+}
