@@ -1,0 +1,60 @@
+{
+    "title": "JavaScript Memory Management",
+    "slug": "js-memory-management",
+    "subject": "JavaScript",
+    "category": "Web Development",
+    "level": "Intermediate",
+    "estimated_read_time": "15 mins",
+    "prerequisites": [
+        "JavaScript Execution Context"
+    ],
+    "learning_objectives": [
+        "Mark-and-Sweep Algorithm",
+        "Stack vs Heap Memory",
+        "Garbage Collection (GC)",
+        "Memory Leaks"
+    ],
+    "theory": "JavaScript automatically allocates memory when objects are created and frees it when they are not used anymore (Garbage Collection).\n\n*   **Stack**: Stores primitives and static references.\n*   **Heap**: Stores objects and dynamic data.\n*   **Mark-and-Sweep**: The GC algorithms checks 'roots' (global vars). Anything reachable is marked. Unreachable is swept (deleted).",
+    "syntax": "// No syntax. Engine concept.\nlet x = { a: 1 };\nx = null; // Object {a:1} now eligible for GC",
+    "examples": [
+        {
+            "code": "function createLeak() {\n  window.leakedVariable = \"I am huge\"; // Accidental global\n}",
+            "output": "Variable stays in memory forever.",
+            "explanation": "Common cause of memory leaks."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Uncleared Timers",
+            "correction": "If you `setInterval` referencing a DOM element and remove the element but force the timer, memory leaks.",
+            "example": ""
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "How does Garbage Collection serve developers?",
+            "answer": "It removes the need for manual memory allocation/deallocation (malloc/free) like in C/C++.",
+            "difficulty": "Medium"
+        }
+    ],
+    "practice_problems": [
+        {
+            "problem": "How to manually free an object?",
+            "hint": "Set to null.",
+            "solution": "obj = null;",
+            "difficulty": "Easy"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Single Page Apps",
+            "description": "Long-running SPAs must be careful not to accumulate detached DOM nodes or listeners, or the browser will crash.",
+            "code": ""
+        }
+    ],
+    "exam_notes": [
+        "Closures can cause memory leaks if not managed.",
+        "Circular references used to be a problem, but modern algo handles them."
+    ],
+    "summary": "While JS manages memory, developers manage pointers. Poor pointer management leads to leaks."
+}

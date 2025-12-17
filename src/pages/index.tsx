@@ -5,16 +5,16 @@ import { ArrowRight, Code, Palette, Zap, Users, BookOpen, Star, Database, GitBra
 
 export default function Home() {
   return (
-    <Layout title="LearnHub - Master Web Development">
+    <Layout title="LearnHub - Master Engineering">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-accent text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Master Web Development
+              Master Engineering
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
-              Learn HTML, CSS, JavaScript, Python, Java, and 60+ other technologies with comprehensive masterclasses and real-world projects
+              Learn Computer Science, Full Stack Development, System Design, and 60+ other technologies with comprehensive masterclasses and real-world projects
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/subjects" className="btn-primary bg-white text-primary hover:bg-gray-100">

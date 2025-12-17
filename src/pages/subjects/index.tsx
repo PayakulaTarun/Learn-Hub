@@ -11,30 +11,43 @@ interface SubjectsPageProps {
 }
 
 const categoryIcons: Record<string, any> = {
+  javascript: Code,
+  python: Code,
+  html: Globe,
+  css: Wrench,
+  java: Code,
+  git: Cloud,
+  django: Wrench,
+  mysql: Database,
+  mongodb: Database,
+  'web development': Globe,
   frontend: Code,
   backend: Wrench,
-  databases: Database,
-  devops: Cloud,
-  mobile: Smartphone,
-  'web development': Globe,
 };
 
 const categoryColors: Record<string, string> = {
+  javascript: 'bg-yellow-500',
+  python: 'bg-blue-500',
+  html: 'bg-orange-600',
+  css: 'bg-blue-400',
+  java: 'bg-red-500',
+  git: 'bg-gray-700',
+  django: 'bg-green-700',
+  mysql: 'bg-blue-600',
+  mongodb: 'bg-green-500',
+  'web development': 'bg-orange-600',
   frontend: 'bg-blue-500',
   backend: 'bg-green-500',
-  databases: 'bg-purple-500',
-  devops: 'bg-orange-500',
-  mobile: 'bg-pink-500',
-  'web development': 'bg-orange-600',
 };
 
 export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
-  // Group tutorials by category
+  // Group tutorials by subject
   const grouped = tutorials.reduce((acc, tutorial) => {
-    if (!acc[tutorial.category]) {
-      acc[tutorial.category] = [];
+    const subject = tutorial.subject || 'General';
+    if (!acc[subject]) {
+      acc[subject] = [];
     }
-    acc[tutorial.category].push(tutorial);
+    acc[subject].push(tutorial);
     return acc;
   }, {} as Record<string, TutorialMetadata[]>);
 
@@ -57,19 +70,20 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
             </p>
           </div>
 
-          {/* Categories */}
-          {Object.entries(grouped).map(([category, tutorialList]) => {
-            const Icon = categoryIcons[category] || BookOpen;
-            const colorClass = categoryColors[category] || 'bg-gray-500';
+          {/* Categories/Subjects */}
+          {Object.entries(grouped).map(([subject, tutorialList]) => {
+             const subjectKey = subject.toLowerCase();
+            const Icon = categoryIcons[subjectKey] || BookOpen;
+            const colorClass = categoryColors[subjectKey] || 'bg-gray-500';
 
             return (
-              <div key={category} className="mb-16">
+              <div key={subject} className="mb-16">
                 <div className="flex items-center gap-3 mb-8">
                   <div className={`${colorClass} p-3 rounded-lg`}>
                     <Icon className="text-white" size={24} />
                   </div>
                   <h2 className="text-3xl font-bold text-gray-900 capitalize">
-                    {category}
+                    {subject}
                   </h2>
                 </div>
 

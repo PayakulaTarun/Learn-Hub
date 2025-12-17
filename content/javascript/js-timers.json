@@ -1,0 +1,61 @@
+{
+    "title": "Timers",
+    "slug": "js-timers",
+    "subject": "JavaScript",
+    "category": "Web Development",
+    "level": "Intermediate",
+    "estimated_read_time": "10 mins",
+    "prerequisites": [
+        "Callbacks"
+    ],
+    "learning_objectives": [
+        "setTimeout",
+        "clearTimeout",
+        "setInterval",
+        "clearInterval",
+        "High precision timing"
+    ],
+    "theory": "The window object allows execution of code at specified time intervals.\n\n*   `setTimeout(function, milliseconds)`: Executes once after delay.\n*   `setInterval(function, milliseconds)`: Repeats execution continuously.\n*   Timers return an ID that can be used to stop them.",
+    "syntax": "let id = setTimeout(() => alert('Hi'), 1000);\nclearTimeout(id);",
+    "examples": [
+        {
+            "code": "let count = 0;\nconst interval = setInterval(() => {\n  count++;\n  console.log(count);\n  if (count === 5) clearInterval(interval);\n}, 1000);",
+            "output": "1, 2, 3, 4, 5 (then stops)",
+            "explanation": "Standard countdown logic."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Passing function call instead of reference",
+            "correction": "`setTimeout(func(), 1000)` calls func IMMEDIATELY and passes result to timer. Use `setTimeout(func, 1000)`.",
+            "example": ""
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "Does setInterval guarantee exact timing?",
+            "answer": "No. JS is single threaded. If the main thread is blocked, the timer will be delayed.",
+            "difficulty": "Medium"
+        }
+    ],
+    "practice_problems": [
+        {
+            "problem": "Create a timer that logs 'Hello' every 2 seconds.",
+            "hint": "setInterval",
+            "solution": "setInterval(() => console.log('Hello'), 2000)",
+            "difficulty": "Easy"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Auto-save",
+            "description": "Triggering a save function 2 seconds after the user stops typing (Debouncing).",
+            "code": ""
+        }
+    ],
+    "exam_notes": [
+        "1000 ms = 1 second.",
+        "requestAnimationFrame is better for animations than timers."
+    ],
+    "summary": "Timers are essential for time-based logic, animations, and polling."
+}

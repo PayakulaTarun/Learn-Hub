@@ -1,0 +1,61 @@
+{
+    "title": "Performance Optimization",
+    "slug": "js-performance",
+    "subject": "JavaScript",
+    "category": "Web Development",
+    "level": "Intermediate",
+    "estimated_read_time": "15 mins",
+    "prerequisites": [
+        "JavaScript Memory Management",
+        "DOM Manipulation"
+    ],
+    "learning_objectives": [
+        "Debouncing and Throttling",
+        "Minification / Bundling",
+        "Lazy Loading",
+        "Document Fragment"
+    ],
+    "theory": "Writing code that runs fast and effectively.\n\n*   **Debounce**: Ensure a function is not called too frequently (e.g. wait for typing to stop).\n*   **Throttle**: Ensure a function is called at most once in X milliseconds (e.g. scroll event).\n*   **DocumentFragment**: Batch DOM insertions to avoid reflow.",
+    "syntax": "// Debounce concept\nlet timer;\nfunction inputHandler() {\n  clearTimeout(timer);\n  timer = setTimeout(apiCall, 500);\n}",
+    "examples": [
+        {
+            "code": "const fragment = document.createDocumentFragment();\nfor(let i=0; i<100; i++) {\n   let li = document.createElement('li');\n   fragment.appendChild(li);\n}\nul.appendChild(fragment);",
+            "output": "1 Reflow instead of 100.",
+            "explanation": "Huge performance boost for lists."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Attaching scroll listeners without throttling",
+            "correction": "Scroll events fire hundreds of times a second. Heavy logic here kills FPS.",
+            "example": ""
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "Debounce vs Throttle?",
+            "answer": "Debounce: Group bursts into 1 final event. Throttle: Guarantee execution every X ms.",
+            "difficulty": "Medium"
+        }
+    ],
+    "practice_problems": [
+        {
+            "problem": "Why script tags go at the bottom?",
+            "hint": "Blocking.",
+            "solution": "To avoid blocking HTML parsing.",
+            "difficulty": "Easy"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Search Bar",
+            "description": "Debounce API calls so we don't request 'A', 'Ap', 'App', 'Appl'...",
+            "code": ""
+        }
+    ],
+    "exam_notes": [
+        "Defer and Async attributes on script tags.",
+        "Web Workers for separate threads."
+    ],
+    "summary": "Performance is feature #1. Slow sites lose users."
+}

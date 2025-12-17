@@ -79,6 +79,7 @@ export function getAllTutorials(): TutorialMetadata[] {
                                 slug: tutorial.slug || 'unknown',
                                 title: tutorial.title || 'Untitled',
                                 category: tutorial.category || category,
+                                subject: tutorial.subject || 'General',
                                 description: tutorial.description || tutorial.summary || '',
                             });
                         }

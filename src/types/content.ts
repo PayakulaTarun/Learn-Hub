@@ -54,5 +54,6 @@ export interface TutorialMetadata {
     slug: string;
     title: string;
     category: string;
+    subject: string;
     description: string;
 }

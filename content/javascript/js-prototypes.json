@@ -1,0 +1,61 @@
+{
+    "title": "Prototype & Prototypal Inheritance",
+    "slug": "js-prototypes",
+    "subject": "JavaScript",
+    "category": "Web Development",
+    "level": "Advanced",
+    "estimated_read_time": "25 mins",
+    "prerequisites": [
+        "JavaScript Objects"
+    ],
+    "learning_objectives": [
+        "__proto__ and prototype",
+        "Prototypal Chain",
+        "Object.create()",
+        "Inheritance without Classes",
+        "Polypills"
+    ],
+    "theory": "In JS, objects inherit from other objects. This is called Prototypal Inheritance.\n\nEvery object has a hidden property `[[Prototype]]` (exposed as `__proto__`) that links to another object.\n\nWhen looking for a property, JS checks the object, then its prototype, then the prototype's prototype... up to `Object.prototype` -> `null`.",
+    "syntax": "function Animal(name) {\n  this.name = name;\n}\nAnimal.prototype.speak = function() {\n  console.log(this.name + ' speaks');\n}\n\nlet dog = new Animal('Dog');\ndog.speak();",
+    "examples": [
+        {
+            "code": "console.log(dog.__proto__ === Animal.prototype); // true\nconsole.log(dog.__proto__.__proto__ === Object.prototype); // true",
+            "output": "Understanding the chain.",
+            "explanation": "This chain is how methods like `.toString()` are available on all objects."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Modifying Object.prototype",
+            "correction": "Never add methods to native prototypes (Monkey Patching). It breaks libraries.",
+            "example": "Object.prototype.foo = ... // BAD"
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "Difference between `__proto__` and `prototype`?",
+            "answer": "`prototype` is property on Functions (constructors). `__proto__` is property on instances (objects) pointing to the constructor's prototype.",
+            "difficulty": "Expert"
+        }
+    ],
+    "practice_problems": [
+        {
+            "problem": "Add a method 'reverse' to String prototype (for learning only).",
+            "hint": "String.prototype.reverse = ...",
+            "solution": "String.prototype.reverse = function(){ return this.split('').reverse().join('') }",
+            "difficulty": "Medium"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Polyfills",
+            "description": "Adding modern functionality to older browsers.",
+            "code": "if (!Array.prototype.map) { ... }"
+        }
+    ],
+    "exam_notes": [
+        "Object.create(proto) creates object with specific prototype.",
+        "Class syntax hides this complexity but it is still working this way."
+    ],
+    "summary": "This is the core identity of JavaScript. It is valid to say JS is not 'Class-based' but 'Prototype-based'."
+}

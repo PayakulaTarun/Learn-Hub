@@ -1,0 +1,61 @@
+{
+    "title": "Advanced Asynchronous Patterns",
+    "slug": "js-advanced-async",
+    "subject": "JavaScript",
+    "category": "Web Development",
+    "level": "Advanced",
+    "estimated_read_time": "20 mins",
+    "prerequisites": [
+        "Async / Await"
+    ],
+    "learning_objectives": [
+        "Generators (function*) and yield",
+        "Async Iterators (for await...of)",
+        "Promise.allSettled()",
+        "Promise.race()",
+        "AbortController (Cancelling fetch)"
+    ],
+    "theory": "Handling complex async flows requires robust tools.\n\n*   **Generators**: Functions that can be paused and resumed (`yield`).\n*   **Promise.allSettled**: Waits for all promises to finish, regardless of success/fail.\n*   **AbortController**: Standard way to cancel async tasks like Fetch.",
+    "syntax": "function* generator() {\n  yield 1;\n  yield 2;\n}\n\nconst controller = new AbortController();\nfetch(url, { signal: controller.signal });\ncontroller.abort();",
+    "examples": [
+        {
+            "code": "const promises = [fetch(url1), fetch(url2)];\nconst results = await Promise.allSettled(promises);\n// results: [{status: 'fulfilled', value: ...}, {status: 'rejected', reason: ...}]",
+            "output": "No error thrown even if efficient fails.",
+            "explanation": "Better than Promise.all which fails fast."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Memory leaks with uncleared listeners",
+            "correction": "Always clean up async subscriptions.",
+            "example": ""
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "What is `Promise.race()`?",
+            "answer": "Returns a promise that resolves or rejects as soon as one of the promises in the iterable resolves or rejects.",
+            "difficulty": "Medium"
+        }
+    ],
+    "practice_problems": [
+        {
+            "problem": "Create a timeout promise that rejects after 5 sec.",
+            "hint": "Promise.race([fetch, timeout])",
+            "solution": "Race logic.",
+            "difficulty": "Hard"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Redux Sagas",
+            "description": "Uses Generators `function*` to manage complex side-effects in React apps.",
+            "code": ""
+        }
+    ],
+    "exam_notes": [
+        "Generators return an Iterator object.",
+        "Can pass values back into generator: `next(value)`."
+    ],
+    "summary": "Mastering these patterns allows you to write robust code that handles network flakiness gracefully."
+}

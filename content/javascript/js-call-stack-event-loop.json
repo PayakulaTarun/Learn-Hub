@@ -1,0 +1,66 @@
+{
+    "title": "Call Stack & Event Loop",
+    "slug": "js-call-stack-event-loop",
+    "subject": "JavaScript",
+    "category": "Web Development",
+    "level": "Intermediate",
+    "estimated_read_time": "25 mins",
+    "prerequisites": [
+        "JavaScript Execution Context"
+    ],
+    "learning_objectives": [
+        "Understanding the Call Stack (LIFO)",
+        "Blocking (Synchronous) code",
+        "Web APIs (Timer, DOM, Fetch)",
+        "Callback Queue (Task Queue)",
+        "The Event Loop mechanism"
+    ],
+    "theory": "JavaScript has a **single threaded** runtime (Call Stack). It can do one thing at a time.\n\nHowever, the browser provides **Web APIs** (like setTimeout) that run in the background. When they finish, they push callbacks to the **Callback Queue**.\n\nThe **Event Loop** is a process that constantly checks: Is the Call Stack keys? If YES, and Queue has items, push item from Queue to Stack.",
+    "syntax": "console.log('Start');\nsetTimeout(() => console.log('Async'), 0);\nconsole.log('End');",
+    "examples": [
+        {
+            "code": "/* Output Order */\n// Start\n// End\n// Async",
+            "output": "Start -> End -> Async",
+            "explanation": "Even with 0ms, setTimeout goes to WebAPI -> Queue -> Wait for Stack Empty -> Stack."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Thinking setTimeout(0) runs immediately",
+            "correction": "It guarantees execution AS SOON AS the stack is empty, not immediately.",
+            "example": ""
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "What is the Event Loop?",
+            "answer": "A mechanism that orchestrates execution between the Call Stack and the Callback Queue.",
+            "difficulty": "Hard"
+        },
+        {
+            "question": "Are Promises handle differently than setTimeout?",
+            "answer": "Yes. Promises go to the Microtask Queue, which has higher priority than the Callback Queue (Macrotask).",
+            "difficulty": "Expert"
+        }
+    ],
+    "practice_problems": [
+        {
+            "problem": "Predict output: log(1); setTimeout(log(2), 100); log(3);",
+            "hint": "Sync first, then Async.",
+            "solution": "1, 3, 2",
+            "difficulty": "Medium"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Non-blocking UI",
+            "description": "Using async operations (fetch) ensures the UI doesn't freeze while waiting for server data.",
+            "code": ""
+        }
+    ],
+    "exam_notes": [
+        "Stack Overflow: Function calling itself infinitely.",
+        "Order: Sync -> Microtasks -> Macrotasks."
+    ],
+    "summary": "This is the most important concept for understanding Asynchronous JavaScript."
+}
