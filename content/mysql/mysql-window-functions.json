@@ -1,0 +1,49 @@
+{
+  "title": "MySQL Window Functions",
+  "slug": "mysql-window-functions",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Advanced",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MySQL Aggregate Functions"
+  ],
+  "learning_objectives": [
+    "OVER() clause",
+    "ROW_NUMBER()",
+    "RANK()",
+    "Running Totals"
+  ],
+  "theory": "## Analytics within SQL\\nIntroduced in MySQL 8.0, **Window Functions** perform calculations across a set of table rows that are related to the current row.\\n\\n### Difference from Group By\\nGROUP BY collapses rows into a single summary. Window Functions keep the original rows but add a calculation (like a Running Total or Rank) to each.\\n\\n### Common Functions\\n* `ROW_NUMBER()`: Assigns 1, 2, 3...\\n* `RANK()`: 1, 2, 2, 4... (Skip on tie)\\n* `DENSE_RANK()`: 1, 2, 2, 3... (No skip)\\n* `LAG()` / `LEAD()`: Access previous/next row value.",
+  "syntax": "SELECT col, FUNC() OVER (PARTITION BY col ORDER BY col) FROM t;",
+  "examples": [
+    {
+      "code": "SELECT name, salary,\\nRANK() OVER (ORDER BY salary DESC) as Rank\\nFROM employees;",
+      "output": "Bob | 5000 | 1\\nAlice | 4000 | 2",
+      "explanation": "Ranks employees by salary without collapsing them."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "Find the top 2 highest paid employees in EACH department.",
+      "answer": "Use `DENSE_RANK() OVER (PARTITION BY Dept ORDER BY Salary DESC)` in a subquery/CTE, then filter where Rank <= 2.",
+      "difficulty": "Hard"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Leaderboards",
+      "description": "Calculate Global Rank and Weekly Rank in a single query.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "Requires MySQL 8.0+.",
+    "OVER clause is key.",
+    "PARTITION BY divides, ORDER BY sorts within partition."
+  ],
+  "summary": "Window Functions are a game changer for analytical queries, removing the need for complex self-joins.",
+  "order": 46
+}

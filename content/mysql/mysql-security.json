@@ -1,0 +1,48 @@
+{
+  "title": "MySQL Security Basics",
+  "slug": "mysql-security",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MySQL Installation"
+  ],
+  "learning_objectives": [
+    "User Management",
+    "GRANT / REVOKE Privileges",
+    "SQL Injection Protection"
+  ],
+  "theory": "## Securing the Fort\\nDatabase security involves managing users and protecting against malicious queries.\\n\\n### Managing Users\\nNever use the `root` user for applications. Create specific users.\\n`CREATE USER 'app'@'localhost' IDENTIFIED BY 'pass';`\\n\\n### Privileges\\nControl what users can do using `GRANT` and `REVOKE`.\\n`GRANT SELECT, INSERT ON db.* TO 'app'@'localhost';`\\n\\n### SQL Injection\\nA hacking technique where attackers inject SQL commands into input fields. Prevent it by using **Prepared Statements**.",
+  "syntax": "CREATE USER 'user'@'host' IDENTIFIED BY 'password';\\nGRANT [privileges] ON [database].[table] TO 'user'@'host';\\nFLUSH PRIVILEGES;",
+  "examples": [
+    {
+      "code": "CREATE USER 'bob'@'%' IDENTIFIED BY 'securepass';\\nGRANT SELECT ON school.* TO 'bob'@'%';\\nFLUSH PRIVILEGES;",
+      "output": "User created",
+      "explanation": "Bob can read (SELECT) from 'school' DB from any IP (%), but cannot modify data."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using `GRANT ALL`.",
+      "correction": "Principle of Least Privilege: Give only necessary permissions.",
+      "example": "GRANT ALL PRIVILEGES... (Risky)"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What does FLUSH PRIVILEGES do?",
+      "answer": "It imposes a reload of the grant tables in MySQL memory. Usually needed after manually modifying grant tables, but not strictly required after GRANT/REVOKE commands in newer versions.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Never use root for apps.",
+    "'%' host means any IP.",
+    "Prepared Statements prevent SQL Injection."
+  ],
+  "summary": "Security is paramount. Proper user management and usage of Prepared Statements are the first lines of defense.",
+  "order": 37
+}

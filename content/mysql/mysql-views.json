@@ -1,0 +1,55 @@
+{
+  "title": "MySQL Views",
+  "slug": "mysql-views",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "MySQL Select"
+  ],
+  "learning_objectives": [
+    "Create Views",
+    "Update Views",
+    "Drop Views",
+    "Security benefits"
+  ],
+  "theory": "## Virtual Tables\\nA **View** is a virtual table based on the result-set of an SQL statement. It contains rows and columns just like a real table, but the fields comes from one or more real tables.\\n\\n### Why use Views?\\n1. **Simplicity**: Hide complex joins/logic. Users just select from the view.\\n2. **Security**: Restrict access to specific columns (e.g., hide salary column) by giving permissions only to the view, not the table.\\n3. **Consistency**: Ensure everyone uses the same logic.",
+  "syntax": "CREATE VIEW view_name AS\\nSELECT columns FROM table WHERE condition;",
+  "examples": [
+    {
+      "code": "CREATE VIEW ExpensiveProducts AS\\nSELECT name, price FROM products WHERE price > 1000;\\n\\nSELECT * FROM ExpensiveProducts;",
+      "output": "Result of the query.",
+      "explanation": "The view stores the query, not the data. It runs fresh every time."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Thinking Views store data.",
+      "correction": "Standard Views do not store data (except Materialized Views, which MySQL doesn't natively support like Oracle). They are saved queries.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Can you UPDATE data through a View?",
+      "answer": "Yes, but with restrictions (e.g., cannot contain aggregates, DISTINCT, GROUP BY, etc.). It must map 1:1 to a real table row.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Public API Data",
+      "description": "Create a view `public_users` that selects `username`, `avatar` but excludes `password_hash`, `email`. Expose this view to the API.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "Virtual table.",
+    "Saved SQL query.",
+    "CREATE OR REPLACE VIEW to update definition."
+  ],
+  "summary": "Views simplify complex access and provide a layer of security over your raw tables.",
+  "order": 25
+}

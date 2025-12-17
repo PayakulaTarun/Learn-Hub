@@ -1,0 +1,66 @@
+{
+  "title": "MySQL Database Creation",
+  "slug": "mysql-create-database",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Beginner",
+  "estimated_read_time": "10 mins",
+  "prerequisites": [
+    "MySQL Installation & Setup",
+    "MySQL Data Types"
+  ],
+  "learning_objectives": [
+    "Create a new Database",
+    "Show available databases",
+    "Select a database for use",
+    "Drop a database"
+  ],
+  "theory": "## Managing Databases\\nBefore you create tables, you must create a container for them, which is the **Database** (or Schema).\\n\\n### Creating a Database\\nThe `CREATE DATABASE` statement is used to create a new SQL database.\\n\\n### Seeing Databases\\nTo see which databases exist on the server, use `SHOW DATABASES;`.\\n\\n### Selecting a Database\\nBefore running queries on tables, you must tell MySQL which database you are working with using the `USE` statement.\\n\\n### Dropping a Database\\nTo delete a database (and all its tables/data forever), use `DROP DATABASE`.",
+  "syntax": "CREATE DATABASE [IF NOT EXISTS] database_name;\\nUSE database_name;\\nDROP DATABASE [IF EXISTS] database_name;",
+  "examples": [
+    {
+      "code": "CREATE DATABASE school;\\nSHOW DATABASES;\\nUSE school;",
+      "output": "Database changed",
+      "explanation": "Creates a DB named 'school', lists it, and then selects it as the active database."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Forgetting to select the database.",
+      "correction": "If you don't run `USE db_name`, extracting tables will fail with 'No database selected'.",
+      "example": "CREATE TABLE students... -> Error 1046."
+    },
+    {
+      "mistake": "Dropping the wrong database.",
+      "correction": "`DROP DATABASE` is irreversible. Always double-check.",
+      "example": "DROP DATABASE production; (Catastrophic)"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the difference between Schema and Database in MySQL?",
+      "answer": "In MySQL, Schema and Database are synonymous. `CREATE SCHEMA` is an alias for `CREATE DATABASE`.",
+      "difficulty": "Easy"
+    }
+  ],
+  "practice_problems": [
+    {
+      "problem": "Create a database named 'inventory'. Check if it exists. Delete it.",
+      "hint": "CREATE DATABASE..., SHOW DATABASES..., DROP DATABASE...",
+      "solution": "CREATE DATABASE inventory;\\nSHOW DATABASES;\\nDROP DATABASE inventory;"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "Multi-Tenant App",
+      "description": "Some SaaS architectures create a separate Database for every Customer (Tenant) to ensure data isolation.",
+      "code": "CREATE DATABASE tenant_101;"
+    }
+  ],
+  "exam_notes": [
+    "Names are case-sensitive depending on OS (Windows=No, Linux=Yes). Best practice: lowercase with underscores.",
+    "USE command selects the db."
+  ],
+  "summary": "The database is the top-level container. You Create it, Select it (USE), and Drop it. Always ensure you are in the correct database before running queries.",
+  "order": 7
+}

@@ -1,0 +1,49 @@
+{
+  "title": "MySQL Partitioning",
+  "slug": "mysql-partitioning",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Advanced",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MySQL Create Table"
+  ],
+  "learning_objectives": [
+    "Horizontal Partitioning",
+    "Range Partitioning",
+    "List Partitioning",
+    "Hash Partitioning"
+  ],
+  "theory": "## Splitting Tables\\n**Partitioning** allows you to distribute portions of individual tables across the file system based on rules. Effectively, it splits one big table into smaller physical pieces.\\n\\n### Types\\n1. **RANGE**: Split by value ranges (e.g., Year 2020, 2021).\\n2. **LIST**: Split by specific value lists (e.g., Region: North, South).\\n3. **HASH**: Split data evenly based on a hash of a key.\\n\\n### Benefits\\n* **Performance**: Scan only relevant partitions (Pruning).\\n* **Management**: Drop old data instantly by dropping a partition.",
+  "syntax": "CREATE TABLE t (id INT, date DATE)\\nPARTITION BY RANGE (YEAR(date)) (\\n  PARTITION p0 VALUES LESS THAN (2020),\\n  PARTITION p1 VALUES LESS THAN (2021)\\n);",
+  "examples": [
+    {
+      "code": "SELECT * FROM t WHERE date BETWEEN '2020-01-01' AND '2020-01-31';",
+      "output": "Scans only p1",
+      "explanation": "Partition Pruning: MySQL knows p0 contains only old data, so it ignores it."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "Partitioning vs Sharding?",
+      "answer": "Partitioning is splitting a table within one server. Sharding is splitting a table across multiple servers.",
+      "difficulty": "Hard"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Logging System",
+      "description": "Store logs by month. To delete logs older than 1 year, just `ALTER TABLE DROP PARTITION old_month`. Instantaneous delete vs slow DELETE queries.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "Range, List, Hash, Key.",
+    "Transparent to application.",
+    "Great for huge tables."
+  ],
+  "summary": "Partitioning manages large datasets by breaking them down into manageable chunks transparently.",
+  "order": 42
+}

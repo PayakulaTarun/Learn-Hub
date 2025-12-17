@@ -1,0 +1,53 @@
+{
+  "title": "MySQL DELETE Statement",
+  "slug": "mysql-delete",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Beginner",
+  "estimated_read_time": "10 mins",
+  "prerequisites": [
+    "MySQL WHERE Clause"
+  ],
+  "learning_objectives": [
+    "Remove existing records",
+    "Delete specific rows",
+    "Delete all rows"
+  ],
+  "theory": "## Removing Data\\nThe `DELETE` statement is used to delete existing records in a table.\\n\\n### CRITICAL WARNING\\nJust like UPDATE, if you omit the **WHERE** clause, **ALL records in the table will be deleted!**\\n\\n### Soft Delete (Best Practice)\\nIn many enterprise apps, we don't actually DELETE the row. We add a column `is_deleted` (BOOLEAN) and set it to TRUE via UPDATE. This is called a **Soft Delete** to preserve history.",
+  "syntax": "DELETE FROM table_name WHERE condition;",
+  "examples": [
+    {
+      "code": "DELETE FROM customers WHERE customer_name = 'Alfred';",
+      "output": "1 row affected",
+      "explanation": "Removes Alfred from the database permanently."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "DELETE * FROM table.",
+      "correction": "Correct syntax is `DELETE FROM table`. No asterisk needed.",
+      "example": "DELETE * FROM users; (Syntax Error)"
+    },
+    {
+      "mistake": "Unintended Mass Delete.",
+      "correction": "Forgetting WHERE clause deletes everything.",
+      "example": "DELETE FROM users; (Empty table)"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Difference between DELETE, TRUNCATE, and DROP?",
+      "answer": "DELETE: Removes rows (can filter with WHERE). Slow, logs each deletion. Can rollback.\\nTRUNCATE: Resets table (removes all rows). Very fast. Cannot filter. Cannot rollback (usually).\\nDROP: Removes table structure entirely.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "DELETE FROM table WHERE...",
+    "Deleting without WHERE is dangerous.",
+    "TRUNCATE is faster for clearing tables."
+  ],
+  "summary": "DELETE removes records permanently. Use cautiously and backup data beforehand.",
+  "order": 14
+}

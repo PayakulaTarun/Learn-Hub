@@ -1,217 +1,218 @@
 {
-    "title": "Python Input and Output - Complete Guide",
-    "slug": "python-input-output",
-    "subject": "Python",
-    "category": "backend",
-    "level": "Beginner",
-    "estimated_read_time": "12 minutes",
-    "prerequisites": [
-        "Python variables",
-        "Python data types (int, str, float)",
-        "Basic Python syntax"
-    ],
-    "learning_objectives": [
-        "Master the input() function to get user input",
-        "Understand that input() always returns string",
-        "Learn to convert user input to appropriate types",
-        "Use print() function effectively with all parameters",
-        "Format output using different methods",
-        "Master f-strings for modern string formatting",
-        "Handle multiple inputs and outputs"
-    ],
-    "theory": "## Input in Python\n\n### The input() Function\n\n**Purpose**: Get data from the user during program execution.\n\n**Syntax**:\n```python\nvariable = input(\"prompt message\")\n```\n\n**Key Points**:\n1. **Always returns a string** (even if user types a number)\n2. Program pauses and waits for user input\n3. User presses Enter to submit\n4. Optional prompt message\n\n**Example**:\n```python\nname = input(\"Enter your name: \")\nprint(name)  # Whatever user typed\nprint(type(name))  # <class 'str'>\n```\n\n### Critical Beginner Mistake\n\n❌ **Common Error**: Assuming input() returns the correct type\n```python\nage = input(\"Enter age: \")  # User types: 25\nfuture_age = age + 5  # ERROR! Can't add string and int\n```\n\n✅ **Correct Approach**: Always convert (type cast)\n```python\nage = int(input(\"Enter age: \"))  # Convert to int\nfuture_age = age + 5  # Works!\n```\n\n## Type Casting User Input\n\n### String to Integer\n```python\nage = int(input(\"Enter age: \"))\n# User types: 25\n# age is now integer 25\n```\n\n### String to Float\n```python\nprice = float(input(\"Enter price: \"))\n# User types: 19.99\n# price is now float 19.99\n```\n\n### Validation Example\n```python\nage_str = input(\"Enter age: \")\nif age_str.isdigit():\n    age = int(age_str)\nelse:\n    print(\"Invalid age!\")\n```\n\n## Multiple Inputs\n\n### Method 1: Separate input() calls\n```python\nname = input(\"Name: \")\nage = int(input(\"Age: \"))\ncity = input(\"City: \")\n```\n\n### Method 2: Single line, split by space\n```python\n# User types: Alice 25 NewYork\ndata = input(\"Enter name age city: \").split()\nname = data[0]\nage = int(data[1])\ncity = data[2]\n```\n\n### Method 3: Map to convert multiple values\n```python\n# User types: 10 20 30\nnumbers = list(map(int, input(\"Enter 3 numbers: \").split()))\nprint(numbers)  # [10, 20, 30]\n```\n\n## Output in Python\n\n### The print() Function\n\n**Basic Syntax**:\n```python\nprint(value1, value2, ..., sep=' ', end='\\n')\n```\n\n**Parameters**:\n- **sep**: Separator between values (default: space)\n- **end**: What to print at the end (default: newline)\n\n### Basic Printing\n```python\nprint(\"Hello, World!\")\nprint(100)\nprint(3.14, \"is pi\")\n```\n\n### Multiple Values\n```python\nname = \"Alice\"\nage = 25\nprint(\"Name:\", name, \"Age:\", age)\n# Output: Name: Alice Age: 25\n```\n\n### Custom Separator\n```python\nprint(\"apple\", \"banana\", \"orange\", sep=\", \")\n# Output: apple, banana, orange\n\nprint(1, 2, 3, 4, 5, sep=\"-\")\n# Output: 1-2-3-4-5\n```\n\n### Custom End Character\n```python\nprint(\"Hello\", end=\" \")\nprint(\"World\")\n# Output: Hello World (on same line)\n\nprint(\"Loading\", end=\"...\")\n# Output: Loading... (no newline)\n```\n\n## String Formatting\n\n### Method 1: Concatenation (Old, Not Recommended)\n```python\nname = \"Alice\"\nage = 25\nprint(\"Name: \" + name + \", Age: \" + str(age))\n# Problem: Must convert numbers to string\n```\n\n### Method 2: % Operator (Old Style)\n```python\nname = \"Alice\"\nage = 25\nprint(\"Name: %s, Age: %d\" % (name, age))\n# %s = string, %d = integer, %f = float\n```\n\n### Method 3: .format() Method\n```python\nname = \"Alice\"\nage = 25\nprint(\"Name: {}, Age: {}\".format(name, age))\nprint(\"Name: {0}, Age: {1}\".format(name, age))  # With index\nprint(\"Name: {n}, Age: {a}\".format(n=name, a=age))  # Named\n```\n\n### Method 4: f-strings (Modern, Recommended)\n\n**Introduced in Python 3.6**\n\n**Syntax**: Prefix string with `f`, use `{variable}` for embedding\n\n```python\nname = \"Alice\"\nage = 25\nprint(f\"Name: {name}, Age: {age}\")\n# Output: Name: Alice, Age: 25\n```\n\n**Why f-strings are Best**:\n1. ✅ Most readable\n2. ✅ Fastest performance\n3. ✅ Can embed expressions\n4. ✅ Modern and Pythonic\n\n## f-strings Advanced Features\n\n### Expressions Inside {}\n```python\nx = 10\ny = 5\nprint(f\"Sum: {x + y}\")  # Sum: 15\nprint(f\"Product: {x * y}\")  # Product: 50\n\nname = \"alice\"\nprint(f\"Uppercase: {name.upper()}\")  # ALICE\n```\n\n### Number Formatting\n\n**Decimal Places**:\n```python\npi = 3.14159265359\nprint(f\"Pi: {pi:.2f}\")  # Pi: 3.14 (2 decimal places)\nprint(f\"Pi: {pi:.4f}\")  # Pi: 3.1416 (4 decimal places)\n```\n\n**Width and Alignment**:\n```python\nnum = 42\nprint(f\"{num:5}\")    # \"   42\" (right-aligned, width 5)\nprint(f\"{num:<5}\")   # \"42   \" (left-aligned)\nprint(f\"{num:^5}\")   # \" 42  \" (center-aligned)\nprint(f\"{num:05}\")   # \"00042\" (zero-padded)\n```\n\n**Thousands Separator**:\n```python\nbig_num = 1000000\nprint(f\"{big_num:,}\")  # 1,000,000\n```\n\n**Percentage**:\n```python\nratio = 0.85\nprint(f\"{ratio:.1%}\")  # 85.0%\n```\n\n### Multiline f-strings\n```python\nname = \"Alice\"\nage = 25\ncity = \"New York\"\n\nmessage = f'''Name: {name}\nAge: {age}\nCity: {city}'''\nprint(message)\n```\n\n## Escape Characters\n\nSpecial characters in strings:\n\n| Escape | Meaning | Example |\n|--------|---------|----------|\n| `\\n` | Newline | `\"Line1\\nLine2\"` |\n| `\\t` | Tab | `\"Name\\tAge\"` |\n| `\\\\` | Backslash | `\"C:\\\\Users\"` |\n| `\\'` | Single quote | `\"It\\'s\"` |\n| `\\\"` | Double quote | `\"He said \\\"Hi\\\"\"` |\n\n```python\nprint(\"First Line\\nSecond Line\")\nprint(\"Name\\tAge\\tCity\")\nprint(\"Path: C:\\\\Users\\\\Alice\")\n```\n\n## Raw Strings\n\nPrefix with `r` to treat escape characters as literal:\n\n```python\npath = r\"C:\\Users\\Alice\\new_folder\"\nprint(path)  # C:\\Users\\Alice\\new_folder\n# Without 'r': \\n would be newline, causing error\n```\n\n## Reading Multiple Lines\n\n```python\nprint(\"Enter 3 numbers:\")\na = int(input())\nb = int(input())\nc = int(input())\nprint(f\"Sum: {a + b + c}\")\n```\n\n## Input Validation Pattern\n\n```python\nwhile True:\n    try:\n        age = int(input(\"Enter age: \"))\n        if age > 0:\n            break\n        else:\n            print(\"Age must be positive!\")\n    except ValueError:\n        print(\"Please enter a valid number!\")\n\nprint(f\"Your age: {age}\")\n```",
-    "syntax": "# Basic input\nvariable = input(\"Prompt: \")\n\n# Input with type conversion\nage = int(input(\"Enter age: \"))\nprice = float(input(\"Enter price: \"))\n\n# Multiple inputs (space-separated)\na, b = input(\"Enter two numbers: \").split()\n\n# Multiple inputs as integers\nx, y = map(int, input(\"Enter x and y: \").split())\n\n# Basic output\nprint(\"Hello, World!\")\nprint(value1, value2, value3)\n\n# Custom separator and end\nprint(a, b, c, sep=\"-\", end=\"\\n\")\n\n# f-string (recommended)\nname = \"Alice\"\nage = 25\nprint(f\"Name: {name}, Age: {age}\")\n\n# f-string with formatting\npi = 3.14159\nprint(f\"Pi: {pi:.2f}\")  # 2 decimal places\n\n# Expression in f-string\nprint(f\"Sum: {10 + 5}\")\nprint(f\"Uppercase: {name.upper()}\")",
-    "examples": [
-        {
-            "code": "# Example 1: Basic Input and Output\nname = input(\"Enter your name: \")\nprint(\"Hello,\", name)\nprint(\"Welcome to Python!\")\n\n# Console:\n# Enter your name: Alice\n# Hello, Alice\n# Welcome to Python!",
-            "output": "Enter your name: Alice\nHello, Alice\nWelcome to Python!",
-            "explanation": "input() displays the prompt and waits for user input. User types 'Alice' and presses Enter. The value is stored in 'name' variable. print() displays output to console."
-        },
-        {
-            "code": "# Example 2: Type Casting Input\nage_str = input(\"Enter age: \")\nprint(\"Type of age_str:\", type(age_str))\n\nage = int(age_str)\nprint(\"Type of age:\", type(age))\nprint(\"Next year:\", age + 1)\n\n# Console:\n# Enter age: 25\n# Type of age_str: <class 'str'>\n# Type of age: <class 'int'>\n# Next year: 26",
-            "output": "Enter age: 25\nType of age_str: <class 'str'>\nType of age: <class 'int'>\nNext year: 26",
-            "explanation": "input() always returns string, even if user types number. We convert string '25' to integer 25 using int(). Now we can perform arithmetic. Without conversion, age + 1 would cause TypeError."
-        },
-        {
-            "code": "# Example 3: Multiple Inputs on One Line\ndata = input(\"Enter name and age: \").split()\nname = data[0]\nage = int(data[1])\n\nprint(f\"Name: {name}\")\nprint(f\"Age: {age}\")\n\n# Console:\n# Enter name and age: Alice 25\n# Name: Alice\n# Age: 25",
-            "output": "Enter name and age: Alice 25\nName: Alice\nAge: 25",
-            "explanation": "split() divides input by spaces into a list. User types 'Alice 25', split() creates ['Alice', '25']. We extract each value and convert age to integer."
-        },
-        {
-            "code": "# Example 4: print() with sep and end\nprint(\"apple\", \"banana\", \"cherry\", sep=\", \")\nprint(1, 2, 3, 4, 5, sep=\" -> \")\n\nprint(\"Loading\", end=\"...\")\nprint(\"Done!\")\n\nprint(\"Line 1\", end=\" \")\nprint(\"Line 2\")",
-            "output": "apple, banana, cherry\n1 -> 2 -> 3 -> 4 -> 5\nLoading...Done!\nLine 1 Line 2",
-            "explanation": "sep parameter changes separator between values (default is space). end parameter changes what prints at the end (default is newline). end='' or end=' ' keeps output on same line."
-        },
-        {
-            "code": "# Example 5: f-strings (Modern Formatting)\nname = \"Alice\"\nage = 25\ncity = \"New York\"\nsalary = 50000.50\n\nprint(f\"Name: {name}\")\nprint(f\"Age: {age}, City: {city}\")\nprint(f\"Salary: ${salary:.2f}\")\nprint(f\"Next year: {age + 1}\")\nprint(f\"Uppercase: {name.upper()}\")",
-            "output": "Name: Alice\nAge: 25, City: New York\nSalary: $50000.50\nNext year: 26\nUppercase: ALICE",
-            "explanation": "f-strings (formatted string literals) allow embedding variables and expressions directly in strings. {variable} inserts value. {expression} evaluates and inserts result. :.2f formats to 2 decimal places."
-        },
-        {
-            "code": "# Example 6: Number Formatting with f-strings\npi = 3.14159265359\nbig_num = 1234567890\nratio = 0.856\n\nprint(f\"Pi (2 decimals): {pi:.2f}\")\nprint(f\"Pi (4 decimals): {pi:.4f}\")\nprint(f\"Big number: {big_num:,}\")\nprint(f\"Ratio as percent: {ratio:.1%}\")\nprint(f\"Padded: {42:05}\")",
-            "output": "Pi (2 decimals): 3.14\nPi (4 decimals): 3.1416\nBig number: 1,234,567,890\nRatio as percent: 85.6%\nPadded: 00042",
-            "explanation": ":.2f formats float to 2 decimal places. :, adds thousand separators. :.1% converts to percentage with 1 decimal. :05 pads with zeros to width 5."
-        },
-        {
-            "code": "# Example 7: Calculator Using Input\nnum1 = float(input(\"Enter first number: \"))\nnum2 = float(input(\"Enter second number: \"))\n\nsum_result = num1 + num2\ndifference = num1 - num2\nproduct = num1 * num2\nquotient = num1 / num2\n\nprint(f\"Sum: {sum_result}\")\nprint(f\"Difference: {difference}\")\nprint(f\"Product: {product}\")\nprint(f\"Quotient: {quotient:.2f}\")\n\n# Console:\n# Enter first number: 10\n# Enter second number: 3\n# Sum: 13.0\n# Difference: 7.0\n# Product: 30.0\n# Quotient: 3.33",
-            "output": "Enter first number: 10\nEnter second number: 3\nSum: 13.0\nDifference: 7.0\nProduct: 30.0\nQuotient: 3.33",
-            "explanation": "We convert user input to float to handle decimals. Perform all arithmetic operations. Use f-string with :.2f to format quotient to 2 decimal places. This is a practical calculator example."
-        }
-    ],
-    "common_mistakes": [
-        {
-            "mistake": "Forgetting that input() returns string, trying to do math directly",
-            "correction": "Always convert input to appropriate type (int, float) before arithmetic",
-            "example": "❌ age = input(\"Age: \")  # User types 25\n❌ next_year = age + 1  # TypeError!\n\n✅ age = int(input(\"Age: \"))\n✅ next_year = age + 1  # Works!"
-        },
-        {
-            "mistake": "Using + to concatenate string and number in print()",
-            "correction": "Use comma in print() or f-string instead",
-            "example": "❌ print(\"Age: \" + age)  # TypeError if age is int\n\n✅ print(\"Age:\", age)  # Works\n✅ print(f\"Age: {age}\")  # f-string (best)"
-        },
-        {
-            "mistake": "Not validating user input before conversion",
-            "correction": "Check if input is valid before converting, or use try-except",
-            "example": "❌ age = int(input(\"Age: \"))  # Crashes if user types 'abc'\n\n✅ age_str = input(\"Age: \")\n✅ if age_str.isdigit():\n    age = int(age_str)\nelse:\n    print(\"Invalid!\")"
-        },
-        {
-            "mistake": "Forgetting :.2f in f-string for decimal formatting",
-            "correction": "Use :.2f (or :.nf) to control decimal places",
-            "example": "❌ price = 19.999\n❌ print(f\"Price: ${price}\")  # Price: $19.999\n\n✅ print(f\"Price: ${price:.2f}\")  # Price: $19.99"
-        },
-        {
-            "mistake": "Using wrong number of values with split()",
-            "correction": "Ensure input has correct number of space-separated values",
-            "example": "❌ a, b = input().split()  # User types only \"5\"\n# ValueError: not enough values to unpack\n\n✅ data = input().split()\n✅ if len(data) == 2:\n    a, b = data"
-        }
-    ],
-    "interview_questions": [
-        {
-            "question": "What does the input() function return?",
-            "difficulty": "Easy",
-            "answer": "input() always returns a string (str), regardless of what the user types. Even if user types a number like 25, it returns '25' as a string. You must explicitly convert it to int or float for arithmetic operations."
-        },
-        {
-            "question": "How do you get integer input from user?",
-            "difficulty": "Easy",
-            "answer": "Use int() to convert the string returned by input(): age = int(input('Enter age: ')). This gets input as string and immediately converts to integer. If user enters non-numeric value, raises ValueError."
-        },
-        {
-            "question": "What are the parameters of print() function?",
-            "difficulty": "Medium",
-            "answer": "print(*objects, sep=' ', end='\\n', file=sys.stdout, flush=False). Main parameters: sep (separator between values, default space), end (what to print at end, default newline). Example: print(a, b, sep='-', end='!') prints values separated by - and ends with !."
-        },
-        {
-            "question": "What is the difference between %s formatting, .format(), and f-strings?",
-            "difficulty": "Medium",
-            "answer": "All format strings but differ in syntax and performance. %s (old): 'Name: %s' % name. .format() (intermediate): 'Name: {}'.format(name). f-strings (modern, Python 3.6+): f'Name: {name}'. f-strings are fastest, most readable, and recommended."
-        },
-        {
-            "question": "How do you format a float to 2 decimal places?",
-            "difficulty": "Easy",
-            "answer": "Use f-string with :.2f format specifier: f'{number:.2f}'. For 3 decimals: :.3f. Example: pi = 3.14159; print(f'{pi:.2f}') outputs '3.14'. Works with .format() too: '{:.2f}'.format(pi)."
-        },
-        {
-            "question": "How do you read multiple space-separated integers in one line?",
-            "difficulty": "Medium",
-            "answer": "Use map() with int and split(): numbers = list(map(int, input().split())). If user types '10 20 30', this creates [10, 20, 30]. Or unpack directly: a, b, c = map(int, input().split())."
-        },
-        {
-            "question": "What is the output of: print('Hello', end=''); print('World')?",
-            "difficulty": "Easy",
-            "answer": "'HelloWorld' (no space or newline between). First print() has end='', meaning no newline after 'Hello'. Second print() immediately follows on same line. Default end='\\n' adds newline."
-        },
-        {
-            "question": "How do you handle invalid input when converting to int?",
-            "difficulty": "Medium",
-            "answer": "Use try-except block: try: age = int(input('Age: ')); except ValueError: print('Invalid number'). Or pre-check: if text.isdigit(): age = int(text). try-except is more robust as it handles negative numbers and spaces."
-        },
-        {
-            "question": "What does .split() do without arguments?",
-            "difficulty": "Easy",
-            "answer": "Splits string by whitespace (spaces, tabs, newlines). 'a b c'.split() returns ['a', 'b', 'c']. Multiple spaces treated as one: 'a  b'.split() still gives ['a', 'b']. Can specify delimiter: 'a,b,c'.split(',') gives ['a', 'b', 'c']."
-        },
-        {
-            "question": "How do you print numbers with thousand separators (1,000,000)?",
-            "difficulty": "Medium",
-            "answer": "Use f-string with :, format: f'{number:,}'. Example: num = 1000000; f'{num:,}' outputs '1,000,000'. Also works in .format(): '{:,}'.format(number). Useful for displaying large numbers readably."
-        }
-    ],
-    "practice_problems": [
-        {
-            "difficulty": "Beginner",
-            "problem": "Ask user for their name and age, then print a greeting with both values.",
-            "hint": "Use input() twice and f-string for output",
-            "solution": "name = input(\"Enter your name: \")\nage = int(input(\"Enter your age: \"))\n\nprint(f\"Hello {name}! You are {age} years old.\")\n\n# Or using comma:\nprint(\"Hello\", name + \"! You are\", age, \"years old.\")"
-        },
-        {
-            "difficulty": "Beginner",
-            "problem": "Get two numbers from user and print their sum, difference, and product.",
-            "hint": "Convert input to int or float before arithmetic",
-            "solution": "num1 = float(input(\"Enter first number: \"))\nnum2 = float(input(\"Enter second number: \"))\n\nprint(f\"Sum: {num1 + num2}\")\nprint(f\"Difference: {num1 - num2}\")\nprint(f\"Product: {num1 * num2}\")"
-        },
-        {
-            "difficulty": "Intermediate",
-            "problem": "Read three space-separated integers in one line and print their average.",
-            "hint": "Use split() and map()",
-            "solution": "numbers = list(map(int, input(\"Enter 3 numbers: \").split()))\naverage = sum(numbers) / len(numbers)\n\nprint(f\"Average: {average:.2f}\")\n\n# Alternative:\na, b, c = map(int, input(\"Enter 3 numbers: \").split())\naverage = (a + b + c) / 3\nprint(f\"Average: {average:.2f}\")"
-        },
-        {
-            "difficulty": "Intermediate",
-            "problem": "Ask for a price and display it formatted as currency with 2 decimal places and thousand separator.",
-            "hint": "Use f-string with :.2f and :,",
-            "solution": "price = float(input(\"Enter price: \"))\n\n# With 2 decimals and comma:\nprint(f\"Price: ${price:,.2f}\")\n\n# Example: If user enters 12500.5\n# Output: Price: $12,500.50"
-        },
-        {
-            "difficulty": "Advanced",
-            "problem": "Create a program that keeps asking for age until a valid positive integer is entered.",
-            "hint": "Use while loop with try-except",
-            "solution": "while True:\n    try:\n        age = int(input(\"Enter your age: \"))\n        if age > 0:\n            print(f\"Valid age: {age}\")\n            break\n        else:\n            print(\"Age must be positive!\")\n    except ValueError:\n        print(\"Please enter a valid number!\")\n\nprint(f\"Your age is {age}\")"
-        }
-    ],
-    "real_world_use_cases": [
-        {
-            "scenario": "User Registration Form",
-            "description": "Collecting user information for account creation",
-            "code": "print(\"=== User Registration ===\")\nusername = input(\"Username: \")\nemail = input(\"Email: \")\nage = int(input(\"Age: \"))\n\nprint(\"\\n=== Registration Summary ===\")\nprint(f\"Username: {username}\")\nprint(f\"Email: {email}\")\nprint(f\"Age: {age}\")\nprint(\"\\nAccount created successfully!\")"
-        },
-        {
-            "scenario": "Shopping Cart Calculator",
-            "description": "Calculate total price with tax",
-            "code": "item_price = float(input(\"Enter item price: $\"))\nquantity = int(input(\"Enter quantity: \"))\ntax_rate = 0.08  # 8% tax\n\nsubtotal = item_price * quantity\ntax = subtotal * tax_rate\ntotal = subtotal + tax\n\nprint(f\"\\n--- Receipt ---\")\nprint(f\"Item Price: ${item_price:.2f}\")\nprint(f\"Quantity: {quantity}\")\nprint(f\"Subtotal: ${subtotal:.2f}\")\nprint(f\"Tax (8%): ${tax:.2f}\")\nprint(f\"Total: ${total:.2f}\")"
-        },
-        {
-            "scenario": "Grade Calculator",
-            "description": "Calculate average of multiple test scores",
-            "code": "print(\"Enter your test scores\")\nscores = []\n\nfor i in range(3):\n    score = float(input(f\"Test {i+1} score: \"))\n    scores.append(score)\n\naverage = sum(scores) / len(scores)\n\nprint(f\"\\nYour scores: {scores}\")\nprint(f\"Average: {average:.2f}\")\n\nif average >= 90:\n    grade = 'A'\nelif average >= 80:\n    grade = 'B'\nelif average >= 70:\n    grade = 'C'\nelse:\n    grade = 'F'\n\nprint(f\"Grade: {grade}\")"
-        },
-        {
-            "scenario": "Temperature Converter",
-            "description": "Convert Celsius to Fahrenheit",
-            "code": "celsius = float(input(\"Enter temperature in Celsius: \"))\n\n# Formula: F = (C × 9/5) + 32\nfahrenheit = (celsius * 9/5) + 32\n\nprint(f\"\\n{celsius:.1f}°C = {fahrenheit:.1f}°F\")\n\n# User enters: 25\n# Output: 25.0°C = 77.0°F"
-        }
-    ],
-    "exam_notes": [
-        "input() function always returns string, regardless of user input type",
-        "Must convert input to int or float for arithmetic: int(input())",
-        "input() can take optional prompt: input('Enter name: ')",
-        "Program pauses at input() until user presses Enter",
-        "print() displays output to console",
-        "print() can take multiple values separated by commas",
-        "sep parameter changes separator (default: space)",
-        "end parameter changes end character (default: newline \\n)",
-        "f-strings (Python 3.6+) are modern way to format: f'{variable}'",
-        "Format float decimals: f'{number:.2f}' for 2 decimal places",
-        "Thousand separator: f'{number:,}' displays 1,000,000",
-        "Percentage: f'{ratio:.1%}' displays 85.5%",
-        "split() divides string by spaces: '1 2 3'.split() → ['1', '2', '3']",
-        "map(int, list) converts all items: map(int, ['1', '2']) → [1, 2]",
-        "Old formatting: %s (string), %d (int), %f (float)",
-        ".format() method: 'Hello {}'.format(name)",
-        "Escape characters: \\n (newline), \\t (tab), \\\\ (backslash)",
-        "Raw strings r'' treat backslashes literally",
-        "Always validate input before type conversion to avoid ValueError",
-        "Use try-except to handle invalid input gracefully"
-    ],
-    "summary": "Input and output are fundamental to interactive programs. Python makes them simple with input() and print() functions.\n\n**Input:**\n\n✅ **input()** gets user input (always returns string)\n✅ **Type cast** to convert: int(input()), float(input())\n✅ **split()** for multiple inputs: input().split()\n✅ **map()** to convert all: map(int, input().split())\n\n**Output:**\n\n✅ **print()** displays output\n✅ **sep** parameter: print(a, b, sep='-')\n✅ **end** parameter: print('Hi', end='')\n✅ **Multiple values**: print(a, b, c)\n\n**String Formatting (Best to Worst):**\n\n1. **f-strings** (modern, Python 3.6+):\n   ```python\n   f\"Name: {name}, Age: {age}\"\n   f\"Price: ${price:.2f}\"\n   ```\n\n2. **.format()** (intermediate):\n   ```python\n   \"Name: {}, Age: {}\".format(name, age)\n   ```\n\n3. **% operator** (old, avoid):\n   ```python\n   \"Name: %s, Age: %d\" % (name, age)\n   ```\n\n**f-string Formatting:**\n- Decimals: `{number:.2f}` → 3.14\n- Thousands: `{num:,}` → 1,000,000\n- Percent: `{ratio:.1%}` → 85.5%\n- Padding: `{num:05}` → 00042\n\n**Common Pattern:**\n```python\n# Get input with validation\nage = int(input(\"Age: \"))\nname = input(\"Name: \")\n\n# Display formatted output\nprint(f\"Hello {name}! You are {age} years old.\")\n```\n\n**Remember:**\n- input() = string\n- Convert before math\n- f-strings are best\n- Validate user input!"
+  "title": "Python Input and Output - Complete Guide",
+  "slug": "python-input-output",
+  "subject": "Python",
+  "category": "backend",
+  "level": "Beginner",
+  "estimated_read_time": "12 minutes",
+  "prerequisites": [
+    "Python variables",
+    "Python data types (int, str, float)",
+    "Basic Python syntax"
+  ],
+  "learning_objectives": [
+    "Master the input() function to get user input",
+    "Understand that input() always returns string",
+    "Learn to convert user input to appropriate types",
+    "Use print() function effectively with all parameters",
+    "Format output using different methods",
+    "Master f-strings for modern string formatting",
+    "Handle multiple inputs and outputs"
+  ],
+  "theory": "## Input in Python\n\n### The input() Function\n\n**Purpose**: Get data from the user during program execution.\n\n**Syntax**:\n```python\nvariable = input(\"prompt message\")\n```\n\n**Key Points**:\n1. **Always returns a string** (even if user types a number)\n2. Program pauses and waits for user input\n3. User presses Enter to submit\n4. Optional prompt message\n\n**Example**:\n```python\nname = input(\"Enter your name: \")\nprint(name)  # Whatever user typed\nprint(type(name))  # <class 'str'>\n```\n\n### Critical Beginner Mistake\n\n❌ **Common Error**: Assuming input() returns the correct type\n```python\nage = input(\"Enter age: \")  # User types: 25\nfuture_age = age + 5  # ERROR! Can't add string and int\n```\n\n✅ **Correct Approach**: Always convert (type cast)\n```python\nage = int(input(\"Enter age: \"))  # Convert to int\nfuture_age = age + 5  # Works!\n```\n\n## Type Casting User Input\n\n### String to Integer\n```python\nage = int(input(\"Enter age: \"))\n# User types: 25\n# age is now integer 25\n```\n\n### String to Float\n```python\nprice = float(input(\"Enter price: \"))\n# User types: 19.99\n# price is now float 19.99\n```\n\n### Validation Example\n```python\nage_str = input(\"Enter age: \")\nif age_str.isdigit():\n    age = int(age_str)\nelse:\n    print(\"Invalid age!\")\n```\n\n## Multiple Inputs\n\n### Method 1: Separate input() calls\n```python\nname = input(\"Name: \")\nage = int(input(\"Age: \"))\ncity = input(\"City: \")\n```\n\n### Method 2: Single line, split by space\n```python\n# User types: Alice 25 NewYork\ndata = input(\"Enter name age city: \").split()\nname = data[0]\nage = int(data[1])\ncity = data[2]\n```\n\n### Method 3: Map to convert multiple values\n```python\n# User types: 10 20 30\nnumbers = list(map(int, input(\"Enter 3 numbers: \").split()))\nprint(numbers)  # [10, 20, 30]\n```\n\n## Output in Python\n\n### The print() Function\n\n**Basic Syntax**:\n```python\nprint(value1, value2, ..., sep=' ', end='\\n')\n```\n\n**Parameters**:\n- **sep**: Separator between values (default: space)\n- **end**: What to print at the end (default: newline)\n\n### Basic Printing\n```python\nprint(\"Hello, World!\")\nprint(100)\nprint(3.14, \"is pi\")\n```\n\n### Multiple Values\n```python\nname = \"Alice\"\nage = 25\nprint(\"Name:\", name, \"Age:\", age)\n# Output: Name: Alice Age: 25\n```\n\n### Custom Separator\n```python\nprint(\"apple\", \"banana\", \"orange\", sep=\", \")\n# Output: apple, banana, orange\n\nprint(1, 2, 3, 4, 5, sep=\"-\")\n# Output: 1-2-3-4-5\n```\n\n### Custom End Character\n```python\nprint(\"Hello\", end=\" \")\nprint(\"World\")\n# Output: Hello World (on same line)\n\nprint(\"Loading\", end=\"...\")\n# Output: Loading... (no newline)\n```\n\n## String Formatting\n\n### Method 1: Concatenation (Old, Not Recommended)\n```python\nname = \"Alice\"\nage = 25\nprint(\"Name: \" + name + \", Age: \" + str(age))\n# Problem: Must convert numbers to string\n```\n\n### Method 2: % Operator (Old Style)\n```python\nname = \"Alice\"\nage = 25\nprint(\"Name: %s, Age: %d\" % (name, age))\n# %s = string, %d = integer, %f = float\n```\n\n### Method 3: .format() Method\n```python\nname = \"Alice\"\nage = 25\nprint(\"Name: {}, Age: {}\".format(name, age))\nprint(\"Name: {0}, Age: {1}\".format(name, age))  # With index\nprint(\"Name: {n}, Age: {a}\".format(n=name, a=age))  # Named\n```\n\n### Method 4: f-strings (Modern, Recommended)\n\n**Introduced in Python 3.6**\n\n**Syntax**: Prefix string with `f`, use `{variable}` for embedding\n\n```python\nname = \"Alice\"\nage = 25\nprint(f\"Name: {name}, Age: {age}\")\n# Output: Name: Alice, Age: 25\n```\n\n**Why f-strings are Best**:\n1. ✅ Most readable\n2. ✅ Fastest performance\n3. ✅ Can embed expressions\n4. ✅ Modern and Pythonic\n\n## f-strings Advanced Features\n\n### Expressions Inside {}\n```python\nx = 10\ny = 5\nprint(f\"Sum: {x + y}\")  # Sum: 15\nprint(f\"Product: {x * y}\")  # Product: 50\n\nname = \"alice\"\nprint(f\"Uppercase: {name.upper()}\")  # ALICE\n```\n\n### Number Formatting\n\n**Decimal Places**:\n```python\npi = 3.14159265359\nprint(f\"Pi: {pi:.2f}\")  # Pi: 3.14 (2 decimal places)\nprint(f\"Pi: {pi:.4f}\")  # Pi: 3.1416 (4 decimal places)\n```\n\n**Width and Alignment**:\n```python\nnum = 42\nprint(f\"{num:5}\")    # \"   42\" (right-aligned, width 5)\nprint(f\"{num:<5}\")   # \"42   \" (left-aligned)\nprint(f\"{num:^5}\")   # \" 42  \" (center-aligned)\nprint(f\"{num:05}\")   # \"00042\" (zero-padded)\n```\n\n**Thousands Separator**:\n```python\nbig_num = 1000000\nprint(f\"{big_num:,}\")  # 1,000,000\n```\n\n**Percentage**:\n```python\nratio = 0.85\nprint(f\"{ratio:.1%}\")  # 85.0%\n```\n\n### Multiline f-strings\n```python\nname = \"Alice\"\nage = 25\ncity = \"New York\"\n\nmessage = f'''Name: {name}\nAge: {age}\nCity: {city}'''\nprint(message)\n```\n\n## Escape Characters\n\nSpecial characters in strings:\n\n| Escape | Meaning | Example |\n|--------|---------|----------|\n| `\\n` | Newline | `\"Line1\\nLine2\"` |\n| `\\t` | Tab | `\"Name\\tAge\"` |\n| `\\\\` | Backslash | `\"C:\\\\Users\"` |\n| `\\'` | Single quote | `\"It\\'s\"` |\n| `\\\"` | Double quote | `\"He said \\\"Hi\\\"\"` |\n\n```python\nprint(\"First Line\\nSecond Line\")\nprint(\"Name\\tAge\\tCity\")\nprint(\"Path: C:\\\\Users\\\\Alice\")\n```\n\n## Raw Strings\n\nPrefix with `r` to treat escape characters as literal:\n\n```python\npath = r\"C:\\Users\\Alice\\new_folder\"\nprint(path)  # C:\\Users\\Alice\\new_folder\n# Without 'r': \\n would be newline, causing error\n```\n\n## Reading Multiple Lines\n\n```python\nprint(\"Enter 3 numbers:\")\na = int(input())\nb = int(input())\nc = int(input())\nprint(f\"Sum: {a + b + c}\")\n```\n\n## Input Validation Pattern\n\n```python\nwhile True:\n    try:\n        age = int(input(\"Enter age: \"))\n        if age > 0:\n            break\n        else:\n            print(\"Age must be positive!\")\n    except ValueError:\n        print(\"Please enter a valid number!\")\n\nprint(f\"Your age: {age}\")\n```",
+  "syntax": "# Basic input\nvariable = input(\"Prompt: \")\n\n# Input with type conversion\nage = int(input(\"Enter age: \"))\nprice = float(input(\"Enter price: \"))\n\n# Multiple inputs (space-separated)\na, b = input(\"Enter two numbers: \").split()\n\n# Multiple inputs as integers\nx, y = map(int, input(\"Enter x and y: \").split())\n\n# Basic output\nprint(\"Hello, World!\")\nprint(value1, value2, value3)\n\n# Custom separator and end\nprint(a, b, c, sep=\"-\", end=\"\\n\")\n\n# f-string (recommended)\nname = \"Alice\"\nage = 25\nprint(f\"Name: {name}, Age: {age}\")\n\n# f-string with formatting\npi = 3.14159\nprint(f\"Pi: {pi:.2f}\")  # 2 decimal places\n\n# Expression in f-string\nprint(f\"Sum: {10 + 5}\")\nprint(f\"Uppercase: {name.upper()}\")",
+  "examples": [
+    {
+      "code": "# Example 1: Basic Input and Output\nname = input(\"Enter your name: \")\nprint(\"Hello,\", name)\nprint(\"Welcome to Python!\")\n\n# Console:\n# Enter your name: Alice\n# Hello, Alice\n# Welcome to Python!",
+      "output": "Enter your name: Alice\nHello, Alice\nWelcome to Python!",
+      "explanation": "input() displays the prompt and waits for user input. User types 'Alice' and presses Enter. The value is stored in 'name' variable. print() displays output to console."
+    },
+    {
+      "code": "# Example 2: Type Casting Input\nage_str = input(\"Enter age: \")\nprint(\"Type of age_str:\", type(age_str))\n\nage = int(age_str)\nprint(\"Type of age:\", type(age))\nprint(\"Next year:\", age + 1)\n\n# Console:\n# Enter age: 25\n# Type of age_str: <class 'str'>\n# Type of age: <class 'int'>\n# Next year: 26",
+      "output": "Enter age: 25\nType of age_str: <class 'str'>\nType of age: <class 'int'>\nNext year: 26",
+      "explanation": "input() always returns string, even if user types number. We convert string '25' to integer 25 using int(). Now we can perform arithmetic. Without conversion, age + 1 would cause TypeError."
+    },
+    {
+      "code": "# Example 3: Multiple Inputs on One Line\ndata = input(\"Enter name and age: \").split()\nname = data[0]\nage = int(data[1])\n\nprint(f\"Name: {name}\")\nprint(f\"Age: {age}\")\n\n# Console:\n# Enter name and age: Alice 25\n# Name: Alice\n# Age: 25",
+      "output": "Enter name and age: Alice 25\nName: Alice\nAge: 25",
+      "explanation": "split() divides input by spaces into a list. User types 'Alice 25', split() creates ['Alice', '25']. We extract each value and convert age to integer."
+    },
+    {
+      "code": "# Example 4: print() with sep and end\nprint(\"apple\", \"banana\", \"cherry\", sep=\", \")\nprint(1, 2, 3, 4, 5, sep=\" -> \")\n\nprint(\"Loading\", end=\"...\")\nprint(\"Done!\")\n\nprint(\"Line 1\", end=\" \")\nprint(\"Line 2\")",
+      "output": "apple, banana, cherry\n1 -> 2 -> 3 -> 4 -> 5\nLoading...Done!\nLine 1 Line 2",
+      "explanation": "sep parameter changes separator between values (default is space). end parameter changes what prints at the end (default is newline). end='' or end=' ' keeps output on same line."
+    },
+    {
+      "code": "# Example 5: f-strings (Modern Formatting)\nname = \"Alice\"\nage = 25\ncity = \"New York\"\nsalary = 50000.50\n\nprint(f\"Name: {name}\")\nprint(f\"Age: {age}, City: {city}\")\nprint(f\"Salary: ${salary:.2f}\")\nprint(f\"Next year: {age + 1}\")\nprint(f\"Uppercase: {name.upper()}\")",
+      "output": "Name: Alice\nAge: 25, City: New York\nSalary: $50000.50\nNext year: 26\nUppercase: ALICE",
+      "explanation": "f-strings (formatted string literals) allow embedding variables and expressions directly in strings. {variable} inserts value. {expression} evaluates and inserts result. :.2f formats to 2 decimal places."
+    },
+    {
+      "code": "# Example 6: Number Formatting with f-strings\npi = 3.14159265359\nbig_num = 1234567890\nratio = 0.856\n\nprint(f\"Pi (2 decimals): {pi:.2f}\")\nprint(f\"Pi (4 decimals): {pi:.4f}\")\nprint(f\"Big number: {big_num:,}\")\nprint(f\"Ratio as percent: {ratio:.1%}\")\nprint(f\"Padded: {42:05}\")",
+      "output": "Pi (2 decimals): 3.14\nPi (4 decimals): 3.1416\nBig number: 1,234,567,890\nRatio as percent: 85.6%\nPadded: 00042",
+      "explanation": ":.2f formats float to 2 decimal places. :, adds thousand separators. :.1% converts to percentage with 1 decimal. :05 pads with zeros to width 5."
+    },
+    {
+      "code": "# Example 7: Calculator Using Input\nnum1 = float(input(\"Enter first number: \"))\nnum2 = float(input(\"Enter second number: \"))\n\nsum_result = num1 + num2\ndifference = num1 - num2\nproduct = num1 * num2\nquotient = num1 / num2\n\nprint(f\"Sum: {sum_result}\")\nprint(f\"Difference: {difference}\")\nprint(f\"Product: {product}\")\nprint(f\"Quotient: {quotient:.2f}\")\n\n# Console:\n# Enter first number: 10\n# Enter second number: 3\n# Sum: 13.0\n# Difference: 7.0\n# Product: 30.0\n# Quotient: 3.33",
+      "output": "Enter first number: 10\nEnter second number: 3\nSum: 13.0\nDifference: 7.0\nProduct: 30.0\nQuotient: 3.33",
+      "explanation": "We convert user input to float to handle decimals. Perform all arithmetic operations. Use f-string with :.2f to format quotient to 2 decimal places. This is a practical calculator example."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Forgetting that input() returns string, trying to do math directly",
+      "correction": "Always convert input to appropriate type (int, float) before arithmetic",
+      "example": "❌ age = input(\"Age: \")  # User types 25\n❌ next_year = age + 1  # TypeError!\n\n✅ age = int(input(\"Age: \"))\n✅ next_year = age + 1  # Works!"
+    },
+    {
+      "mistake": "Using + to concatenate string and number in print()",
+      "correction": "Use comma in print() or f-string instead",
+      "example": "❌ print(\"Age: \" + age)  # TypeError if age is int\n\n✅ print(\"Age:\", age)  # Works\n✅ print(f\"Age: {age}\")  # f-string (best)"
+    },
+    {
+      "mistake": "Not validating user input before conversion",
+      "correction": "Check if input is valid before converting, or use try-except",
+      "example": "❌ age = int(input(\"Age: \"))  # Crashes if user types 'abc'\n\n✅ age_str = input(\"Age: \")\n✅ if age_str.isdigit():\n    age = int(age_str)\nelse:\n    print(\"Invalid!\")"
+    },
+    {
+      "mistake": "Forgetting :.2f in f-string for decimal formatting",
+      "correction": "Use :.2f (or :.nf) to control decimal places",
+      "example": "❌ price = 19.999\n❌ print(f\"Price: ${price}\")  # Price: $19.999\n\n✅ print(f\"Price: ${price:.2f}\")  # Price: $19.99"
+    },
+    {
+      "mistake": "Using wrong number of values with split()",
+      "correction": "Ensure input has correct number of space-separated values",
+      "example": "❌ a, b = input().split()  # User types only \"5\"\n# ValueError: not enough values to unpack\n\n✅ data = input().split()\n✅ if len(data) == 2:\n    a, b = data"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What does the input() function return?",
+      "difficulty": "Easy",
+      "answer": "input() always returns a string (str), regardless of what the user types. Even if user types a number like 25, it returns '25' as a string. You must explicitly convert it to int or float for arithmetic operations."
+    },
+    {
+      "question": "How do you get integer input from user?",
+      "difficulty": "Easy",
+      "answer": "Use int() to convert the string returned by input(): age = int(input('Enter age: ')). This gets input as string and immediately converts to integer. If user enters non-numeric value, raises ValueError."
+    },
+    {
+      "question": "What are the parameters of print() function?",
+      "difficulty": "Medium",
+      "answer": "print(*objects, sep=' ', end='\\n', file=sys.stdout, flush=False). Main parameters: sep (separator between values, default space), end (what to print at end, default newline). Example: print(a, b, sep='-', end='!') prints values separated by - and ends with !."
+    },
+    {
+      "question": "What is the difference between %s formatting, .format(), and f-strings?",
+      "difficulty": "Medium",
+      "answer": "All format strings but differ in syntax and performance. %s (old): 'Name: %s' % name. .format() (intermediate): 'Name: {}'.format(name). f-strings (modern, Python 3.6+): f'Name: {name}'. f-strings are fastest, most readable, and recommended."
+    },
+    {
+      "question": "How do you format a float to 2 decimal places?",
+      "difficulty": "Easy",
+      "answer": "Use f-string with :.2f format specifier: f'{number:.2f}'. For 3 decimals: :.3f. Example: pi = 3.14159; print(f'{pi:.2f}') outputs '3.14'. Works with .format() too: '{:.2f}'.format(pi)."
+    },
+    {
+      "question": "How do you read multiple space-separated integers in one line?",
+      "difficulty": "Medium",
+      "answer": "Use map() with int and split(): numbers = list(map(int, input().split())). If user types '10 20 30', this creates [10, 20, 30]. Or unpack directly: a, b, c = map(int, input().split())."
+    },
+    {
+      "question": "What is the output of: print('Hello', end=''); print('World')?",
+      "difficulty": "Easy",
+      "answer": "'HelloWorld' (no space or newline between). First print() has end='', meaning no newline after 'Hello'. Second print() immediately follows on same line. Default end='\\n' adds newline."
+    },
+    {
+      "question": "How do you handle invalid input when converting to int?",
+      "difficulty": "Medium",
+      "answer": "Use try-except block: try: age = int(input('Age: ')); except ValueError: print('Invalid number'). Or pre-check: if text.isdigit(): age = int(text). try-except is more robust as it handles negative numbers and spaces."
+    },
+    {
+      "question": "What does .split() do without arguments?",
+      "difficulty": "Easy",
+      "answer": "Splits string by whitespace (spaces, tabs, newlines). 'a b c'.split() returns ['a', 'b', 'c']. Multiple spaces treated as one: 'a  b'.split() still gives ['a', 'b']. Can specify delimiter: 'a,b,c'.split(',') gives ['a', 'b', 'c']."
+    },
+    {
+      "question": "How do you print numbers with thousand separators (1,000,000)?",
+      "difficulty": "Medium",
+      "answer": "Use f-string with :, format: f'{number:,}'. Example: num = 1000000; f'{num:,}' outputs '1,000,000'. Also works in .format(): '{:,}'.format(number). Useful for displaying large numbers readably."
+    }
+  ],
+  "practice_problems": [
+    {
+      "difficulty": "Beginner",
+      "problem": "Ask user for their name and age, then print a greeting with both values.",
+      "hint": "Use input() twice and f-string for output",
+      "solution": "name = input(\"Enter your name: \")\nage = int(input(\"Enter your age: \"))\n\nprint(f\"Hello {name}! You are {age} years old.\")\n\n# Or using comma:\nprint(\"Hello\", name + \"! You are\", age, \"years old.\")"
+    },
+    {
+      "difficulty": "Beginner",
+      "problem": "Get two numbers from user and print their sum, difference, and product.",
+      "hint": "Convert input to int or float before arithmetic",
+      "solution": "num1 = float(input(\"Enter first number: \"))\nnum2 = float(input(\"Enter second number: \"))\n\nprint(f\"Sum: {num1 + num2}\")\nprint(f\"Difference: {num1 - num2}\")\nprint(f\"Product: {num1 * num2}\")"
+    },
+    {
+      "difficulty": "Intermediate",
+      "problem": "Read three space-separated integers in one line and print their average.",
+      "hint": "Use split() and map()",
+      "solution": "numbers = list(map(int, input(\"Enter 3 numbers: \").split()))\naverage = sum(numbers) / len(numbers)\n\nprint(f\"Average: {average:.2f}\")\n\n# Alternative:\na, b, c = map(int, input(\"Enter 3 numbers: \").split())\naverage = (a + b + c) / 3\nprint(f\"Average: {average:.2f}\")"
+    },
+    {
+      "difficulty": "Intermediate",
+      "problem": "Ask for a price and display it formatted as currency with 2 decimal places and thousand separator.",
+      "hint": "Use f-string with :.2f and :,",
+      "solution": "price = float(input(\"Enter price: \"))\n\n# With 2 decimals and comma:\nprint(f\"Price: ${price:,.2f}\")\n\n# Example: If user enters 12500.5\n# Output: Price: $12,500.50"
+    },
+    {
+      "difficulty": "Advanced",
+      "problem": "Create a program that keeps asking for age until a valid positive integer is entered.",
+      "hint": "Use while loop with try-except",
+      "solution": "while True:\n    try:\n        age = int(input(\"Enter your age: \"))\n        if age > 0:\n            print(f\"Valid age: {age}\")\n            break\n        else:\n            print(\"Age must be positive!\")\n    except ValueError:\n        print(\"Please enter a valid number!\")\n\nprint(f\"Your age is {age}\")"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "User Registration Form",
+      "description": "Collecting user information for account creation",
+      "code": "print(\"=== User Registration ===\")\nusername = input(\"Username: \")\nemail = input(\"Email: \")\nage = int(input(\"Age: \"))\n\nprint(\"\\n=== Registration Summary ===\")\nprint(f\"Username: {username}\")\nprint(f\"Email: {email}\")\nprint(f\"Age: {age}\")\nprint(\"\\nAccount created successfully!\")"
+    },
+    {
+      "scenario": "Shopping Cart Calculator",
+      "description": "Calculate total price with tax",
+      "code": "item_price = float(input(\"Enter item price: $\"))\nquantity = int(input(\"Enter quantity: \"))\ntax_rate = 0.08  # 8% tax\n\nsubtotal = item_price * quantity\ntax = subtotal * tax_rate\ntotal = subtotal + tax\n\nprint(f\"\\n--- Receipt ---\")\nprint(f\"Item Price: ${item_price:.2f}\")\nprint(f\"Quantity: {quantity}\")\nprint(f\"Subtotal: ${subtotal:.2f}\")\nprint(f\"Tax (8%): ${tax:.2f}\")\nprint(f\"Total: ${total:.2f}\")"
+    },
+    {
+      "scenario": "Grade Calculator",
+      "description": "Calculate average of multiple test scores",
+      "code": "print(\"Enter your test scores\")\nscores = []\n\nfor i in range(3):\n    score = float(input(f\"Test {i+1} score: \"))\n    scores.append(score)\n\naverage = sum(scores) / len(scores)\n\nprint(f\"\\nYour scores: {scores}\")\nprint(f\"Average: {average:.2f}\")\n\nif average >= 90:\n    grade = 'A'\nelif average >= 80:\n    grade = 'B'\nelif average >= 70:\n    grade = 'C'\nelse:\n    grade = 'F'\n\nprint(f\"Grade: {grade}\")"
+    },
+    {
+      "scenario": "Temperature Converter",
+      "description": "Convert Celsius to Fahrenheit",
+      "code": "celsius = float(input(\"Enter temperature in Celsius: \"))\n\n# Formula: F = (C × 9/5) + 32\nfahrenheit = (celsius * 9/5) + 32\n\nprint(f\"\\n{celsius:.1f}°C = {fahrenheit:.1f}°F\")\n\n# User enters: 25\n# Output: 25.0°C = 77.0°F"
+    }
+  ],
+  "exam_notes": [
+    "input() function always returns string, regardless of user input type",
+    "Must convert input to int or float for arithmetic: int(input())",
+    "input() can take optional prompt: input('Enter name: ')",
+    "Program pauses at input() until user presses Enter",
+    "print() displays output to console",
+    "print() can take multiple values separated by commas",
+    "sep parameter changes separator (default: space)",
+    "end parameter changes end character (default: newline \\n)",
+    "f-strings (Python 3.6+) are modern way to format: f'{variable}'",
+    "Format float decimals: f'{number:.2f}' for 2 decimal places",
+    "Thousand separator: f'{number:,}' displays 1,000,000",
+    "Percentage: f'{ratio:.1%}' displays 85.5%",
+    "split() divides string by spaces: '1 2 3'.split() → ['1', '2', '3']",
+    "map(int, list) converts all items: map(int, ['1', '2']) → [1, 2]",
+    "Old formatting: %s (string), %d (int), %f (float)",
+    ".format() method: 'Hello {}'.format(name)",
+    "Escape characters: \\n (newline), \\t (tab), \\\\ (backslash)",
+    "Raw strings r'' treat backslashes literally",
+    "Always validate input before type conversion to avoid ValueError",
+    "Use try-except to handle invalid input gracefully"
+  ],
+  "summary": "Input and output are fundamental to interactive programs. Python makes them simple with input() and print() functions.\n\n**Input:**\n\n✅ **input()** gets user input (always returns string)\n✅ **Type cast** to convert: int(input()), float(input())\n✅ **split()** for multiple inputs: input().split()\n✅ **map()** to convert all: map(int, input().split())\n\n**Output:**\n\n✅ **print()** displays output\n✅ **sep** parameter: print(a, b, sep='-')\n✅ **end** parameter: print('Hi', end='')\n✅ **Multiple values**: print(a, b, c)\n\n**String Formatting (Best to Worst):**\n\n1. **f-strings** (modern, Python 3.6+):\n   ```python\n   f\"Name: {name}, Age: {age}\"\n   f\"Price: ${price:.2f}\"\n   ```\n\n2. **.format()** (intermediate):\n   ```python\n   \"Name: {}, Age: {}\".format(name, age)\n   ```\n\n3. **% operator** (old, avoid):\n   ```python\n   \"Name: %s, Age: %d\" % (name, age)\n   ```\n\n**f-string Formatting:**\n- Decimals: `{number:.2f}` → 3.14\n- Thousands: `{num:,}` → 1,000,000\n- Percent: `{ratio:.1%}` → 85.5%\n- Padding: `{num:05}` → 00042\n\n**Common Pattern:**\n```python\n# Get input with validation\nage = int(input(\"Age: \"))\nname = input(\"Name: \")\n\n# Display formatted output\nprint(f\"Hello {name}! You are {age} years old.\")\n```\n\n**Remember:**\n- input() = string\n- Convert before math\n- f-strings are best\n- Validate user input!",
+  "order": 8
 }

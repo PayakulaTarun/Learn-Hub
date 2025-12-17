@@ -1,0 +1,68 @@
+{
+  "title": "MySQL Constraints",
+  "slug": "mysql-constraints",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Beginner",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MySQL Tables"
+  ],
+  "learning_objectives": [
+    "Understand Constraints",
+    "PRIMARY KEY",
+    "NOT NULL",
+    "UNIQUE",
+    "DEFAULT",
+    "FOREIGN KEY"
+  ],
+  "theory": "## Ensuring Data Integrity\\nConstraints are rules enforced on data columns. They ensure the accuracy and reliability of the data.\\n\\n### Common Constraints\\n1. **NOT NULL**: Ensures a column cannot have a NULL value.\\n2. **UNIQUE**: Ensures all values in a column are different.\\n3. **PRIMARY KEY**: A combination of NOT NULL and UNIQUE. Uniquely identifies each row. Only one per table.\\n4. **FOREIGN KEY**: Uniquely identifies a row/record in *another* table. Links two tables.\\n5. **DEFAULT**: Sets a default value if none is specified.\\n6. **CHECK**: Ensures values satisfy a specific condition (e.g., Age >= 18).",
+  "syntax": "CREATE TABLE table_name (\\n    col1 type CONSTRAINTS,\\n    ...\\n    PRIMARY KEY (col1)\\n);",
+  "examples": [
+    {
+      "code": "CREATE TABLE students (\\n    id INT PRIMARY KEY,\\n    email VARCHAR(100) UNIQUE,\\n    name VARCHAR(50) NOT NULL,\\n    age INT CHECK (age >= 18),\\n    status VARCHAR(20) DEFAULT 'active'\\n);",
+      "output": "Table created",
+      "explanation": "Validates data: ID is unique/mandatory, Email must be unique, Name is mandatory, Age must be adult, Status defaults to 'active'."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Inserting duplicate values into a Primary Key.",
+      "correction": "Will cause error: Duplicate entry 'x' for key 'PRIMARY'.",
+      "example": "Inserting ID 1 twice."
+    },
+    {
+      "mistake": "Inserting NULL into NOT NULL column.",
+      "correction": "Will cause error: Column 'x' cannot be null.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Can a table have multiple Primary Keys?",
+      "answer": "No. A table can have only ONE Primary Key. However, that primary key can consist of multiple columns (Composite Primary Key).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Difference between Primary Key and Unique Key?",
+      "answer": "Primary Key imposes NOT NULL constraint automatically. Unique Key allows NULL values (usually one NULL, depending on DB). A table can have multiple Unique Keys but only one Primary Key.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "User Registration",
+      "description": "Email must be UNIQUE to prevent duplicate accounts. Password must be NOT NULL. Created_at usually has a DEFAULT of current_timestamp.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "Constraints = Rules.",
+    "PK = Unique + Not Null.",
+    "FK = Link to other table.",
+    "Check constraints valid from MySQL 8.0.16+."
+  ],
+  "summary": "Constraints are vital for data quality. They prevent invalid data from entering the system at the database level.",
+  "order": 9
+}

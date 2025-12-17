@@ -81,6 +81,7 @@ export function getAllTutorials(): TutorialMetadata[] {
                                 category: tutorial.category || category,
                                 subject: tutorial.subject || 'General',
                                 description: tutorial.description || tutorial.summary || '',
+                                order: tutorial.order ?? 9999,
                             });
                         }
                     } catch (fileError) {
@@ -99,7 +100,8 @@ export function getAllTutorials(): TutorialMetadata[] {
         console.error('[Content Error] Fatal error in getAllTutorials:', error);
     }
 
-    return tutorials;
+    // Sort by order to ensure curriculum sequence
+    return tutorials.sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
 }
 
 /**

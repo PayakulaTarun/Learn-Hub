@@ -1,0 +1,49 @@
+{
+  "title": "MySQL JSON Data Type",
+  "slug": "mysql-json",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Advanced",
+  "estimated_read_time": "10 mins",
+  "prerequisites": [
+    "MySQL Introduction"
+  ],
+  "learning_objectives": [
+    "Storing JSON",
+    "Querying JSON",
+    "Indexing JSON",
+    "NoSQL in SQL"
+  ],
+  "theory": "## Best of Both Worlds\\nSince version 5.7, MySQL supports a native **JSON** data type. This allows you to store NoSQL-like document data within your Relational Database.\\n\\n### Features\\n* **Validation**: Ensures stored data is valid JSON.\\n* **Searching**: Extract values using `->` operator.\\n* **Indexing**: Create indexes on generated columns from JSON fields.",
+  "syntax": "CREATE TABLE t (data JSON);\\nSELECT data->'$.key' FROM t;",
+  "examples": [
+    {
+      "code": "INSERT INTO events VALUES ('{\"event\": \"click\", \"user_id\": 5}');\\nSELECT data->>'$.event' FROM events;",
+      "output": "click",
+      "explanation": "Extracts the 'event' key from the JSON blob."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "When to use JSON in MySQL?",
+      "answer": "When data structure is highly variable (e.g., custom user settings) or sparse. Do not use it for structured data that needs frequent relational integrity.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "E-commerce Attributes",
+      "description": "Products have different attributes. T-shirts have Size/Color. Laptops have RAM/CPU. Store in a `attributes` JSON column.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "Native JSON type.",
+    "`->` accesses object.",
+    "`->>` accesses object and unquotes result."
+  ],
+  "summary": "Native JSON support allows MySQL to compete with MongoDB for hybrid data storage needs.",
+  "order": 47
+}

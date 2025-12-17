@@ -1,0 +1,35 @@
+{
+  "title": "MySQL Error Handling",
+  "slug": "mysql-error-handling",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "MySQL Stored Procedures"
+  ],
+  "learning_objectives": [
+    "DECLARE HANDLER",
+    "SQLSTATE",
+    "EXIT vs CONTINUE"
+  ],
+  "theory": "## Managing Exceptions\\nIn Stored Procedures, things can fail (duplicate key, foreign key violation). You need to handle these errors gracefully.\\n\\n### Handlers\\nYou can `DECLARE` a handler for specific error codes or generic conditions.\\n* **EXIT HANDLER**: Stop execution and run handler code.\\n* **CONTINUE HANDLER**: Run handler code and continue execution.",
+  "syntax": "DECLARE action HANDLER FOR condition_value statement;",
+  "examples": [
+    {
+      "code": "DECLARE EXIT HANDLER FOR SQLEXCEPTION\\nBEGIN\\n  ROLLBACK;\\n  SELECT 'An error occurred, transaction rolled back';\\nEND;",
+      "output": "Error handling block",
+      "explanation": "Standard pattern for transaction safety."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Used inside Stored Procedures.",
+    "Can handle specific error codes (e.g. 1062 Duplicate Entry)."
+  ],
+  "summary": "Robust database logic requires anticipating failures. Handlers allow your stored procedures to recover and clean up after errors.",
+  "order": 40
+}

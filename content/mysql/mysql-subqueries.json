@@ -1,0 +1,48 @@
+{
+  "title": "MySQL Subqueries",
+  "slug": "mysql-subqueries",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MySQL Joins"
+  ],
+  "learning_objectives": [
+    "Nested Queries",
+    "Subqueries in WHERE",
+    "Subqueries in FROM",
+    "Correlated Subqueries"
+  ],
+  "theory": "## Queries within Queries\\nA **Subquery** (or Inner Query) is a query nested inside another SQL query.\\n\\n### Use Cases\\n1. **WHERE clause**: Using the result of one query to filter another.\\n2. **FROM clause**: Treating a subquery result as a temporary table (Derived Table).\\n3. **SELECT clause**: Returning a single value for each row.\\n\\n### Correlated Subquery\\nA subquery that uses values from the outer query. It is evaluated once for each row processed by the outer query (Slow).",
+  "syntax": "SELECT * FROM t1 WHERE col1 IN (SELECT col1 FROM t2);",
+  "examples": [
+    {
+      "code": "SELECT * FROM products\\nWHERE price > (SELECT AVG(price) FROM products);",
+      "output": "Products with above-average price.",
+      "explanation": "First calculates AVG, then uses that value to filter."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Subquery returning multiple rows for single-value comparison.",
+      "correction": "`WHERE id = (SELECT ids...)` fails if multiple IDs. Use `IN` instead.",
+      "example": "id = (SELECT id FROM users) -> Error: Subquery returns more than 1 row"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Subquery vs JOIN performance?",
+      "answer": "Generally, JOINs are more efficient because RDBMS optimizers are built for them. Subqueries can sometimes be optimized away, but Correlated Subqueries are usually slow.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Nested query execution order: Inner runs first (usually).",
+    "IN, ANY, ALL often key terms."
+  ],
+  "summary": "Subqueries provide a flexible way to filter data dynamically based on other data.",
+  "order": 24
+}

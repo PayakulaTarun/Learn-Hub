@@ -1,0 +1,61 @@
+{
+  "title": "MySQL UPDATE Statement",
+  "slug": "mysql-update",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Beginner",
+  "estimated_read_time": "10 mins",
+  "prerequisites": [
+    "MySQL WHERE Clause"
+  ],
+  "learning_objectives": [
+    "Modify existing records",
+    "Update single column",
+    "Update multiple columns",
+    "Use WHERE within UPDATE"
+  ],
+  "theory": "## Modifying Data\\nThe `UPDATE` statement is used to modify the existing records in a table.\\n\\n### CRITICAL WARNING\\nNotice the **WHERE** clause in the UPDATE syntax. If you omit the WHERE clause, **ALL records in the table will be updated!**\\n\\n### Updating Multiple Columns\\nSeparate column assignments with commas.",
+  "syntax": "UPDATE table_name\\nSET column1 = value1, column2 = value2, ...\\nWHERE condition;",
+  "examples": [
+    {
+      "code": "UPDATE employees\\nSET salary = 50000, position = 'Senior Dev'\\nWHERE id = 101;",
+      "output": "Rows matched: 1  Changed: 1",
+      "explanation": "Updates salary and position ONLY for employee 101."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Forgetting the WHERE clause.",
+      "correction": "This is a career-ending mistake. Always double check or run as a SELECT first to verify the target rows.",
+      "example": "UPDATE users SET password = 'reset'; (Resets everyone's password!)"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "How can you undo an UPDATE if you made a mistake?",
+      "answer": "If you are in a Transaction (`START TRANSACTION`), you can `ROLLBACK`. If not (Autocommit is ON), the change is permanent unless you restore from backup.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [
+    {
+      "problem": "Update the city to 'New York' for the customer with name 'John Doe'.",
+      "hint": "UPDATE customers SET city='New York' WHERE name='John Doe'",
+      "solution": "UPDATE customers SET city = 'New York' WHERE name = 'John Doe';"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "Password Change",
+      "description": "User updates their profile. Update only the password field for that specific User ID.",
+      "code": "UPDATE users SET password_hash = '...' WHERE id = 5;"
+    }
+  ],
+  "exam_notes": [
+    "SET clause defines new values.",
+    "WHERE clause defines target rows.",
+    "Safe Updates mode in MySQL Workbench prevents updates without keys."
+  ],
+  "summary": "UPDATE modifies data. Always use a WHERE clause to avoid accidental mass-updates.",
+  "order": 13
+}

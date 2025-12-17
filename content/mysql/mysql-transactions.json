@@ -1,0 +1,56 @@
+{
+  "title": "MySQL Transactions",
+  "slug": "mysql-transactions",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MySQL Introduction"
+  ],
+  "learning_objectives": [
+    "Understand Transactions",
+    "COMMIT",
+    "ROLLBACK",
+    "AUTOCOMMIT"
+  ],
+  "theory": "## All or Nothing\\nA **Transaction** is a sequential group of database manipulation operations, which is performed as if it were one single work unit.\\n\\n### Lifecycle\\n1. **START TRANSACTION**: Begin the block.\\n2. **Execute Queries**: Run your INSERT/UPDATE/DELETEs.\\n3. **COMMIT**: Save changes permanently.\\n4. **ROLLBACK**: Undo all changes if an error occurs.\\n\\n### Default Behavior\\nMySQL runs in `AUTOCOMMIT` mode by default, meaning every single statement is treated as a committed transaction immediately.",
+  "syntax": "START TRANSACTION;\\nUPDATE accounts SET balance = balance - 100 WHERE id = 1;\\nUPDATE accounts SET balance = balance + 100 WHERE id = 2;\\nCOMMIT;",
+  "examples": [
+    {
+      "code": "START TRANSACTION;\\nDELETE FROM orders WHERE id = 10;\\n-- Wait, mistake!\\nROLLBACK;",
+      "output": "Data restored.",
+      "explanation": "The delete is undone."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using MyISAM.",
+      "correction": "Transactions ONLY work with transactional engines like InnoDB. MyISAM ignores these commands.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What ends a transaction?",
+      "answer": "COMMIT, ROLLBACK, or DDL statements (like CREATE TABLE, ALTER TABLE) which cause an implicit commit.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Bank Transfer",
+      "description": "Debit User A and Credit User B. If Credit fails, Debit must be rolled back. Money cannot vanish.",
+      "code": "Transaction block wrapper."
+    }
+  ],
+  "exam_notes": [
+    "COMMIT saves.",
+    "ROLLBACK undoes.",
+    "DDL causes implicit commit.",
+    "Requires InnoDB."
+  ],
+  "summary": "Transactions ensure data integrity. In complex operations, they guarantee that the database never enters an inconsistent state.",
+  "order": 30
+}

@@ -1,0 +1,53 @@
+{
+  "title": "MySQL GROUP BY",
+  "slug": "mysql-group-by",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MySQL Aggregate Functions"
+  ],
+  "learning_objectives": [
+    "Group rows with same values",
+    "Use Aggregate functions on groups",
+    "Understand the need for Grouping"
+  ],
+  "theory": "## Grouping Results\\nThe `GROUP BY` statement groups rows that have the same values into summary rows, like 'find the number of customers in each country'.\\n\\n### How it works\\nIt is typically used with aggregate functions (`COUNT`, `MAX`, `MIN`, `SUM`, `AVG`) to group the result-set by one or more columns.",
+  "syntax": "SELECT column_name, COUNT(*)\\nFROM table_name\\nGROUP BY column_name;",
+  "examples": [
+    {
+      "code": "SELECT Country, COUNT(*) as UserCount\\nFROM Users\\nGROUP BY Country;",
+      "output": "USA | 50\\nIndia | 40\\nUK | 20",
+      "explanation": "Counts how many users are in each country."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Selecting non-aggregated columns without grouping.",
+      "correction": "In strict SQL modes (ONLY_FULL_GROUP_BY), every column in SELECT must be either aggregated or in GROUP BY logic.",
+      "example": "SELECT Name, Country, COUNT(*) FROM Users GROUP BY Country; (Error: Which Name?)"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "ORDER BY vs GROUP BY?",
+      "answer": "ORDER BY sorts the result. GROUP BY aggregates the result into summaries.",
+      "difficulty": "Easy"
+    }
+  ],
+  "practice_problems": [
+    {
+      "problem": "Calculate total sales for each product category.",
+      "hint": "SELECT category, SUM(sales)... GROUP BY category",
+      "solution": "SELECT category, SUM(amount) FROM sales GROUP BY category;"
+    }
+  ],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "GROUP BY comes after WHERE and before ORDER BY.",
+    "Often requires Aggregate functions."
+  ],
+  "summary": "GROUP BY is essential for generating reports and summaries from raw data.",
+  "order": 21
+}

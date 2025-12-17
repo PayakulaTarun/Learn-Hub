@@ -1,0 +1,54 @@
+{
+  "title": "MySQL Replication",
+  "slug": "mysql-replication",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Advanced",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MySQL Architecture"
+  ],
+  "learning_objectives": [
+    "Master-Slave setup",
+    "Binary Log",
+    "Async vs Semi-Sync Replication"
+  ],
+  "theory": "## Scaling Reads\\n**Replication** allows you to copy data from one MySQL server (Master) to one or more others (Slaves).\\n\\n### How it works\\n1. **Master** records changes in the **Binary Log** (binlog).\\n2. **Slave** copies the binlog events to its Relay Log.\\n3. **Slave** executes the events to apply changes.\\n\\n### Use Cases\\n* **Scale-Out**: Distribute read queries to slaves.\\n* **Backup**: Run backups on slave to avoid loading master.\\n* **Analytics**: Run heavy analytical queries on slave.",
+  "syntax": "CHANGE MASTER TO ...; START SLAVE;",
+  "examples": [
+    {
+      "code": "SHOW MASTER STATUS;",
+      "output": "File: mysql-bin.000001, Position: 107",
+      "explanation": "Master provides coordinates for slave to connect."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Writing to Slave.",
+      "correction": "Slaves should be Read-Only. Writing to a slave breaks consistency with the master.",
+      "example": "INSERT INTO slave_db... (Dangerous)"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is Replication Lag?",
+      "answer": "The delay between a write on Master and its execution on Slave. Can be caused by network or heavy load on slave.",
+      "difficulty": "Hard"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "High Traffic Website",
+      "description": "1 Master for Writes (INSERT/UPDATE). 5 Slaves for Reads (SELECT). Load balancer distributes read traffic.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "Master writes to Binlog.",
+    "Slave reads from Relay Log.",
+    "Async by default."
+  ],
+  "summary": "Replication is the first step in scaling MySQL beyond a single server.",
+  "order": 41
+}

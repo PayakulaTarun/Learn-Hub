@@ -71,7 +71,22 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
           </div>
 
           {/* Categories/Subjects */}
-          {Object.entries(grouped).map(([subject, tutorialList]) => {
+          {Object.entries(grouped)
+            .sort(([a], [b]) => {
+                const order = ['html', 'css', 'javascript', 'bootstrap', 'typeScript', 'react', 'next.js', 'java', 'python', 'mysql', 'mongodb', 'git', 'django'];
+                const indexA = order.indexOf(a.toLowerCase());
+                const indexB = order.indexOf(b.toLowerCase());
+                
+                // If both are in the list, sort by index
+                if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+                // If only A is in list, A comes first
+                if (indexA !== -1) return -1;
+                // If only B is in list, B comes first
+                if (indexB !== -1) return 1;
+                // If neither, sort alphabetically
+                return a.localeCompare(b);
+            })
+            .map(([subject, tutorialList]) => {
              const subjectKey = subject.toLowerCase();
             const Icon = categoryIcons[subjectKey] || BookOpen;
             const colorClass = categoryColors[subjectKey] || 'bg-gray-500';

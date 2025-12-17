@@ -1,0 +1,46 @@
+{
+  "title": "MySQL HAVING",
+  "slug": "mysql-having",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "10 mins",
+  "prerequisites": [
+    "MySQL GROUP BY"
+  ],
+  "learning_objectives": [
+    "Filter groups",
+    "Difference between WHERE and HAVING"
+  ],
+  "theory": "## Filtering Groups\\nThe `HAVING` clause was added to SQL because the `WHERE` keyword **cannot** be used with aggregate functions.\\n\\n### Key Difference\\n* **WHERE**: Filters rows *before* grouping.\\n* **HAVING**: Filters groups *after* grouping.",
+  "syntax": "SELECT column_name, COUNT(*)\\nFROM table_name\\nGROUP BY column_name\\nHAVING COUNT(*) > value;",
+  "examples": [
+    {
+      "code": "SELECT Country, COUNT(*) as UserCount\\nFROM Users\\nGROUP BY Country\\nHAVING COUNT(*) > 5;",
+      "output": "Countries with more than 5 users.",
+      "explanation": "Only shows groups that meet the criteria."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using HAVING for non-aggregate conditions.",
+      "correction": "Use WHERE for row filtering (faster). Use HAVING only for aggregates.",
+      "example": "HAVING country = 'USA' (Inefficient, use WHERE)"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Can I use WHERE and HAVING in the same query?",
+      "answer": "Yes. WHERE filters filtering raw records filters first, GROUP BY groups them, then HAVING filters the groups.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "HAVING is for Group filtering.",
+    "Can use aliases defined in SELECT."
+  ],
+  "summary": "HAVING allows you to apply conditions to the aggregated results produced by GROUP BY.",
+  "order": 22
+}

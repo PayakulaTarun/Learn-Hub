@@ -1,0 +1,72 @@
+{
+  "title": "MySQL Data Types",
+  "slug": "mysql-data-types",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Beginner",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "SQL vs MySQL"
+  ],
+  "learning_objectives": [
+    "Understand Numeric Types",
+    "Understand String/Text Types",
+    "Understand Date/Time Types",
+    "Choose the right type for data"
+  ],
+  "theory": "## MySQL Data Types\\nWhen defining a table, you must specify the data type for each column. Using the correct type optimizes storage and performance.\\n\\n### 1. Numeric Types\\n* **INT**: Standard integer. Range: -2B to 2B.\\n* **TINYINT**: Very small integer (0-255 unsigned). Good for status flags.\\n* **BIGINT**: Large integer. Good for IDs in massive tables.\\n* **FLOAT / DOUBLE**: Approximate decimal numbers.\\n* **DECIMAL(M, D)**: Exact fixed-point number. **Crucial for Money/Financial data**.\\n\\n### 2. String Types\\n* **CHAR(size)**: Fixed length string (0-255). Faster for fixed data (e.g., Country Code 'US').\\n* **VARCHAR(size)**: Variable length string (0-65535). Good for names, emails.\\n* **TEXT**: Long text strings.\\n\\n### 3. Date and Time Types\\n* **DATE**: Format 'YYYY-MM-DD'.\\n* **DATETIME**: Format 'YYYY-MM-DD HH:MM:SS'. Range: 1000 to 9999.\\n* **TIMESTAMP**: Similar to DATETIME but stored as UTC. Range: 1970 to 2038. Updates automatically on modification if configured.",
+  "syntax": "column_name DATA_TYPE(parameters)",
+  "examples": [
+    {
+      "code": "CREATE TABLE items (\\n    id INT,\\n    name VARCHAR(50),\\n    price DECIMAL(10, 2),\\n    created_at TIMESTAMP\\n);",
+      "output": "Table created",
+      "explanation": "Defines an integer ID, a name up to 50 chars, a precise price (e.g., 12345678.99), and a timestamp."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using FLOAT for Money.",
+      "correction": "FLOAT leads to precision errors (e.g., 19.999999 instead of 20.00). Always use DECIMAL for currency.",
+      "example": "price FLOAT (Wrong)"
+    },
+    {
+      "mistake": "Using CHAR for variable length names.",
+      "correction": "CHAR(100) pads shorter names with spaces, wasting space. Use VARCHAR.",
+      "example": "name CHAR(100) (Inefficient)"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the difference between CHAR and VARCHAR?",
+      "answer": "CHAR is fixed length (padded with spaces). VARCHAR is variable length (uses only necessary space + length byte). CHAR is faster for fixed-length data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Difference between DATETIME and TIMESTAMP?",
+      "answer": "TIMESTAMP converts to UTC for storage and back to local time for retrieval. DATETIME stores value as-is. TIMESTAMP has a range up to 2038; DATETIME goes to 9999.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [
+    {
+      "problem": "Suggest data types for: User Age, Email Address, Product Price, Date of Birth.",
+      "hint": "Age -> TINYINT, Email -> VARCHAR, Price -> DECIMAL, DOB -> DATE.",
+      "solution": "TINYINT, VARCHAR(255), DECIMAL(10,2), DATE"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "Financial App",
+      "description": "Using DECIMAL(15,2) for account balances ensures no penny is lost due to floating point math.",
+      "code": "balance DECIMAL(15,2)"
+    }
+  ],
+  "exam_notes": [
+    "CHAR = Fixed, VARCHAR = Variable.",
+    "DECIMAL = Exact math (Money).",
+    "FLOAT = Approximate.",
+    "TIMESTAMP = UTC Timezone aware."
+  ],
+  "summary": "Choosing the correct data type is foundational. Use INT for numbers, VARCHAR for typical text, DECIMAL for money, and DATETIME for moments in time.",
+  "order": 6
+}

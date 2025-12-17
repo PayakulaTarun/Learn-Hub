@@ -1,0 +1,55 @@
+{
+  "title": "MySQL Locks & Concurrency",
+  "slug": "mysql-locks",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "ACID Properties"
+  ],
+  "learning_objectives": [
+    "Shared vs Exclusive Locks",
+    "Deadlocks",
+    "Optimistic vs Pessimistic Locking",
+    "Isolation Levels"
+  ],
+  "theory": "## Managing Concurrent Access\\nWhen thousands of users access a database simultaneously, **Locking** prevents them from overwriting each other's work.\\n\\n### Lock Types\\n1. **Shared Lock (Read Lock)**: Allows others to read, but no one to write.\\n2. **Exclusive Lock (Write Lock)**: Allows no one else to read or write.\\n\\n### Locking Levels\\n* **Table Lock**: Locks entire table (MyISAM default). Fast but poor concurrency.\\n* **Row Lock**: Locks only specific rows (InnoDB default). Slower overhead but high concurrency.\\n\\n### Deadlock\\nA situation where Transaction A waits for B, and B waits for A. MySQL detects this and kills one transaction.",
+  "syntax": "SELECT * FROM table WHERE id=1 FOR UPDATE; -- Exclusive Lock\\nLOCK TABLES table WRITE;",
+  "examples": [
+    {
+      "code": "START TRANSACTION;\\nSELECT * FROM seats WHERE id=5 FOR UPDATE;\\n-- Seat 5 is now locked. No one else can book it.\\nUPDATE seats SET status='booked' WHERE id=5;\\nCOMMIT;",
+      "output": "Seat booked safely.",
+      "explanation": "Prevents double-booking via Row Locking."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Long transactions.",
+      "correction": "Holding locks for too long (e.g., waiting for user input during a transaction) kills performance. Keep transactions short.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is MVCC?",
+      "answer": "Multi-Version Concurrency Control. It allows reading without locking by showing an old snapshot of data while it's being modified by others.",
+      "difficulty": "Hard"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Ticket Booking",
+      "description": "User A selects Seat 1. User B selects Seat 1. Who gets it? The one who acquires the row lock first.",
+      "code": "FOR UPDATE"
+    }
+  ],
+  "exam_notes": [
+    "InnoDB = Row Level Locking.",
+    "MyISAM = Table Level Locking.",
+    "Deadlock = Circular wait."
+  ],
+  "summary": "Locking is essential for isolation (The 'I' in ACID). Row-level locking makes InnoDB superior for high-concurrency apps.",
+  "order": 32
+}

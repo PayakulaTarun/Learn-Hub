@@ -1,66 +1,67 @@
 {
-    "title": "HTML Drag and Drop",
-    "slug": "html-drag-and-drop",
-    "subject": "HTML",
-    "category": "Web Development",
-    "level": "Intermediate",
-    "estimated_read_time": "20 minutes",
-    "prerequisites": [
-        "HTML Attributes"
-    ],
-    "learning_objectives": [
-        "Make elements draggable",
-        "Handle drag events (dragstart, dragover, drop)",
-        "Transfer data during drag"
-    ],
-    "theory": "# HTML Drag and Drop API\n\nHTML5 standardizes Drag and Drop functionality. Any element can be made draggable.\n\n## The Drag Process\n\n1.  **Make Draggable:** Set `draggable=\"true\"` on the element.\n2.  **Drag Start:** Define what happens when dragging starts (store data).\n3.  **Drag Over:** Allow the drop by preventing default behavior.\n4.  **Drop:** Define what happens when dropped (read data).\n\n## Example Workflow\n\n### 1. The Item\n```html\n<img id=\"drag1\" src=\"img.png\" draggable=\"true\" ondragstart=\"drag(event)\">\n```\n\n### 2. The JavaScript\n```javascript\nfunction drag(ev) {\n  ev.dataTransfer.setData(\"text\", ev.target.id);\n}\n\nfunction allowDrop(ev) {\n  ev.preventDefault(); // Must do this to allow dropping\n}\n\nfunction drop(ev) {\n  ev.preventDefault();\n  var data = ev.dataTransfer.getData(\"text\");\n  ev.target.appendChild(document.getElementById(data));\n}\n```\n\n### 3. The Drop Zone\n```html\n<div ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"></div>\n```",
-    "syntax": "<div draggable=\"true\" ondragstart=\"...\">",
-    "examples": [
-        {
-            "code": "<!-- See theory code for full implementation -->",
-            "output": "Moves an element from one div to another.",
-            "explanation": "The appendChild() method moves the DOM node, effectively 'dropping' it."
-        }
-    ],
-    "common_mistakes": [
-        {
-            "mistake": "Forgetting event.preventDefault()",
-            "correction": "By default, elements generally cannot be dropped into other elements. You MUST call preventDefault() in the ondragover event handler.",
-            "example": "Without it, the drop event never fires."
-        }
-    ],
-    "interview_questions": [
-        {
-            "question": "How do you make an element draggable?",
-            "difficulty": "Easy",
-            "answer": "Set the draggable=\"true\" attribute."
-        },
-        {
-            "question": "What is dataTransfer?",
-            "difficulty": "Advanced",
-            "answer": "It is an object used to hold the data that is being dragged during a drag and drop operation. methods like setData() and getData() are used to handle the payload."
-        }
-    ],
-    "practice_problems": [
-        {
-            "difficulty": "Advanced",
-            "problem": "Create a simple code structure to drag a <p> element into a <div>.",
-            "hint": "Needs draggable=true, ondragstart, ondragover, ondrop.",
-            "solution": "(Complex JS required, see theory)"
-        }
-    ],
-    "real_world_use_cases": [
-        {
-            "scenario": "Trello/Kanban Boards",
-            "description": "Task management apps rely heavily on the Drag and Drop API to move cards between columns.",
-            "code": "ev.dataTransfer..."
-        }
-    ],
-    "exam_notes": [
-        "draggable=\"true\"",
-        "Events: ondragstart, ondragover, ondrop",
-        "ondragover must preventDefault()",
-        "dataTransfer object handles the info"
-    ],
-    "summary": "The Drag and Drop API brings desktop-like interaction to the web. By handling specific events and using the dataTransfer object, you can create intuitive interfaces where users organize content by moving elements visually."
+  "title": "HTML Drag and Drop",
+  "slug": "html-drag-and-drop",
+  "subject": "HTML",
+  "category": "Web Development",
+  "level": "Intermediate",
+  "estimated_read_time": "20 minutes",
+  "prerequisites": [
+    "HTML Attributes"
+  ],
+  "learning_objectives": [
+    "Make elements draggable",
+    "Handle drag events (dragstart, dragover, drop)",
+    "Transfer data during drag"
+  ],
+  "theory": "# HTML Drag and Drop API\n\nHTML5 standardizes Drag and Drop functionality. Any element can be made draggable.\n\n## The Drag Process\n\n1.  **Make Draggable:** Set `draggable=\"true\"` on the element.\n2.  **Drag Start:** Define what happens when dragging starts (store data).\n3.  **Drag Over:** Allow the drop by preventing default behavior.\n4.  **Drop:** Define what happens when dropped (read data).\n\n## Example Workflow\n\n### 1. The Item\n```html\n<img id=\"drag1\" src=\"img.png\" draggable=\"true\" ondragstart=\"drag(event)\">\n```\n\n### 2. The JavaScript\n```javascript\nfunction drag(ev) {\n  ev.dataTransfer.setData(\"text\", ev.target.id);\n}\n\nfunction allowDrop(ev) {\n  ev.preventDefault(); // Must do this to allow dropping\n}\n\nfunction drop(ev) {\n  ev.preventDefault();\n  var data = ev.dataTransfer.getData(\"text\");\n  ev.target.appendChild(document.getElementById(data));\n}\n```\n\n### 3. The Drop Zone\n```html\n<div ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"></div>\n```",
+  "syntax": "<div draggable=\"true\" ondragstart=\"...\">",
+  "examples": [
+    {
+      "code": "<!-- See theory code for full implementation -->",
+      "output": "Moves an element from one div to another.",
+      "explanation": "The appendChild() method moves the DOM node, effectively 'dropping' it."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Forgetting event.preventDefault()",
+      "correction": "By default, elements generally cannot be dropped into other elements. You MUST call preventDefault() in the ondragover event handler.",
+      "example": "Without it, the drop event never fires."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "How do you make an element draggable?",
+      "difficulty": "Easy",
+      "answer": "Set the draggable=\"true\" attribute."
+    },
+    {
+      "question": "What is dataTransfer?",
+      "difficulty": "Advanced",
+      "answer": "It is an object used to hold the data that is being dragged during a drag and drop operation. methods like setData() and getData() are used to handle the payload."
+    }
+  ],
+  "practice_problems": [
+    {
+      "difficulty": "Advanced",
+      "problem": "Create a simple code structure to drag a <p> element into a <div>.",
+      "hint": "Needs draggable=true, ondragstart, ondragover, ondrop.",
+      "solution": "(Complex JS required, see theory)"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "Trello/Kanban Boards",
+      "description": "Task management apps rely heavily on the Drag and Drop API to move cards between columns.",
+      "code": "ev.dataTransfer..."
+    }
+  ],
+  "exam_notes": [
+    "draggable=\"true\"",
+    "Events: ondragstart, ondragover, ondrop",
+    "ondragover must preventDefault()",
+    "dataTransfer object handles the info"
+  ],
+  "summary": "The Drag and Drop API brings desktop-like interaction to the web. By handling specific events and using the dataTransfer object, you can create intuitive interfaces where users organize content by moving elements visually.",
+  "order": 29
 }

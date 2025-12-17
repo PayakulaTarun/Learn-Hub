@@ -1,0 +1,73 @@
+{
+  "title": "MySQL Joins",
+  "slug": "mysql-joins",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "MySQL SELECT",
+    "MySQL Keys (implied)"
+  ],
+  "learning_objectives": [
+    "INNER JOIN",
+    "LEFT JOIN",
+    "RIGHT JOIN",
+    "FULL JOIN",
+    "CROSS JOIN"
+  ],
+  "theory": "## Combining Tables\\nA `JOIN` clause is used to combine rows from two or more tables, based on a related column (Foreign Key) between them.\\n\\n### Types of Joins\\n1. **(INNER) JOIN**: Returns records that have matching values in both tables.\\n2. **LEFT (OUTER) JOIN**: Returns all records from the left table, and the matched records from the right table.\\n3. **RIGHT (OUTER) JOIN**: Returns all records from the right table, and the matched records from the left table.\\n4. **FULL JOIN**: Returns all records when there is a match in *either* left or right table (Not directly supported in MySQL, emulated using UNION).\\n5. **CROSS JOIN**: Returns the Cartesian product of records.",
+  "syntax": "SELECT t1.col, t2.col\\nFROM table1 t1\\nINNER JOIN table2 t2 ON t1.id = t2.fk_id;",
+  "examples": [
+    {
+      "code": "SELECT Users.name, Orders.order_id\\nFROM Users\\nINNER JOIN Orders ON Users.id = Orders.user_id;",
+      "output": "Users who have placed orders.",
+      "explanation": "Only shows users who have at least one order."
+    },
+    {
+      "code": "SELECT Users.name, Orders.order_id\\nFROM Users\\nLEFT JOIN Orders ON Users.id = Orders.user_id;",
+      "output": "All users, showing NULL for order_id if no order.",
+      "explanation": "Lists all users, even those without orders."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Missing the ON clause.",
+      "correction": "Becomes a CROSS JOIN (Cartesian product), which is usually huge and wrong.",
+      "example": "SELECT * FROM Users JOIN Orders; (Dangerous)"
+    },
+    {
+      "mistake": "Ambiguous column names.",
+      "correction": "If both tables have 'id', must specify `table.id`.",
+      "example": "SELECT id FROM ... (Error: Ambiguous)"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Difference between Inner and Left Join?",
+      "answer": "Inner Join only returns matches. Left Join returns everything from Left table + matches/NULLs from Right.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How to simulate FULL OUTER JOIN in MySQL?",
+      "answer": "Use `LEFT JOIN ... UNION SELECT ... RIGHT JOIN`.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Customer Orders",
+      "description": "Viewing order history requires joining Customer table with Orders table.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "INNER = Intersection.",
+    "LEFT = Left Circle + Intersection.",
+    "RIGHT = Right Circle + Intersection.",
+    "MySQL has no FULL JOIN keyword."
+  ],
+  "summary": "Joins are the power of Relational Databases, allowing normalized data (separate tables) to be brought together for analysis.",
+  "order": 23
+}

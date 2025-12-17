@@ -1,0 +1,42 @@
+{
+  "title": "MySQL Functions (User-Defined)",
+  "slug": "mysql-user-defined-functions",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "MySQL Stored Procedures"
+  ],
+  "learning_objectives": [
+    "Create Functions",
+    "Return Deterministic values",
+    "Use in Select Statements"
+  ],
+  "theory": "## Custom Functions\\nJust like built-in functions (`SUM`, `UPPER`), you can create your own **User-Defined Functions (UDFs)**.\\n\\n### Characteristics\\n* Must return a single value.\\n* Can be used in SQL statements (`SELECT`, `WHERE`, etc.).\\n* Cannot perform transactions or modify tables (usually).",
+  "syntax": "CREATE FUNCTION func_name(param type) RETURNS type\\nBEGIN\\n  RETURN value;\\nEND;",
+  "examples": [
+    {
+      "code": "CREATE FUNCTION AddTax(price DECIMAL(10,2)) RETURNS DECIMAL(10,2)\\nDETERMINISTIC\\nBEGIN\\n  RETURN price * 1.10;\\nEND;\\n\\nSELECT AddTax(100);",
+      "output": "110.00",
+      "explanation": "Calculates tax."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Non-deterministic error.",
+      "correction": "If bin-logging is on, you must specify `DETERMINISTIC` (or NO SQL) to create functions.",
+      "example": "Error 1418"
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Must RETURN a value.",
+    "Can be used like `SELECT MyFunc(col)`.",
+    "DETERMINISTIC keyword often required."
+  ],
+  "summary": "UDFs extend SQL capabilities for simple calculations and formatting logic.",
+  "order": 28
+}

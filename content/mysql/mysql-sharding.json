@@ -1,0 +1,55 @@
+{
+  "title": "MySQL Sharding Concepts",
+  "slug": "mysql-sharding",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Advanced",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "MySQL Replication",
+    "MySQL Partitioning"
+  ],
+  "learning_objectives": [
+    "Horizontal Scaling",
+    "Sharding Key",
+    "Challenges"
+  ],
+  "theory": "## Breaking the Ceiling\\nWhen a single server cannot hold the data or handle the write load, we use **Sharding**.\\n\\n### Concept\\nSplit data horizontally across multiple completely independent database servers. Each server holds a subset of data (a 'shard').\\n\\n### Sharding Key\\nDetermines where a row lives. E.g., `User ID % 4`.\\n* User 1 -> Server A\\n* User 2 -> Server B\\n* User 3 -> Server C\\n* User 4 -> Server D",
+  "syntax": "N/A (Architecture Pattern)",
+  "examples": [
+    {
+      "code": "App Logic:\\nServer = GetServer(UserId);\\nConnect(Server).Query('SELECT * FROM users WHERE id=?', UserId);",
+      "output": "N/A",
+      "explanation": "Logic moves from Database to Application."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Cross-Shard Joins.",
+      "correction": "You generally cannot JOIN tables that live on different servers. You must join in application code or duplicate data.",
+      "example": "JOIN user (Shard A) with orders (Shard B)."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Why is Sharding difficult?",
+      "answer": "Ops complexity increases. Resharding (moving data when adding servers) is painful. Loss of ACID across shards (need Distributed Transactions).",
+      "difficulty": "Hard"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Facebook/Twitter",
+      "description": "Billions of users. Impossible to fit in one DB. Sharded by User ID.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "Sharding = Horizontal Scaling.",
+    "Shared Nothing Architecture.",
+    "Application aware."
+  ],
+  "summary": "Sharding is the ultimate scaling strategy but comes with massive complexity costs. Avoid until absolutely necessary.",
+  "order": 43
+}

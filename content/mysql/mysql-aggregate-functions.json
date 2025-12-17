@@ -1,0 +1,66 @@
+{
+  "title": "MySQL Aggregate Functions",
+  "slug": "mysql-aggregate-functions",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Beginner",
+  "estimated_read_time": "12 mins",
+  "prerequisites": [
+    "MySQL Functions"
+  ],
+  "learning_objectives": [
+    "COUNT()",
+    "SUM()",
+    "AVG()",
+    "MIN()",
+    "MAX()"
+  ],
+  "theory": "## Summarizing Data\\nAggregate functions perform a calculation on a **set** of values execution and return a **single** value.\\n\\n### Common Functions\\n* `COUNT(col)`: Returns number of rows (non-null).\\n* `SUM(col)`: Returns total sum of a numeric column.\\n* `AVG(col)`: Returns average value.\\n* `MIN(col)`: Returns smallest value.\\n* `MAX(col)`: Returns largest value.",
+  "syntax": "SELECT AVG(price) FROM products;",
+  "examples": [
+    {
+      "code": "SELECT COUNT(*) FROM users;",
+      "output": "150",
+      "explanation": "Counts total rows in users table."
+    },
+    {
+      "code": "SELECT MAX(price) FROM products;",
+      "output": "999.99",
+      "explanation": "Finds the most expensive product price."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Mixing Aggregate and Non-Aggregate columns without GROUP BY.",
+      "correction": "SELECT name, MAX(price) FROM products; -> Error (Which name?).",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Does COUNT(*) count NULL values?",
+      "answer": "COUNT(*) counts row existence, so Yes. COUNT(column_name) counts only Non-NULL values in that column.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [
+    {
+      "problem": "Find the total quantity of items in stock.",
+      "hint": "SUM(quantity)",
+      "solution": "SELECT SUM(quantity) FROM inventory;"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "Analytics Dashboard",
+      "description": "Total Users, Average Revenue, Max Sale Today - all calculated using aggregates.",
+      "code": "SELECT COUNT(*) FROM orders WHERE date = CURDATE();"
+    }
+  ],
+  "exam_notes": [
+    "Aggregates return one value from many.",
+    "Often used with GROUP BY (next topic)."
+  ],
+  "summary": "Aggregate functions are the basis of reporting and data analysis in SQL.",
+  "order": 20
+}

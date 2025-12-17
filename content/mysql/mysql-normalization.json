@@ -1,0 +1,51 @@
+{
+  "title": "MySQL Normalization",
+  "slug": "mysql-normalization",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "MySQL Database Design"
+  ],
+  "learning_objectives": [
+    "Understand Redundancy",
+    "1NF (First Normal Form)",
+    "2NF",
+    "3NF",
+    "BCNF"
+  ],
+  "theory": "## Organizing Data Efficiently\\n**Normalization** is the process of organizing data to minimize redundancy (duplicates) and improve integrity.\\n\\n### The Forms\\n1. **1NF (Atomic)**: Each cell contains a single value. No arrays/lists.\\n2. **2NF (No Partial Dependency)**: Must be in 1NF. All non-key columns must depend on the *entire* Primary Key.\\n3. **3NF (No Transitive Dependency)**: Must be in 2NF. Non-key columns must rely only on the Key, not on other non-key columns.\\n\\n### Mantra\\n'The data depends on the Key, the whole Key, and nothing but the Key.'",
+  "syntax": "N/A (Design Concept)",
+  "examples": [
+    {
+      "code": "Un-normalized:\\nUser | Address\\nJohn | NY, USA\\n\\nNormalized:\\nUser Table | Address Table\\nJohn       | ID 1 -> NY, USA",
+      "output": "N/A",
+      "explanation": "Splitting data into linked tables reduces duplication if John has multiple addresses."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Over-normalization.",
+      "correction": "Creating too many tables leads to complex, slow queries (too many JOINs). Sometimes Denormalization is needed for performance.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is Denormalization?",
+      "answer": "Intentionally adding redundancy (e.g., storing 'count' in a parent table) to avoid expensive joins/calculations on read.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "1NF: Atomic values.",
+    "2NF: Whole PK.",
+    "3NF: Nothing but PK.",
+    "Reduces Update Anomalies."
+  ],
+  "summary": "Normalization reduces data redundancy and improves data integrity, albeit at the cost of query complexity (Joins).",
+  "order": 33
+}

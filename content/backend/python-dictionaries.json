@@ -1,218 +1,219 @@
 {
-    "title": "Python Dictionaries - Complete Guide",
-    "slug": "python-dictionaries",
-    "subject": "Python",
-    "category": "backend",
-    "level": "Beginner",
-    "estimated_read_time": "16 minutes",
-    "prerequisites": [
-        "Python variables and data types",
-        "Python lists and tuples",
-        "Understanding of key-value concept",
-        "Basic Python syntax"
-    ],
-    "learning_objectives": [
-        "Understand key-value pair structure",
-        "Create and manipulate dictionaries effectively",
-        "Master dictionary methods for adding, removing, and accessing data",
-        "Iterate over dictionaries efficiently",
-        "Work with nested dictionaries",
-        "Understand dictionary lookup efficiency (O(1))",
-        "Choose appropriate data structure for key-value data"
-    ],
-    "theory": "## What is a Dictionary?\n\nA **dictionary** is an unordered collection of **key-value pairs**. Each key maps to a value.\n\n### Real-Life Analogy\n\nThink of a **real dictionary** (vocabulary book):\n- **Word** (key): \"Python\"\n- **Definition** (value): \"A high-level programming language\"\n- Look up word → Get definition\n- Words are unique (no duplicates)\n\nPython dictionaries work the same:\n- **Key** → **Value**\n- Fast lookup by key\n- Keys must be unique\n\n### JSON Similarity\n\nPython dictionaries are nearly identical to **JSON objects**:\n\n**JSON:**\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 25,\n  \"city\": \"New York\"\n}\n```\n\n**Python Dictionary:**\n```python\n{\n  \"name\": \"Alice\",\n  \"age\": 25,\n  \"city\": \"New York\"\n}\n```\n\nAlmost the same! This makes dictionaries perfect for working with JSON data.\n\n### Key Characteristics\n\n1. **Key-Value Pairs**: Data stored as `key: value`\n2. **Keys are Unique**: Duplicate keys not allowed\n3. **Keys must be Immutable**: str, int, tuple (not list)\n4. **Values can be Anything**: Any data type\n5. **Unordered** (Python 3.6-): No guaranteed order\n6. **Ordered** (Python 3.7+): Maintains insertion order\n7. **Mutable**: Can be modified after creation\n8. **Fast Lookup**: O(1) access by key\n\n### Dictionary vs List vs Tuple\n\n| Feature | List | Tuple | Dictionary |\n|---------|------|-------|------------|\n| **Syntax** | `[1,2,3]` | `(1,2,3)` | `{\"a\":1, \"b\":2}` |\n| **Access** | Index | Index | **Key** |\n| **Ordered** | ✅ Yes | ✅ Yes | ✅ Yes (3.7+) |\n| **Mutable** | ✅ Yes | ❌ No | ✅ Yes |\n| **Lookup** | O(n) | O(n) | **O(1)** |\n| **Use Case** | Sequence | Fixed data | **Key-value** |\n\n---\n\n## Creating Dictionaries\n\n### Method 1: Curly Braces {}\n\n```python\n# Empty dictionary\nempty = {}\n\n# Basic dictionary\nstudent = {\n    \"name\": \"Alice\",\n    \"age\": 20,\n    \"grade\": \"A\"\n}\n\n# Different value types\nperson = {\n    \"name\": \"Bob\",           # String\n    \"age\": 25,               # Integer\n    \"height\": 5.9,           # Float\n    \"married\": False,        # Boolean\n    \"hobbies\": [\"reading\"]   # List\n}\n```\n\n### Method 2: dict() Constructor\n\n```python\n# From keyword arguments\nstudent = dict(name=\"Alice\", age=20, grade=\"A\")\n\n# From list of tuples\npairs = [(\"name\", \"Alice\"), (\"age\", 20)]\nstudent = dict(pairs)\n\n# From two lists using zip\nkeys = [\"name\", \"age\", \"grade\"]\nvalues = [\"Alice\", 20, \"A\"]\nstudent = dict(zip(keys, values))\n```\n\n### Method 3: Dictionary Comprehension\n\n```python\n# Squares\nsquares = {x: x**2 for x in range(6)}\n# {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25}\n\n# Conditional\nevens = {x: x**2 for x in range(10) if x % 2 == 0}\n# {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}\n```\n\n---\n\n## Accessing Dictionary Values\n\n### Using Square Brackets []\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\n# Access by key\nprint(student[\"name\"])   # Alice\nprint(student[\"age\"])    # 20\n\n# KeyError if key doesn't exist\nprint(student[\"email\"])  # KeyError!\n```\n\n### Using get() Method (Safer)\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\n\n# get() returns None if key doesn't exist\nemail = student.get(\"email\")  # None\n\n# Provide default value\nemail = student.get(\"email\", \"Not provided\")\nprint(email)  # Not provided\n\n# Existing key\nname = student.get(\"name\")\nprint(name)  # Alice\n```\n\n**get() vs []:**\n- `dict[key]`: Raises KeyError if missing\n- `dict.get(key)`: Returns None if missing (safe)\n- `dict.get(key, default)`: Returns default if missing\n\n---\n\n## Modifying Dictionaries\n\n### Adding/Updating Values\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\n\n# Add new key-value pair\nstudent[\"grade\"] = \"A\"\nprint(student)  # {'name': 'Alice', 'age': 20, 'grade': 'A'}\n\n# Update existing value\nstudent[\"age\"] = 21\nprint(student)  # {'name': 'Alice', 'age': 21, 'grade': 'A'}\n```\n\n### update() Method\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\n\n# Update with another dictionary\nstudent.update({\"grade\": \"A\", \"city\": \"NYC\"})\nprint(student)\n# {'name': 'Alice', 'age': 20, 'grade': 'A', 'city': 'NYC'}\n\n# Update existing and add new\nstudent.update({\"age\": 21, \"email\": \"alice@example.com\"})\n```\n\n### Removing Items\n\n**pop(key)**: Remove and return value\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\nage = student.pop(\"age\")  # Returns 20\nprint(age)  # 20\nprint(student)  # {'name': 'Alice', 'grade': 'A'}\n\n# KeyError if key doesn't exist\n# email = student.pop(\"email\")  # KeyError!\n\n# Provide default\nemail = student.pop(\"email\", \"Not found\")\nprint(email)  # Not found\n```\n\n**popitem()**: Remove and return last inserted (key, value)\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\nitem = student.popitem()  # ('grade', 'A')\nprint(item)\nprint(student)  # {'name': 'Alice', 'age': 20}\n```\n\n**del**: Delete specific key\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\n\ndel student[\"age\"]\nprint(student)  # {'name': 'Alice'}\n\n# Delete entire dictionary\ndel student\n```\n\n**clear()**: Remove all items\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\nstudent.clear()\nprint(student)  # {}\n```\n\n---\n\n## Dictionary Methods\n\n### Accessing Keys, Values, Items\n\n**keys()**: Get all keys\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\nkeys = student.keys()\nprint(keys)  # dict_keys(['name', 'age', 'grade'])\nprint(list(keys))  # ['name', 'age', 'grade']\n```\n\n**values()**: Get all values\n```python\nvalues = student.values()\nprint(values)  # dict_values(['Alice', 20, 'A'])\nprint(list(values))  # ['Alice', 20, 'A']\n```\n\n**items()**: Get all key-value pairs as tuples\n```python\nitems = student.items()\nprint(items)  # dict_items([('name', 'Alice'), ('age', 20), ('grade', 'A')])\nprint(list(items))  # [('name', 'Alice'), ('age', 20), ('grade', 'A')]\n```\n\n### Other Useful Methods\n\n**copy()**: Create shallow copy\n```python\noriginal = {\"name\": \"Alice\", \"age\": 20}\ncopy = original.copy()\n\ncopy[\"age\"] = 21\nprint(original)  # {'name': 'Alice', 'age': 20} (unchanged)\nprint(copy)      # {'name': 'Alice', 'age': 21}\n```\n\n**setdefault()**: Get value, set default if missing\n```python\nstudent = {\"name\": \"Alice\"}\n\n# Key exists: returns value\nname = student.setdefault(\"name\", \"Unknown\")\nprint(name)  # Alice\n\n# Key doesn't exist: sets and returns default\nage = student.setdefault(\"age\", 18)\nprint(age)  # 18\nprint(student)  # {'name': 'Alice', 'age': 18}\n```\n\n**fromkeys()**: Create dict from sequence of keys\n```python\nkeys = [\"name\", \"age\", \"grade\"]\nstudent = dict.fromkeys(keys, \"Unknown\")\nprint(student)  # {'name': 'Unknown', 'age': 'Unknown', 'grade': 'Unknown'}\n\n# Without default (None)\nstudent = dict.fromkeys(keys)\nprint(student)  # {'name': None, 'age': None, 'grade': None}\n```\n\n---\n\n## Iterating Over Dictionaries\n\n### Iterate Over Keys (Default)\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\n# Default iteration is over keys\nfor key in student:\n    print(key)\n# Output: name, age, grade\n\n# Explicit\nfor key in student.keys():\n    print(key)\n```\n\n### Iterate Over Values\n\n```python\nfor value in student.values():\n    print(value)\n# Output: Alice, 20, A\n```\n\n### Iterate Over Key-Value Pairs (Best)\n\n```python\nfor key, value in student.items():\n    print(f\"{key}: {value}\")\n# Output:\n# name: Alice\n# age: 20\n# grade: A\n```\n\n### Accessing Values During Iteration\n\n```python\nscores = {\"math\": 90, \"science\": 85, \"english\": 92}\n\n# Method 1: Using items()\nfor subject, score in scores.items():\n    print(f\"{subject}: {score}\")\n\n# Method 2: Using keys\nfor subject in scores:\n    score = scores[subject]\n    print(f\"{subject}: {score}\")\n```\n\n---\n\n## Nested Dictionaries\n\nDictionaries within dictionaries (like nested JSON).\n\n### Creating Nested Dictionaries\n\n```python\n# Student database\nstudents = {\n    \"student1\": {\n        \"name\": \"Alice\",\n        \"age\": 20,\n        \"grades\": {\"math\": 90, \"science\": 85}\n    },\n    \"student2\": {\n        \"name\": \"Bob\",\n        \"age\": 22,\n        \"grades\": {\"math\": 75, \"science\": 88}\n    }\n}\n```\n\n### Accessing Nested Values\n\n```python\n# Access outer key\nstudent1 = students[\"student1\"]\nprint(student1)  # {'name': 'Alice', 'age': 20, 'grades': {...}}\n\n# Access nested key\nname = students[\"student1\"][\"name\"]\nprint(name)  # Alice\n\n# Access deeply nested\nmath_score = students[\"student1\"][\"grades\"][\"math\"]\nprint(math_score)  # 90\n```\n\n### Iterating Nested Dictionaries\n\n```python\nfor student_id, info in students.items():\n    print(f\"\\n{student_id}:\")\n    print(f\"  Name: {info['name']}\")\n    print(f\"  Age: {info['age']}\")\n    print(\"  Grades:\")\n    for subject, score in info['grades'].items():\n        print(f\"    {subject}: {score}\")\n```\n\n**Output:**\n```\nstudent1:\n  Name: Alice\n  Age: 20\n  Grades:\n    math: 90\n    science: 85\n\nstudent2:\n  Name: Bob\n  Age: 22\n  Grades:\n    math: 75\n    science: 88\n```\n\n---\n\n## Dictionary Lookup Efficiency\n\n### Why Dictionaries are Fast\n\nDictionaries use **hash tables** for O(1) average lookup!\n\n**List (Linear Search - O(n)):**\n```python\nmy_list = [(\"name\", \"Alice\"), (\"age\", 20), (\"grade\", \"A\")]\n\n# Find value for \"age\"\nfor key, value in my_list:\n    if key == \"age\":  # Checks each item\n        print(value)\n# Time: O(n) - slow for large data\n```\n\n**Dictionary (Hash Lookup - O(1)):**\n```python\nmy_dict = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\n# Find value for \"age\"\nprint(my_dict[\"age\"])  # Instant!\n# Time: O(1) - very fast!\n```\n\n### Performance Comparison\n\n| Operation | List | Dictionary |\n|-----------|------|------------|\n| Access by key/index | O(1) | **O(1)** |\n| Search value | O(n) | O(n) |\n| Insert | O(n) | **O(1)** |\n| Delete | O(n) | **O(1)** |\n| Membership test | O(n) | **O(1)** |\n\n**When to use dictionary:**\n- Need fast key-based lookup\n- Data has natural key (ID, name, etc.)\n- Frequent insertions/deletions\n- Representing structured data (like JSON)\n\n---\n\n## Dictionary Comprehension\n\n**Syntax**: `{key_expr: value_expr for item in iterable}`\n\n```python\n# Squares\nsquares = {x: x**2 for x in range(6)}\n# {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25}\n\n# From lists\nnames = [\"Alice\", \"Bob\", \"Charlie\"]\nages = [25, 30, 35]\npeople = {name: age for name, age in zip(names, ages)}\n# {'Alice': 25, 'Bob': 30, 'Charlie': 35}\n\n# With condition\neven_squares = {x: x**2 for x in range(10) if x % 2 == 0}\n# {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}\n\n# Transform existing dict\nscores = {\"math\": 85, \"science\": 90, \"english\": 78}\npassed = {subject: score for subject, score in scores.items() if score >= 80}\n# {'math': 85, 'science': 90}\n```\n\n---\n\n## Checking Keys/Values\n\n### Check if Key Exists\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\n\n# Using 'in'\nif \"name\" in student:\n    print(\"Name exists\")\n\nif \"email\" not in student:\n    print(\"Email doesn't exist\")\n```\n\n### Check if Value Exists\n\n```python\nif \"Alice\" in student.values():\n    print(\"Alice is a value\")\n\nif 20 in student.values():\n    print(\"20 is a value\")\n```",
-    "syntax": "# Create dictionary\nmy_dict = {key1: value1, key2: value2}\nempty = {}\n\n# dict() constructor\nmy_dict = dict(key1=value1, key2=value2)\nmy_dict = dict([(k1, v1), (k2, v2)])\n\n# Access\nvalue = my_dict[key]\nvalue = my_dict.get(key, default)\n\n# Add/Update\nmy_dict[key] = value\nmy_dict.update({key: value})\n\n# Remove\nvalue = my_dict.pop(key, default)\nitem = my_dict.popitem()\ndel my_dict[key]\nmy_dict.clear()\n\n# Methods\nmy_dict.keys()          # All keys\nmy_dict.values()        # All values\nmy_dict.items()         # Key-value pairs\nmy_dict.get(key, default)\nmy_dict.setdefault(key, default)\nmy_dict.copy()\n\n# Iteration\nfor key in my_dict:\nfor value in my_dict.values():\nfor key, value in my_dict.items():\n\n# Membership\nkey in my_dict\nvalue in my_dict.values()\n\n# Comprehension\n{k: v for k, v in iterable if condition}",
-    "examples": [
-        {
-            "code": "# Example 1: Creating and Accessing Dictionary\n# Like JSON object\nstudent = {\n    \"name\": \"Alice\",\n    \"age\": 20,\n    \"grade\": \"A\",\n    \"courses\": [\"Math\", \"Science\"]\n}\n\nprint(\"Name:\", student[\"name\"])\nprint(\"Age:\", student[\"age\"])\nprint(\"Courses:\", student[\"courses\"])\n\n# Using get() - safer\nemail = student.get(\"email\", \"Not provided\")\nprint(\"Email:\", email)",
-            "output": "Name: Alice\nAge: 20\nCourses: ['Math', 'Science']\nEmail: Not provided",
-            "explanation": "Dictionary stores key-value pairs. Access using dict[key] or dict.get(key, default). get() is safer - returns default instead of error if key missing. Structure similar to JSON."
-        },
-        {
-            "code": "# Example 2: Adding and Updating\nstudent = {\"name\": \"Alice\", \"age\": 20}\nprint(\"Initial:\", student)\n\n# Add new key-value\nstudent[\"grade\"] = \"A\"\nprint(\"After add:\", student)\n\n# Update existing\nstudent[\"age\"] = 21\nprint(\"After update:\", student)\n\n# Update multiple\nstudent.update({\"city\": \"NYC\", \"email\": \"alice@example.com\"})\nprint(\"After update():\", student)",
-            "output": "Initial: {'name': 'Alice', 'age': 20}\nAfter add: {'name': 'Alice', 'age': 20, 'grade': 'A'}\nAfter update: {'name': 'Alice', 'age': 21, 'grade': 'A'}\nAfter update(): {'name': 'Alice', 'age': 21, 'grade': 'A', 'city': 'NYC', 'email': 'alice@example.com'}",
-            "explanation": "Add/update using dict[key] = value. If key exists, updates value. If new, adds key-value pair. update() adds/modifies multiple items from another dictionary."
-        },
-        {
-            "code": "# Example 3: Iterating Dictionary\nscores = {\"math\": 90, \"science\": 85, \"english\": 92}\n\nprint(\"Subject\\tScore\")\nprint(\"-\" * 20)\n\n# Best way: iterate over items()\nfor subject, score in scores.items():\n    print(f\"{subject}\\t{score}\")\n\n# Calculate average\naverage = sum(scores.values()) / len(scores)\nprint(f\"\\nAverage: {average:.2f}\")",
-            "output": "Subject\tScore\n--------------------\nmath\t90\nscience\t85\nenglish\t92\n\nAverage: 89.00",
-            "explanation": "items() returns (key, value) tuples. Use tuple unpacking in loop: for key, value in dict.items(). values() gets all values for calculations. Most Pythonic iteration pattern."
-        },
-        {
-            "code": "# Example 4: Nested Dictionary (JSON-like)\ncompany = {\n    \"employees\": {\n        \"emp1\": {\"name\": \"Alice\", \"role\": \"Developer\", \"salary\": 90000},\n        \"emp2\": {\"name\": \"Bob\", \"role\": \"Designer\", \"salary\": 75000}\n    },\n    \"departments\": [\"Engineering\", \"Design\", \"HR\"]\n}\n\n# Access nested values\nprint(\"Employee 1 name:\", company[\"employees\"][\"emp1\"][\"name\"])\nprint(\"Employee 2 salary:\", company[\"employees\"][\"emp2\"][\"salary\"])\n\n# Iterate nested\nfor emp_id, info in company[\"employees\"].items():\n    print(f\"{emp_id}: {info['name']} - {info['role']}\")",
-            "output": "Employee 1 name: Alice\nEmployee 2 salary: 75000\nemp1: Alice - Developer\nemp2: Bob - Designer",
-            "explanation": "Nested dictionaries store hierarchical data like JSON. Access with multiple brackets: dict[key1][key2][key3]. Common for complex data structures like databases, APIs, config files."
-        },
-        {
-            "code": "# Example 5: Dictionary Methods\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\n# Get all keys\nprint(\"Keys:\", list(student.keys()))\n\n# Get all values\nprint(\"Values:\", list(student.values()))\n\n# Get all items\nprint(\"Items:\", list(student.items()))\n\n# Remove and return\nage = student.pop(\"age\")\nprint(f\"Removed age: {age}\")\nprint(\"After pop:\", student)\n\n# setdefault\nemail = student.setdefault(\"email\", \"unknown@example.com\")\nprint(f\"Email (new): {email}\")\nprint(\"After setdefault:\", student)",
-            "output": "Keys: ['name', 'age', 'grade']\nValues: ['Alice', 20, 'A']\nItems: [('name', 'Alice'), ('age', 20), ('grade', 'A')]\nRemoved age: 20\nAfter pop: {'name': 'Alice', 'grade': 'A'}\nEmail (new): unknown@example.com\nAfter setdefault: {'name': 'Alice', 'grade': 'A', 'email': 'unknown@example.com'}",
-            "explanation": "keys(), values(), items() return views (convert to list if needed). pop() removes and returns value. setdefault() returns value if exists, else sets default and returns it. Useful for initialization."
-        },
-        {
-            "code": "# Example 6: Dictionary Comprehension\n# Create from range\nsquares = {x: x**2 for x in range(6)}\nprint(\"Squares:\", squares)\n\n# From two lists\nnames = [\"Alice\", \"Bob\", \"Charlie\"]\nages = [25, 30, 35]\npeople = {name: age for name, age in zip(names, ages)}\nprint(\"People:\", people)\n\n# With condition\nscores = {\"math\": 85, \"science\": 90, \"english\": 78}\npassed = {subj: score for subj, score in scores.items() if score >= 80}\nprint(\"Passed:\", passed)",
-            "output": "Squares: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25}\nPeople: {'Alice': 25, 'Bob': 30, 'Charlie': 35}\nPassed: {'math': 85, 'science': 90}",
-            "explanation": "Dictionary comprehension creates dicts concisely: {key_expr: value_expr for item in iterable}. Can include conditions. zip() pairs corresponding elements from multiple sequences. Very Pythonic!"
-        },
-        {
-            "code": "# Example 7: Membership and Lookup Speed\nimport time\n\n# Large dataset\ndata_dict = {i: i**2 for i in range(100000)}\ndata_list = [(i, i**2) for i in range(100000)]\n\n# Dictionary lookup (fast!)\nstart = time.time()\nvalue = data_dict.get(99999)\ndict_time = time.time() - start\n\n# List search (slow)\nstart = time.time()\nfor key, value in data_list:\n    if key == 99999:\n        break\nlist_time = time.time() - start\n\nprint(f\"Dictionary: {dict_time:.6f}s\")\nprint(f\"List: {list_time:.6f}s\")\nprint(f\"Dict is ~{list_time/dict_time:.0f}x faster!\")",
-            "output": "Dictionary: 0.000001s\nList: 0.002500s\nDict is ~2500x faster!",
-            "explanation": "Dictionaries use hash tables for O(1) lookup - nearly instant regardless of size. Lists require O(n) linear search - slow for large data. Use dictionaries for key-based access!"
-        }
-    ],
-    "common_mistakes": [
-        {
-            "mistake": "Using mutable objects (lists, dicts) as keys",
-            "correction": "Keys must be immutable: use str, int, tuple (not list)",
-            "example": "❌ my_dict = {[1, 2]: \"value\"}  # TypeError! Lists not hashable\n\n✅ my_dict = {(1, 2): \"value\"}  # Tuples work\n✅ my_dict = {\"key\": \"value\"}   # Strings work"
-        },
-        {
-            "mistake": "Accessing non-existent key with []",
-            "correction": "Use get() method or check with 'in' first",
-            "example": "❌ value = my_dict[\"nonexistent\"]  # KeyError!\n\n✅ value = my_dict.get(\"nonexistent\", \"default\")\n✅ if \"nonexistent\" in my_dict:\n       value = my_dict[\"nonexistent\"]"
-        },
-        {
-            "mistake": "Modifying dictionary while iterating over it",
-            "correction": "Iterate over copy or collect keys to remove",
-            "example": "❌ for key in my_dict:\n       del my_dict[key]  # RuntimeError!\n\n✅ for key in list(my_dict.keys()):\n       del my_dict[key]\n\n✅ keys_to_remove = [k for k, v in my_dict.items() if condition]\n   for key in keys_to_remove:\n       del my_dict[key]"
-        },
-        {
-            "mistake": "Expecting dictionaries to maintain order (Python < 3.7)",
-            "correction": "Python 3.7+ maintains insertion order, but don't rely on it for 3.6-",
-            "example": "# Python 3.7+: order preserved\nmy_dict = {\"c\": 3, \"a\": 1, \"b\": 2}\nfor key in my_dict:\n    print(key)  # c, a, b (insertion order)\n\n# If order critical, use collections.OrderedDict for 3.6-"
-        },
-        {
-            "mistake": "Confusing copy vs reference",
-            "correction": "Use .copy() to create independent copy",
-            "example": "❌ dict2 = dict1  # Both reference same dict!\n   dict2[\"key\"] = \"value\"  # Affects both\n\n✅ dict2 = dict1.copy()  # Independent copy\n   dict2[\"key\"] = \"value\"  # Only affects dict2"
-        }
-    ],
-    "interview_questions": [
-        {
-            "question": "What is a dictionary in Python?",
-            "difficulty": "Easy",
-            "answer": "Dictionary is unordered collection of key-value pairs. Keys must be unique and immutable (str, int, tuple). Values can be any type. Uses curly braces {}. Provides O(1) lookup by key."
-        },
-        {
-            "question": "How do you access dictionary values safely?",
-            "difficulty": "Easy",
-            "answer": "Use get() method: dict.get(key, default). Returns default (or None) if key missing, instead of raising KeyError like dict[key]. Example: age = person.get('age', 0)."
-        },
-        {
-            "question": "What's the difference between dict.get() and dict[key]?",
-            "difficulty": "Easy",
-            "answer": "dict[key] raises KeyError if key doesn't exist. dict.get(key) returns None if missing. dict.get(key, default) returns default if missing. get() is safer for optional keys."
-        },
-        {
-            "question": "Can you use a list as a dictionary key? Why or why not?",
-            "difficulty": "Medium",
-            "answer": "No, lists are mutable and not hashable. Dictionary keys must be immutable (hashable). Use tuple instead: dict[(1,2,3)] = 'value' works. Lists: dict[[1,2,3]] raises TypeError."
-        },
-        {
-            "question": "What is the time complexity of dictionary lookup?",
-            "difficulty": "Medium",
-            "answer": "O(1) average case using hash tables. Much faster than list lookup O(n). This makes dictionaries ideal for frequent lookups by key. Insertion and deletion also O(1) average."
-        },
-        {
-            "question": "How do you iterate over dictionary key-value pairs?",
-            "difficulty": "Easy",
-            "answer": "Use items() method: for key, value in dict.items(). Returns (key, value) tuples. Also: keys() for keys only, values() for values only. items() is most common."
-        },
-        {
-            "question": "What's the difference between pop() and popitem()?",
-            "difficulty": "Medium",
-            "answer": "pop(key): removes specific key, returns its value, optional default. popitem(): removes and returns last inserted (key, value) pair as tuple. pop() needs key, popitem() doesn't."
-        },
-        {
-            "question": "How do you merge two dictionaries?",
-            "difficulty": "Medium",
-            "answer": "Multiple ways: 1) update(): dict1.update(dict2), 2) unpacking: {**dict1, **dict2}, 3) union (3.9+): dict1 | dict2. Later values overwrite earlier for duplicate keys."
-        },
-        {
-            "question": "What is dictionary comprehension?",
-            "difficulty": "Medium",
-            "answer": "Concise way to create dictionaries: {key_expr: value_expr for item in iterable if condition}. Example: {x: x**2 for x in range(5)} creates {0:0, 1:1, 2:4, 3:9, 4:16}."
-        },
-        {
-            "question": "How do nested dictionaries work?",
-            "difficulty": "Hard",
-            "answer": "Dictionary values can be dictionaries: data = {'user': {'name': 'Alice', 'age': 25}}. Access with chaining: data['user']['name']. Common for JSON-like structures, hierarchical data. Iterate with nested loops."
-        }
-    ],
-    "practice_problems": [
-        {
-            "difficulty": "Beginner",
-            "problem": "Create dictionary with your name, age, and city. Print each value.",
-            "hint": "Use {key: value} syntax",
-            "solution": "person = {\n    \"name\": \"Alice\",\n    \"age\": 25,\n    \"city\": \"New York\"\n}\n\nprint(\"Name:\", person[\"name\"])\nprint(\"Age:\", person[\"age\"])\nprint(\"City:\", person[\"city\"])"
-        },
-        {
-            "difficulty": "Beginner",
-            "problem": "Given dict {'a': 1, 'b': 2, 'c': 3}, add key 'd' with value 4, update 'b' to 20.",
-            "hint": "Use dict[key] = value",
-            "solution": "my_dict = {'a': 1, 'b': 2, 'c': 3}\nprint(\"Initial:\", my_dict)\n\nmy_dict['d'] = 4\nmy_dict['b'] = 20\n\nprint(\"Modified:\", my_dict)"
-        },
-        {
-            "difficulty": "Intermediate",
-            "problem": "Create dictionary of student names and scores. Calculate average score.",
-            "hint": "Use values() and sum()",
-            "solution": "students = {\n    \"Alice\": 85,\n    \"Bob\": 92,\n    \"Charlie\": 78,\n    \"Diana\": 95\n}\n\naverage = sum(students.values()) / len(students)\nprint(f\"Average score: {average:.2f}\")\n\n# Find highest scorer\ntop_student = max(students, key=students.get)\nprint(f\"Top student: {top_student} ({students[top_student]})\")"
-        },
-        {
-            "difficulty": "Intermediate",
-            "problem": "Given two lists: names=['Alice','Bob'] and ages=[25,30], create dictionary mapping names to ages.",
-            "hint": "Use zip() and dict() or comprehension",
-            "solution": "names = ['Alice', 'Bob', 'Charlie']\nages = [25, 30, 35]\n\n# Method 1: dict() with zip()\npeople = dict(zip(names, ages))\n\n# Method 2: Dictionary comprehension\npeople = {name: age for name, age in zip(names, ages)}\n\nprint(people)\n# {'Alice': 25, 'Bob': 30, 'Charlie': 35}"
-        },
-        {
-            "difficulty": "Advanced",
-            "problem": "Count frequency of each character in string 'hello world'.",
-            "hint": "Use dictionary to store counts, loop through string",
-            "solution": "text = \"hello world\"\nfreq = {}\n\nfor char in text:\n    if char != ' ':  # Skip spaces\n        freq[char] = freq.get(char, 0) + 1\n\nprint(\"Character frequencies:\")\nfor char, count in sorted(freq.items()):\n    print(f\"'{char}': {count}\")\n\n# Or using Counter:\nfrom collections import Counter\nfreq = Counter(text.replace(' ', ''))\nprint(dict(freq))"
-        }
-    ],
-    "real_world_use_cases": [
-        {
-            "scenario": "Contact Book",
-            "description": "Store and manage contact information",
-            "code": "contacts = {\n    \"Alice\": {\"phone\": \"555-1234\", \"email\": \"alice@example.com\"},\n    \"Bob\": {\"phone\": \"555-5678\", \"email\": \"bob@example.com\"},\n    \"Charlie\": {\"phone\": \"555-9012\", \"email\": \"charlie@example.com\"}\n}\n\ndef add_contact(name, phone, email):\n    contacts[name] = {\"phone\": phone, \"email\": email}\n    print(f\"Added {name}\")\n\ndef get_contact(name):\n    if name in contacts:\n        info = contacts[name]\n        print(f\"{name}: {info['phone']}, {info['email']}\")\n    else:\n        print(f\"{name} not found\")\n\nget_contact(\"Alice\")\nadd_contact(\"Diana\", \"555-3456\", \"diana@example.com\")\nprint(f\"\\nTotal contacts: {len(contacts)}\")"
-        },
-        {
-            "scenario": "Product Inventory",
-            "description": "Track product stock and prices",
-            "code": "inventory = {\n    \"laptop\": {\"price\": 999.99, \"stock\": 15},\n    \"mouse\": {\"price\": 25.99, \"stock\": 50},\n    \"keyboard\": {\"price\": 79.99, \"stock\": 30}\n}\n\ndef check_stock(product):\n    if product in inventory:\n        info = inventory[product]\n        print(f\"{product.title()}: ${info['price']:.2f}, Stock: {info['stock']}\")\n        return info['stock'] > 0\n    return False\n\ndef sell_product(product, quantity=1):\n    if product in inventory:\n        if inventory[product]['stock'] >= quantity:\n            inventory[product]['stock'] -= quantity\n            total = inventory[product]['price'] * quantity\n            print(f\"Sold {quantity} {product}(s) for ${total:.2f}\")\n        else:\n            print(f\"Insufficient stock for {product}\")\n\ncheck_stock(\"laptop\")\nsell_product(\"laptop\", 2)\ncheck_stock(\"laptop\")"
-        },
-        {
-            "scenario": "Configuration Settings",
-            "description": "Application configuration using nested dictionaries",
-            "code": "config = {\n    \"database\": {\n        \"host\": \"localhost\",\n        \"port\": 5432,\n        \"username\": \"admin\",\n        \"database_name\": \"myapp_db\"\n    },\n    \"api\": {\n        \"base_url\": \"https://api.example.com\",\n        \"timeout\": 30,\n        \"retries\": 3\n    },\n    \"logging\": {\n        \"level\": \"INFO\",\n        \"file\": \"app.log\"\n    }\n}\n\ndef get_config(section, key):\n    return config.get(section, {}).get(key, None)\n\ndb_host = get_config(\"database\", \"host\")\napi_url = get_config(\"api\", \"base_url\")\nlog_level = get_config(\"logging\", \"level\")\n\nprint(f\"DB Host: {db_host}\")\nprint(f\"API URL: {api_url}\")\nprint(f\"Log Level: {log_level}\")"
-        },
-        {
-            "scenario": "Word Frequency Counter",
-            "description": "Count word occurrences in text",
-            "code": "text = \"python is awesome python is powerful python is easy\"\n\n# Count word frequencies\nword_freq = {}\nfor word in text.split():\n    word_freq[word] = word_freq.get(word, 0) + 1\n\nprint(\"Word Frequencies:\")\nfor word, count in sorted(word_freq.items(), key=lambda x: x[1], reverse=True):\n    print(f\"  {word}: {count}\")\n\n# Find most common word\nmost_common = max(word_freq, key=word_freq.get)\nprint(f\"\\nMost common word: '{most_common}' ({word_freq[most_common]} times)\")"
-        }
-    ],
-    "exam_notes": [
-        "Dictionary: unordered collection of key-value pairs",
-        "Syntax: {key1: value1, key2: value2} or dict()",
-        "Keys must be unique and immutable (str, int, tuple)",
-        "Values can be any type (including other dicts, lists)",
-        "Access: dict[key] raises KeyError if missing",
-        "Safe access: dict.get(key, default) returns default if missing",
-        "Add/update: dict[key] = value",
-        "Remove: pop(key), popitem(), del dict[key], clear()",
-        "Iterate keys: for key in dict or for key in dict.keys()",
-        "Iterate values: for value in dict.values()",
-        "Iterate items: for key, value in dict.items() (most common)",
-        "Methods: keys(), values(), items(), get(), pop(), update()",
-        "Membership: key in dict checks if key exists (O(1))",
-        "Lookup complexity: O(1) average (hash table)",
-        "Python 3.7+ maintains insertion order",
-        "Dictionary comprehension: {k: v for k, v in iterable}",
-        "Nested dictionaries: dict['key1']['key2'] for hierarchical data",
-        "Similar to JSON objects in structure",
-        "copy() creates shallow copy",
-        "setdefault() gets value or sets default if missing"
-    ],
-    "summary": "Dictionaries are Python's key-value data structure - fast, flexible, and essential for structured data.\n\n**Key Concepts:**\n\n✅ **Key-Value Pairs**: Data stored as `{key: value}`\n✅ **Unique Keys**: No duplicates allowed\n✅ **Immutable Keys**: str, int, tuple (not list)\n✅ **Any Values**: Lists, dicts, objects, anything\n✅ **O(1) Lookup**: Hash table = very fast\n✅ **JSON-like**: Perfect for structured data\n\n**Creation:**\n```python\ndict = {\"name\": \"Alice\", \"age\": 25}\ndict = dict(name=\"Alice\", age=25)\ndict = {k: v for k, v in pairs}\n```\n\n**Access:**\n```python\nvalue = dict[\"key\"]           # KeyError if missing\nvalue = dict.get(\"key\", default)  # Safe\n```\n\n**Essential Methods:**\n\n| Method | Action |\n|--------|--------|\n| `dict[key] = value` | Add/update |\n| `dict.get(key, default)` | Safe access |\n| `dict.pop(key)` | Remove & return |\n| `dict.keys()` | All keys |\n| `dict.values()` | All values |\n| `dict.items()` | Key-value pairs |\n| `dict.update(other)` | Merge dicts |\n\n**Iteration (Best Practice):**\n```python\nfor key, value in dict.items():\n    print(f\"{key}: {value}\")\n```\n\n**Nested Dictionaries:**\n```python\ndata = {\n    \"user1\": {\"name\": \"Alice\", \"age\": 25},\n    \"user2\": {\"name\": \"Bob\", \"age\": 30}\n}\n\nname = data[\"user1\"][\"name\"]  # Alice\n```\n\n**Why Dictionaries are Fast:**\n- Hash tables: O(1) lookup\n- List: O(n) search\n- Dict: instant key-based access\n\n**When to Use:**\n\n| Scenario | Use |\n|----------|-----|\n| Need key-based lookup | ✅ Dict |\n| Store configuration | ✅ Dict |\n| JSON-like data | ✅ Dict |\n| Counting/frequency | ✅ Dict |\n| Ordered sequence | List |\n| Just need values | List |\n\n**Common Patterns:**\n```python\n# Count frequency\nfreq = {}\nfor item in items:\n    freq[item] = freq.get(item, 0) + 1\n\n# Group by key\ngroups = {}\nfor item in items:\n    key = get_key(item)\n    groups.setdefault(key, []).append(item)\n\n# Merge dicts\ncombined = {**dict1, **dict2}\n```\n\n**Remember:**\n```python\n# ❌ Wrong\ndict[[1,2]] = \"value\"  # Lists not hashable!\nvalue = dict[\"missing\"]  # KeyError!\n\n# ✅ Correct\ndict[(1,2)] = \"value\"  # Tuples OK\nvalue = dict.get(\"missing\", default)\n```\n\nMaster dictionaries for efficient data management!"
+  "title": "Python Dictionaries - Complete Guide",
+  "slug": "python-dictionaries",
+  "subject": "Python",
+  "category": "backend",
+  "level": "Beginner",
+  "estimated_read_time": "16 minutes",
+  "prerequisites": [
+    "Python variables and data types",
+    "Python lists and tuples",
+    "Understanding of key-value concept",
+    "Basic Python syntax"
+  ],
+  "learning_objectives": [
+    "Understand key-value pair structure",
+    "Create and manipulate dictionaries effectively",
+    "Master dictionary methods for adding, removing, and accessing data",
+    "Iterate over dictionaries efficiently",
+    "Work with nested dictionaries",
+    "Understand dictionary lookup efficiency (O(1))",
+    "Choose appropriate data structure for key-value data"
+  ],
+  "theory": "## What is a Dictionary?\n\nA **dictionary** is an unordered collection of **key-value pairs**. Each key maps to a value.\n\n### Real-Life Analogy\n\nThink of a **real dictionary** (vocabulary book):\n- **Word** (key): \"Python\"\n- **Definition** (value): \"A high-level programming language\"\n- Look up word → Get definition\n- Words are unique (no duplicates)\n\nPython dictionaries work the same:\n- **Key** → **Value**\n- Fast lookup by key\n- Keys must be unique\n\n### JSON Similarity\n\nPython dictionaries are nearly identical to **JSON objects**:\n\n**JSON:**\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 25,\n  \"city\": \"New York\"\n}\n```\n\n**Python Dictionary:**\n```python\n{\n  \"name\": \"Alice\",\n  \"age\": 25,\n  \"city\": \"New York\"\n}\n```\n\nAlmost the same! This makes dictionaries perfect for working with JSON data.\n\n### Key Characteristics\n\n1. **Key-Value Pairs**: Data stored as `key: value`\n2. **Keys are Unique**: Duplicate keys not allowed\n3. **Keys must be Immutable**: str, int, tuple (not list)\n4. **Values can be Anything**: Any data type\n5. **Unordered** (Python 3.6-): No guaranteed order\n6. **Ordered** (Python 3.7+): Maintains insertion order\n7. **Mutable**: Can be modified after creation\n8. **Fast Lookup**: O(1) access by key\n\n### Dictionary vs List vs Tuple\n\n| Feature | List | Tuple | Dictionary |\n|---------|------|-------|------------|\n| **Syntax** | `[1,2,3]` | `(1,2,3)` | `{\"a\":1, \"b\":2}` |\n| **Access** | Index | Index | **Key** |\n| **Ordered** | ✅ Yes | ✅ Yes | ✅ Yes (3.7+) |\n| **Mutable** | ✅ Yes | ❌ No | ✅ Yes |\n| **Lookup** | O(n) | O(n) | **O(1)** |\n| **Use Case** | Sequence | Fixed data | **Key-value** |\n\n---\n\n## Creating Dictionaries\n\n### Method 1: Curly Braces {}\n\n```python\n# Empty dictionary\nempty = {}\n\n# Basic dictionary\nstudent = {\n    \"name\": \"Alice\",\n    \"age\": 20,\n    \"grade\": \"A\"\n}\n\n# Different value types\nperson = {\n    \"name\": \"Bob\",           # String\n    \"age\": 25,               # Integer\n    \"height\": 5.9,           # Float\n    \"married\": False,        # Boolean\n    \"hobbies\": [\"reading\"]   # List\n}\n```\n\n### Method 2: dict() Constructor\n\n```python\n# From keyword arguments\nstudent = dict(name=\"Alice\", age=20, grade=\"A\")\n\n# From list of tuples\npairs = [(\"name\", \"Alice\"), (\"age\", 20)]\nstudent = dict(pairs)\n\n# From two lists using zip\nkeys = [\"name\", \"age\", \"grade\"]\nvalues = [\"Alice\", 20, \"A\"]\nstudent = dict(zip(keys, values))\n```\n\n### Method 3: Dictionary Comprehension\n\n```python\n# Squares\nsquares = {x: x**2 for x in range(6)}\n# {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25}\n\n# Conditional\nevens = {x: x**2 for x in range(10) if x % 2 == 0}\n# {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}\n```\n\n---\n\n## Accessing Dictionary Values\n\n### Using Square Brackets []\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\n# Access by key\nprint(student[\"name\"])   # Alice\nprint(student[\"age\"])    # 20\n\n# KeyError if key doesn't exist\nprint(student[\"email\"])  # KeyError!\n```\n\n### Using get() Method (Safer)\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\n\n# get() returns None if key doesn't exist\nemail = student.get(\"email\")  # None\n\n# Provide default value\nemail = student.get(\"email\", \"Not provided\")\nprint(email)  # Not provided\n\n# Existing key\nname = student.get(\"name\")\nprint(name)  # Alice\n```\n\n**get() vs []:**\n- `dict[key]`: Raises KeyError if missing\n- `dict.get(key)`: Returns None if missing (safe)\n- `dict.get(key, default)`: Returns default if missing\n\n---\n\n## Modifying Dictionaries\n\n### Adding/Updating Values\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\n\n# Add new key-value pair\nstudent[\"grade\"] = \"A\"\nprint(student)  # {'name': 'Alice', 'age': 20, 'grade': 'A'}\n\n# Update existing value\nstudent[\"age\"] = 21\nprint(student)  # {'name': 'Alice', 'age': 21, 'grade': 'A'}\n```\n\n### update() Method\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\n\n# Update with another dictionary\nstudent.update({\"grade\": \"A\", \"city\": \"NYC\"})\nprint(student)\n# {'name': 'Alice', 'age': 20, 'grade': 'A', 'city': 'NYC'}\n\n# Update existing and add new\nstudent.update({\"age\": 21, \"email\": \"alice@example.com\"})\n```\n\n### Removing Items\n\n**pop(key)**: Remove and return value\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\nage = student.pop(\"age\")  # Returns 20\nprint(age)  # 20\nprint(student)  # {'name': 'Alice', 'grade': 'A'}\n\n# KeyError if key doesn't exist\n# email = student.pop(\"email\")  # KeyError!\n\n# Provide default\nemail = student.pop(\"email\", \"Not found\")\nprint(email)  # Not found\n```\n\n**popitem()**: Remove and return last inserted (key, value)\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\nitem = student.popitem()  # ('grade', 'A')\nprint(item)\nprint(student)  # {'name': 'Alice', 'age': 20}\n```\n\n**del**: Delete specific key\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\n\ndel student[\"age\"]\nprint(student)  # {'name': 'Alice'}\n\n# Delete entire dictionary\ndel student\n```\n\n**clear()**: Remove all items\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\nstudent.clear()\nprint(student)  # {}\n```\n\n---\n\n## Dictionary Methods\n\n### Accessing Keys, Values, Items\n\n**keys()**: Get all keys\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\nkeys = student.keys()\nprint(keys)  # dict_keys(['name', 'age', 'grade'])\nprint(list(keys))  # ['name', 'age', 'grade']\n```\n\n**values()**: Get all values\n```python\nvalues = student.values()\nprint(values)  # dict_values(['Alice', 20, 'A'])\nprint(list(values))  # ['Alice', 20, 'A']\n```\n\n**items()**: Get all key-value pairs as tuples\n```python\nitems = student.items()\nprint(items)  # dict_items([('name', 'Alice'), ('age', 20), ('grade', 'A')])\nprint(list(items))  # [('name', 'Alice'), ('age', 20), ('grade', 'A')]\n```\n\n### Other Useful Methods\n\n**copy()**: Create shallow copy\n```python\noriginal = {\"name\": \"Alice\", \"age\": 20}\ncopy = original.copy()\n\ncopy[\"age\"] = 21\nprint(original)  # {'name': 'Alice', 'age': 20} (unchanged)\nprint(copy)      # {'name': 'Alice', 'age': 21}\n```\n\n**setdefault()**: Get value, set default if missing\n```python\nstudent = {\"name\": \"Alice\"}\n\n# Key exists: returns value\nname = student.setdefault(\"name\", \"Unknown\")\nprint(name)  # Alice\n\n# Key doesn't exist: sets and returns default\nage = student.setdefault(\"age\", 18)\nprint(age)  # 18\nprint(student)  # {'name': 'Alice', 'age': 18}\n```\n\n**fromkeys()**: Create dict from sequence of keys\n```python\nkeys = [\"name\", \"age\", \"grade\"]\nstudent = dict.fromkeys(keys, \"Unknown\")\nprint(student)  # {'name': 'Unknown', 'age': 'Unknown', 'grade': 'Unknown'}\n\n# Without default (None)\nstudent = dict.fromkeys(keys)\nprint(student)  # {'name': None, 'age': None, 'grade': None}\n```\n\n---\n\n## Iterating Over Dictionaries\n\n### Iterate Over Keys (Default)\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\n# Default iteration is over keys\nfor key in student:\n    print(key)\n# Output: name, age, grade\n\n# Explicit\nfor key in student.keys():\n    print(key)\n```\n\n### Iterate Over Values\n\n```python\nfor value in student.values():\n    print(value)\n# Output: Alice, 20, A\n```\n\n### Iterate Over Key-Value Pairs (Best)\n\n```python\nfor key, value in student.items():\n    print(f\"{key}: {value}\")\n# Output:\n# name: Alice\n# age: 20\n# grade: A\n```\n\n### Accessing Values During Iteration\n\n```python\nscores = {\"math\": 90, \"science\": 85, \"english\": 92}\n\n# Method 1: Using items()\nfor subject, score in scores.items():\n    print(f\"{subject}: {score}\")\n\n# Method 2: Using keys\nfor subject in scores:\n    score = scores[subject]\n    print(f\"{subject}: {score}\")\n```\n\n---\n\n## Nested Dictionaries\n\nDictionaries within dictionaries (like nested JSON).\n\n### Creating Nested Dictionaries\n\n```python\n# Student database\nstudents = {\n    \"student1\": {\n        \"name\": \"Alice\",\n        \"age\": 20,\n        \"grades\": {\"math\": 90, \"science\": 85}\n    },\n    \"student2\": {\n        \"name\": \"Bob\",\n        \"age\": 22,\n        \"grades\": {\"math\": 75, \"science\": 88}\n    }\n}\n```\n\n### Accessing Nested Values\n\n```python\n# Access outer key\nstudent1 = students[\"student1\"]\nprint(student1)  # {'name': 'Alice', 'age': 20, 'grades': {...}}\n\n# Access nested key\nname = students[\"student1\"][\"name\"]\nprint(name)  # Alice\n\n# Access deeply nested\nmath_score = students[\"student1\"][\"grades\"][\"math\"]\nprint(math_score)  # 90\n```\n\n### Iterating Nested Dictionaries\n\n```python\nfor student_id, info in students.items():\n    print(f\"\\n{student_id}:\")\n    print(f\"  Name: {info['name']}\")\n    print(f\"  Age: {info['age']}\")\n    print(\"  Grades:\")\n    for subject, score in info['grades'].items():\n        print(f\"    {subject}: {score}\")\n```\n\n**Output:**\n```\nstudent1:\n  Name: Alice\n  Age: 20\n  Grades:\n    math: 90\n    science: 85\n\nstudent2:\n  Name: Bob\n  Age: 22\n  Grades:\n    math: 75\n    science: 88\n```\n\n---\n\n## Dictionary Lookup Efficiency\n\n### Why Dictionaries are Fast\n\nDictionaries use **hash tables** for O(1) average lookup!\n\n**List (Linear Search - O(n)):**\n```python\nmy_list = [(\"name\", \"Alice\"), (\"age\", 20), (\"grade\", \"A\")]\n\n# Find value for \"age\"\nfor key, value in my_list:\n    if key == \"age\":  # Checks each item\n        print(value)\n# Time: O(n) - slow for large data\n```\n\n**Dictionary (Hash Lookup - O(1)):**\n```python\nmy_dict = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\n# Find value for \"age\"\nprint(my_dict[\"age\"])  # Instant!\n# Time: O(1) - very fast!\n```\n\n### Performance Comparison\n\n| Operation | List | Dictionary |\n|-----------|------|------------|\n| Access by key/index | O(1) | **O(1)** |\n| Search value | O(n) | O(n) |\n| Insert | O(n) | **O(1)** |\n| Delete | O(n) | **O(1)** |\n| Membership test | O(n) | **O(1)** |\n\n**When to use dictionary:**\n- Need fast key-based lookup\n- Data has natural key (ID, name, etc.)\n- Frequent insertions/deletions\n- Representing structured data (like JSON)\n\n---\n\n## Dictionary Comprehension\n\n**Syntax**: `{key_expr: value_expr for item in iterable}`\n\n```python\n# Squares\nsquares = {x: x**2 for x in range(6)}\n# {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25}\n\n# From lists\nnames = [\"Alice\", \"Bob\", \"Charlie\"]\nages = [25, 30, 35]\npeople = {name: age for name, age in zip(names, ages)}\n# {'Alice': 25, 'Bob': 30, 'Charlie': 35}\n\n# With condition\neven_squares = {x: x**2 for x in range(10) if x % 2 == 0}\n# {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}\n\n# Transform existing dict\nscores = {\"math\": 85, \"science\": 90, \"english\": 78}\npassed = {subject: score for subject, score in scores.items() if score >= 80}\n# {'math': 85, 'science': 90}\n```\n\n---\n\n## Checking Keys/Values\n\n### Check if Key Exists\n\n```python\nstudent = {\"name\": \"Alice\", \"age\": 20}\n\n# Using 'in'\nif \"name\" in student:\n    print(\"Name exists\")\n\nif \"email\" not in student:\n    print(\"Email doesn't exist\")\n```\n\n### Check if Value Exists\n\n```python\nif \"Alice\" in student.values():\n    print(\"Alice is a value\")\n\nif 20 in student.values():\n    print(\"20 is a value\")\n```",
+  "syntax": "# Create dictionary\nmy_dict = {key1: value1, key2: value2}\nempty = {}\n\n# dict() constructor\nmy_dict = dict(key1=value1, key2=value2)\nmy_dict = dict([(k1, v1), (k2, v2)])\n\n# Access\nvalue = my_dict[key]\nvalue = my_dict.get(key, default)\n\n# Add/Update\nmy_dict[key] = value\nmy_dict.update({key: value})\n\n# Remove\nvalue = my_dict.pop(key, default)\nitem = my_dict.popitem()\ndel my_dict[key]\nmy_dict.clear()\n\n# Methods\nmy_dict.keys()          # All keys\nmy_dict.values()        # All values\nmy_dict.items()         # Key-value pairs\nmy_dict.get(key, default)\nmy_dict.setdefault(key, default)\nmy_dict.copy()\n\n# Iteration\nfor key in my_dict:\nfor value in my_dict.values():\nfor key, value in my_dict.items():\n\n# Membership\nkey in my_dict\nvalue in my_dict.values()\n\n# Comprehension\n{k: v for k, v in iterable if condition}",
+  "examples": [
+    {
+      "code": "# Example 1: Creating and Accessing Dictionary\n# Like JSON object\nstudent = {\n    \"name\": \"Alice\",\n    \"age\": 20,\n    \"grade\": \"A\",\n    \"courses\": [\"Math\", \"Science\"]\n}\n\nprint(\"Name:\", student[\"name\"])\nprint(\"Age:\", student[\"age\"])\nprint(\"Courses:\", student[\"courses\"])\n\n# Using get() - safer\nemail = student.get(\"email\", \"Not provided\")\nprint(\"Email:\", email)",
+      "output": "Name: Alice\nAge: 20\nCourses: ['Math', 'Science']\nEmail: Not provided",
+      "explanation": "Dictionary stores key-value pairs. Access using dict[key] or dict.get(key, default). get() is safer - returns default instead of error if key missing. Structure similar to JSON."
+    },
+    {
+      "code": "# Example 2: Adding and Updating\nstudent = {\"name\": \"Alice\", \"age\": 20}\nprint(\"Initial:\", student)\n\n# Add new key-value\nstudent[\"grade\"] = \"A\"\nprint(\"After add:\", student)\n\n# Update existing\nstudent[\"age\"] = 21\nprint(\"After update:\", student)\n\n# Update multiple\nstudent.update({\"city\": \"NYC\", \"email\": \"alice@example.com\"})\nprint(\"After update():\", student)",
+      "output": "Initial: {'name': 'Alice', 'age': 20}\nAfter add: {'name': 'Alice', 'age': 20, 'grade': 'A'}\nAfter update: {'name': 'Alice', 'age': 21, 'grade': 'A'}\nAfter update(): {'name': 'Alice', 'age': 21, 'grade': 'A', 'city': 'NYC', 'email': 'alice@example.com'}",
+      "explanation": "Add/update using dict[key] = value. If key exists, updates value. If new, adds key-value pair. update() adds/modifies multiple items from another dictionary."
+    },
+    {
+      "code": "# Example 3: Iterating Dictionary\nscores = {\"math\": 90, \"science\": 85, \"english\": 92}\n\nprint(\"Subject\\tScore\")\nprint(\"-\" * 20)\n\n# Best way: iterate over items()\nfor subject, score in scores.items():\n    print(f\"{subject}\\t{score}\")\n\n# Calculate average\naverage = sum(scores.values()) / len(scores)\nprint(f\"\\nAverage: {average:.2f}\")",
+      "output": "Subject\tScore\n--------------------\nmath\t90\nscience\t85\nenglish\t92\n\nAverage: 89.00",
+      "explanation": "items() returns (key, value) tuples. Use tuple unpacking in loop: for key, value in dict.items(). values() gets all values for calculations. Most Pythonic iteration pattern."
+    },
+    {
+      "code": "# Example 4: Nested Dictionary (JSON-like)\ncompany = {\n    \"employees\": {\n        \"emp1\": {\"name\": \"Alice\", \"role\": \"Developer\", \"salary\": 90000},\n        \"emp2\": {\"name\": \"Bob\", \"role\": \"Designer\", \"salary\": 75000}\n    },\n    \"departments\": [\"Engineering\", \"Design\", \"HR\"]\n}\n\n# Access nested values\nprint(\"Employee 1 name:\", company[\"employees\"][\"emp1\"][\"name\"])\nprint(\"Employee 2 salary:\", company[\"employees\"][\"emp2\"][\"salary\"])\n\n# Iterate nested\nfor emp_id, info in company[\"employees\"].items():\n    print(f\"{emp_id}: {info['name']} - {info['role']}\")",
+      "output": "Employee 1 name: Alice\nEmployee 2 salary: 75000\nemp1: Alice - Developer\nemp2: Bob - Designer",
+      "explanation": "Nested dictionaries store hierarchical data like JSON. Access with multiple brackets: dict[key1][key2][key3]. Common for complex data structures like databases, APIs, config files."
+    },
+    {
+      "code": "# Example 5: Dictionary Methods\nstudent = {\"name\": \"Alice\", \"age\": 20, \"grade\": \"A\"}\n\n# Get all keys\nprint(\"Keys:\", list(student.keys()))\n\n# Get all values\nprint(\"Values:\", list(student.values()))\n\n# Get all items\nprint(\"Items:\", list(student.items()))\n\n# Remove and return\nage = student.pop(\"age\")\nprint(f\"Removed age: {age}\")\nprint(\"After pop:\", student)\n\n# setdefault\nemail = student.setdefault(\"email\", \"unknown@example.com\")\nprint(f\"Email (new): {email}\")\nprint(\"After setdefault:\", student)",
+      "output": "Keys: ['name', 'age', 'grade']\nValues: ['Alice', 20, 'A']\nItems: [('name', 'Alice'), ('age', 20), ('grade', 'A')]\nRemoved age: 20\nAfter pop: {'name': 'Alice', 'grade': 'A'}\nEmail (new): unknown@example.com\nAfter setdefault: {'name': 'Alice', 'grade': 'A', 'email': 'unknown@example.com'}",
+      "explanation": "keys(), values(), items() return views (convert to list if needed). pop() removes and returns value. setdefault() returns value if exists, else sets default and returns it. Useful for initialization."
+    },
+    {
+      "code": "# Example 6: Dictionary Comprehension\n# Create from range\nsquares = {x: x**2 for x in range(6)}\nprint(\"Squares:\", squares)\n\n# From two lists\nnames = [\"Alice\", \"Bob\", \"Charlie\"]\nages = [25, 30, 35]\npeople = {name: age for name, age in zip(names, ages)}\nprint(\"People:\", people)\n\n# With condition\nscores = {\"math\": 85, \"science\": 90, \"english\": 78}\npassed = {subj: score for subj, score in scores.items() if score >= 80}\nprint(\"Passed:\", passed)",
+      "output": "Squares: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25}\nPeople: {'Alice': 25, 'Bob': 30, 'Charlie': 35}\nPassed: {'math': 85, 'science': 90}",
+      "explanation": "Dictionary comprehension creates dicts concisely: {key_expr: value_expr for item in iterable}. Can include conditions. zip() pairs corresponding elements from multiple sequences. Very Pythonic!"
+    },
+    {
+      "code": "# Example 7: Membership and Lookup Speed\nimport time\n\n# Large dataset\ndata_dict = {i: i**2 for i in range(100000)}\ndata_list = [(i, i**2) for i in range(100000)]\n\n# Dictionary lookup (fast!)\nstart = time.time()\nvalue = data_dict.get(99999)\ndict_time = time.time() - start\n\n# List search (slow)\nstart = time.time()\nfor key, value in data_list:\n    if key == 99999:\n        break\nlist_time = time.time() - start\n\nprint(f\"Dictionary: {dict_time:.6f}s\")\nprint(f\"List: {list_time:.6f}s\")\nprint(f\"Dict is ~{list_time/dict_time:.0f}x faster!\")",
+      "output": "Dictionary: 0.000001s\nList: 0.002500s\nDict is ~2500x faster!",
+      "explanation": "Dictionaries use hash tables for O(1) lookup - nearly instant regardless of size. Lists require O(n) linear search - slow for large data. Use dictionaries for key-based access!"
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using mutable objects (lists, dicts) as keys",
+      "correction": "Keys must be immutable: use str, int, tuple (not list)",
+      "example": "❌ my_dict = {[1, 2]: \"value\"}  # TypeError! Lists not hashable\n\n✅ my_dict = {(1, 2): \"value\"}  # Tuples work\n✅ my_dict = {\"key\": \"value\"}   # Strings work"
+    },
+    {
+      "mistake": "Accessing non-existent key with []",
+      "correction": "Use get() method or check with 'in' first",
+      "example": "❌ value = my_dict[\"nonexistent\"]  # KeyError!\n\n✅ value = my_dict.get(\"nonexistent\", \"default\")\n✅ if \"nonexistent\" in my_dict:\n       value = my_dict[\"nonexistent\"]"
+    },
+    {
+      "mistake": "Modifying dictionary while iterating over it",
+      "correction": "Iterate over copy or collect keys to remove",
+      "example": "❌ for key in my_dict:\n       del my_dict[key]  # RuntimeError!\n\n✅ for key in list(my_dict.keys()):\n       del my_dict[key]\n\n✅ keys_to_remove = [k for k, v in my_dict.items() if condition]\n   for key in keys_to_remove:\n       del my_dict[key]"
+    },
+    {
+      "mistake": "Expecting dictionaries to maintain order (Python < 3.7)",
+      "correction": "Python 3.7+ maintains insertion order, but don't rely on it for 3.6-",
+      "example": "# Python 3.7+: order preserved\nmy_dict = {\"c\": 3, \"a\": 1, \"b\": 2}\nfor key in my_dict:\n    print(key)  # c, a, b (insertion order)\n\n# If order critical, use collections.OrderedDict for 3.6-"
+    },
+    {
+      "mistake": "Confusing copy vs reference",
+      "correction": "Use .copy() to create independent copy",
+      "example": "❌ dict2 = dict1  # Both reference same dict!\n   dict2[\"key\"] = \"value\"  # Affects both\n\n✅ dict2 = dict1.copy()  # Independent copy\n   dict2[\"key\"] = \"value\"  # Only affects dict2"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is a dictionary in Python?",
+      "difficulty": "Easy",
+      "answer": "Dictionary is unordered collection of key-value pairs. Keys must be unique and immutable (str, int, tuple). Values can be any type. Uses curly braces {}. Provides O(1) lookup by key."
+    },
+    {
+      "question": "How do you access dictionary values safely?",
+      "difficulty": "Easy",
+      "answer": "Use get() method: dict.get(key, default). Returns default (or None) if key missing, instead of raising KeyError like dict[key]. Example: age = person.get('age', 0)."
+    },
+    {
+      "question": "What's the difference between dict.get() and dict[key]?",
+      "difficulty": "Easy",
+      "answer": "dict[key] raises KeyError if key doesn't exist. dict.get(key) returns None if missing. dict.get(key, default) returns default if missing. get() is safer for optional keys."
+    },
+    {
+      "question": "Can you use a list as a dictionary key? Why or why not?",
+      "difficulty": "Medium",
+      "answer": "No, lists are mutable and not hashable. Dictionary keys must be immutable (hashable). Use tuple instead: dict[(1,2,3)] = 'value' works. Lists: dict[[1,2,3]] raises TypeError."
+    },
+    {
+      "question": "What is the time complexity of dictionary lookup?",
+      "difficulty": "Medium",
+      "answer": "O(1) average case using hash tables. Much faster than list lookup O(n). This makes dictionaries ideal for frequent lookups by key. Insertion and deletion also O(1) average."
+    },
+    {
+      "question": "How do you iterate over dictionary key-value pairs?",
+      "difficulty": "Easy",
+      "answer": "Use items() method: for key, value in dict.items(). Returns (key, value) tuples. Also: keys() for keys only, values() for values only. items() is most common."
+    },
+    {
+      "question": "What's the difference between pop() and popitem()?",
+      "difficulty": "Medium",
+      "answer": "pop(key): removes specific key, returns its value, optional default. popitem(): removes and returns last inserted (key, value) pair as tuple. pop() needs key, popitem() doesn't."
+    },
+    {
+      "question": "How do you merge two dictionaries?",
+      "difficulty": "Medium",
+      "answer": "Multiple ways: 1) update(): dict1.update(dict2), 2) unpacking: {**dict1, **dict2}, 3) union (3.9+): dict1 | dict2. Later values overwrite earlier for duplicate keys."
+    },
+    {
+      "question": "What is dictionary comprehension?",
+      "difficulty": "Medium",
+      "answer": "Concise way to create dictionaries: {key_expr: value_expr for item in iterable if condition}. Example: {x: x**2 for x in range(5)} creates {0:0, 1:1, 2:4, 3:9, 4:16}."
+    },
+    {
+      "question": "How do nested dictionaries work?",
+      "difficulty": "Hard",
+      "answer": "Dictionary values can be dictionaries: data = {'user': {'name': 'Alice', 'age': 25}}. Access with chaining: data['user']['name']. Common for JSON-like structures, hierarchical data. Iterate with nested loops."
+    }
+  ],
+  "practice_problems": [
+    {
+      "difficulty": "Beginner",
+      "problem": "Create dictionary with your name, age, and city. Print each value.",
+      "hint": "Use {key: value} syntax",
+      "solution": "person = {\n    \"name\": \"Alice\",\n    \"age\": 25,\n    \"city\": \"New York\"\n}\n\nprint(\"Name:\", person[\"name\"])\nprint(\"Age:\", person[\"age\"])\nprint(\"City:\", person[\"city\"])"
+    },
+    {
+      "difficulty": "Beginner",
+      "problem": "Given dict {'a': 1, 'b': 2, 'c': 3}, add key 'd' with value 4, update 'b' to 20.",
+      "hint": "Use dict[key] = value",
+      "solution": "my_dict = {'a': 1, 'b': 2, 'c': 3}\nprint(\"Initial:\", my_dict)\n\nmy_dict['d'] = 4\nmy_dict['b'] = 20\n\nprint(\"Modified:\", my_dict)"
+    },
+    {
+      "difficulty": "Intermediate",
+      "problem": "Create dictionary of student names and scores. Calculate average score.",
+      "hint": "Use values() and sum()",
+      "solution": "students = {\n    \"Alice\": 85,\n    \"Bob\": 92,\n    \"Charlie\": 78,\n    \"Diana\": 95\n}\n\naverage = sum(students.values()) / len(students)\nprint(f\"Average score: {average:.2f}\")\n\n# Find highest scorer\ntop_student = max(students, key=students.get)\nprint(f\"Top student: {top_student} ({students[top_student]})\")"
+    },
+    {
+      "difficulty": "Intermediate",
+      "problem": "Given two lists: names=['Alice','Bob'] and ages=[25,30], create dictionary mapping names to ages.",
+      "hint": "Use zip() and dict() or comprehension",
+      "solution": "names = ['Alice', 'Bob', 'Charlie']\nages = [25, 30, 35]\n\n# Method 1: dict() with zip()\npeople = dict(zip(names, ages))\n\n# Method 2: Dictionary comprehension\npeople = {name: age for name, age in zip(names, ages)}\n\nprint(people)\n# {'Alice': 25, 'Bob': 30, 'Charlie': 35}"
+    },
+    {
+      "difficulty": "Advanced",
+      "problem": "Count frequency of each character in string 'hello world'.",
+      "hint": "Use dictionary to store counts, loop through string",
+      "solution": "text = \"hello world\"\nfreq = {}\n\nfor char in text:\n    if char != ' ':  # Skip spaces\n        freq[char] = freq.get(char, 0) + 1\n\nprint(\"Character frequencies:\")\nfor char, count in sorted(freq.items()):\n    print(f\"'{char}': {count}\")\n\n# Or using Counter:\nfrom collections import Counter\nfreq = Counter(text.replace(' ', ''))\nprint(dict(freq))"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "Contact Book",
+      "description": "Store and manage contact information",
+      "code": "contacts = {\n    \"Alice\": {\"phone\": \"555-1234\", \"email\": \"alice@example.com\"},\n    \"Bob\": {\"phone\": \"555-5678\", \"email\": \"bob@example.com\"},\n    \"Charlie\": {\"phone\": \"555-9012\", \"email\": \"charlie@example.com\"}\n}\n\ndef add_contact(name, phone, email):\n    contacts[name] = {\"phone\": phone, \"email\": email}\n    print(f\"Added {name}\")\n\ndef get_contact(name):\n    if name in contacts:\n        info = contacts[name]\n        print(f\"{name}: {info['phone']}, {info['email']}\")\n    else:\n        print(f\"{name} not found\")\n\nget_contact(\"Alice\")\nadd_contact(\"Diana\", \"555-3456\", \"diana@example.com\")\nprint(f\"\\nTotal contacts: {len(contacts)}\")"
+    },
+    {
+      "scenario": "Product Inventory",
+      "description": "Track product stock and prices",
+      "code": "inventory = {\n    \"laptop\": {\"price\": 999.99, \"stock\": 15},\n    \"mouse\": {\"price\": 25.99, \"stock\": 50},\n    \"keyboard\": {\"price\": 79.99, \"stock\": 30}\n}\n\ndef check_stock(product):\n    if product in inventory:\n        info = inventory[product]\n        print(f\"{product.title()}: ${info['price']:.2f}, Stock: {info['stock']}\")\n        return info['stock'] > 0\n    return False\n\ndef sell_product(product, quantity=1):\n    if product in inventory:\n        if inventory[product]['stock'] >= quantity:\n            inventory[product]['stock'] -= quantity\n            total = inventory[product]['price'] * quantity\n            print(f\"Sold {quantity} {product}(s) for ${total:.2f}\")\n        else:\n            print(f\"Insufficient stock for {product}\")\n\ncheck_stock(\"laptop\")\nsell_product(\"laptop\", 2)\ncheck_stock(\"laptop\")"
+    },
+    {
+      "scenario": "Configuration Settings",
+      "description": "Application configuration using nested dictionaries",
+      "code": "config = {\n    \"database\": {\n        \"host\": \"localhost\",\n        \"port\": 5432,\n        \"username\": \"admin\",\n        \"database_name\": \"myapp_db\"\n    },\n    \"api\": {\n        \"base_url\": \"https://api.example.com\",\n        \"timeout\": 30,\n        \"retries\": 3\n    },\n    \"logging\": {\n        \"level\": \"INFO\",\n        \"file\": \"app.log\"\n    }\n}\n\ndef get_config(section, key):\n    return config.get(section, {}).get(key, None)\n\ndb_host = get_config(\"database\", \"host\")\napi_url = get_config(\"api\", \"base_url\")\nlog_level = get_config(\"logging\", \"level\")\n\nprint(f\"DB Host: {db_host}\")\nprint(f\"API URL: {api_url}\")\nprint(f\"Log Level: {log_level}\")"
+    },
+    {
+      "scenario": "Word Frequency Counter",
+      "description": "Count word occurrences in text",
+      "code": "text = \"python is awesome python is powerful python is easy\"\n\n# Count word frequencies\nword_freq = {}\nfor word in text.split():\n    word_freq[word] = word_freq.get(word, 0) + 1\n\nprint(\"Word Frequencies:\")\nfor word, count in sorted(word_freq.items(), key=lambda x: x[1], reverse=True):\n    print(f\"  {word}: {count}\")\n\n# Find most common word\nmost_common = max(word_freq, key=word_freq.get)\nprint(f\"\\nMost common word: '{most_common}' ({word_freq[most_common]} times)\")"
+    }
+  ],
+  "exam_notes": [
+    "Dictionary: unordered collection of key-value pairs",
+    "Syntax: {key1: value1, key2: value2} or dict()",
+    "Keys must be unique and immutable (str, int, tuple)",
+    "Values can be any type (including other dicts, lists)",
+    "Access: dict[key] raises KeyError if missing",
+    "Safe access: dict.get(key, default) returns default if missing",
+    "Add/update: dict[key] = value",
+    "Remove: pop(key), popitem(), del dict[key], clear()",
+    "Iterate keys: for key in dict or for key in dict.keys()",
+    "Iterate values: for value in dict.values()",
+    "Iterate items: for key, value in dict.items() (most common)",
+    "Methods: keys(), values(), items(), get(), pop(), update()",
+    "Membership: key in dict checks if key exists (O(1))",
+    "Lookup complexity: O(1) average (hash table)",
+    "Python 3.7+ maintains insertion order",
+    "Dictionary comprehension: {k: v for k, v in iterable}",
+    "Nested dictionaries: dict['key1']['key2'] for hierarchical data",
+    "Similar to JSON objects in structure",
+    "copy() creates shallow copy",
+    "setdefault() gets value or sets default if missing"
+  ],
+  "summary": "Dictionaries are Python's key-value data structure - fast, flexible, and essential for structured data.\n\n**Key Concepts:**\n\n✅ **Key-Value Pairs**: Data stored as `{key: value}`\n✅ **Unique Keys**: No duplicates allowed\n✅ **Immutable Keys**: str, int, tuple (not list)\n✅ **Any Values**: Lists, dicts, objects, anything\n✅ **O(1) Lookup**: Hash table = very fast\n✅ **JSON-like**: Perfect for structured data\n\n**Creation:**\n```python\ndict = {\"name\": \"Alice\", \"age\": 25}\ndict = dict(name=\"Alice\", age=25)\ndict = {k: v for k, v in pairs}\n```\n\n**Access:**\n```python\nvalue = dict[\"key\"]           # KeyError if missing\nvalue = dict.get(\"key\", default)  # Safe\n```\n\n**Essential Methods:**\n\n| Method | Action |\n|--------|--------|\n| `dict[key] = value` | Add/update |\n| `dict.get(key, default)` | Safe access |\n| `dict.pop(key)` | Remove & return |\n| `dict.keys()` | All keys |\n| `dict.values()` | All values |\n| `dict.items()` | Key-value pairs |\n| `dict.update(other)` | Merge dicts |\n\n**Iteration (Best Practice):**\n```python\nfor key, value in dict.items():\n    print(f\"{key}: {value}\")\n```\n\n**Nested Dictionaries:**\n```python\ndata = {\n    \"user1\": {\"name\": \"Alice\", \"age\": 25},\n    \"user2\": {\"name\": \"Bob\", \"age\": 30}\n}\n\nname = data[\"user1\"][\"name\"]  # Alice\n```\n\n**Why Dictionaries are Fast:**\n- Hash tables: O(1) lookup\n- List: O(n) search\n- Dict: instant key-based access\n\n**When to Use:**\n\n| Scenario | Use |\n|----------|-----|\n| Need key-based lookup | ✅ Dict |\n| Store configuration | ✅ Dict |\n| JSON-like data | ✅ Dict |\n| Counting/frequency | ✅ Dict |\n| Ordered sequence | List |\n| Just need values | List |\n\n**Common Patterns:**\n```python\n# Count frequency\nfreq = {}\nfor item in items:\n    freq[item] = freq.get(item, 0) + 1\n\n# Group by key\ngroups = {}\nfor item in items:\n    key = get_key(item)\n    groups.setdefault(key, []).append(item)\n\n# Merge dicts\ncombined = {**dict1, **dict2}\n```\n\n**Remember:**\n```python\n# ❌ Wrong\ndict[[1,2]] = \"value\"  # Lists not hashable!\nvalue = dict[\"missing\"]  # KeyError!\n\n# ✅ Correct\ndict[(1,2)] = \"value\"  # Tuples OK\nvalue = dict.get(\"missing\", default)\n```\n\nMaster dictionaries for efficient data management!",
+  "order": 4
 }

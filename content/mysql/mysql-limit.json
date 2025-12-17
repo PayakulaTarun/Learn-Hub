@@ -1,0 +1,58 @@
+{
+  "title": "MySQL LIMIT",
+  "slug": "mysql-limit",
+  "subject": "MySQL",
+  "category": "Database",
+  "level": "Beginner",
+  "estimated_read_time": "8 mins",
+  "prerequisites": [
+    "MySQL ORDER BY"
+  ],
+  "learning_objectives": [
+    "Restrict number of rows returned",
+    "Pagination (Offset)"
+  ],
+  "theory": "## Restricting Results\\nThe `LIMIT` clause is used to specify the number of records to return. It is crucial for performance on large tables.\\n\\n### Pagination\\nLIMIT is often used with **OFFSET** for pagination (Page 1, Page 2).\\nSyntax: `LIMIT offset, count` OR `LIMIT count OFFSET offset`.",
+  "syntax": "SELECT * FROM table LIMIT number;\\nSELECT * FROM table LIMIT offset, count;",
+  "examples": [
+    {
+      "code": "SELECT * FROM products LIMIT 5;",
+      "output": "Top 5 products (based on natural or sort order).",
+      "explanation": "Returns only 5 rows."
+    },
+    {
+      "code": "SELECT * FROM products LIMIT 10, 5;",
+      "output": "Rows 11 to 15.",
+      "explanation": "Skip first 10, take next 5. Used for 'Page 3' if page size is 5."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Confusing Offset and Limit order.",
+      "correction": "`LIMIT 10, 5` means Skip 10, Take 5. Not Take 10, Skip 5.",
+      "example": "N/A"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "How do you get the 2nd highest salary?",
+      "answer": "SELECT distinct salary FROM employees ORDER BY salary DESC LIMIT 1, 1; (Skip 1, Take 1).",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Web Search Results",
+      "description": "Google shows 10 results per page. It uses generic equivalent of LIMIT 10 OFFSET 0, then OFFSET 10, etc.",
+      "code": "N/A"
+    }
+  ],
+  "exam_notes": [
+    "LIMIT n = Top n.",
+    "LIMIT x, y = Skip x, Top y.",
+    "MySQL specific (PostgreSQL uses LIMIT/OFFSET syntax slightly differently)."
+  ],
+  "summary": "LIMIT controls the volume of data returned, essential for UI pagination and performance.",
+  "order": 16
+}

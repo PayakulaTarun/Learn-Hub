@@ -48,6 +48,7 @@ export interface Tutorial {
     exam_notes: string[];
     summary: string;
     description?: string; // Fallback for backward compatibility
+    order?: number;
 }
 
 export interface TutorialMetadata {
@@ -56,4 +57,5 @@ export interface TutorialMetadata {
     category: string;
     subject: string;
     description: string;
+    order?: number;
 }

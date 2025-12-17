@@ -1,60 +1,61 @@
 {
-    "title": "Advanced Closures & Scope Chains",
-    "slug": "js-advanced-closures",
-    "subject": "JavaScript",
-    "category": "Web Development",
-    "level": "Advanced",
-    "estimated_read_time": "20 mins",
-    "prerequisites": [
-        "JavaScript Closures"
-    ],
-    "learning_objectives": [
-        "Lexical Environment Detail",
-        "Scope Chain Lookup",
-        "Module Pattern with Closures",
-        "Memoization"
-    ],
-    "theory": "Deep dive into how Closures work under the hood.\n\nEvery function has a hidden property `[[Environment]]` referencing the Lexical Environment where it was created.\n\n**Memoization** is an optimization technique where you cache the result of a function call based on inputs, using closures to hold the cache.",
-    "syntax": "function memoize(fn) {\n  const cache = {};\n  return function(...args) {\n    const key = JSON.stringify(args);\n    if (cache[key]) return cache[key];\n    const result = fn(...args);\n    cache[key] = result;\n    return result;\n  }\n}",
-    "examples": [
-        {
-            "code": "const slowSquare = n => { /* delay */ return n*n; }\nconst fastSquare = memoize(slowSquare);\nfastSquare(5); // Slow\nfastSquare(5); // Instant (from cache)",
-            "output": "Performance gain.",
-            "explanation": "Closure `cache` survives between calls."
-        }
-    ],
-    "common_mistakes": [
-        {
-            "mistake": "Memory Leaks",
-            "correction": "Holding large objects in closure scope prevents them from being garbage collected.",
-            "example": ""
-        }
-    ],
-    "interview_questions": [
-        {
-            "question": "Implement a `once` function.",
-            "answer": "A function that can only be called once, no matter how many times invoked.",
-            "difficulty": "Hard"
-        }
-    ],
-    "practice_problems": [
-        {
-            "problem": "Create a function `counter` that can increment AND decrement.",
-            "hint": "Return object { inc, dec }",
-            "solution": "function create() { let c=0; return { inc: ()=>c++, dec: ()=>c-- } }",
-            "difficulty": "Medium"
-        }
-    ],
-    "real_world_use_cases": [
-        {
-            "scenario": "React Hooks",
-            "description": "`useState` and `useEffect` rely entirely on closures to persist state between renders.",
-            "code": ""
-        }
-    ],
-    "exam_notes": [
-        "Scope Chain is searched outward until Global.",
-        "Variable Shadowing: Inner var hides Outer var."
-    ],
-    "summary": "Closures are the key to state management in functional JavaScript."
+  "title": "Advanced Closures & Scope Chains",
+  "slug": "js-advanced-closures",
+  "subject": "JavaScript",
+  "category": "Web Development",
+  "level": "Advanced",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "JavaScript Closures"
+  ],
+  "learning_objectives": [
+    "Lexical Environment Detail",
+    "Scope Chain Lookup",
+    "Module Pattern with Closures",
+    "Memoization"
+  ],
+  "theory": "Deep dive into how Closures work under the hood.\n\nEvery function has a hidden property `[[Environment]]` referencing the Lexical Environment where it was created.\n\n**Memoization** is an optimization technique where you cache the result of a function call based on inputs, using closures to hold the cache.",
+  "syntax": "function memoize(fn) {\n  const cache = {};\n  return function(...args) {\n    const key = JSON.stringify(args);\n    if (cache[key]) return cache[key];\n    const result = fn(...args);\n    cache[key] = result;\n    return result;\n  }\n}",
+  "examples": [
+    {
+      "code": "const slowSquare = n => { /* delay */ return n*n; }\nconst fastSquare = memoize(slowSquare);\nfastSquare(5); // Slow\nfastSquare(5); // Instant (from cache)",
+      "output": "Performance gain.",
+      "explanation": "Closure `cache` survives between calls."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Memory Leaks",
+      "correction": "Holding large objects in closure scope prevents them from being garbage collected.",
+      "example": ""
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Implement a `once` function.",
+      "answer": "A function that can only be called once, no matter how many times invoked.",
+      "difficulty": "Hard"
+    }
+  ],
+  "practice_problems": [
+    {
+      "problem": "Create a function `counter` that can increment AND decrement.",
+      "hint": "Return object { inc, dec }",
+      "solution": "function create() { let c=0; return { inc: ()=>c++, dec: ()=>c-- } }",
+      "difficulty": "Medium"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "React Hooks",
+      "description": "`useState` and `useEffect` rely entirely on closures to persist state between renders.",
+      "code": ""
+    }
+  ],
+  "exam_notes": [
+    "Scope Chain is searched outward until Global.",
+    "Variable Shadowing: Inner var hides Outer var."
+  ],
+  "summary": "Closures are the key to state management in functional JavaScript.",
+  "order": 41
 }
