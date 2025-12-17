@@ -85,7 +85,7 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
   if (!tutorial) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-ui-dark flex flex-col">
       <Head>
         <title>{`${tutorial.title} - LearnHub`}</title>
         <meta name="description" content={tutorial.theory?.substring(0, 160)} />
@@ -105,17 +105,17 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
         {/* Sidebar Navigation */}
         <aside className={`
           fixed lg:sticky top-0 left-0 h-screen lg:h-[calc(100vh-100px)]
-          w-80 bg-white border-r border-gray-200 overflow-y-auto
+          w-80 bg-ui-card border-r border-ui-border overflow-y-auto
           transition-transform duration-300 z-40 lg:translate-x-0
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          lg:top-24 lg:rounded-lg lg:shadow-sm
+          lg:top-24 lg:rounded-lg lg:shadow-md
         `}>
           <div className="p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
-              <BookOpen className="text-[#4A90E2]" size={24} />
+            <h2 className="text-xl font-bold text-text-primary mb-2 flex items-center gap-2">
+              <BookOpen className="text-accent" size={24} />
               {tutorial.category.toUpperCase()}
             </h2>
-            <p className="text-sm text-gray-600 mb-6 line-clamp-2">{tutorial.title}</p>
+            <p className="text-sm text-text-secondary mb-6 line-clamp-2">{tutorial.title}</p>
 
             <div className="space-y-2">
               {sections.map((section, idx) => (
@@ -128,8 +128,8 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
                   }}
                   className={`w-full text-left px-4 py-3 rounded-lg flex items-center justify-between group transition-all duration-200 ${
                     activeSection.id === section.id
-                      ? 'bg-[#4A90E2]/10 text-[#4A90E2] font-semibold border-l-4 border-[#4A90E2]'
-                      : 'hover:bg-gray-50 text-gray-600 hover:text-gray-900'
+                      ? 'bg-accent/10 text-accent font-semibold border-l-4 border-accent'
+                      : 'hover:bg-ui-dark text-text-secondary hover:text-text-primary'
                   }`}
                 >
                   <span className="line-clamp-1 text-sm">{idx + 1}. {section.title}</span>
@@ -139,7 +139,7 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
             </div>
 
             <div className="mt-8 pt-6 border-t border-gray-100">
-              <Link href="/subjects" className="text-sm text-gray-500 hover:text-[#4A90E2] flex items-center gap-1">
+              <Link href="/subjects" className="text-sm text-text-muted hover:text-accent flex items-center gap-1">
                 ← Back to All Subjects
               </Link>
             </div>
@@ -147,21 +147,21 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
         </aside>
 
         {/* Main Content */}
-        <div className="flex-1 w-full lg:max-w-4xl bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden min-h-[500px]">
+        <div className="flex-1 w-full lg:max-w-4xl bg-ui-card rounded-2xl shadow-lg border border-ui-border overflow-hidden min-h-[500px]">
           <div className="p-8 lg:p-12">
             
             {/* Header Content */}
-            <div className="mb-8 border-b border-gray-100 pb-8">
+            <div className="mb-8 border-b border-ui-border pb-8">
                <div className="flex items-center gap-2 mb-4">
-                  <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">{tutorial.level}</span>
-                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">{tutorial.estimated_read_time}</span>
+                  <span className="px-3 py-1 bg-secondary/30 text-highlight border border-secondary/50 rounded-full text-xs font-semibold">{tutorial.level}</span>
+                  <span className="px-3 py-1 bg-accent/20 text-accent border border-accent/40 rounded-full text-xs font-semibold">{tutorial.estimated_read_time}</span>
                </div>
-              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">{tutorial.title}</h1>
-              <h2 className="text-xl text-[#4A90E2] font-medium">{activeSection.title}</h2>
+              <h1 className="text-3xl lg:text-4xl font-bold text-text-primary mb-2">{tutorial.title}</h1>
+              <h2 className="text-xl text-accent font-medium">{activeSection.title}</h2>
             </div>
 
             {/* Dynamic Content Renderer */}
-            <div className="prose prose-lg max-w-none text-gray-700 space-y-8">
+            <div className="prose prose-lg prose-invert max-w-none text-text-secondary space-y-8">
               
               {/* Theory & Syntax */}
               {(activeSection.type === 'theory') && (
@@ -170,38 +170,39 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
 
               {/* Examples */}
               {activeSection.type === 'example' && activeSection.data?.map((ex: TutorialExample, i: number) => (
-                <div key={i} className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                    <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
-                        <Code className="text-green-600" size={20}/> Example {i + 1}
+
+                <div key={i} className="bg-ui-dark rounded-xl p-6 border border-ui-border">
+                    <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-text-primary">
+                        <Code className="text-accent" size={20}/> Example {i + 1}
                     </h3>
-                    <div className="bg-[#1e1e1e] text-white rounded-lg p-4 font-mono text-sm overflow-x-auto mb-4">
+                    <div className="bg-[#050B14] text-gray-300 rounded-lg p-4 font-mono text-sm overflow-x-auto mb-4 border border-ui-border">
                         <pre>{ex.code}</pre>
                     </div>
-                    <div className="bg-white border-l-4 border-green-500 p-4 rounded-r-lg shadow-sm">
-                        <p className="font-mono text-xs text-gray-400 mb-1">OUTPUT:</p>
-                        <pre className="text-sm whitespace-pre-wrap">{ex.output}</pre>
+                    <div className="bg-ui-dark border-l-4 border-accent p-4 rounded-r-lg shadow-sm">
+                        <p className="font-mono text-xs text-text-muted mb-1">OUTPUT:</p>
+                        <pre className="text-sm whitespace-pre-wrap text-text-secondary">{ex.output}</pre>
                     </div>
-                    <p className="mt-4 text-gray-600 italic border-l-2 border-gray-300 pl-4">{ex.explanation}</p>
+                    <p className="mt-4 text-text-muted italic border-l-2 border-ui-border pl-4">{ex.explanation}</p>
                 </div>
               ))}
 
               {/* Mistakes */}
               {activeSection.type === 'mistake' && activeSection.data?.map((m: CommonMistake, i: number) => (
                 <div key={i} className="mb-8 border-l-4 border-red-500 pl-6 py-2">
-                    <h3 className="text-lg font-bold text-red-600 mb-2 flex items-center gap-2">
+                    <h3 className="text-lg font-bold text-red-400 mb-2 flex items-center gap-2">
                         <AlertTriangle size={20}/> ❌ {m.mistake}
                     </h3>
-                    <div className="bg-red-50 p-4 rounded-lg text-red-800 mb-4">
+                    <div className="bg-red-900/20 p-4 rounded-lg text-red-200 mb-4 border border-red-900/30">
                         {m.correction}
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-gray-100 p-3 rounded">
-                            <p className="text-xs text-red-500 font-bold mb-1">WRONG:</p>
-                            <code className="text-sm block whitespace-pre-wrap">{m.example.split('# ✅')[0]}</code>
+                        <div className="bg-ui-dark p-3 rounded border border-ui-border">
+                            <p className="text-xs text-red-400 font-bold mb-1">WRONG:</p>
+                            <code className="text-sm block whitespace-pre-wrap text-text-muted">{m.example.split('# ✅')[0]}</code>
                         </div>
-                         <div className="bg-green-50 p-3 rounded">
-                            <p className="text-xs text-green-500 font-bold mb-1">CORRECT:</p>
-                            <code className="text-sm block whitespace-pre-wrap">{'# ✅' + m.example.split('# ✅')[1] || ''}</code>
+                         <div className="bg-ui-dark p-3 rounded border border-ui-border">
+                            <p className="text-xs text-accent font-bold mb-1">CORRECT:</p>
+                            <code className="text-sm block whitespace-pre-wrap text-text-primary">{'# ✅' + m.example.split('# ✅')[1] || ''}</code>
                         </div>
                     </div>
                 </div>
@@ -209,16 +210,16 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
 
               {/* Interview Questions */}
               {activeSection.type === 'interview' && activeSection.data?.map((q: InterviewQuestion, i: number) => (
-                <div key={i} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+                <div key={i} className="bg-ui-dark border border-ui-border rounded-xl p-6 shadow-sm hover:shadow-glow transition duration-300">
                     <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-lg font-bold text-gray-900 pr-4">Q{i+1}: {q.question}</h3>
+                        <h3 className="text-lg font-bold text-text-primary pr-4">Q{i+1}: {q.question}</h3>
                         <span className={`px-2 py-1 rounded text-xs font-bold ${
-                            q.difficulty === 'Easy' ? 'bg-green-100 text-green-700' : 
-                            q.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' : 
-                            'bg-red-100 text-red-700'
+                            q.difficulty === 'Easy' ? 'bg-green-500/20 text-green-400' : 
+                            q.difficulty === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' : 
+                            'bg-red-500/20 text-red-400'
                         }`}>{q.difficulty}</span>
                     </div>
-                    <div className="bg-blue-50 p-4 rounded-lg text-blue-900 text-sm leading-relaxed">
+                    <div className="bg-secondary/10 p-4 rounded-lg text-text-secondary text-sm leading-relaxed border border-secondary/20">
                         {q.answer}
                     </div>
                 </div>
@@ -226,20 +227,20 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
 
                {/* Practice Problems */}
               {activeSection.type === 'practice' && activeSection.data?.map((p: PracticeProblem, i: number) => (
-                <div key={i} className="bg-purple-50 rounded-xl p-6 border border-purple-100">
+                <div key={i} className="bg-ui-dark rounded-xl p-6 border border-ui-border">
                     <div className="flex items-center gap-2 mb-3">
-                        <HelpCircle className="text-purple-600" size={20}/>
-                        <h3 className="font-bold text-gray-900">Problem {i+1}</h3>
-                        <span className="text-xs bg-white px-2 py-0.5 rounded border border-purple-200 text-purple-600 ml-auto">{p.difficulty}</span>
+                        <HelpCircle className="text-highlight" size={20}/>
+                        <h3 className="font-bold text-text-primary">Problem {i+1}</h3>
+                        <span className="text-xs bg-ui-card px-2 py-0.5 rounded border border-highlight/30 text-highlight ml-auto">{p.difficulty}</span>
                     </div>
-                    <p className="mb-4 text-gray-800 font-medium">{p.problem}</p>
+                    <p className="mb-4 text-text-secondary font-medium">{p.problem}</p>
                     <details className="group">
-                        <summary className="cursor-pointer text-sm text-purple-600 hover:text-purple-800 font-medium mb-2">Show Hint</summary>
-                        <p className="text-sm text-gray-600 pl-4 border-l-2 border-purple-200 italic mb-4">{p.hint}</p>
+                        <summary className="cursor-pointer text-sm text-highlight hover:text-white font-medium mb-2 transition-colors">Show Hint</summary>
+                        <p className="text-sm text-text-muted pl-4 border-l-2 border-highlight/30 italic mb-4">{p.hint}</p>
                     </details>
                      <details className="group">
-                        <summary className="cursor-pointer text-sm text-green-600 hover:text-green-800 font-medium">Show Solution</summary>
-                        <div className="mt-2 bg-[#1e1e1e] text-white p-3 rounded text-sm font-mono overflow-x-auto">
+                        <summary className="cursor-pointer text-sm text-accent hover:text-white font-medium transition-colors">Show Solution</summary>
+                        <div className="mt-2 bg-[#050B14] text-gray-300 p-3 rounded text-sm font-mono overflow-x-auto border border-ui-border">
                             <pre>{p.solution}</pre>
                         </div>
                     </details>
@@ -249,13 +250,13 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
               {/* Real World Use Cases */}
               {activeSection.type === 'usecase' && activeSection.data?.map((u: RealWorldUseCase, i: number) => (
                  <div key={i} className="flex gap-4 items-start">
-                     <div className="bg-indigo-100 p-3 rounded-lg text-indigo-600">
-                         <Briefcase size={24} />
+                     <div className="bg-secondary/20 p-3 rounded-lg text-secondary border border-secondary/30">
+                         <Briefcase size={24} className="text-white" />
                      </div>
                      <div>
-                         <h3 className="text-xl font-bold text-gray-900 mb-1">{u.scenario}</h3>
-                         <p className="text-gray-600 mb-3">{u.description}</p>
-                         <div className="bg-gray-800 text-gray-300 p-4 rounded-lg font-mono text-sm">
+                         <h3 className="text-xl font-bold text-text-primary mb-1">{u.scenario}</h3>
+                         <p className="text-text-secondary mb-3">{u.description}</p>
+                         <div className="bg-[#050B14] text-gray-300 p-4 rounded-lg font-mono text-sm border border-ui-border">
                              <pre className="whitespace-pre-wrap">{u.code}</pre>
                          </div>
                      </div>
@@ -265,20 +266,20 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
               {/* Summary & Exam Notes */}
               {activeSection.type === 'summary' && (
                   <div>
-                      <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                          <GraduationCap size={24} className="text-blue-600"/> Key Exam Takeaways
+                      <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-text-primary">
+                          <GraduationCap size={24} className="text-highlight"/> Key Exam Takeaways
                       </h3>
                       <ul className="space-y-2 mb-8">
                           {activeSection.data?.map((note: string, i: number) => (
-                              <li key={i} className="flex gap-2 items-start bg-yellow-50 p-3 rounded border border-yellow-100">
-                                  <span className="text-yellow-500 font-bold">•</span>
-                                  <span className="text-gray-800 text-sm">{note}</span>
+                              <li key={i} className="flex gap-2 items-start bg-yellow-500/10 p-3 rounded border border-yellow-500/20">
+                                  <span className="text-yellow-400 font-bold">•</span>
+                                  <span className="text-text-secondary text-sm">{note}</span>
                               </li>
                           ))}
                       </ul>
-                      <div className="bg-blue-50 p-6 rounded-xl border border-blue-100">
-                          <h3 className="font-bold text-blue-900 mb-2">Topic Summary</h3>
-                          <div className="text-blue-800 prose prose-sm max-w-none">
+                      <div className="bg-secondary/10 p-6 rounded-xl border border-secondary/20">
+                          <h3 className="font-bold text-highlight mb-2">Topic Summary</h3>
+                          <div className="text-text-secondary prose prose-invert prose-sm max-w-none">
                             <ReactMarkdown>{activeSection.content || ''}</ReactMarkdown>
                           </div>
                       </div>
@@ -288,21 +289,21 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
             </div>
 
             {/* Navigation Footer */}
-            <div className="mt-16 pt-8 border-t border-gray-100 flex justify-between items-center">
+            <div className="mt-16 pt-8 border-t border-ui-border flex justify-between items-center">
               <button
                 onClick={goToPrevious}
                 disabled={!hasPrevious}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition ${
                   hasPrevious
-                    ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    : 'bg-gray-50 text-gray-400 cursor-not-allowed'
+                    ? 'bg-ui-dark text-text-primary hover:bg-ui-border border border-ui-border'
+                    : 'bg-ui-dark text-text-muted cursor-not-allowed opacity-50'
                 }`}
               >
                 <ArrowLeft size={20} />
                 Previous
               </button>
 
-              <div className="text-sm text-gray-500 hidden sm:block">
+              <div className="text-sm text-text-muted hidden sm:block">
                 {activeSection.title} ({currentIndex + 1}/{sections.length})
               </div>
 
@@ -311,8 +312,8 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
                 disabled={!hasNext}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition ${
                   hasNext
-                    ? 'bg-[#4A90E2] text-white hover:bg-[#357ABD]'
-                    : 'bg-gray-50 text-gray-400 cursor-not-allowed'
+                    ? 'bg-accent text-primary hover:bg-highlight hover:shadow-glow'
+                    : 'bg-ui-dark text-text-muted cursor-not-allowed opacity-50'
                 }`}
               >
                 Next
