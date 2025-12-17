@@ -8,40 +8,38 @@ export default function Home() {
     <Layout title="LearnHub - Master Engineering">
       {/* Hero Section */}
       {/* Hero Section */}
-      <section className="relative text-white overflow-hidden">
-        {/* Background Video */}
-        <div className="absolute inset-0 w-full h-full z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="object-cover w-full h-full"
-          >
-            <source src="/background.mp4" type="video/mp4" />
-          </video>
-          {/* Overlay to ensure text readability */}
-          <div className="absolute inset-0 bg-black/60"></div>
-        </div>
+      {/* Hero Video Section (Visual) */}
+      <section className="relative w-full h-[50vh] overflow-hidden border-b border-ui-border/20">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="object-cover w-full h-full"
+        >
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        {/* Subtle overlay for video integration */}
+        <div className="absolute inset-0 bg-ui-dark/20"></div>
+      </section>
 
-        {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-48">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Master Engineering
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
-              Learn Computer Science, Full Stack Development, System Design, and 60+ other technologies with comprehensive masterclasses and real-world projects
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/subjects" className="btn-primary bg-accent text-primary hover:bg-highlight hover:text-white border-2 border-accent hover:border-highlight backdrop-blur-sm font-bold shadow-[0_0_15px_rgba(31,209,193,0.3)] transition-all duration-300">
-                Start Learning
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-              <Link href="/about" className="btn-secondary bg-black/30 border-2 border-white/50 text-white hover:bg-white/10 hover:border-white hover:text-accent backdrop-blur-md font-bold transition-all duration-300">
-                Learn More
-              </Link>
-            </div>
+      {/* Hero Content Section */}
+      <section className="py-16 md:py-24 bg-ui-dark text-center border-b border-ui-border/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-text-primary">
+            Master Engineering
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 text-text-secondary max-w-3xl mx-auto">
+            Learn Computer Science, Full Stack Development, System Design, and 200+ other technologies with comprehensive masterclasses and real-world projects
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/subjects" className="btn-primary bg-accent text-primary hover:bg-highlight hover:text-white border-2 border-accent hover:border-highlight backdrop-blur-sm font-bold shadow-glow transition-all duration-300">
+              Start Learning
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+            <Link href="/about" className="btn-secondary bg-transparent hover:bg-ui-light/5 text-text-primary border-2 border-text-secondary hover:border-accent hover:text-accent backdrop-blur-md font-bold transition-all duration-300">
+              Learn More
+            </Link>
           </div>
         </div>
       </section>
@@ -123,16 +121,31 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Coming Soon Card */}
-            <div className="bg-ui-dark rounded-xl border-2 border-dashed border-ui-border p-6 flex flex-col items-center justify-center text-center opacity-70">
-              <Code className="h-8 w-8 text-text-muted mb-2" />
-              <h3 className="font-bold text-text-secondary">JavaScript</h3>
-              <p className="text-xs text-text-muted">Coming Soon</p>
+            {/* JavaScript Card */}
+            <div className="bg-ui-card rounded-xl shadow-lg overflow-hidden hover:shadow-glow-blue transition-shadow border border-ui-border">
+              <div className="p-6">
+                <div className="flex items-center mb-3">
+                  <Code className="h-6 w-6 text-accent mr-2" />
+                  <h3 className="text-lg font-bold text-text-primary">JavaScript Ultimate</h3>
+                </div>
+                <p className="text-text-secondary text-sm mb-3">
+                  Master the language of the web from basics to advanced.
+                </p>
+                <div className="text-xs text-text-muted mb-4">
+                  <strong>Includes:</strong> ES6+, Async/Await, DOM, APIs
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-text-muted">50 Topics • In-Depth</span>
+                  <Link href="/subjects/js-introduction" className="text-xs bg-accent text-primary font-bold px-3 py-1 rounded hover:bg-highlight hover:text-white transition">
+                    Start Learning
+                  </Link>
+                </div>
+              </div>
             </div>
 
             <div className="bg-ui-dark rounded-xl border-2 border-dashed border-ui-border p-6 flex flex-col items-center justify-center text-center opacity-70">
               <Database className="h-8 w-8 text-text-muted mb-2" />
-              <h3 className="font-bold text-text-secondary">Databases</h3>
+              <h3 className="font-bold text-text-secondary">MySQL & SQL</h3>
               <p className="text-xs text-text-muted">Coming Soon</p>
             </div>
           </div>
