@@ -24,7 +24,7 @@ export default function Home() {
       </section>
 
       {/* Hero Content Section */}
-      <section className="py-16 md:py-24 bg-ui-dark text-center border-b border-ui-border/10">
+      <section className="py-16 md:py-24 bg-ui-dark text-center border-b border-ui-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-text-primary">
             Master Engineering
@@ -37,7 +37,7 @@ export default function Home() {
               Start Learning
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
-            <Link href="/about" className="btn-secondary bg-transparent hover:bg-ui-light/5 text-text-primary border-2 border-text-secondary hover:border-accent hover:text-accent backdrop-blur-md font-bold transition-all duration-300">
+            <Link href="/about" className="btn-secondary bg-transparent hover:bg-ui-border/50 text-text-primary border-2 border-text-secondary hover:border-accent hover:text-accent backdrop-blur-md font-bold transition-all duration-300">
               Learn More
             </Link>
           </div>
@@ -45,42 +45,42 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-ui-light text-primary">
+      <section className="py-20 bg-ui-dark text-text-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Why Choose LearnHub?</h2>
-            <p className="text-xl text-text-muted max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">Why Choose LearnHub?</h2>
+            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
               Master 60+ technologies with structured masterclasses, interactive code examples, and portfolio-ready projects
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-ui-border/10">
-              <div className="w-24 h-24 mx-auto mb-4">
-                <img src="/books.jpg" alt="Live Code Editor" className="w-full h-full object-cover rounded-lg" />
+            <div className="text-center p-6 bg-ui-card rounded-xl shadow-lg border border-ui-border hover:border-accent transition-colors duration-300">
+              <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-lg border border-ui-border/50">
+                <img src="/books.jpg" alt="Live Code Editor" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-primary">Live Code Editor</h3>
-              <p className="text-text-muted">
+              <h3 className="text-xl font-semibold mb-2 text-text-primary">Live Code Editor</h3>
+              <p className="text-text-secondary">
                 Write and run code directly in your browser with Prism.js syntax highlighting. Test each lesson's code examples instantly.
               </p>
             </div>
 
-            <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-ui-border/10">
-              <div className="w-24 h-24 mx-auto mb-4">
-                <img src="/brain.jpg" alt="Structured Learning Path" className="w-full h-full object-cover rounded-lg" />
+            <div className="text-center p-6 bg-ui-card rounded-xl shadow-lg border border-ui-border hover:border-accent transition-colors duration-300">
+              <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-lg border border-ui-border/50">
+                <img src="/brain.jpg" alt="Structured Learning Path" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-primary">Structured Learning Path</h3>
-              <p className="text-text-muted">
+              <h3 className="text-xl font-semibold mb-2 text-text-primary">Structured Learning Path</h3>
+              <p className="text-text-secondary">
                 Follow our recommended path from HTML basics → CSS styling → JavaScript/Python → Backend frameworks with clear difficulty levels
               </p>
             </div>
 
-            <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-ui-border/10">
-              <div className="w-24 h-24 mx-auto mb-4">
-                <img src="/studying.png" alt="Real Projects" className="w-full h-full object-cover rounded-lg" />
+            <div className="text-center p-6 bg-ui-card rounded-xl shadow-lg border border-ui-border hover:border-accent transition-colors duration-300">
+              <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-lg border border-ui-border/50">
+                <img src="/studying.png" alt="Real Projects" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-primary">Real Projects</h3>
-              <p className="text-text-muted">
+              <h3 className="text-xl font-semibold mb-2 text-text-primary">Real Projects</h3>
+              <p className="text-text-secondary">
                 Build portfolio sites, REST APIs, Django web apps, and database-driven applications to showcase to employers
               </p>
             </div>
@@ -89,11 +89,11 @@ export default function Home() {
       </section>
 
       {/* Courses Preview */}
-      <section className="bg-ui-light py-20 border-t border-ui-border/10">
+      <section className="bg-ui-dark py-20 border-t border-ui-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Available Courses</h2>
-            <p className="text-xl text-text-muted">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">Available Courses</h2>
+            <p className="text-xl text-text-secondary">
               Start your journey with our comprehensive curriculum
             </p>
           </div>
@@ -151,7 +151,7 @@ export default function Home() {
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/subjects" className="btn-primary inline-flex items-center bg-primary text-white hover:bg-secondary hover:shadow-[0_0_20px_rgba(77,163,255,0.4)]">
+            <Link href="/subjects" className="btn-primary inline-flex items-center bg-accent text-primary hover:bg-highlight hover:shadow-[0_0_20px_rgba(31,209,193,0.4)]">
               View All Topics <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </div>
