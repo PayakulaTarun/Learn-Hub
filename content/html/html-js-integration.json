@@ -1,0 +1,72 @@
+{
+    "title": "HTML with JavaScript Integration",
+    "slug": "html-js-integration",
+    "subject": "HTML",
+    "category": "Web Development",
+    "level": "Advanced",
+    "estimated_read_time": "15 minutes",
+    "prerequisites": [
+        "HTML Document Structure"
+    ],
+    "learning_objectives": [
+        "Link JS files with <script>",
+        "Placement in <head> vs <body>",
+        "Inline event handlers (onclick)",
+        "The <noscript> tag"
+    ],
+    "theory": "# Integration with JavaScript\n\nJavaScript provides interactivity. It connects to HTML via the `<script>` tag.\n\n## 1. External Script (Best Practice)\n```html\n<script src=\"app.js\"></script>\n```\nIt is best to place this:\n*   At the **end of the body** (`</body>`), OR\n*   In the head with the **defer** attribute.\n\n## 2. Internal Script\n```html\n<script>\n  alert('Hello');\n</script>\n```\n\n## 3. Inline Events (Avoid)\nHTML elements have event attributes like `onclick`, `onmouseover`.\n```html\n<button onclick=\"doSomething()\">Click</button>\n```\n**Better approach:** Select the element in JS and add an event listener.\n\n## The `<noscript>` Tag\nDefines content to be displayed if the user has disabled JavaScript.\n\n```html\n<noscript>Please enable JavaScript to use this site.</noscript>\n```\n\n## Manipulation (DOM)\nJavaScript sees HTML as a tree of objects (DOM). It can change content (`innerHTML`), styles (`style`), and attributes.",
+    "syntax": "<script src=\"file.js\" defer></script>",
+    "examples": [
+        {
+            "code": "<button id=\"btn\">Click</button>\n<script>\n  document.getElementById('btn').onclick = function() {\n     alert('Clicked!');\n  };\n</script>",
+            "output": "Button triggers alert.",
+            "explanation": "Separates HTML structure from JS logic."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Script in head without defer",
+            "correction": "Blocks rendering. Move to bottom or use defer.",
+            "example": "Bad performance."
+        },
+        {
+            "mistake": "Mixing logic in HTML",
+            "correction": "Writing complex JS inside onclick=\"...\" is unmaintainable.",
+            "example": "Use addEventListener."
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "Where should you put script tags?",
+            "difficulty": "Easy",
+            "answer": "Ideally at the bottom of the <body> element or in the <head> using the 'defer' attribute. This ensures the HTML content loads before the heavy script execution begins."
+        },
+        {
+            "question": "What is <noscript>?",
+            "difficulty": "Easy",
+            "answer": "It provides fallback content for users who have disabled JavaScript in their browser."
+        }
+    ],
+    "practice_problems": [
+        {
+            "difficulty": "Beginner",
+            "problem": "Create a button that changes its text to 'Clicked' when clicked, using internal JS.",
+            "hint": "this.innerHTML = 'Clicked'",
+            "solution": "<button onclick=\"this.innerHTML='Clicked'\">Click me</button>"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Single Page Apps (React)",
+            "description": "React/Vue apps usually consist of a single HTML file with one <div id=\"root\"> and a <script> bundle that generates the entire UI.",
+            "code": "<div id=\"root\"></div>"
+        }
+    ],
+    "exam_notes": [
+        "<script> tag loads JS",
+        "defer attribute is modern standard",
+        "<noscript> for fallback",
+        "Avoid inline onclick"
+    ],
+    "summary": "JavaScript brings HTML to life. The <script> tag allows you to execute logic that manipulates the HTML DOM. Using 'defer' and avoiding inline event handlers ensures your site remains fast and maintainable."
+}

@@ -1,0 +1,73 @@
+{
+    "title": "HTML Security Basics",
+    "slug": "html-security-basics",
+    "subject": "HTML",
+    "category": "Web Development",
+    "level": "Advanced",
+    "estimated_read_time": "15 minutes",
+    "prerequisites": [
+        "HTML Forms",
+        "HTML Iframes"
+    ],
+    "learning_objectives": [
+        "Understand XSS (Cross Site Scripting)",
+        "Understand CSRF",
+        "Use CSP (Content Security Policy)",
+        "Secure Iframes sandbox"
+    ],
+    "theory": "# HTML Security Basics\n\nSecurity is often handled on the server, but the frontend HTML plays a big role.\n\n## 1. XSS (Cross-Site Scripting)\nAttackers inject malicious scripts into your web page.\n*   **Prevention:** Never trust user input. Always escape special characters (`<` to `&lt;`) before displaying user data.\n\n## 2. Content Security Policy (CSP)\nA meta tag (or header) that tells the browser which sources are allowed to run.\n```html\n<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; script-src 'self' https://trusted.com\">\n```\nThis prevents attackers from loading scripts from evil-site.com.\n\n## 3. Iframe Security\nIframes can be dangerous. Use the `sandbox` attribute to restrict what the embedded content can do.\n```html\n<iframe src=\"untrusted.html\" sandbox></iframe>\n```\n`sandbox` bans scripts, forms, and popups by default.\n\n## 4. HTTPS\nAlways serve HTML over HTTPS. Unencrypted HTTP allows attackers to modify the HTML in transit (Man-in-the-Middle).",
+    "syntax": "<meta http-equiv=\"Content-Security-Policy\" ...>\n<iframe sandbox>",
+    "examples": [
+        {
+            "code": "<iframe src=\"user-content.html\" sandbox=\"allow-scripts\"></iframe>",
+            "output": "Restricted iframe.",
+            "explanation": "Allows scripts but blocks forms and top-navigation."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Displaying raw user input",
+            "correction": "If a user enters '<script>alert()</script>' as their name, and you display it, it executes! Always sanitize/encode output.",
+            "example": "Use textContent instead of innerHTML."
+        },
+        {
+            "mistake": "Using 'unsafe-inline' in CSP",
+            "correction": "Allowing inline scripts defeats the purpose of CSP. Move JS to external files.",
+            "example": "script-src 'self'"
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "What is XSS?",
+            "difficulty": "Intermediate",
+            "answer": "Cross-Site Scripting. An attack where malicious scripts are injected into trusted websites. It occurs when an application includes untrusted data in a web page without proper validation or escaping."
+        },
+        {
+            "question": "What does the sandbox attribute do?",
+            "difficulty": "Advanced",
+            "answer": "It restricts the actions of the content within an iframe, such as preventing script execution, form submission, or accessing local storage."
+        }
+    ],
+    "practice_problems": [
+        {
+            "difficulty": "Advanced",
+            "problem": "Write a CSP meta tag that only allows scripts from your own domain.",
+            "hint": "script-src 'self'",
+            "solution": "<meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'self'\">"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Banking Apps",
+            "description": "Banks use strict CSP to ensure that even if a hacker finds a vulnerability, they cannot load external scripts to steal data.",
+            "code": "CSP Header"
+        }
+    ],
+    "exam_notes": [
+        "XSS = Malicious script injection",
+        "CSP = Whitelist of allowed sources",
+        "Sandbox = Restrict iframes",
+        "HTTPS = Encrypted connection"
+    ],
+    "summary": "HTML security relies on defense-in-depth. Tools like Content Security Policy (CSP) and Iframe sandboxing allow you to strictly control what code acts on your page, significantly reducing the surface area for attacks like XSS."
+}

@@ -1,0 +1,73 @@
+{
+    "title": "HTML Forms Validation",
+    "slug": "html-forms-validation",
+    "subject": "HTML",
+    "category": "Web Development",
+    "level": "Intermediate",
+    "estimated_read_time": "15 minutes",
+    "prerequisites": [
+        "HTML Forms",
+        "HTML Input Types"
+    ],
+    "learning_objectives": [
+        "Understand client-side validation",
+        "Use required, min, max, pattern attributes",
+        "Perform regex validation",
+        "Style valid/invalid states"
+    ],
+    "theory": "# HTML Form Validation\n\nHTML5 built-in validation allows you to check user input before it is sent to the server. This provides instant feedback and reduces server load.\n\n## Validation Attributes\n\n### 1. `required`\nSpecifies that an input field must be filled out.\n```html\n<input type=\"text\" required>\n```\n\n### 2. `min` and `max`\nSpecifies the minimum and maximum values for numeric types.\n```html\n<input type=\"number\" min=\"1\" max=\"10\">\n```\n\n### 3. `minlength` and `maxlength`\nSpecifies the length limits for text strings.\n```html\n<input type=\"password\" minlength=\"8\">\n```\n\n### 4. `pattern`\nUses a **Regular Expression (Regex)** to validate complex formats.\n```html\n<input type=\"text\" pattern=\"[A-Za-z]{3}\" title=\"3 letters only\">\n```\n\n### 5. `type` checking\nInputs like `type=\"email\"` automatically validate email formats.\n\n## CSS Pseudo-classes\nYou can style inputs based on their state:\n*   `:valid`: Styles valid inputs.\n*   `:invalid`: Styles invalid inputs.\n\n```css\ninput:invalid { border: 2px solid red; }\n```",
+    "syntax": "<input required pattern=\"regex\">",
+    "examples": [
+        {
+            "code": "<form>\n  <label>Zip Code (5 digits):</label>\n  <input type=\"text\" pattern=\"[0-9]{5}\" title=\"Five digit zip code\" required>\n  <input type=\"submit\">\n</form>",
+            "output": "Form denies submission if not 5 digits.",
+            "explanation": "The browser checks the regex pattern [0-9]{5} automatically."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Relying ONLY on HTML validation",
+            "correction": "HTML validation can be bypassed by hackers. ALWAYS validate data on the Server Side as well.",
+            "example": "Client-side = UX. Server-side = Security."
+        },
+        {
+            "mistake": "Using confusing regex",
+            "correction": "Always provide a `title` attribute to explain what the pattern requires.",
+            "example": "pattern=\"...\" title=\"Must be 3 uppercase letters\""
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "Is HTML validation secure?",
+            "difficulty": "Intermediate",
+            "answer": "No. A user can disable JavaScript or inspector tools to remove the required attributes. It is purely for User Experience (UX). Security validation happens on the server."
+        },
+        {
+            "question": "What is the pattern attribute?",
+            "difficulty": "Advanced",
+            "answer": "It allows validation against a custom Regular Expression (e.g., checking for a specific ID format)."
+        }
+    ],
+    "practice_problems": [
+        {
+            "difficulty": "Intermediate",
+            "problem": "Create an input for 'Age' that is required and accepts numbers between 18 and 99.",
+            "hint": "Use type='number', min, max, required.",
+            "solution": "<input type=\"number\" min=\"18\" max=\"99\" required>"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Password Strength",
+            "description": "Signup forms use patterns to enforce 'At least one number, one uppercase' rules instantly.",
+            "code": "pattern=\"(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}\""
+        }
+    ],
+    "exam_notes": [
+        "required = Cannot be empty",
+        "type='email' checks @ symbol",
+        "pattern uses Regex",
+        "Always validate on server too"
+    ],
+    "summary": "HTML Form Validation provides a way to ensure data integrity before it leaves the browser. By using simple attributes like `required` and `pattern`, you can prevent errors and guide users to correct format input instantly."
+}

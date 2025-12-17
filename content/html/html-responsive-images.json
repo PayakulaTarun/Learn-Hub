@@ -1,0 +1,73 @@
+{
+    "title": "HTML Responsive Images",
+    "slug": "html-responsive-images",
+    "subject": "HTML",
+    "category": "Web Development",
+    "level": "Intermediate",
+    "estimated_read_time": "15 minutes",
+    "prerequisites": [
+        "HTML Images",
+        "HTML Meta Tags"
+    ],
+    "learning_objectives": [
+        "Understand responsive design needs",
+        "Learn the <picture> element",
+        "Use srcset and sizes attributes",
+        "Serve different images for different screen sizes"
+    ],
+    "theory": "# HTML Responsive Images\n\nResponsive images adapt to fit the user's device. You shouldn't serve a massive 4K desktop banner image to a mobile phone on a 3G network. It wastes bandwidth and slows down the site.\n\n## Solution 1: `srcset` attribute\n\nThe `srcset` attribute allows you to provide a list of image files and their widths, letting the browser choose the best one.\n\n```html\n<img src=\"small.jpg\"\n     srcset=\"small.jpg 500w, medium.jpg 1000w, large.jpg 2000w\"\n     sizes=\"(max-width: 600px) 480px, 800px\"\n     alt=\"Responsive\">\n```\n*   `500w`: Tells browser this image is 500 pixels wide.\n*   Browser calculates which one to download based on current screen width.\n\n## Solution 2: The `<picture>` Element\n\nGives you more explicit control (Art Direction). Use this if you want to show a *different* image (e.g., cropped differently) on mobile.\n\n```html\n<picture>\n  <source media=\"(min-width: 650px)\" srcset=\"img_desktop.jpg\">\n  <source media=\"(min-width: 465px)\" srcset=\"img_tablet.jpg\">\n  <img src=\"img_mobile.jpg\" alt=\"Flowers\">\n</picture>\n```\nIt works like `<audio>`/`<video>`. The browser uses the first `<source>` that matches, or falls back to `<img>`.",
+    "syntax": "<picture>\n <source media=\"condition\" srcset=\"url\">\n <img src=\"fallback\">\n</picture>",
+    "examples": [
+        {
+            "code": "<picture>\n  <source media=\"(min-width: 800px)\" srcset=\"wide-banner.jpg\">\n  <img src=\"square-Mobile.jpg\" alt=\"Banner\">\n</picture>",
+            "output": "Shows wide banner on PC, square image on phone.",
+            "explanation": "This ensures the subject of the photo is visible on small screens."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Using picture for everything",
+            "correction": "If you just need the same image in different sizes/resolutions, use <img> with `srcset`. Use <picture> only when changing the art/crop.",
+            "example": "srcset fits 90% of use cases."
+        },
+        {
+            "mistake": "Forgetting fallback img",
+            "correction": "The <picture> element itself displays nothing. You MUST include an <img> tag inside it.",
+            "example": "❌ <picture><source...></picture>\n✅ <picture>...<img></picture>"
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "Difference between srcset and picture?",
+            "difficulty": "Advanced",
+            "answer": "Use `srcset` when you want to serve the SAME image in different resolutions (performance). Use `<picture>` when you want to serve a DIFFERENT image (cropping, aspect ratio) based on device (art direction) or different formats (WebP vs JPG)."
+        },
+        {
+            "question": "What is the 'w' descriptor in srcset?",
+            "difficulty": "Advanced",
+            "answer": "It tells the browser the real width of the image file (e.g., 500w means 500px wide), allowing the browser to calculate which image to fetch based on screen density (DPR) and layout size."
+        }
+    ],
+    "practice_problems": [
+        {
+            "difficulty": "Intermediate",
+            "problem": "Create a responsive image setup that serves 'logo-large.png' for screens wider than 1000px and 'logo-small.png' otherwise.",
+            "hint": "Use <picture> element.",
+            "solution": "<picture>\n  <source media=\"(min-width: 1000px)\" srcset=\"logo-large.png\">\n  <img src=\"logo-small.png\" alt=\"Logo\">\n</picture>"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Modern Blogs",
+            "description": "Blogs serve WebP images to Chrome/Edge users and JPG to old Safari users using <picture> for better performance.",
+            "code": "<source type=\"image/webp\" ...>"
+        }
+    ],
+    "exam_notes": [
+        "srcset is for resolution switching",
+        "picture is for art direction or format switching",
+        "Always include <img> as the last child of <picture>",
+        "Saves bandwidth and improves load speed"
+    ],
+    "summary": "Responsive images ensure your website looks great and loads fast on any device. By using `srcset` for resolution switching or `<picture>` for explicit control, you avoid sending large desktop files to mobile users."
+}

@@ -1,0 +1,72 @@
+{
+    "title": "HTML Performance Optimization",
+    "slug": "html-performance-optimization",
+    "subject": "HTML",
+    "category": "Web Development",
+    "level": "Advanced",
+    "estimated_read_time": "15 minutes",
+    "prerequisites": [
+        "HTML Best Practices"
+    ],
+    "learning_objectives": [
+        "Minify HTML",
+        "Optimize asset loading (Lazy Loading)",
+        "Use defer/async for scripts",
+        "Reduce DOM size"
+    ],
+    "theory": "# HTML Performance Optimization\n\nA fast website is crucial for user retention and SEO.\n\n## 1. Minification\nRemove unnecessary whitespace, comments, and line breaks from code. This reduces file size.\n\n## 2. Image Optimization\n*   **Size:** Resize images to the exact display size.\n*   **Format:** Use modern formats like WebP.\n*   **Lazy Loading:** Use `loading=\"lazy\"` on images to load them only when user scrolls to them.\n\n```html\n<img src=\"large-photo.jpg\" loading=\"lazy\" alt=\"Photo\">\n```\n\n## 3. Script Loading (`async` vs `defer`)\nScripts block HTML parsing. To prevent this:\n*   `<script src=\"file.js\" async>`: Downloads in parallel, runs immediately (might disrupt order).\n*   `<script src=\"file.js\" defer>`: Downloads in parallel, runs **after** HTML parsing (Recommended).\n\n## 4. Preloading\nTell the browser to fetch critical assets early.\n```html\n<link rel=\"preload\" href=\"font.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n```\n\n## 5. Reduce DOM Complexity\nAvoid excessive `<div>` nesting. A large DOM tree slows down rendering.",
+    "syntax": "loading=\"lazy\"\n<script defer>",
+    "examples": [
+        {
+            "code": "<!-- Optimized Page Head -->\n<link rel=\"preload\" href=\"style.css\" as=\"style\">\n<script src=\"app.js\" defer></script>",
+            "output": "Fast loading.",
+            "explanation": "defer ensures the script doesn't block the visible content from appearing."
+        }
+    ],
+    "common_mistakes": [
+        {
+            "mistake": "Placing scripts in <head> without defer",
+            "correction": "This causes the 'White Screen of Death' because the browser pauses rendering to download the script.",
+            "example": "Always use defer or put scripts at bottom of body."
+        },
+        {
+            "mistake": "Serving 4K images for thumbnails",
+            "correction": "Always resize images.",
+            "example": "Downloading a 5MB image for a 50px icon."
+        }
+    ],
+    "interview_questions": [
+        {
+            "question": "What is difference between async and defer?",
+            "difficulty": "Advanced",
+            "answer": "Async: Download parallel, execute immediately (pauses HTML). Defer: Download parallel, execute after HTML is fully parsed (preserves order). Defer is usually better."
+        },
+        {
+            "question": "What is Lazy Loading?",
+            "difficulty": "Intermediate",
+            "answer": "A technique to defer loading of non-critical resources (like off-screen images) until they are needed (e.g., when the user scrolls near them)."
+        }
+    ],
+    "practice_problems": [
+        {
+            "difficulty": "Advanced",
+            "problem": "Optimize an image tag to lazy load.",
+            "hint": "add loading='lazy'.",
+            "solution": "<img src=\"pic.jpg\" loading=\"lazy\" alt=\"pic\">"
+        }
+    ],
+    "real_world_use_cases": [
+        {
+            "scenario": "Core Web Vitals",
+            "description": "Google ranks sites based on loading speed (LCP). Implementing Lazy Loading and Defer scripts is the first step to passing.",
+            "code": "loading=\"lazy\""
+        }
+    ],
+    "exam_notes": [
+        "Minify code",
+        "loading='lazy'",
+        "Use defer for scripts",
+        "Preload critical assets"
+    ],
+    "summary": "Optimizing HTML involves ensuring the browser can render content as fast as possible. Techniques like lazy loading images, deferring JavaScript, and minifying code significantly improve load times and user experience."
+}
