@@ -51,53 +51,89 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
     return acc;
   }, {} as Record<string, TutorialMetadata[]>);
 
+  const sortedSubjects = Object.entries(grouped).sort(([a], [b]) => {
+    const order = [
+      'html',
+      'css',
+      'javascript',
+      'bootstrap',
+      'typescript',
+      'react',
+      'next.js',
+      'java',
+      'python',
+      'mysql',
+      'mongodb',
+      'git',
+      'django',
+    ];
+    const indexA = order.indexOf(a.toLowerCase());
+    const indexB = order.indexOf(b.toLowerCase());
+
+    // If both are in the list, sort by index
+    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+    // If only A is in list, A comes first
+    if (indexA !== -1) return -1;
+    // If only B is in list, B comes first
+    if (indexB !== -1) return 1;
+    // If neither, sort alphabetically
+    return a.localeCompare(b);
+  });
+
   return (
     <Layout>
       <Head>
         <title>All Subjects - LearnHub</title>
-        <meta name="description" content="Browse all available technology tutorials and masterclasses" />
+        <meta
+          name="description"
+          content="Browse all available technology tutorials and masterclasses"
+        />
       </Head>
 
-      <div className="min-h-screen bg-gray-50 py-12">
+      {/* Secondary Web Navigation (Sticky) */}
+      <div className="sticky top-16 z-40 bg-ui-card/95 backdrop-blur-sm border-b border-ui-border shadow-sm hidden md:block">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center space-x-1 overflow-x-auto py-3 no-scrollbar">
+            {sortedSubjects.map(([subject]) => (
+              <a
+                key={subject}
+                href={`#${subject.toLowerCase().replace(/\s+/g, '-')}`}
+                className="px-4 py-1.5 text-sm font-medium text-text-secondary hover:text-accent hover:bg-ui-dark rounded-full transition-all whitespace-nowrap"
+              >
+                {subject}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="min-h-screen bg-ui-dark py-12">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl lg:text-5xl font-bold text-text-primary mb-4">
               All Subjects
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Master modern technologies with comprehensive masterclasses and hands-on examples
+            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
+              Master modern technologies with comprehensive masterclasses and
+              hands-on examples
             </p>
           </div>
 
           {/* Categories/Subjects */}
-          {Object.entries(grouped)
-            .sort(([a], [b]) => {
-                const order = ['html', 'css', 'javascript', 'bootstrap', 'typeScript', 'react', 'next.js', 'java', 'python', 'mysql', 'mongodb', 'git', 'django'];
-                const indexA = order.indexOf(a.toLowerCase());
-                const indexB = order.indexOf(b.toLowerCase());
-                
-                // If both are in the list, sort by index
-                if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-                // If only A is in list, A comes first
-                if (indexA !== -1) return -1;
-                // If only B is in list, B comes first
-                if (indexB !== -1) return 1;
-                // If neither, sort alphabetically
-                return a.localeCompare(b);
-            })
-            .map(([subject, tutorialList]) => {
-             const subjectKey = subject.toLowerCase();
+          {sortedSubjects.map(([subject, tutorialList]) => {
+            const subjectKey = subject.toLowerCase();
             const Icon = categoryIcons[subjectKey] || BookOpen;
             const colorClass = categoryColors[subjectKey] || 'bg-gray-500';
+            const subjectId = subject.toLowerCase().replace(/\s+/g, '-');
 
             return (
-              <div key={subject} className="mb-16">
-                <div className="flex items-center gap-3 mb-8">
-                  <div className={`${colorClass} p-3 rounded-lg`}>
-                    <Icon className="text-white" size={24} />
+              <div key={subject} id={subjectId} className="mb-16 scroll-mt-32">
+                <div className="flex items-center gap-3 mb-8 border-b border-ui-border pb-4">
+                  <div className={`${colorClass} p-3 rounded-lg bg-opacity-20`}>
+                    <Icon className="text-text-primary" size={24} />
                   </div>
-                  <h2 className="text-3xl font-bold text-gray-900 capitalize">
+                  <h2 className="text-3xl font-bold text-text-primary capitalize">
                     {subject}
                   </h2>
                 </div>
@@ -107,20 +143,22 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
                     <Link
                       key={tutorial.slug}
                       href={`/subjects/${tutorial.slug}`}
-                      className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-[#4A90E2]"
+                      className="group bg-ui-card rounded-xl shadow-lg hover:shadow-glow transition-all duration-300 overflow-hidden border border-ui-border hover:border-accent"
                     >
                       <div className="p-6">
-                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#4A90E2] transition">
+                        <h3 className="text-xl font-bold text-text-primary mb-2 group-hover:text-accent transition">
                           {tutorial.title}
                         </h3>
-                        <p className="text-gray-600 text-sm line-clamp-2">
+                        <p className="text-text-secondary text-sm line-clamp-2">
                           {tutorial.description}
                         </p>
                       </div>
                       <div className="px-6 pb-6">
-                        <div className="flex items-center text-[#4A90E2] font-medium text-sm group-hover:gap-2 transition-all">
+                        <div className="flex items-center text-accent font-medium text-sm group-hover:gap-2 transition-all">
                           Start Learning
-                          <span className="ml-1 group-hover:ml-0 transition-all">→</span>
+                          <span className="ml-1 group-hover:ml-0 transition-all">
+                            →
+                          </span>
                         </div>
                       </div>
                     </Link>
@@ -133,9 +171,13 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
           {/* Empty State */}
           {tutorials.length === 0 && (
             <div className="text-center py-16">
-              <BookOpen className="mx-auto text-gray-400 mb-4" size={64} />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">No tutorials available</h3>
-              <p className="text-gray-600">Check back soon for new content!</p>
+              <BookOpen className="mx-auto text-text-muted mb-4" size={64} />
+              <h3 className="text-2xl font-bold text-text-primary mb-2">
+                No tutorials available
+              </h3>
+              <p className="text-text-secondary">
+                Check back soon for new content!
+              </p>
             </div>
           )}
         </div>
