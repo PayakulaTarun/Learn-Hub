@@ -87,7 +87,7 @@ export default function SubjectPage({ tutorial }: SubjectPageProps) {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Head>
-        <title>{tutorial.title} - LearnHub</title>
+        <title>{`${tutorial.title} - LearnHub`}</title>
         <meta name="description" content={tutorial.theory?.substring(0, 160)} />
       </Head>
 
