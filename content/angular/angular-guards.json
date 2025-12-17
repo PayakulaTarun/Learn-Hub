@@ -1,0 +1,48 @@
+{
+  "title": "Angular Guards",
+  "slug": "angular-guards",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "Angular Routing Basics"
+  ],
+  "learning_objectives": [
+    "canActivate",
+    "canDeactivate",
+    "canLoad",
+    "Resolve"
+  ],
+  "theory": "Guards are interfaces that tell the router whether it should allow navigation to or from a route. They are used for authentication, permission checking, or preventing unsaved changes loss.",
+  "syntax": "canActivate: [AuthGuard]",
+  "examples": [
+    {
+      "code": "@Injectable()\nexport class AuthGuard implements CanActivate {\n  constructor(private auth: AuthService, private router: Router) {}\n\n  canActivate(): boolean {\n    if (this.auth.isLoggedIn()) return true;\n    this.router.navigate(['/login']);\n    return false;\n  }\n}",
+      "output": "Protects routes",
+      "explanation": "If logic returns false, navigation stops."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "What is usage of CanDeactivate?",
+      "answer": "It is often used to warn the user before leaving a page with unsaved changes in a form.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Admin Dashboard",
+      "description": "Preventing non-admin users from determining the admin route.",
+      "code": "canActivate: [RoleGuard]"
+    }
+  ],
+  "exam_notes": [
+    "canActivate: Enter route?",
+    "canDeactivate: Leave route?",
+    "Resolve: Fetch data before route."
+  ],
+  "summary": "Guards provide security and better UX by handling navigation logic centrally."
+}

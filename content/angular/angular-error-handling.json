@@ -1,0 +1,46 @@
+{
+  "title": "Error Handling",
+  "slug": "angular-error-handling",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "HTTP Client & API Calls"
+  ],
+  "learning_objectives": [
+    "HttpErrorResponse",
+    "Global ErrorHandler",
+    "catchError operator"
+  ],
+  "theory": "Handling errors gracefully is vital. Angular provides a global ErrorHandler class that can be intercepted. For HTTP, RxJS `catchError` is used to handle stream failures without crashing the app.",
+  "syntax": "catchError(error => { return of([]); })",
+  "examples": [
+    {
+      "code": "this.http.get('/api').pipe(\n  catchError(this.handleError)\n).subscribe();\n\nhandleError(error: HttpErrorResponse) {\n  console.log(error.message);\n  return throwError(() => new Error('Something bad happened'));\n}",
+      "output": "Graceful failure",
+      "explanation": "Intercepts the error notification and can log it or display a user-friendly message."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "How do you implement global error logging?",
+      "answer": "By creating a class implementing ErrorHandler and providing it in the root module.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Toast Notifications",
+      "description": "Showing a red toast message whenever an API call fails 500.",
+      "code": "Interceptor -> ToastService.showError()"
+    }
+  ],
+  "exam_notes": [
+    "RxJS catchError for streams.",
+    "ErrorHandler for global exceptions."
+  ],
+  "summary": "Proper error handling prevents white screens of death and improves user trust."
+}

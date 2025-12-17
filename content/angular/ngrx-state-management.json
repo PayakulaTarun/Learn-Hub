@@ -1,0 +1,52 @@
+{
+  "title": "Advanced State Management (NgRx)",
+  "slug": "ngrx-state-management",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Advanced",
+  "estimated_read_time": "40 mins",
+  "prerequisites": [
+    "State Management Basics"
+  ],
+  "learning_objectives": [
+    "Redux Pattern",
+    "Store, Actions, Reducers",
+    "Selectors, Effects"
+  ],
+  "theory": "NgRx is the Angular implementation of the Redux pattern. It provides a single source of truth (Store) using explicit Actions to trigger state changes via pure functions called Reducers. Effects handle side effects (API calls).",
+  "syntax": "store.dispatch(increment());\nthis.count$ = store.select(selectCount);",
+  "examples": [
+    {
+      "code": "export const counterReducer = createReducer(\n  initialState,\n  on(increment, (state) => state + 1),\n  on(reset, (state) => 0)\n);",
+      "output": "Pure state transformation",
+      "explanation": "State is immutable. The reducer takes old state + action and returns new state."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Overusing NgRx",
+      "correction": "Not every app needs Redux. It adds boilerplate. Use it for complex, shared state.",
+      "example": "Using NgRx for a simple toggle button."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the role of Effects in NgRx?",
+      "answer": "Effects listen for actions, perform side effects (like HTTP calls) and dispatch new actions (success/fail) back to the store, keeping components pure.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "E-commerce Cart",
+      "description": "Cart state must be consistent across header, checkout, and inventory pages.",
+      "code": "store.select(selectCartTotal)"
+    }
+  ],
+  "exam_notes": [
+    "Unidirectional data flow.",
+    "Actions -> Reducer -> Store -> Selector -> View."
+  ],
+  "summary": "NgRx provides predictability and debugging power (Time Travel) for large enterprise apps."
+}

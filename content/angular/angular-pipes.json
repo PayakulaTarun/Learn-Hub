@@ -1,0 +1,64 @@
+{
+  "title": "Pipes",
+  "slug": "angular-pipes",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Beginner",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "Templates & Interpolation"
+  ],
+  "learning_objectives": [
+    "Understand Built-in Pipes",
+    "Chaining Pipes",
+    "Creating Custom Pipes"
+  ],
+  "theory": "Pipes are functions that transform input data to a desired output for display in templates. They do not change the underlying data, only how it is viewed. Angular comes with built-in pipes like DatePipe, UpperCasePipe, LowerCasePipe, and CurrencyPipe.",
+  "syntax": "{{ value | pipeName:args }}",
+  "examples": [
+    {
+      "code": "<p>Birthday: {{ birthday | date:'medium' }}</p>\n<p>Price: {{ price | currency:'USD' }}</p>\n<p>Name: {{ 'john' | uppercase }}</p>",
+      "output": "Birthday: Jan 1, 2023, 12:00:00 AM\nPrice: $100.00\nName: JOHN",
+      "explanation": "The pipe operator (|) takes the left-side data and passes it through the specified pipe function."
+    },
+    {
+      "code": "import { Pipe, PipeTransform } from '@angular/core';\n\n@Pipe({name: 'exponentialStrength'})\nexport class ExponentialStrengthPipe implements PipeTransform {\n  transform(value: number, exponent: number): number {\n    return Math.pow(value, exponent);\n  }\n}",
+      "output": "{{ 2 | exponentialStrength:10 }} -> 1024",
+      "explanation": "Custom pipe implementing PipeTransform interface."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Thinking pipes change the data in the component",
+      "correction": "Pipes only transform the data for the view (template). The component property remains unchanged.",
+      "example": "{{ name | uppercase }} does not make this.name uppercase in TS."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the difference between pure and impure pipes?",
+      "answer": "Pure pipes only run when the input reference changes. Impure pipes run on every change detection cycle.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [
+    {
+      "problem": "Create a pipe named 'reverse' that reverses a string.",
+      "difficulty": "Easy",
+      "hint": "Implement PipeTransform.",
+      "solution": "transform(value: string): string { return value.split('').reverse().join(''); }"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "Filtering Lists",
+      "description": "Although discouraged for performance, pipes were historically used to filter lists in templates (now better handled in component logic).",
+      "code": "<li *ngFor=\"let item of items | filter:searchText\">"
+    }
+  ],
+  "exam_notes": [
+    "Known built-in pipes: date, json, uppercase, lowercase, decimal, currency, percent.",
+    "Syntax is {{ val | pipe }}."
+  ],
+  "summary": "Pipes provide a clean, declarative way to format data right in the HTML template."
+}

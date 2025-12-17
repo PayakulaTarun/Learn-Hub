@@ -1,0 +1,52 @@
+{
+  "title": "Advanced RxJS Patterns",
+  "slug": "advanced-rxjs-patterns",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Advanced",
+  "estimated_read_time": "30 mins",
+  "prerequisites": [
+    "RxJS Operators"
+  ],
+  "learning_objectives": [
+    "Higher-order Mapping",
+    "Subject vs BehaviorSubject vs ReplaySubject",
+    "Custom Operators"
+  ],
+  "theory": "Mastering RxJS involves understanding higher order mapping (streams of streams), multicasting, and creating reusable custom operators. Patterns like 'switchMap for search', 'concatMap for queueing', and 'mergeMap for parallel' are essential.",
+  "syntax": "shareReplay(1)",
+  "examples": [
+    {
+      "code": "const data$ = this.http.get('/data').pipe(\n  shareReplay(1)\n);",
+      "output": "Caches the latest value",
+      "explanation": "shareReplay makes the observable multicast and replays the last value to late subscribers, avoiding redundant HTTP calls."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Nested Subscriptions",
+      "correction": "This is an anti-pattern. Use higher-order mapping operators (switchMap, mergeMap) to flatten the stream.",
+      "example": "obs1.subscribe(val => obs2.subscribe(...)) // NO"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "When to use switchMap vs exhaustMap?",
+      "answer": "switchMap cancels prior request (good for read/search). exhaustMap ignores new requests until current finishes (good for login button).",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Live Caching",
+      "description": "Fetching config once and sharing it across the app without re-fetching.",
+      "code": "shareReplay(1)"
+    }
+  ],
+  "exam_notes": [
+    "Multicasting shares execution.",
+    "Unsubscribe via takeUntil or async pipe is mandatory."
+  ],
+  "summary": "Advanced RxJS allows you to handle complex asynchronous flows elegantly."
+}

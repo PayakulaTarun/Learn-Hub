@@ -1,0 +1,52 @@
+{
+  "title": "Angular Lifecycle Hooks",
+  "slug": "angular-lifecycle-hooks",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Beginner",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Components in Angular"
+  ],
+  "learning_objectives": [
+    "ngOnChanges, ngOnInit, ngOnDestroy",
+    "ngAfterViewInit",
+    "Order of execution"
+  ],
+  "theory": "A component has a lifecycle managed by Angular. Angular creates it, renders it, creates and renders its children, checks it when data bound properties change, and destroys it before removing it from the DOM. Hooks allow you to tap into these moments.",
+  "syntax": "ngOnInit() {\n  // logic\n}",
+  "examples": [
+    {
+      "code": "export class UserComponent implements OnInit, OnDestroy {\n  ngOnInit() {\n    console.log('Component Initialized');\n  }\n  ngOnDestroy() {\n    console.log('Component Destroyed');\n  }\n}",
+      "output": "Logs during creation and removal",
+      "explanation": "ngOnInit is the most common place to fetch data."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Fetching data in constructor",
+      "correction": "The constructor is for simple initialization (like DI). Heavy logic should go in ngOnInit.",
+      "example": "constructor() { this.loadData(); } // Avoid"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the difference between constructor and ngOnInit?",
+      "answer": "Constructor is a TS feature for class instantiation. ngOnInit is an Angular lifecycle method called after Angular has finished setting up the component's data-bound input properties.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Cleanup",
+      "description": "Unsubscribing from Observables in ngOnDestroy to prevent memory leaks.",
+      "code": "ngOnDestroy() { this.sub.unsubscribe(); }"
+    }
+  ],
+  "exam_notes": [
+    "Order: OnChanges -> OnInit -> DoCheck -> AfterContent -> AfterView -> OnDestroy.",
+    "ngOnChanges is called before ngOnInit."
+  ],
+  "summary": "Lifecycle hooks provide precise control over how components behave throughout their existence."
+}

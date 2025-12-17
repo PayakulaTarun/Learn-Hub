@@ -23,6 +23,7 @@ const categoryIcons: Record<string, any> = {
   'web development': Globe,
   frontend: Code,
   backend: Wrench,
+  angular: Code,
 };
 
 const categoryColors: Record<string, string> = {
@@ -38,6 +39,7 @@ const categoryColors: Record<string, string> = {
   'web development': 'bg-orange-600',
   frontend: 'bg-blue-500',
   backend: 'bg-green-500',
+  angular: 'bg-red-600',
 };
 
 export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
@@ -59,6 +61,7 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
       'bootstrap',
       'typescript',
       'react',
+      'angular',
       'next.js',
       'java',
       'python',

@@ -1,0 +1,47 @@
+{
+  "title": "Dependency Injection",
+  "slug": "angular-dependency-injection",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Beginner",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Services"
+  ],
+  "learning_objectives": [
+    "Understand DI pattern",
+    "Inject a service into a component",
+    "Hierarchical Injectors"
+  ],
+  "theory": "Dependency Injection (DI) is a design pattern where dependencies (services) are provided to a class (component) rather than the class creating them itself. Angular has a powerful built-in DI system.",
+  "syntax": "constructor(private heroService: HeroService) { }",
+  "examples": [
+    {
+      "code": "export class HeroListComponent {\n  heroes: string[];\n\n  constructor(private heroService: HeroService) {\n    this.heroes = this.heroService.getHeroes();\n  }\n}",
+      "output": "Component receives the service instance automatically",
+      "explanation": "Angular looks up the provider for HeroService and injects the singleton instance into the constructor."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Circular Dependency",
+      "correction": "Service A injects B, and B injects A. Resolve by refactoring or using forwardRef.",
+      "example": "Circular dependency detected: ServiceA -> ServiceB -> ServiceA"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is singleton service in Angular?",
+      "answer": "A service provided in the root injector is created once and shared across the entire app.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "DI decoupling.",
+    "Constructor injection is standard.",
+    "providers array in Module/Component configures injectors."
+  ],
+  "summary": "Angular's DI system makes applications modular, efficient to test, and easy to maintain."
+}

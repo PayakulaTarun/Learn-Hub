@@ -1,0 +1,54 @@
+{
+  "title": "Change Detection",
+  "slug": "angular-change-detection",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "Angular Lifecycle Hooks",
+    "Zone.js basics (implied)"
+  ],
+  "learning_objectives": [
+    "Understand Zone.js",
+    "Default Strategy",
+    "OnPush Strategy"
+  ],
+  "theory": "Change Detection (CD) is the mechanism Angular uses to synchronize the model and the view. Angular uses Zone.js to detect async operations (clicks, timers, HTTP). When one finishes, Angular checks bindings.",
+  "syntax": "changeDetection: ChangeDetectionStrategy.OnPush",
+  "examples": [
+    {
+      "code": "@Component({\n  selector: 'app-child',\n  template: '{{data.name}}',\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ChildComponent {\n  @Input() data: any;\n}",
+      "output": "Optimized updates",
+      "explanation": "With OnPush, Angular only checks this component if the @Input() reference changes, ignoring internal mutations."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Mutating data with OnPush",
+      "correction": "OnPush works with immutability. If you do `data.name = 'new'`, the reference hasn't changed, so View won't update.",
+      "example": "items.push(newItem) // Won't trigger OnPush update. Use items = [...items, newItem]"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is Zone.js?",
+      "answer": "A library that patches standard browser APIs (setTimeout, XHR, events) to notify Angular when an async task is done so it can run Change Detection.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "High Performance Grid",
+      "description": "A table with 1000 rows. Using OnPush ensures only rows receiving new data updates receive CD checks.",
+      "code": "changeDetection: OnPush"
+    }
+  ],
+  "exam_notes": [
+    "Default checks everything (tree).",
+    "OnPush checks only input changes/events.",
+    "markForCheck() manually triggers."
+  ],
+  "summary": "Mastering Change Detection strategies is key to preventing lag in complex Angular apps."
+}

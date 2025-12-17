@@ -1,0 +1,47 @@
+{
+  "title": "Angular Styling & Theming",
+  "slug": "angular-styling-theming",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "Components in Angular"
+  ],
+  "learning_objectives": [
+    ":host",
+    ":host-context",
+    "View Encapsulation",
+    "Global Styles"
+  ],
+  "theory": "Angular components encapsulate styles by default (Emulated). Special selectors like `:host` allow styling the component shell itself. Global styles (styles.css) affect everything.",
+  "syntax": ":host {\n  display: block;\n  border: 1px solid red;\n}\n::ng-deep .child { ... }",
+  "examples": [
+    {
+      "code": "@Component({\n  selector: 'app-card',\n  styles: [':host { display: block; padding: 10px; }']\n})",
+      "output": "Styles applied to <app-card> tag",
+      "explanation": "The :host pseudo-class selector targets elements in the component's own template."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Overusing ::ng-deep",
+      "correction": "ng-deep is deprecated but still used. It breaks encapsulation. Use view encapsulation modes or global styles instead.",
+      "example": "::ng-deep .mat-button { color: red; } // Leaks globally sometimes"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is ViewEncapsulation.None?",
+      "answer": "It removes style isolation. Styles defined in this component are added to the document head and affect the global application.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Emulated (default) matches ShadowDOM behavior.",
+    ":host selects self."
+  ],
+  "summary": "Angular's style system allows for modular CSS while providing escape hatches for global themes."
+}

@@ -1,0 +1,52 @@
+{
+  "title": "ViewChild & ContentChild",
+  "slug": "angular-viewchild-contentchild",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Component Communication"
+  ],
+  "learning_objectives": [
+    "Access Child Component Logic",
+    "Access DOM elements",
+    "Content Projection"
+  ],
+  "theory": "@ViewChild allows a parent to access a child component or DOM element inside its own template. @ContentChild allows access to projected content (ng-content).",
+  "syntax": "@ViewChild(ChildComponent) child: ChildComponent;",
+  "examples": [
+    {
+      "code": "// Parent\n@ViewChild('myInput') input: ElementRef;\n\nngAfterViewInit() {\n  this.input.nativeElement.focus();\n}\n\n// HTML\n<input #myInput>",
+      "output": "Focuses input on load",
+      "explanation": "Direct DOM access wrapper using ElementRef."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Accessing ViewChild in ngOnInit",
+      "correction": "ViewChild is only available in ngAfterViewInit.",
+      "example": "result is undefined in ngOnInit."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Difference between ViewChild and ContentChild?",
+      "answer": "ViewChild selects elements from the component's own template. ContentChild selects elements projected into the component (via ng-content) from the parent.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Modal Component",
+      "description": "Parent calls `modal.open()` directly on the child instance.",
+      "code": "this.modal.open()"
+    }
+  ],
+  "exam_notes": [
+    "Available in AfterViewInit/AfterContentInit.",
+    "ElementRef gives DOM access (use carefully)."
+  ],
+  "summary": "These decorators provide imperative access to the component hierarchy and DOM."
+}

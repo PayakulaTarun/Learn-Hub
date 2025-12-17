@@ -1,0 +1,53 @@
+{
+  "title": "HTTP Client & API Calls",
+  "slug": "angular-http-client",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Observables & RxJS Basics",
+    "Services"
+  ],
+  "learning_objectives": [
+    "HttpClientModule",
+    "GET, POST, PUT, DELETE",
+    "Interceptors basics"
+  ],
+  "theory": "Most front-end apps communicate with backend services over HTTP. Angular provides a simplified client HTTP API known as HttpClient, which rests on the XMLHTTPRequest interface exposed by browsers.",
+  "syntax": "this.http.get<User[]>('/api/users');",
+  "examples": [
+    {
+      "code": "constructor(private http: HttpClient) { }\n\ngetUsers() {\n  return this.http.get<User[]>('https://api.example.com/users');\n}",
+      "output": "Returns an Observable<User[]>",
+      "explanation": "HttpClient methods return Observables, not Promises."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Forgetting to subscribe",
+      "correction": "Observables are lazy. The HTTP request is not sent until you call .subscribe().",
+      "example": "this.service.getUsers(); // Nothing happens"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Does HttpClient return a Promise or Observable?",
+      "answer": "Observable.",
+      "difficulty": "Easy"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Authentication",
+      "description": "Sending login credentials via POST and receiving a token.",
+      "code": "http.post('/login', credentials)"
+    }
+  ],
+  "exam_notes": [
+    "Requires HttpClientModule.",
+    "Returns generic typed Observables."
+  ],
+  "summary": "HttpClient enables communication with remote servers using the Observable pattern."
+}

@@ -1,0 +1,42 @@
+{
+  "title": "Component Communication",
+  "slug": "angular-component-communication",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Components in Angular",
+    "Services"
+  ],
+  "learning_objectives": [
+    "Parent to Child (@Input)",
+    "Child to Parent (@Output)",
+    "Sibling via Service"
+  ],
+  "theory": "Components need to share data. Parent-Child uses Input/Output bindings. Unrelated components usually communicate via a shared Service (subject/observable).",
+  "syntax": "@Input() data: string;\n@Output() notify = new EventEmitter();",
+  "examples": [
+    {
+      "code": "// Child\n@Input() heroName: string;\n@Output() saved = new EventEmitter();\n\nonSave() { this.saved.emit(); }\n\n// Parent HTML\n<app-child [heroName]=\"name\" (saved)=\"onSaved()\"></app-child>",
+      "output": "Two-way communication flow",
+      "explanation": "Parent passes name down. Child emits event up."
+    }
+  ],
+  "common_mistakes": [],
+  "interview_questions": [
+    {
+      "question": "How do siblings communicate?",
+      "answer": "Typically using a shared Service with an RxJS Subject, or by passing data up to a common parent (state lift) and then down.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "@Input() passes down.",
+    "@Output() events up.",
+    "Services for cross-tree."
+  ],
+  "summary": "Understanding data flow patterns is crucial for avoiding spaghetti code in large apps."
+}

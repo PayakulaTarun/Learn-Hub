@@ -1,0 +1,52 @@
+{
+  "title": "Router Parameters",
+  "slug": "angular-router-parameters",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Beginner",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "Angular Routing Basics"
+  ],
+  "learning_objectives": [
+    "Define Route Parameters",
+    "ActivatedRoute service",
+    "Read parameters"
+  ],
+  "theory": "Routes often need to pass data, like a specific user ID for a profile page. This is done using route parameters defined with a colon.",
+  "syntax": "{ path: 'user/:id', component: UserDetailComponent }",
+  "examples": [
+    {
+      "code": "constructor(private route: ActivatedRoute) {\n  this.route.params.subscribe(params => {\n    this.id = params['id'];\n  });\n}",
+      "output": "Captures ID from URL /user/123",
+      "explanation": "ActivatedRoute provides access to the url, params, and fragments of the current route."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using snapshots for dynamic navigation",
+      "correction": "Snapshots only capture data once. If navigating from user/1 to user/2, snapshot won't update. Use Observable subscription.",
+      "example": "this.id = this.route.snapshot.paramMap.get('id'); // May fail on reuse"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Difference between snapshot and observable params?",
+      "answer": "Snapshot gets value at initialization only. Observable subscription updates whenever the parameter changes while remaining on the same component.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Product Details Page",
+      "description": "Clicking a product in a list navigates to /products/45, where 45 is the parameter used to fetch details.",
+      "code": "path: 'product/:id'"
+    }
+  ],
+  "exam_notes": [
+    "Defined as :paramName.",
+    "Accessed via ActivatedRoute."
+  ],
+  "summary": "Route parameters are essential for dynamic data-driven navigation pages."
+}

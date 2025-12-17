@@ -1,0 +1,49 @@
+{
+  "title": "Performance Optimization Basics",
+  "slug": "angular-performance-optimization",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "Change Detection",
+    "Lazy Loading Modules"
+  ],
+  "learning_objectives": [
+    "TrackBy in *ngFor",
+    "Production Build",
+    "Pure Pipes"
+  ],
+  "theory": "Angular is fast by default, but common patterns can slow it down. Key optimizations include using `trackBy` for lists to minimize DOM manipulation, ensuring production builds (AOT), and avoiding complex logic in getters.",
+  "syntax": "<li *ngFor=\"let item of items; trackBy: trackById\">",
+  "examples": [
+    {
+      "code": "trackById(index, item) {\n  return item.id;\n}\n\n// HTML\n<div *ngFor=\"let user of users; trackBy: trackById\">",
+      "output": "Efficient list updates",
+      "explanation": "If the list items change, Angular uses the ID to identify which DOM elements to keep, update, or remove, rather than rebuilding the whole list."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Calling functions in template interpolation",
+      "correction": "Functions in {{ func() }} run on EVERY change detection cycle. Use pipes or pre-calculated properties.",
+      "example": "{{ calculateData() }} // High Performance Cost"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Why use trackBy?",
+      "answer": "It improves performance of ngFor by helping Angular identify unique items, reducing DOM re-creation operations.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "AOT vs JIT.",
+    "Tree shaking.",
+    "Lazy Loading.",
+    "TrackBy."
+  ],
+  "summary": "Small changes like TrackBy and OnPush can lead to massive rendering improvements."
+}

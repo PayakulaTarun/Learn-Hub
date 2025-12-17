@@ -1,0 +1,40 @@
+{
+  "title": "Unit Testing Components",
+  "slug": "components-unit-testing",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "Angular Testing Basics"
+  ],
+  "learning_objectives": [
+    "ComponentFixture",
+    "DebugElement",
+    "Simulating events"
+  ],
+  "theory": "Testing components involves creating a `ComponentFixture` to interact with the component instance and its DOM. `DebugElement` provides a wrapper around the native DOM element for safe inspection.",
+  "syntax": "fixture.detectChanges();\nconst compiled = fixture.nativeElement;",
+  "examples": [
+    {
+      "code": "it('should render title', () => {\n  const fixture = TestBed.createComponent(AppComponent);\n  fixture.detectChanges();\n  const compiled = fixture.nativeElement;\n  expect(compiled.querySelector('h1').textContent).toContain('Welcome');\n});",
+      "output": "Verifies DOM output",
+      "explanation": "We trigger CD with detectChanges() and then check the HTML content."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Forgetting detectChanges()",
+      "correction": "The test environment does not run CD automatically (mostly). You must call it to update the view.",
+      "example": "View remains empty until detectChanges is called."
+    }
+  ],
+  "interview_questions": [],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Async testing needs async() or fakeAsync().",
+    "Mock services using providers: []"
+  ],
+  "summary": "Unit tests ensure individual components behave correctly in isolation."
+}

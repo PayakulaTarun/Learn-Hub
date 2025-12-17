@@ -1,0 +1,46 @@
+{
+  "title": "Angular Security Basics",
+  "slug": "angular-security",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "20 mins",
+  "prerequisites": [
+    "HTTP Client & API Calls"
+  ],
+  "learning_objectives": [
+    "XSS Prevention",
+    "Sanitization (DomSanitizer)",
+    "CSP"
+  ],
+  "theory": "Angular treats all values as untrusted by default. It automatically sanitizes property bindings to prevent Cross-Site Scripting (XSS). If you must modify HTML dynamically, you use `DomSanitizer` to bypass security (carefully).",
+  "syntax": "this.sanitizer.bypassSecurityTrustHtml(html)",
+  "examples": [
+    {
+      "code": "import { DomSanitizer } from '@angular/platform-browser';\n\nconstructor(private sanitizer: DomSanitizer) {}\n\nget safeUrl() {\n  return this.sanitizer.bypassSecurityTrustResourceUrl(this.videoUrl);\n}",
+      "output": "Allows embedding iframe",
+      "explanation": "Needed for iframes or dangerous script tags."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Bypassing security unnecessarily",
+      "correction": "Avoid usage of innerHTML. Often interpolation is safer and sufficient.",
+      "example": "[innerHTML]=\"userContent\" // Risky"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Does Angular prevent XSS?",
+      "answer": "Yes, by automatic sanitization of all data bound to templates. It strips dangerous script tags.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "XSS is main threat.",
+    "HttpClient also helps (XSRF tokens support)."
+  ],
+  "summary": "Angular allows you to build secure apps by default, but you must know when and how to bypass it safely."
+}

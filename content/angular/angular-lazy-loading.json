@@ -1,0 +1,47 @@
+{
+  "title": "Lazy Loading Modules",
+  "slug": "angular-lazy-loading",
+  "subject": "Angular",
+  "category": "Frontend Framework",
+  "level": "Intermediate",
+  "estimated_read_time": "15 mins",
+  "prerequisites": [
+    "Modules",
+    "Angular Routing Basics"
+  ],
+  "learning_objectives": [
+    "Understand performance benefits",
+    "loadChildren syntax",
+    "Module Preloading"
+  ],
+  "theory": "By default, NgModules are eagerly loaded. Lazy loading means a module is loaded only when the user navigates to its route. This significantly reduces the initial bundle size and load time.",
+  "syntax": "{ path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) }",
+  "examples": [
+    {
+      "code": "const routes: Routes = [\n  { \n    path: 'dashboard',\n    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)\n  }\n];",
+      "output": "Code splitting in action",
+      "explanation": "Webpack splits this module into a separate chunk (e.g., chunk.js) loaded on demand."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Importing lazy module in AppModule",
+      "correction": "Do NOT import a lazy loaded module in the root AppModule. That defeats the purpose.",
+      "example": "imports: [LazyModule] // WRONG"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Why use lazy loading?",
+      "answer": "To decrease initial load time by splitting code into smaller bundles loaded only when needed.",
+      "difficulty": "Easy"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "Use loadChildren.",
+    "Do not import statically."
+  ],
+  "summary": "Lazy loading is a critical performance optimization for large Angular applications."
+}
