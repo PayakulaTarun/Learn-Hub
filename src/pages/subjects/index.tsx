@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { TutorialMetadata } from '../../types/content';
 import { getAllTutorials } from '../../lib/contentLoader';
-import { BookOpen, Code, Database, Cloud, Smartphone, Wrench, Globe } from 'lucide-react';
+import { BookOpen, Code, Database, Cloud, Smartphone, Wrench, Globe, BarChart } from 'lucide-react';
 
 interface SubjectsPageProps {
   tutorials: TutorialMetadata[];
@@ -24,6 +24,7 @@ const categoryIcons: Record<string, any> = {
   frontend: Code,
   backend: Wrench,
   angular: Code,
+  'data science': BarChart,
 };
 
 const categoryColors: Record<string, string> = {
@@ -40,6 +41,7 @@ const categoryColors: Record<string, string> = {
   frontend: 'bg-blue-500',
   backend: 'bg-green-500',
   angular: 'bg-red-600',
+  'data science': 'bg-purple-600',
 };
 
 export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
@@ -65,6 +67,7 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
       'next.js',
       'java',
       'python',
+      'data science',
       'mysql',
       'mongodb',
       'git',

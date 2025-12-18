@@ -1,0 +1,53 @@
+{
+  "title": "Handling Missing Values",
+  "slug": "handling-missing-values",
+  "subject": "Data Science",
+  "category": "Data & Analytics",
+  "level": "Beginner",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "Data Cleaning Basics"
+  ],
+  "learning_objectives": [
+    "Identify Nulls",
+    "Dropping Nulls",
+    "Imputation (Mean, Median, Mode)",
+    "Forward/Backward Fill"
+  ],
+  "theory": "Missing data (NaN) causes errors in models. Strategies:\n1. **Drop**: Remove rows (`dropna`) if dataset is large and missingness is low.\n2. **Impute**: Fill with mean/median (`fillna`).\n3. **Advanced**: Predict missing values.",
+  "syntax": "df.isna().sum()\ndf.dropna()\ndf.fillna(value)",
+  "examples": [
+    {
+      "code": "mean_age = df['Age'].mean()\ndf['Age'].fillna(mean_age, inplace=True)",
+      "output": "No NaNs in Age",
+      "explanation": "Replaces missing ages with the average age."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Imputing with mean on skewed data",
+      "correction": "If data has outliers, the mean is distorted. Use Median instead.",
+      "example": "Salary data often needs Median imputation."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "When should you drop rows vs impute data?",
+      "answer": "Drop if missing data is <5% and random. Impute if missing data is significant to avoid data loss.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [
+    {
+      "scenario": "Sensor Data",
+      "description": "Sensors might fail for a second. Use Forward Fill (ffill) to propagate the last valid reading.",
+      "code": "method='ffill'"
+    }
+  ],
+  "exam_notes": [
+    "NaN = Not a Number.",
+    "isnull() alias for isna()."
+  ],
+  "summary": "Handling nulls correctly preserves the integrity of the dataset."
+}

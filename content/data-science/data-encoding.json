@@ -1,0 +1,46 @@
+{
+  "title": "Data Types & Encoding",
+  "slug": "data-encoding",
+  "subject": "Data Science",
+  "category": "Data & Analytics",
+  "level": "Beginner",
+  "estimated_read_time": "25 mins",
+  "prerequisites": [
+    "Pandas Introduction"
+  ],
+  "learning_objectives": [
+    "Label Encoding",
+    "One-Hot Encoding",
+    "pd.get_dummies"
+  ],
+  "theory": "Machine Learning models usually require numerical input. Categorical text data must be encoded.\n- **Label Encoding**: 'Red'->0, 'Blue'->1. (Implies order).\n- **One-Hot**: Creates columns 'Is_Red', 'Is_Blue'. (No order implied).",
+  "syntax": "pd.get_dummies(df, columns=['Color'])",
+  "examples": [
+    {
+      "code": "import pandas as pd\ndf = pd.DataFrame({'Color': ['Red', 'Blue', 'Red']})\nencoded = pd.get_dummies(df)",
+      "output": "Color_Blue  Color_Red\n0          0          1\n1          1          0\n2          0          1",
+      "explanation": "Binary columns created for each category."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Dummy Variable Trap",
+      "correction": "In linear models, perfect multicollinearity occurs if you keep all dummy columns. Drop one column (`drop_first=True`).",
+      "example": "If Is_Male=0, we know Is_Female=1. Redundant."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "When to use One-Hot vs Label Encoding?",
+      "answer": "Use One-Hot for Nominal data (Color). Use Label for Ordinal data (Size: S, M, L) or tree-based models.",
+      "difficulty": "Medium"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [
+    "get_dummies.",
+    "Curse of Dimensionality (too many one-hot columns)."
+  ],
+  "summary": "Computers speak numbers; encoding translates human concepts into machine numbers."
+}
