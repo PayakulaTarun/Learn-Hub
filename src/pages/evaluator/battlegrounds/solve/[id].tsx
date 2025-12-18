@@ -1,0 +1,176 @@
+
+import React, { useState } from 'react';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import Layout from '../../../../components/Layout';
+import { 
+  ArrowLeft, ChevronRight, Zap, Trophy, 
+  Target, Info, Code, ShieldCheck,
+  Layout as LayoutIcon, MessageSquare
+} from 'lucide-react';
+import { companies } from '../../../../lib/evaluatorData';
+import { CompanyQuestion, CodeReviewResult } from '../../../../types/evaluator';
+import InteractiveEditor from '../../../../components/PracticeEngine/InteractiveEditor';
+import CodeReviewPanel from '../../../../components/Evaluator/CodeReviewPanel';
+import { analyzeCode } from '../../../../lib/codeReviewer';
+import Link from 'next/link';
+
+interface SolvePageProps {
+  question: CompanyQuestion;
+  companyName: string;
+}
+
+export default function SolvePage({ question, companyName }: SolvePageProps) {
+    const [reviewResult, setReviewResult] = useState<CodeReviewResult | null>(null);
+    const [isReviewOpen, setIsReviewOpen] = useState(false);
+
+    const handleCodeSubmit = (code: string) => {
+        const result = analyzeCode(code, question.language || 'javascript');
+        setReviewResult(result);
+        setIsReviewOpen(true);
+    };
+
+    return (
+        <Layout title={`Solving ${question.title} | ${companyName} Battleground`}>
+            <div className="bg-ui-dark min-h-screen py-8">
+                <div className="max-w-[1600px] mx-auto px-4 md:px-8 flex flex-col lg:flex-row gap-8 items-start">
+                    
+                    {/* Left Panel: Question Description */}
+                    <div className="w-full lg:w-1/3 space-y-8 sticky top-24">
+                        <div className="bg-ui-card border border-ui-border rounded-[2.5rem] p-8 shadow-xl">
+                            <Link href={`/evaluator/battlegrounds/${question.id.split('-')[0]}`} className="text-xs font-bold text-text-muted hover:text-rose-400 mb-8 flex items-center gap-2">
+                                <ArrowLeft className="w-4 h-4" /> Back to Battleground
+                            </Link>
+
+                            <div className="mb-8">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <span className="px-3 py-1 bg-rose-500/20 text-rose-400 border border-rose-500/20 rounded-full text-[10px] font-black uppercase tracking-widest">{question.difficulty}</span>
+                                    <span className="px-3 py-1 bg-primary border border-ui-border rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted">{question.type}</span>
+                                </div>
+                                <h1 className="text-3xl font-black mb-2">{question.title}</h1>
+                                <p className="text-sm text-text-muted font-bold uppercase tracking-tight">{companyName} Interview Series</p>
+                            </div>
+
+                            <div className="prose prose-invert max-w-none text-text-secondary mb-10">
+                                <p className="leading-relaxed">
+                                    {question.description}
+                                </p>
+                            </div>
+
+                            {question.constraints && (
+                                <div className="space-y-4 mb-10">
+                                    <h4 className="text-[10px] font-black text-text-muted uppercase tracking-widest flex items-center gap-2">
+                                        <ShieldCheck className="w-3.5 h-3.5 text-rose-500" /> Technical Constraints
+                                    </h4>
+                                    <div className="bg-primary/30 rounded-2xl p-6 border border-ui-border">
+                                        <ul className="space-y-2">
+                                            {question.constraints.map((c, i) => (
+                                                <li key={i} className="text-xs text-text-secondary flex gap-2">
+                                                    <span className="text-rose-500">•</span> {c}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            )}
+
+                            {question.solutionSlug && (
+                                <div className="p-6 bg-highlight/5 border border-highlight/20 rounded-2xl flex items-center justify-between group hover:bg-highlight/10 transition-all">
+                                   <div className="flex items-center gap-4">
+                                      <div className="p-3 bg-highlight/20 text-highlight rounded-xl">
+                                         <Info className="w-5 h-5" />
+                                      </div>
+                                      <div>
+                                         <p className="text-xs font-bold">Struggling with logic?</p>
+                                         <p className="text-[10px] text-text-muted">Review the relevant tutorial</p>
+                                      </div>
+                                   </div>
+                                   <Link href={`/subjects/${question.solutionSlug}`} className="p-2 text-text-muted hover:text-highlight transition-colors">
+                                      <ChevronRight className="w-5 h-5" />
+                                   </Link>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Right Panel: Editor & Review */}
+                    <div className="flex-1 w-full space-y-8">
+                        <div className="relative">
+                            <InteractiveEditor 
+                                title={`${question.title} Lab`}
+                                initialCode={question.initialCode || `// Write your ${question.language} solution here\nfunction solution() {\n\n}`}
+                                language={question.language || 'javascript'}
+                                onSubmit={handleCodeSubmit}
+                                submitLabel="Submit for Review"
+                                challengeMode={true}
+                            />
+
+                            {/* Review Side Drawer */}
+                            {isReviewOpen && reviewResult && (
+                                <div className="fixed inset-0 z-50 flex items-center justify-end p-4 md:p-8 pointer-events-none">
+                                    <div className="absolute inset-0 bg-ui-dark/60 backdrop-blur-sm pointer-events-auto" onClick={() => setIsReviewOpen(false)}></div>
+                                    <div className="w-full max-w-xl pointer-events-auto transform transition-all translate-x-0 animate-in slide-in-from-right duration-500">
+                                        <CodeReviewPanel 
+                                            result={reviewResult} 
+                                            onClose={() => setIsReviewOpen(false)} 
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Tip */}
+                        <div className="bg-ui-card border border-ui-border p-8 rounded-3xl flex flex-col md:flex-row items-center gap-8 border-dashed">
+                           <div className="p-4 bg-orange-500/20 text-orange-400 rounded-2xl">
+                              <Target className="w-8 h-8" />
+                           </div>
+                           <div>
+                              <h4 className="font-bold text-lg mb-1">Interview Tip</h4>
+                              <p className="text-sm text-text-secondary leading-relaxed">
+                                 {companyName} interviewers care as much about your <b>code structure</b> and <b>naming</b> as they do about correctness. Use the "Submit for Review" button to see how your code stacks up against industry standards.
+                              </p>
+                           </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </Layout>
+    );
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const questionId = params?.id as string;
+    let foundQuestion: CompanyQuestion | null = null;
+    let foundCompanyName = "";
+
+    companies.forEach(c => {
+        const q = c.questions.find(q => q.id === questionId);
+        if (q) {
+            foundQuestion = q;
+            foundCompanyName = c.name;
+        }
+    });
+
+    if (!foundQuestion) return { notFound: true };
+
+    return {
+        props: { 
+          question: foundQuestion,
+          companyName: foundCompanyName
+        }
+    };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    const paths: any[] = [];
+    companies.forEach(c => {
+        c.questions.forEach(q => {
+            paths.push({ params: { id: q.id } });
+        });
+    });
+
+    return {
+        paths,
+        fallback: false
+    };
+};

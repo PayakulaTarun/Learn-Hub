@@ -27,6 +27,9 @@ export default function Header() {
             <Link href="/navigator" className="text-text-secondary hover:text-accent font-medium transition-colors">
               Navigator
             </Link>
+            <Link href="/evaluator" className="text-rose-400 hover:text-rose-300 font-bold transition-colors">
+              Evaluator
+            </Link>
             <Link href="/practice" className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30">
               Practice
             </Link>
@@ -54,6 +57,9 @@ export default function Header() {
               </Link>
               <Link href="/navigator" className="text-text-secondary hover:text-accent transition-colors">
                 Navigator
+              </Link>
+              <Link href="/evaluator" className="text-rose-400 font-bold hover:text-rose-300 transition-colors">
+                Evaluator
               </Link>
               <Link href="/practice" className="text-indigo-400 hover:text-indigo-300 transition-colors font-medium">
                 Practice Lab

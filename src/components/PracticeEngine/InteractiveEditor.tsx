@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { Play, RotateCcw, Zap, CheckCircle2, XCircle, Info, ChevronDown } from 'lucide-react';
@@ -13,6 +12,8 @@ interface InteractiveEditorProps {
   challengeMode?: boolean;
   hints?: string[];
   title?: string;
+  onSubmit?: (code: string) => void;
+  submitLabel?: string;
 }
 
 export default function InteractiveEditor({ 
@@ -21,7 +22,9 @@ export default function InteractiveEditor({
   expectedOutput, 
   challengeMode = false,
   hints = [],
-  title = "Code Laboratory"
+  title = "Code Laboratory",
+  onSubmit,
+  submitLabel = "Submit for Review"
 }: InteractiveEditorProps) {
   const [code, setCode] = useState(initialCode);
   const [result, setResult] = useState<ExecutionResult | null>(null);
@@ -90,6 +93,15 @@ export default function InteractiveEditor({
             {isRunning ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4 fill-current" />}
             {isRunning ? 'Compiling...' : 'Run Code'}
           </button>
+          {onSubmit && (
+            <button 
+              onClick={() => onSubmit(code)}
+              className="flex items-center gap-2 px-6 py-1.5 rounded-xl text-xs font-black transition-all bg-rose-500 text-primary hover:bg-rose-400 shadow-glow-rose"
+            >
+              <Zap className="w-4 h-4 fill-current" />
+              {submitLabel}
+            </button>
+          )}
         </div>
       </div>
 
