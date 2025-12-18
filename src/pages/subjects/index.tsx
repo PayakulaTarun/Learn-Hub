@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { TutorialMetadata } from '../../types/content';
 import { getAllTutorials } from '../../lib/contentLoader';
-import { BookOpen, Code, Database, Cloud, Smartphone, Wrench, Globe, BarChart, Network, Cpu, Server, Brain } from 'lucide-react';
+import { BookOpen, Code, Database, Cloud, Smartphone, Wrench, Globe, BarChart, Network, Cpu, Server, Brain, Layers } from 'lucide-react';
 
 interface SubjectsPageProps {
   tutorials: TutorialMetadata[];
@@ -34,6 +34,7 @@ const categoryIcons: Record<string, any> = {
   'machine learning': BarChart,
   'c programming': Cpu,
   'c++ programming': Code,
+  'software engineering': Layers,
 };
 
 const categoryColors: Record<string, string> = {
@@ -60,6 +61,7 @@ const categoryColors: Record<string, string> = {
   'machine learning': 'bg-violet-600',
   'c programming': 'bg-blue-700',
   'c++ programming': 'bg-blue-800',
+  'software engineering': 'bg-emerald-700',
 };
 
 export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
@@ -87,6 +89,7 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
       'machine learning',
       'c programming',
       'c++ programming',
+      'software engineering',
       'bootstrap',
       'typescript',
       'react',
