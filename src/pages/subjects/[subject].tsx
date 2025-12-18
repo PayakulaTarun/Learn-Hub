@@ -1,3 +1,4 @@
+
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -8,6 +9,10 @@ import { useState, useMemo } from 'react';
 import { BookOpen, ChevronRight, Menu, X, ArrowLeft, ArrowRight, Code, AlertTriangle, HelpCircle, GraduationCap, Briefcase } from 'lucide-react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import InteractiveEditor from '../../components/PracticeEngine/InteractiveEditor';
+import SearchingLab from '../../components/PracticeEngine/SearchingLab';
+import SortingLab from '../../components/PracticeEngine/SortingLab';
+import GraphLab from '../../components/PracticeEngine/GraphLab';
 
 interface SubjectPageProps {
   tutorial: Tutorial;
@@ -57,6 +62,14 @@ export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: Su
 
     if (tutorial.real_world_use_cases && tutorial.real_world_use_cases.length > 0) {
       list.push({ id: 'usecases', title: 'Real World Use Cases', type: 'usecase', data: tutorial.real_world_use_cases });
+    }
+
+    if (tutorial.interactive_lab) {
+      list.push({ id: 'lab', title: 'Interactive Practice Lab', type: 'theory', data: tutorial.interactive_lab });
+    }
+
+    if (tutorial.visualizer) {
+      list.push({ id: 'visualizer', title: 'Interactive Visualizer', type: 'theory', data: tutorial.visualizer });
     }
 
     if (tutorial.exam_notes && tutorial.exam_notes.length > 0) {
@@ -109,7 +122,6 @@ export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: Su
       <Header />
 
       <main className="flex-1 container mx-auto px-4 py-8 flex items-start gap-8 relative">
-        {/* Mobile Sidebar Toggle */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           className="lg:hidden fixed bottom-4 right-4 z-50 bg-[#4A90E2] text-white p-3 rounded-full shadow-lg hover:bg-[#357ABD] transition"
@@ -117,7 +129,6 @@ export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: Su
           {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        {/* Sidebar Navigation */}
         <aside className={`
           fixed lg:sticky top-0 left-0 h-screen lg:h-[calc(100vh-100px)]
           w-80 bg-ui-card border-r border-ui-border overflow-y-auto
@@ -161,11 +172,8 @@ export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: Su
           </div>
         </aside>
 
-        {/* Main Content */}
         <div className="flex-1 w-full lg:max-w-4xl bg-ui-card rounded-2xl shadow-lg border border-ui-border overflow-hidden min-h-[500px]">
           <div className="p-8 lg:p-12">
-            
-            {/* Header Content */}
             <div className="mb-8 border-b border-ui-border pb-8">
                <div className="flex items-center gap-2 mb-4">
                   <span className="px-3 py-1 bg-secondary/30 text-highlight border border-secondary/50 rounded-full text-xs font-semibold">{tutorial.level}</span>
@@ -175,17 +183,38 @@ export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: Su
               <h2 className="text-xl text-accent font-medium">{activeSection.title}</h2>
             </div>
 
-            {/* Dynamic Content Renderer */}
             <div className="prose prose-lg prose-invert max-w-none text-text-secondary space-y-8">
               
               {/* Theory & Syntax */}
-              {(activeSection.type === 'theory') && (
+              {(activeSection.type === 'theory' && activeSection.id !== 'lab' && activeSection.id !== 'visualizer') && (
                 <ReactMarkdown>{activeSection.content || ''}</ReactMarkdown>
+              )}
+
+              {/* Practice Lab */}
+              {activeSection.id === 'lab' && activeSection.data && (
+                <InteractiveEditor 
+                  {...activeSection.data}
+                  initialCode={activeSection.data.initial_code}
+                  expectedOutput={activeSection.data.expected_output}
+                  challengeMode={activeSection.data.challenge_mode}
+                  title={`${tutorial.title} Practice`}
+                />
+              )}
+
+              {/* Interactive Visualizer */}
+              {activeSection.id === 'visualizer' && activeSection.data && (
+                <div className="space-y-6">
+                  {activeSection.data.type === 'searching' && <SearchingLab />}
+                  {activeSection.data.type === 'sorting' && <SortingLab />}
+                  {activeSection.data.type === 'graph' && <GraphLab />}
+                  <div className="bg-primary/40 p-4 rounded-xl text-sm border border-ui-border italic">
+                    <p>Tip: Use the controls to adjust speed and observe how nodes are visited and data structures are updated.</p>
+                  </div>
+                </div>
               )}
 
               {/* Examples */}
               {activeSection.type === 'example' && activeSection.data?.map((ex: TutorialExample, i: number) => (
-
                 <div key={i} className="bg-ui-dark rounded-xl p-6 border border-ui-border">
                     <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-text-primary">
                         <Code className="text-accent" size={20}/> Example {i + 1}
@@ -303,7 +332,6 @@ export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: Su
 
             </div>
 
-            {/* Navigation Footer */}
             <div className="mt-16 pt-8 border-t border-ui-border flex justify-between items-center">
               <button
                 onClick={goToPrevious}
@@ -345,36 +373,26 @@ export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: Su
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const slugs = getAllTutorialSlugs();
-
     return {
       paths: slugs.map(slug => ({ params: { subject: slug } })),
       fallback: false, 
     };
   } catch (error) {
     console.error('[Static Paths Error]:', error);
-    return {
-      paths: [],
-      fallback: false,
-    };
+    return { paths: [], fallback: false };
   }
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { subject } = params as { subject: string };
   const tutorial = getTutorialBySlug(subject);
-
-  if (!tutorial) {
-    return { notFound: true };
-  }
+  if (!tutorial) return { notFound: true };
 
   const allTutorials = getAllTutorials();
-  // Filter by subject to keep navigation contextual
   const courseTutorials = allTutorials.filter(t => t.subject === tutorial.subject);
-  // Re-sort just in case, though getAllTutorials should be sorted
   courseTutorials.sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
 
   const currentIndex = courseTutorials.findIndex(t => t.slug === tutorial.slug);
-  
   const prevTutorial = currentIndex > 0 ? courseTutorials[currentIndex - 1] : null;
   const nextTutorial = currentIndex < courseTutorials.length - 1 ? courseTutorials[currentIndex + 1] : null;
 

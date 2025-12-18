@@ -13,34 +13,64 @@
     "Sorted Requirement",
     "O(log n)"
   ],
-  "theory": "If list is **Sorted**, we can do better. \n1. Check Middle.\n2. If Middle < Target, discard Left half.\n3. Else discard Right half.\nHalves the search space every step.",
-  "syntax": "mid = l + (r-l)/2",
-  "examples": [],
+  "theory": "Binary Search is an efficient algorithm for finding an item from a sorted list of items. It works by repeatedly dividing in half the portion of the list that could contain the item, until you've narrowed down the possible locations to just one.\n\n### How it works:\n1. Start with the middle element.\n2. If the search element is equal to the middle element, we are done.\n3. If the search element is smaller, repeat the search on the left half.\n4. If the search element is larger, repeat the search on the right half.",
+  "syntax": "mid = low + (high - low) / 2;",
+  "examples": [
+    {
+      "code": "def binary_search(arr, low, high, x):\n    if high >= low:\n        mid = (high + low) // 2\n        if arr[mid] == x:\n            return mid\n        elif arr[mid] > x:\n            return binary_search(arr, low, mid - 1, x)\n        else:\n            return binary_search(arr, mid + 1, high, x)\n    else:\n        return -1",
+      "output": "Returns index or -1",
+      "explanation": "Recursive implementation of Binary Search."
+    }
+  ],
   "common_mistakes": [
     {
       "mistake": "Unsorted Input",
-      "correction": "Binary search fails silently or loops forever on unsorted data. Ensure sort first.",
-      "example": "Searching [3, 1, 2]"
+      "correction": "Binary search fails silently or loops forever on unsorted data. Always sort the list first.",
+      "example": "searching [3, 1, 2] will return incorrect results."
+    },
+    {
+      "mistake": "Integer Overflow in Mid Calculation",
+      "correction": "Use `low + (high - low) / 2` instead of `(low + high) / 2` in languages like C++ or Java.",
+      "example": "mid = (low + high) / 2 # Can overflow if low + high > max_int"
     }
   ],
   "interview_questions": [
     {
-      "question": "What is the max steps for 1 million items?",
-      "answer": "log2(1,000,000) approx 20 steps.",
+      "question": "What is the time complexity of Binary Search?",
+      "answer": "O(log N) because the search space is halved in every step.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Does Binary Search always require a sorted array?",
+      "answer": "Yes, it relies on the property that elements are ordered to decide which half to discard.",
       "difficulty": "Easy"
     }
   ],
   "practice_problems": [],
   "real_world_use_cases": [
     {
-      "scenario": "Phonebook",
-      "description": "You don't start at 'A' to find 'Z'. You flip to the middle.",
-      "code": "Dictionary"
+      "scenario": "Auto-complete in Search Engines",
+      "description": "Quickly finding prefix matches in a massive sorted dictionary of search terms.",
+      "code": "// Pseudocode\ndictionary.binarySearchPrefix(\"react\")"
     }
   ],
   "exam_notes": [
-    "Most efficient comparison search.",
-    "Requires sort."
+    "Most efficient comparison-based search.",
+    "Data must be sorted.",
+    "Time: O(log n), Space: O(1) iterative, O(log n) recursive."
   ],
-  "summary": "Exponentially faster than linear search."
+  "summary": "Exponentially faster than linear search for large, sorted datasets.",
+  "interactive_lab": {
+    "challenge_mode": true,
+    "language": "python",
+    "initial_code": "def binary_search(arr, x):\n    low = 0\n    high = len(arr) - 1\n    \n    while low <= high:\n        # FIX THE BUG: There is an error in the mid calculation or comparison\n        mid = (low + high) \n        \n        if arr[mid] < x:\n            low = mid + 1\n        elif arr[mid] > x:\n            high = mid - 1\n        else:\n            return mid\n    return -1\n\n# Test code\nmy_arr = [2, 3, 4, 10, 40]\ntarget = 10\nprint(binary_search(my_arr, target))",
+    "expected_output": "3",
+    "hints": [
+      "The current code doesn't actually calculate the middle index. It just adds low and high.",
+      "Remember the formula for finding the index between two points: (low + high) // 2"
+    ]
+  },
+  "visualizer": {
+    "type": "searching"
+  }
 }

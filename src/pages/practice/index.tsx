@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { 
   Code2, BarChart3, MonitorPlay, Zap, 
-  Terminal, Database, Cpu, Layout as LayoutIcon 
+  Terminal, Database, Cpu, Layout as LayoutIcon, Search, Network 
 } from 'lucide-react';
 
 const tools = [
@@ -19,31 +19,49 @@ const tools = [
     features: ['9+ Algorithms', 'Step-by-Step', 'Complexity Analysis']
   },
   {
-    title: 'Web Playground',
-    description: 'An industrial-grade editor for HTML, CSS, and JavaScript. Test your frontend skills with real-time preview and debounced execution.',
-    icon: MonitorPlay,
+    title: 'Searching Visualizer',
+    description: 'Understand Linear and Binary search with high-speed step-by-step animations and complexity breakdown.',
+    icon: Search,
     color: 'from-blue-500 to-indigo-600',
+    href: '/practice/searching-visualizer',
+    status: 'Live',
+    features: ['Linear Search', 'Binary Search', 'Dynamic Targets']
+  },
+  {
+    title: 'Graph Traversal',
+    description: 'Explore BFS and DFS with interactive graph networks. Track stacks, queues, and visited sets in real-time.',
+    icon: Network,
+    color: 'from-highlight to-accent',
+    href: '/practice/graph-visualizer',
+    status: 'Live',
+    features: ['BFS / DFS', 'Stack/Queue Tracking', 'SVG Graph Canvas']
+  },
+  {
+    title: 'Web Playground',
+    description: 'An industrial-grade editor for HTML, CSS, and JavaScript. Test your frontend skills with real-time preview.',
+    icon: MonitorPlay,
+    color: 'from-blue-400 to-cyan-500',
     href: '/practice/web-playground',
     status: 'Live',
-    features: ['Live Preview', 'Monaco Editor', 'Auto-Save']
+    features: ['Live Preview', 'Monaco Editor', 'IDE Experience']
+  },
+  {
+    title: 'Building Blocks',
+    description: 'Learn to build professional projects from scratch. Step-by-step guides for Text Editors, Weather Apps, and more.',
+    icon: LayoutIcon,
+    color: 'from-emerald-500 to-teal-600',
+    href: '/practice/projects/text-editor-c',
+    status: 'Live',
+    features: ['C Editor', 'React Apps', 'Backend Engines']
   },
   {
     title: 'SQL Sandbox',
-    description: 'Practice complex queries on a variety of relational databases. Perfect for mastering joins, sub-queries, and window functions.',
+    description: 'Practice complex queries on a variety of relational databases. Perfect for mastering joins and data analysis.',
     icon: Database,
     color: 'from-orange-500 to-red-600',
     href: '#',
     status: 'Coming Soon',
     features: ['Schema Design', 'Data Analysis', 'Query Export']
-  },
-  {
-    title: 'System Design Canvas',
-    description: 'Design scalable, highly available systems using standard architectural patterns. Learn load balancing, sharding, and more.',
-    icon: LayoutIcon,
-    color: 'from-emerald-500 to-teal-600',
-    href: '#',
-    status: 'Coming Soon',
-    features: ['Architecture Tool', 'Case Studies', 'Cloud Patterns']
   },
 ];
 
@@ -58,7 +76,7 @@ export default function PracticeHub() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="text-center">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-accent/20 text-accent border border-accent/20 tracking-widest uppercase mb-6 animate-pulse">
-                Pillar One: Practice
+                Pillar One: Practice Engine
               </span>
               <h1 className="text-5xl md:text-7xl font-extrabold text-text-primary mb-6 tracking-tight">
                 Interactive <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-highlight">Practice Lab</span>

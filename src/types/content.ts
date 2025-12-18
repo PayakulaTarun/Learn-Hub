@@ -29,6 +29,19 @@ export interface RealWorldUseCase {
     code: string;
 }
 
+export interface InteractiveLab {
+    challenge_mode: boolean;
+    initial_code: string;
+    language: string;
+    expected_output?: string;
+    hints?: string[];
+}
+
+export interface VisualizerConfig {
+    type: "sorting" | "searching" | "graph" | "linkedlist";
+    initial_data?: any;
+}
+
 export interface Tutorial {
     title: string;
     slug: string;
@@ -47,6 +60,8 @@ export interface Tutorial {
     real_world_use_cases: RealWorldUseCase[];
     exam_notes: string[];
     summary: string;
+    interactive_lab?: InteractiveLab;
+    visualizer?: VisualizerConfig;
     description?: string; // Fallback for backward compatibility
     order?: number;
 }
