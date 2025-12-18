@@ -28,6 +28,7 @@ const categoryIcons: Record<string, any> = {
   'data structures': Network,
   algorithms: Cpu,
   'operating systems': Server,
+  dbms: Database,
 };
 
 const categoryColors: Record<string, string> = {
@@ -48,6 +49,7 @@ const categoryColors: Record<string, string> = {
   'data structures': 'bg-indigo-600',
   algorithms: 'bg-orange-500',
   'operating systems': 'bg-slate-600',
+  dbms: 'bg-teal-600',
 };
 
 export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
@@ -69,6 +71,7 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
       'data structures',
       'algorithms',
       'operating systems',
+      'dbms',
       'bootstrap',
       'typescript',
       'react',
