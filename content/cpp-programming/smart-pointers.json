@@ -1,0 +1,44 @@
+{
+  "title": "Smart Pointers",
+  "slug": "smart-pointers",
+  "subject": "C++ Programming",
+  "category": "Programming Language",
+  "level": "Advanced",
+  "estimated_read_time": "35 mins",
+  "prerequisites": [
+    "Advanced Pointers"
+  ],
+  "learning_objectives": [
+    "unique_ptr",
+    "shared_ptr",
+    "weak_ptr",
+    "RAII"
+  ],
+  "theory": "Wrappers around raw pointers to manage memory automatically. \n- **unique_ptr**: Sole owner. Deletes when out of scope. Cannot copy.\n- **shared_ptr**: Ref counted. Deletes when last owner leaves.\n- **weak_ptr**: Non-owning watcher (breaks cycles).",
+  "syntax": "#include <memory>",
+  "examples": [
+    {
+      "code": "unique_ptr<int> p = make_unique<int>(10);\n// No delete needed. Auto freed.",
+      "output": "Safe",
+      "explanation": "Modern Memory Management."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using new with smart pointers",
+      "correction": "Use `make_unique` or `make_shared` instead of `new`. It's safer and cleaner.",
+      "example": "Best Practice."
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "Circular dependency with shared_ptr?",
+      "answer": "A has shared_ptr to B, B has shared_ptr to A. Count never reaches 0. Leak. Solution: Use weak_ptr in one.",
+      "difficulty": "Advanced"
+    }
+  ],
+  "practice_problems": [],
+  "real_world_use_cases": [],
+  "exam_notes": [],
+  "summary": "No more leaks."
+}

@@ -33,6 +33,7 @@ const categoryIcons: Record<string, any> = {
   'artificial intelligence': Brain,
   'machine learning': BarChart,
   'c programming': Cpu,
+  'c++ programming': Code,
 };
 
 const categoryColors: Record<string, string> = {
@@ -58,6 +59,7 @@ const categoryColors: Record<string, string> = {
   'artificial intelligence': 'bg-rose-600',
   'machine learning': 'bg-violet-600',
   'c programming': 'bg-blue-700',
+  'c++ programming': 'bg-blue-800',
 };
 
 export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
@@ -84,6 +86,7 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
       'artificial intelligence',
       'machine learning',
       'c programming',
+      'c++ programming',
       'bootstrap',
       'typescript',
       'react',
