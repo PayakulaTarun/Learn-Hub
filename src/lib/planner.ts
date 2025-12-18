@@ -1,9 +1,14 @@
 
 import { RoadmapTopic, CareerRoadmap } from './roadmaps';
 
+export interface PlanTopic extends RoadmapTopic {
+    role: string;
+    domain: string;
+}
+
 export interface PlanTask {
     day: number;
-    topics: RoadmapTopic[];
+    topics: PlanTopic[];
     type: 'theory' | 'practice' | 'revision';
 }
 
@@ -18,15 +23,18 @@ export function generatePlan(
     totalWeeks: number,
     dailyHours: number
 ): StudyPlan {
-    const allTopics = roadmap.stages.flatMap(s => s.topics);
+    // Flatten stages but preserve role and domain
+    const allTopics: PlanTopic[] = roadmap.stages.flatMap(s =>
+        s.topics.map(t => ({ ...t, role: roadmap.id, domain: s.domain }))
+    );
+
     const totalDays = totalWeeks * 7;
-    const availableHours = totalDays * dailyHours;
 
     // Basic allocation logic
     let dailyTasks: PlanTask[] = [];
     let currentDay = 1;
     let accumulatedHours = 0;
-    let currentDayTopics: RoadmapTopic[] = [];
+    let currentDayTopics: PlanTopic[] = [];
 
     allTopics.forEach((topic, index) => {
         currentDayTopics.push(topic);
@@ -55,7 +63,7 @@ export function generatePlan(
         }
     });
 
-    // Ensure it fits within totalDays (simple truncation for now, real AI would distribute better)
+    // Ensure it fits within totalDays
     dailyTasks = dailyTasks.filter(t => t.day <= totalDays);
 
     return {

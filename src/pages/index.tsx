@@ -65,15 +65,15 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="text-center p-6 bg-ui-card rounded-xl shadow-lg border border-ui-border hover:border-accent transition-colors duration-300">
-              <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-lg border border-ui-border/50">
-                <img src="/brain.jpg" alt="Structured Learning Path" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
+            <Link href="/navigator" className="text-center p-6 bg-ui-card rounded-xl shadow-lg border border-ui-border hover:border-accent transition-all duration-300 group">
+              <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-lg border border-ui-border/50 group-hover:scale-105 transition-transform">
+                <img src="/brain.jpg" alt="AI Navigator" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-text-primary">Structured Learning Path</h3>
+              <h3 className="text-xl font-semibold mb-2 text-text-primary group-hover:text-accent">Career Navigator</h3>
               <p className="text-text-secondary">
-                Follow our recommended path from HTML basics → CSS styling → JavaScript/Python → Backend frameworks with clear difficulty levels
+                Our new AI-driven Roadmap system. Track your progress, unlock topics sequentially, and follow industrial paths for roles like Full Stack Dev & System Architect.
               </p>
-            </div>
+            </Link>
 
             <div className="text-center p-6 bg-ui-card rounded-xl shadow-lg border border-ui-border hover:border-accent transition-colors duration-300">
               <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-lg border border-ui-border/50">

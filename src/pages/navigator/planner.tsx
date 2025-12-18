@@ -141,7 +141,7 @@ export default function PlannerPage() {
                                        <span className="text-sm font-semibold">{topic.title}</span>
                                     </div>
                                     <Link 
-                                      href={topic.slug ? `/subjects/${topic.slug}` : '#'}
+                                      href={`/learn/${topic.role}/${topic.domain}/${topic.id}`}
                                       className="p-2 text-text-muted hover:text-accent transition-colors"
                                     >
                                        <ArrowRight className="w-4 h-4" />
