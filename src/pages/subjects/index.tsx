@@ -31,6 +31,7 @@ const categoryIcons: Record<string, any> = {
   dbms: Database,
   'computer networks': Globe,
   'artificial intelligence': Brain,
+  'machine learning': BarChart,
 };
 
 const categoryColors: Record<string, string> = {
@@ -54,6 +55,7 @@ const categoryColors: Record<string, string> = {
   dbms: 'bg-teal-600',
   'computer networks': 'bg-cyan-600',
   'artificial intelligence': 'bg-rose-600',
+  'machine learning': 'bg-violet-600',
 };
 
 export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
@@ -78,6 +80,7 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
       'dbms',
       'computer networks',
       'artificial intelligence',
+      'machine learning',
       'bootstrap',
       'typescript',
       'react',
