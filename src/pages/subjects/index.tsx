@@ -35,6 +35,7 @@ const categoryIcons: Record<string, any> = {
   'c programming': Cpu,
   'c++ programming': Code,
   'software engineering': Layers,
+  'computer organization': Cpu,
 };
 
 const categoryColors: Record<string, string> = {
@@ -62,6 +63,7 @@ const categoryColors: Record<string, string> = {
   'c programming': 'bg-blue-700',
   'c++ programming': 'bg-blue-800',
   'software engineering': 'bg-emerald-700',
+  'computer organization': 'bg-slate-800',
 };
 
 export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
@@ -90,6 +92,7 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
       'c programming',
       'c++ programming',
       'software engineering',
+      'computer organization',
       'bootstrap',
       'typescript',
       'react',
