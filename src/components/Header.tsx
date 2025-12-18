@@ -24,6 +24,9 @@ export default function Header() {
             <Link href="/about" className="text-text-secondary hover:text-accent font-medium transition-colors">
               About
             </Link>
+            <Link href="/practice" className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30">
+              Practice
+            </Link>
           </nav>
 
           <button
@@ -45,6 +48,9 @@ export default function Header() {
               </Link>
               <Link href="/about" className="text-text-secondary hover:text-accent transition-colors">
                 About
+              </Link>
+              <Link href="/practice" className="text-indigo-400 hover:text-indigo-300 transition-colors font-medium">
+                Practice Lab
               </Link>
             </nav>
           </div>

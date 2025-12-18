@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import Link from 'next/link';
-import { ArrowRight, Code, Palette, Zap, Users, BookOpen, Star, Database, GitBranch } from 'lucide-react';
+import { ArrowRight, Code, Palette, Zap, Users, BookOpen, Star, Database, GitBranch, BarChart } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -45,7 +45,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-ui-dark text-text-primary">
+      <section className="py-20 bg-ui-dark text-text-primary border-b border-ui-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">Why Choose LearnHub?</h2>
@@ -87,6 +87,47 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Practice Lab Teaser */}
+      <section className="py-24 bg-primary relative overflow-hidden">
+        <div className="absolute inset-0 bg-accent/5 radial-gradient opacity-20"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <span className="text-accent font-bold tracking-widest uppercase text-xs mb-4 block">New Feature</span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-text-primary mb-6 leading-tight">
+                Don't just read about code. <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-highlight">Experience it.</span>
+              </h2>
+              <p className="text-xl text-text-secondary mb-10 leading-relaxed">
+                Step into our <strong>Interactive Practice Lab</strong>. From visualizing complex algorithms to building frontend components in our live studio, we provide the tools to master engineering by actually <em>doing</em> it.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link href="/practice/sorting-visualizer" className="px-8 py-3 bg-accent text-primary font-bold rounded-xl hover:bg-highlight hover:text-white transition-all shadow-glow">
+                  Explore Visualizers
+                </Link>
+                <Link href="/practice/web-playground" className="px-8 py-3 bg-ui-card border border-ui-border text-text-primary font-bold rounded-xl hover:border-accent transition-all">
+                  Open Web Studio
+                </Link>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute -inset-4 bg-accent/20 blur-3xl rounded-full opacity-30"></div>
+              <div className="bg-ui-card border border-ui-border rounded-3xl p-4 shadow-2xl relative">
+                <img 
+                  src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800" 
+                  alt="Code Visualization" 
+                  className="rounded-2xl opacity-80"
+                />
+                <div className="absolute -bottom-8 -right-8 bg-accent p-6 rounded-2xl shadow-glow hidden md:block">
+                  <BarChart className="w-8 h-8 text-primary" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* Courses Preview */}
       <section className="bg-ui-dark py-20 border-t border-ui-border">
