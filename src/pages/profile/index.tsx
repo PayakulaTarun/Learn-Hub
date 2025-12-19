@@ -6,7 +6,8 @@ import {
   Flame, Trophy, BookOpen, 
   Settings, LogOut, ChevronRight,
   Target, Rocket, CheckCircle2,
-  Lock, Calendar, Zap, Sparkles
+  Lock, Calendar, Zap, Sparkles,
+  Clock, Swords
 } from 'lucide-react';
 import LayoutComponent from '../../components/Layout';
 import { useAuth } from '../../components/Auth/AuthContext';
@@ -26,13 +27,23 @@ export default function ProfileDashboard() {
     const fetchUserData = async () => {
       if (!user) return;
       
-      const [profileRes, xpRes] = await Promise.all([
+      const [profileRes, xpRes, statsRes, eventsRes] = await Promise.all([
         supabase.from('profiles').select('*').eq('id', user.id).single(),
-        supabase.from('user_xp').select('*').eq('user_id', user.id).single()
+        supabase.from('user_xp').select('*').eq('user_id', user.id).single(),
+        supabase.from('user_learning_stats').select('*').eq('user_id', user.id).single(),
+        supabase.from('user_activity_events').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5)
       ]);
 
       if (profileRes.data) setProfile(profileRes.data);
       if (xpRes.data) setXpData(xpRes.data);
+      
+      // Merge all stats for easier display
+      setProfile((prev: any) => ({
+        ...prev,
+        stats: statsRes.data || { total_time_spent_ms: 0, problems_solved_count: 0, tutorials_completed_count: 0 },
+        recentEvents: eventsRes.data || []
+      }));
+      
       setLoading(false);
     };
 
@@ -105,58 +116,57 @@ export default function ProfileDashboard() {
 
         {/* Intelligence Quadrants */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-10 pb-20">
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-              <div className="bg-ui-card border border-ui-border p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
-                 <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:rotate-12 transition-transform">
-                    <Flame className="w-24 h-24 text-orange-500" />
-                 </div>
-                 <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] mb-4">Focus Streak</p>
-                 <div className="flex items-end gap-3 mb-2">
-                    <span className="text-5xl font-black text-orange-500">{xpData?.streak || 0}</span>
-                    <span className="text-xl font-bold text-text-muted mb-1">Days</span>
-                 </div>
-                 <p className="text-xs text-text-secondary leading-relaxed">Don't break your chain. You are in the top 5% of learners.</p>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+               <div className="bg-ui-card border border-ui-border p-8 rounded-[2rem] shadow-xl relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:scale-110 transition-transform">
+                     <Flame className="w-24 h-24 text-orange-500" />
+                  </div>
+                  <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] mb-4">Focus Streak</p>
+                  <div className="flex items-end gap-3 mb-2">
+                     <span className="text-5xl font-black text-orange-500">{xpData?.streak_days || 0}</span>
+                     <span className="text-xl font-bold text-text-muted mb-1">Days</span>
+                  </div>
+                  <p className="text-xs text-text-secondary leading-relaxed">Maintaining architectural consistency.</p>
+               </div>
 
-              <div className="bg-ui-card border border-ui-border p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
-                 <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:-rotate-12 transition-transform">
-                    <Star className="w-24 h-24 text-yellow-500" />
-                 </div>
-                 <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] mb-4">Current Experience</p>
-                 <div className="flex items-end gap-3 mb-2">
-                    <span className="text-5xl font-black text-yellow-500">{xpData?.xp || 0}</span>
-                    <span className="text-xl font-bold text-text-muted mb-1">XP</span>
-                 </div>
-                 <div className="h-2 bg-ui-dark rounded-full overflow-hidden mb-2">
-                    <div className="h-full bg-yellow-500 shadow-glow-yellow-sm" style={{ width: '45%' }}></div>
-                 </div>
-                 <p className="text-[10px] font-black text-text-muted uppercase text-right">To Level { (xpData?.level || 1) + 1}</p>
-              </div>
+               <div className="bg-ui-card border border-ui-border p-8 rounded-[2rem] shadow-xl relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:scale-110 transition-transform">
+                     <Clock className="w-24 h-24 text-indigo-500" />
+                  </div>
+                  <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] mb-4">Study Time</p>
+                  <div className="flex items-end gap-3 mb-2">
+                     <span className="text-5xl font-black text-indigo-500">
+                        {Math.floor((profile?.stats?.total_time_spent_ms || 0) / (1000 * 60 * 60))}
+                     </span>
+                     <span className="text-xl font-bold text-text-muted mb-1">Hours</span>
+                  </div>
+                  <p className="text-xs text-text-secondary leading-relaxed">Deep-work engineering hours logged.</p>
+               </div>
 
-              <div className="bg-ui-card border border-ui-border p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
-                 <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:scale-125 transition-transform">
-                    <CheckCircle2 className="w-24 h-24 text-emerald-500" />
-                 </div>
-                 <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] mb-4">Pillars Mastered</p>
-                 <div className="flex items-end gap-3 mb-2">
-                    <span className="text-5xl font-black text-emerald-500">12</span>
-                    <span className="text-xl font-bold text-text-muted mb-1">Topics</span>
-                 </div>
-                 <p className="text-xs text-text-secondary leading-relaxed">High proficiency in Core CS and Frontend Architecture.</p>
-              </div>
+               <div className="bg-ui-card border border-ui-border p-8 rounded-[2rem] shadow-xl relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:scale-110 transition-transform">
+                     <Target className="w-24 h-24 text-emerald-500" />
+                  </div>
+                  <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] mb-4">Pillars Mastered</p>
+                  <div className="flex items-end gap-3 mb-2">
+                     <span className="text-5xl font-black text-emerald-500">{profile?.stats?.tutorials_completed_count || 0}</span>
+                     <span className="text-xl font-bold text-text-muted mb-1">Topics</span>
+                  </div>
+                  <p className="text-xs text-text-secondary leading-relaxed">Core conceptual pillars stabilized.</p>
+               </div>
 
-              <div className="bg-ui-card border border-ui-border p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
-                 <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:translate-x-2 transition-transform">
-                    <Trophy className="w-24 h-24 text-rose-500" />
-                 </div>
-                 <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] mb-4">Battleground Rank</p>
-                 <div className="flex items-end gap-3 mb-2">
-                    <span className="text-5xl font-black text-rose-500">A+</span>
-                    <span className="text-xl font-bold text-text-muted mb-1">Elite</span>
-                 </div>
-                 <p className="text-xs text-text-secondary leading-relaxed">Strong readiness for Tier-1 Product Companies.</p>
-              </div>
-           </div>
+               <div className="bg-ui-card border border-ui-border p-8 rounded-[2rem] shadow-xl relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:scale-110 transition-transform">
+                     <Swords className="w-24 h-24 text-rose-500" />
+                  </div>
+                  <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] mb-4">Problems Solved</p>
+                  <div className="flex items-end gap-3 mb-2">
+                     <span className="text-5xl font-black text-rose-500">{profile?.stats?.problems_solved_count || 0}</span>
+                     <span className="text-xl font-bold text-text-muted mb-1">Solved</span>
+                  </div>
+                  <p className="text-xs text-text-secondary leading-relaxed">Challenges crushed in the field.</p>
+               </div>
+            </div>
 
            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column: Progress & Paths */}
@@ -202,27 +212,39 @@ export default function ProfileDashboard() {
                        <h2 className="text-2xl font-black tracking-tight">Recent Activity</h2>
                     </div>
                     
-                    <div className="space-y-4">
-                       {[
-                         { title: 'Graph Traversal (Hard)', info: 'Solved 2 hours ago', icon: Zap, color: 'text-orange-400' },
-                         { title: 'System Design: Rate Limiting', info: 'Readiness: 85%', icon: Rocket, color: 'text-indigo-400' },
-                         { title: 'TCS NQT Full Mock', info: 'Rank: #420', icon: Trophy, color: 'text-rose-400' }
-                       ].map((item, i) => {
-                         const Icon = item.icon;
-                         return (
-                           <div key={i} className="flex items-center gap-6 p-6 bg-ui-dark border border-ui-border rounded-2xl hover:border-ui-border transition-all">
-                              <div className={`w-12 h-12 bg-ui-card border border-ui-border rounded-xl flex items-center justify-center ${item.color}`}>
-                                 <Icon size={20} />
+                     <div className="space-y-4">
+                        {profile?.recentEvents?.length > 0 ? (
+                          profile.recentEvents.map((item: any, i: number) => {
+                            const eventConfigs: Record<string, { icon: any, color: string, label: string }> = {
+                              solve: { icon: Target, color: 'text-rose-400', label: 'Solved' },
+                              view: { icon: BookOpen, color: 'text-indigo-400', label: 'Viewed' },
+                              run: { icon: Zap, color: 'text-orange-400', label: 'Practiced' },
+                              test_attempt: { icon: Trophy, color: 'text-emerald-400', label: 'Tested' },
+                            };
+                            
+                            const config = eventConfigs[item.event_type] || { icon: Sparkles, color: 'text-text-muted', label: 'Activity' };
+                            const Icon = config.icon;
+                            return (
+                              <div key={i} className="flex items-center gap-6 p-6 bg-ui-dark border border-ui-border rounded-2xl hover:border-ui-border transition-all">
+                                 <div className={`w-12 h-12 bg-ui-card border border-ui-border rounded-xl flex items-center justify-center ${config.color}`}>
+                                    <Icon size={20} />
+                                 </div>
+                                 <div className="flex-1">
+                                    <h4 className="font-bold">{item.entity_id}</h4>
+                                    <p className="text-xs text-text-muted uppercase tracking-widest font-black mt-1">
+                                       {config.label} {new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </p>
+                                 </div>
+                                 <ChevronRight className="text-text-muted" size={16} />
                               </div>
-                              <div className="flex-1">
-                                 <h4 className="font-bold">{item.title}</h4>
-                                 <p className="text-xs text-text-muted uppercase tracking-widest font-black mt-1">{item.info}</p>
-                              </div>
-                              <ChevronRight className="text-text-muted" size={16} />
-                           </div>
-                         );
-                       })}
-                    </div>
+                            );
+                          })
+                        ) : (
+                          <div className="text-center py-12 text-text-muted italic border-2 border-dashed border-ui-border rounded-[2rem]">
+                             No recent mission activity detected.
+                          </div>
+                        )}
+                     </div>
                  </div>
               </div>
 

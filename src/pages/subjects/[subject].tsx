@@ -16,6 +16,7 @@ import GraphLab from '../../components/PracticeEngine/GraphLab';
 import { getPracticePack } from '../../lib/practiceLoader';
 import { PracticePack } from '../../types/practice';
 import { Target, Shield, Zap, Swords } from 'lucide-react';
+import { useAnalytics } from '../../hooks/useAnalytics';
 
 interface SubjectPageProps {
   tutorial: Tutorial;
@@ -33,9 +34,13 @@ interface UISection {
 }
 
 export default function SubjectPage({ tutorial, practicePack, prevTutorial, nextTutorial }: SubjectPageProps) {
+  const { trackTimeSpent } = useAnalytics();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'deep' | 'cram'>('deep');
   const router = useRouter();
+
+  // Track time spent on this specific tutorial
+  trackTimeSpent('tutorial', tutorial?.slug || 'unknown', { title: tutorial?.title });
 
   // Transform raw tutorial data into navigable sections
   const sections: UISection[] = useMemo(() => {

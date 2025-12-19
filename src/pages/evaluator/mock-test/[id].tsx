@@ -10,6 +10,7 @@ import {
 import { mockExams } from '../../../lib/evaluatorData';
 import { MockExam } from '../../../types/evaluator';
 import Link from 'next/link';
+import { useAnalytics } from '../../../hooks/useAnalytics';
 
 interface MockTestPageProps {
   exam: MockExam;
@@ -21,6 +22,7 @@ export default function MockTestPage({ exam }: MockTestPageProps) {
     const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
     const [answers, setAnswers] = useState<Record<string, string>>({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
+    const { trackEvent } = useAnalytics();
 
     // Timer logic
     useEffect(() => {
@@ -36,6 +38,8 @@ export default function MockTestPage({ exam }: MockTestPageProps) {
     const handleAutoSubmit = () => {
         setHasSubmitted(true);
         setGameState('result');
+        const finalScore = calculateScore();
+        trackEvent('solve', 'mock_test', exam.id, { score: finalScore, completed: true });
     };
 
     const formatTime = (seconds: number) => {
@@ -114,7 +118,10 @@ export default function MockTestPage({ exam }: MockTestPageProps) {
                                 </div>
 
                                 <button 
-                                    onClick={() => setGameState('live')}
+                                    onClick={() => {
+                                        setGameState('live');
+                                        trackEvent('test_attempt', 'mock_test', exam.id);
+                                    }}
                                     className="w-full py-5 bg-orange-500 text-primary font-black rounded-3xl shadow-glow-orange hover:scale-[1.02] transition-all flex items-center justify-center gap-4 text-xl"
                                 >
                                     Start Locked Session <Rocket className="w-6 h-6" />

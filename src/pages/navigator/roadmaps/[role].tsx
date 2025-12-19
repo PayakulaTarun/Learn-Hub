@@ -11,16 +11,28 @@ import {
   BookOpen, Terminal, Code, Settings, Users
 } from 'lucide-react';
 import Link from 'next/link';
+import { useAnalytics } from '../../../hooks/useAnalytics';
 
 export default function RoadmapPage() {
   const router = useRouter();
   const { role } = router.query;
-  const { isCompleted, toggleComplete } = useLearningState();
+  const { isCompleted: isTopicCompleted, toggleComplete: originalToggleComplete } = useLearningState();
+  const { trackTimeSpent, trackEvent } = useAnalytics();
+  const isCompleted = isTopicCompleted;
 
   const roadmap = useMemo(() => 
     roadmaps.find(r => r.id === role), 
   [role]);
 
+  // Track time spent on this roadmap
+  trackTimeSpent('roadmap', roadmap?.id || 'unknown', { title: roadmap?.title });
+
+  const toggleComplete = (topicId: string) => {
+    originalToggleComplete(topicId);
+    if (!isTopicCompleted(topicId)) {
+        trackEvent('roadmap_step', 'roadmap', roadmap?.id || 'unknown', { topicId });
+    }
+  };
   if (!roadmap) return null;
 
   // Logic to check if a topic can be unlocked

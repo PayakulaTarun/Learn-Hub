@@ -28,11 +28,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
-      setUser(session?.user ?? null);
-      setIsVerified(session?.user?.email_confirmed_at ? true : false);
+      const newUser = session?.user ?? null;
+      setUser(newUser);
+      setIsVerified(newUser?.email_confirmed_at ? true : false);
       setLoading(false);
+
+      if (_event === 'SIGNED_IN' && newUser) {
+        // Track login activity
+        await supabase.from('user_activity_events').insert({
+          user_id: newUser.id,
+          event_type: 'login',
+          entity_type: 'session',
+          entity_id: session?.access_token.substring(0, 8),
+          metadata: { last_sign_in: newUser.last_sign_in_at }
+        });
+      }
     });
 
     return () => subscription.unsubscribe();

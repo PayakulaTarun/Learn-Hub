@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { Play, RotateCcw, Zap, CheckCircle2, XCircle, Info, ChevronDown } from 'lucide-react';
 import { executeCode, ExecutionResult } from '../../lib/codeRunner';
+import { useAnalytics } from '../../hooks/useAnalytics';
 
 const Editor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
@@ -31,6 +32,7 @@ export default function InteractiveEditor({
   const [isRunning, setIsRunning] = useState(false);
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
   const [showHints, setShowHints] = useState(false);
+  const { trackEvent } = useAnalytics();
 
   const resetCode = () => {
     setCode(initialCode);
@@ -44,8 +46,13 @@ export default function InteractiveEditor({
     setResult(res);
     setIsRunning(false);
 
+    // Track standard code run
+    trackEvent('run', 'problem', title, { language, success: !!res.output });
+
     if (expectedOutput && res.output.trim() === expectedOutput.trim()) {
       setIsSuccess(true);
+      // Track successful solution
+      trackEvent('solve', 'problem', title, { language, challengeMode });
     } else if (expectedOutput) {
       setIsSuccess(false);
     }
