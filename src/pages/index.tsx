@@ -1,14 +1,15 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import Link from 'next/link';
-import { ArrowRight, Code, Palette, Zap, Users, BookOpen, Star, Database, GitBranch, BarChart } from 'lucide-react';
+import { ArrowRight, Code, Palette, Zap, Users, BookOpen, Star, Database, GitBranch, BarChart, Trophy, Swords, FileText, Target } from 'lucide-react';
+import DailyProblem from '../components/Motivator/DailyProblem';
+import { useGamification } from '../hooks/useGamification';
 
 export default function Home() {
+  const { stats } = useGamification();
+
   return (
     <Layout title="LearnHub - Master Engineering">
-      {/* Hero Section */}
-      {/* Hero Section */}
-      {/* Hero Video Section (Visual) */}
       <section className="relative w-full h-[50vh] overflow-hidden border-b border-ui-border/20">
         <video
           autoPlay
@@ -22,25 +23,39 @@ export default function Home() {
         {/* Subtle overlay for video integration */}
         <div className="absolute inset-0 bg-ui-dark/20"></div>
       </section>
-
+      
       {/* Hero Content Section */}
       <section className="py-16 md:py-24 bg-ui-dark text-center border-b border-ui-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-text-primary">
-            Master Engineering
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 text-text-secondary max-w-3xl mx-auto">
-            Learn Computer Science, Full Stack Development, System Design, and 200+ other technologies with comprehensive masterclasses and real-world projects
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/subjects" className="btn-primary bg-accent text-primary hover:bg-highlight hover:text-white border-2 border-accent hover:border-highlight backdrop-blur-sm font-bold shadow-glow transition-all duration-300">
-              Start Learning
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            <Link href="/about" className="btn-secondary bg-transparent hover:bg-ui-border/50 text-text-primary border-2 border-text-secondary hover:border-accent hover:text-accent backdrop-blur-md font-bold transition-all duration-300">
-              Learn More
-            </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-12 items-center text-left">
+          
+          <div className="lg:col-span-2">
+            {stats.xp > 0 && (
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full mb-6">
+                <Star className="w-4 h-4 text-accent fill-accent" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-accent">Welcome back Level {stats.level} Developer</span>
+              </div>
+            )}
+            <h1 className="text-5xl md:text-8xl font-black mb-8 text-text-primary tracking-tighter leading-none">
+              Master Engineering <br />
+              <span className="text-accent">Build the Future</span>
+            </h1>
+            <p className="text-xl md:text-2xl mb-12 text-text-secondary max-w-2xl leading-relaxed font-medium">
+              Transform your coding journey into a structured career path with industry roadmaps, interactive labs, and automated quality reviews.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6">
+              <Link href="/subjects" className="px-10 py-5 bg-accent text-primary rounded-2xl font-black shadow-glow hover:bg-highlight hover:scale-105 transition-all text-sm uppercase tracking-widest">
+                Start Learning
+              </Link>
+              <Link href="/evaluator" className="px-10 py-5 bg-ui-dark border-2 border-ui-border text-text-primary rounded-2xl font-black hover:border-accent hover:text-accent transition-all text-sm uppercase tracking-widest">
+                Job Ready Check
+              </Link>
+            </div>
           </div>
+
+          <div className="lg:col-span-1">
+             <DailyProblem />
+          </div>
+
         </div>
       </section>
 
@@ -128,8 +143,55 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Motivator & Toolkit Section */}
+      <section className="py-24 bg-ui-dark border-b border-ui-border overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+             <span className="text-[10px] font-black tracking-[0.3em] uppercase text-text-muted mb-4 block">The Career Engine</span>
+             <h2 className="text-4xl md:text-6xl font-black tracking-tighter">Tools to <span className="text-highlight">Accelerate</span> Growth</h2>
+          </div>
 
-      {/* Courses Preview */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <Link href="/evaluator/challenges/duel" className="group bg-ui-card border border-ui-border p-8 rounded-[2rem] hover:border-rose-500/50 transition-all shadow-xl">
+               <div className="w-12 h-12 bg-rose-500/20 text-rose-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Swords className="w-6 h-6" />
+               </div>
+               <h3 className="text-xl font-bold mb-3">Coding Duels</h3>
+               <p className="text-xs text-text-secondary leading-relaxed mb-6">Challenge peers to real-time coding battles. Fastest solution wins XP & Rank.</p>
+               <span className="text-[10px] font-black uppercase text-rose-500 flex items-center gap-2">Enter Arena <ArrowRight className="w-3 h-3" /></span>
+            </Link>
+
+            <Link href="/toolkit/resume-builder" className="group bg-ui-card border border-ui-border p-8 rounded-[2rem] hover:border-indigo-500/50 transition-all shadow-xl">
+               <div className="w-12 h-12 bg-indigo-500/20 text-indigo-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <FileText className="w-6 h-6" />
+               </div>
+               <h3 className="text-xl font-bold mb-3">Resume AI</h3>
+               <p className="text-xs text-text-secondary leading-relaxed mb-6">Create ATS-optimized resumes auto-filled with your verified platform progress.</p>
+               <span className="text-[10px] font-black uppercase text-indigo-400 flex items-center gap-2">Generate Now <ArrowRight className="w-3 h-3" /></span>
+            </Link>
+
+            <div className="group bg-ui-card border border-ui-border p-8 rounded-[2rem] shadow-xl relative overflow-hidden">
+               <div className="w-12 h-12 bg-emerald-500/20 text-emerald-500 rounded-xl flex items-center justify-center mb-6">
+                  <Trophy className="w-6 h-6" />
+               </div>
+               <h3 className="text-xl font-bold mb-3">Global Leaderboard</h3>
+               <p className="text-xs text-text-secondary leading-relaxed mb-6">Compete globally and earn badges that reflect your true technical depth.</p>
+               <span className="text-[10px] font-black uppercase text-emerald-500">Coming Season 1</span>
+            </div>
+
+             <div className="group bg-ui-card border border-ui-border p-8 rounded-[2rem] shadow-xl relative overflow-hidden">
+               <div className="w-12 h-12 bg-yellow-500/20 text-yellow-500 rounded-xl flex items-center justify-center mb-6">
+                  <Target className="w-6 h-6" />
+               </div>
+               <h3 className="text-xl font-bold mb-3">Skill Analytics</h3>
+               <p className="text-xs text-text-secondary leading-relaxed mb-6">Deep insights into your conceptual gaps and interview readiness scores.</p>
+               <span className="text-[10px] font-black uppercase text-yellow-500">View Pro Stats</span>
+            </div>
+
+          </div>
+        </div>
+      </section>
       <section className="bg-ui-dark py-20 border-t border-ui-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">

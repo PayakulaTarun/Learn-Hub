@@ -60,6 +60,7 @@ export interface Tutorial {
     real_world_use_cases: RealWorldUseCase[];
     exam_notes: string[];
     summary: string;
+    cheatsheet?: string;
     interactive_lab?: InteractiveLab;
     visualizer?: VisualizerConfig;
     description?: string; // Fallback for backward compatibility

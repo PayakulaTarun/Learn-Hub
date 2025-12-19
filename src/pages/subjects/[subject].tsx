@@ -30,6 +30,7 @@ interface UISection {
 
 export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: SubjectPageProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'deep' | 'cram'>('deep');
   const router = useRouter();
 
   // Transform raw tutorial data into navigable sections
@@ -172,16 +173,109 @@ export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: Su
           </div>
         </aside>
 
-        <div className="flex-1 w-full lg:max-w-4xl bg-ui-card rounded-2xl shadow-lg border border-ui-border overflow-hidden min-h-[500px]">
-          <div className="p-8 lg:p-12">
-            <div className="mb-8 border-b border-ui-border pb-8">
-               <div className="flex items-center gap-2 mb-4">
-                  <span className="px-3 py-1 bg-secondary/30 text-highlight border border-secondary/50 rounded-full text-xs font-semibold">{tutorial.level}</span>
-                  <span className="px-3 py-1 bg-accent/20 text-accent border border-accent/40 rounded-full text-xs font-semibold">{tutorial.estimated_read_time}</span>
-               </div>
-              <h1 className="text-3xl lg:text-4xl font-bold text-text-primary mb-2">{tutorial.title}</h1>
-              <h2 className="text-xl text-accent font-medium">{activeSection.title}</h2>
+        <div className="flex-1 w-full lg:max-w-4xl bg-ui-card rounded-[2rem] shadow-2xl border border-ui-border overflow-hidden min-h-[600px]">
+          <div className="p-8 lg:p-12 bg-gradient-to-b from-primary/30 to-transparent">
+            
+            {/* Header & Mode Toggle */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 border-b border-ui-border pb-10">
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="px-3 py-1 bg-secondary/30 text-highlight border border-secondary/50 rounded-full text-[10px] font-black uppercase tracking-widest">{tutorial.level}</span>
+                  <span className="px-3 py-1 bg-accent/20 text-accent border border-accent/40 rounded-full text-[10px] font-black uppercase tracking-widest">{tutorial.estimated_read_time}</span>
+                </div>
+                <h1 className="text-3xl lg:text-5xl font-black text-text-primary tracking-tighter mb-2">{tutorial.title}</h1>
+                <p className="text-xs font-bold text-text-muted uppercase tracking-widest">{tutorial.category} • Knowledge Pillar</p>
+              </div>
+
+              {/* Mode Switcher */}
+              <div className="flex items-center p-1 bg-primary rounded-2xl border border-ui-border">
+                <button 
+                  onClick={() => setViewMode('deep')}
+                  className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${viewMode === 'deep' ? 'bg-accent text-primary shadow-glow' : 'text-text-muted hover:text-text-primary'}`}
+                >
+                  Deep Dive
+                </button>
+                <button 
+                  onClick={() => setViewMode('cram')}
+                  className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${viewMode === 'cram' ? 'bg-highlight text-primary shadow-glow-blue' : 'text-text-muted hover:text-text-primary'}`}
+                >
+                  Exam Cram
+                </button>
+              </div>
             </div>
+
+            {viewMode === 'cram' ? (
+              <div className="animate-in fade-in zoom-in duration-500 space-y-10">
+                <div className="bg-gradient-to-br from-highlight/20 to-indigo-500/10 border border-highlight/30 rounded-[2.5rem] p-10 shadow-xl relative overflow-hidden">
+                   <div className="absolute top-0 right-0 p-10 opacity-5">
+                       <GraduationCap className="w-64 h-64" />
+                   </div>
+                   <div className="relative">
+                      <h2 className="text-3xl font-black mb-6">High-Density <span className="text-highlight">Cheatsheet</span></h2>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                         <div>
+                            <h3 className="text-xs font-black uppercase tracking-widest text-text-muted mb-4 border-b border-ui-border pb-2">Internal Framework</h3>
+                            <p className="text-sm text-text-secondary leading-relaxed bg-ui-dark/30 p-6 rounded-2xl border border-ui-border font-medium">
+                               {tutorial.summary}
+                            </p>
+                         </div>
+                         <div>
+                            <h3 className="text-xs font-black uppercase tracking-widest text-text-muted mb-4 border-b border-ui-border pb-2">Critical Notes</h3>
+                            <ul className="space-y-3">
+                               {tutorial.exam_notes.map((note, i) => (
+                                  <li key={i} className="text-[13px] text-text-secondary flex gap-3 font-medium">
+                                     <div className="w-1.5 h-1.5 bg-highlight rounded-full mt-1.5 shadow-glow-blue"></div> {note}
+                                  </li>
+                               ))}
+                            </ul>
+                         </div>
+                      </div>
+
+                      {tutorial.syntax && (
+                         <div className="mt-10">
+                             <h3 className="text-xs font-black uppercase tracking-widest text-text-muted mb-4 border-b border-ui-border pb-2">Syntax Fast-Ref</h3>
+                             <pre className="bg-ui-dark/50 p-8 rounded-3xl border border-ui-border font-mono text-sm text-emerald-400 overflow-x-auto shadow-inner">
+                                {tutorial.syntax}
+                             </pre>
+                         </div>
+                      )}
+                      
+                      {tutorial.common_mistakes.length > 0 && (
+                         <div className="mt-10">
+                            <h3 className="text-xs font-black uppercase tracking-widest text-text-muted mb-4 border-b border-ui-border pb-2">Trap Prevention</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                               {tutorial.common_mistakes.slice(0, 2).map((m, i) => (
+                                  <div key={i} className="p-6 bg-rose-500/5 border border-rose-500/20 rounded-2xl">
+                                     <p className="text-[10px] font-black text-rose-500 uppercase mb-2 tracking-widest">Potential Mistake</p>
+                                     <p className="text-[13px] font-bold text-text-primary mb-1">{m.mistake}</p>
+                                     <p className="text-xs text-text-muted leading-relaxed">{m.correction}</p>
+                                  </div>
+                               ))}
+                            </div>
+                         </div>
+                      )}
+                   </div>
+                </div>
+                
+                <div className="bg-ui-card border border-ui-border rounded-[2.5rem] p-10">
+                   <h3 className="text-2xl font-black mb-8 flex items-center gap-4">
+                      <HelpCircle className="w-8 h-8 text-highlight" /> High-Probability <span className="text-highlight">Interview Prompts</span>
+                   </h3>
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {tutorial.interview_questions.slice(0, 4).map((q, i) => (
+                         <div key={i} className="p-6 bg-primary/40 border border-ui-border rounded-3xl group hover:border-highlight/30 transition-all">
+                            <p className="text-sm font-bold text-text-primary mb-3 leading-snug">{q.question}</p>
+                            <span className="px-2 py-0.5 bg-highlight/10 text-highlight text-[9px] font-black rounded uppercase tracking-widest">{q.difficulty}</span>
+                         </div>
+                      ))}
+                   </div>
+                </div>
+              </div>
+            ) : (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h2 className="text-2xl font-black text-accent mb-8 flex items-center gap-3">
+                   <ChevronRight className="w-6 h-6" /> {activeSection.title}
+                </h2>
 
             <div className="prose prose-lg prose-invert max-w-none text-text-secondary space-y-8">
               
@@ -362,7 +456,9 @@ export default function SubjectPage({ tutorial, prevTutorial, nextTutorial }: Su
                 {hasNextSection ? 'Next Section' : (nextTutorial ? `Next: ${nextTutorial.title.substring(0, 15)}...` : 'Next')}
                 <ArrowRight size={20} />
               </button>
+              </div>
             </div>
+           )}
           </div>
         </div>
       </main>
