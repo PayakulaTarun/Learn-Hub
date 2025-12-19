@@ -299,9 +299,14 @@ export default function ProfileDashboard() {
                           <p className="text-[10px] font-black uppercase text-text-muted mb-4 tracking-widest">Curriculum Reach</p>
                           <div className="flex items-center gap-4 mb-4">
                              <div className="flex-1 h-3 bg-primary rounded-full overflow-hidden border border-ui-border">
-                                <div className="h-full bg-accent shadow-glow-indigo" style={{ width: '15%' }}></div>
+                                <div 
+                                    className="h-full bg-accent shadow-glow-indigo transition-all duration-1000" 
+                                    style={{ width: `${Math.min(100, Math.round(((profile?.stats?.tutorials_completed_count || 0) / availableSubjects.length) * 100))}%` }}
+                                ></div>
                              </div>
-                             <span className="text-sm font-black">15%</span>
+                             <span className="text-sm font-black">
+                                {Math.round(((profile?.stats?.tutorials_completed_count || 0) / availableSubjects.length) * 100)}%
+                             </span>
                           </div>
                           <p className="text-[10px] text-text-muted font-bold tracking-tight">
                             {Math.min(profile?.stats?.tutorials_completed_count || 0, availableSubjects.length)} of {availableSubjects.length} domains activated.
