@@ -124,7 +124,7 @@ export default function SubjectPage({ tutorial, practicePack, prevTutorial, next
   return (
     <div className="min-h-screen bg-ui-dark flex flex-col">
       <Head>
-        <title>{`${tutorial.title} - LearnHub`}</title>
+        <title>{`${tutorial.title} - Student Resource Hub`}</title>
         <meta name="description" content={tutorial.theory?.substring(0, 160)} />
       </Head>
 

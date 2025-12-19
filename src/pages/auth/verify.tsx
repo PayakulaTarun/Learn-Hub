@@ -56,7 +56,7 @@ export default function VerificationHandler() {
   return (
     <Layout>
       <Head>
-        <title>Authenticating Identity | LearnHub</title>
+        <title>Authenticating Identity | Student Resource Hub</title>
       </Head>
       <div className="min-h-[80vh] flex items-center justify-center p-4">
         <div className="max-w-md w-full bg-ui-card border border-ui-border rounded-[3rem] p-12 text-center shadow-2xl">

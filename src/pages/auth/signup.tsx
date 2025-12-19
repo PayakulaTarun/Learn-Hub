@@ -69,7 +69,7 @@ export default function SignupPage() {
   return (
     <Layout>
       <Head>
-        <title>Join LearnHub | Secure Identity</title>
+        <title>Join Student Resource Hub | Secure Identity</title>
       </Head>
       <div className="min-h-screen flex items-center justify-center p-4 bg-primary/30">
         <div className="max-w-xl w-full">

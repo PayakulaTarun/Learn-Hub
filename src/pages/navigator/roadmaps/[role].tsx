@@ -40,7 +40,7 @@ export default function RoadmapPage() {
   };
 
   return (
-    <Layout title={`${roadmap.title} Roadmap | LearnHub`}>
+    <Layout title={`${roadmap.title} Roadmap | Student Resource Hub`}>
       <div className="bg-primary min-h-screen pb-20">
         
         {/* Sub-Header */}

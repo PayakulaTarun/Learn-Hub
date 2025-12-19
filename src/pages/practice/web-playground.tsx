@@ -11,7 +11,7 @@ import {
 const MonacoEditor = dynamic(() => import('../../components/tools/MonacoEditor'), { ssr: false });
 
 export default function WebPlayground() {
-  const [html, setHtml] = useState('<!-- UI Structure -->\n<div class="card">\n  <h1>LearnHub Studio</h1>\n  <p>The professional playground for engineers.</p>\n  <button id="action">Click Me</button>\n</div>');
+  const [html, setHtml] = useState('<!-- UI Structure -->\n<div class="card">\n  <h1>Student Resource Hub Studio</h1>\n  <p>The professional playground for engineers.</p>\n  <button id="action">Click Me</button>\n</div>');
   const [css, setCss] = useState('/* Component Styling */\nbody {\n  background: #070D18;\n  color: #EAF1FF;\n  font-family: system-ui, sans-serif;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n  margin: 0;\n}\n\n.card {\n  background: #0F1E33;\n  padding: 3rem;\n  border-radius: 2rem;\n  border: 1px solid #233A5E;\n  text-align: center;\n  box-shadow: 0 0 40px rgba(31, 209, 193, 0.1);\n}\n\nh1 {\n  color: #1FD1C1;\n  font-size: 3rem;\n  margin-bottom: 1rem;\n}\n\nbutton {\n  background: #1FD1C1;\n  border: none;\n  padding: 0.8rem 2rem;\n  border-radius: 0.5rem;\n  font-weight: bold;\n  cursor: pointer;\n  transition: 0.3s;\n}\n\nbutton:hover {\n  background: #4DA3FF;\n  transform: scale(1.05);\n}');
   const [js, setJs] = useState('// Logic\ndocument.getElementById("action").addEventListener("click", () => {\n  alert("Logic connected! Welcome to the lab.");\n});');
   const [srcDoc, setSrcDoc] = useState('');
@@ -50,7 +50,7 @@ export default function WebPlayground() {
                 <Terminal className="w-5 h-5 text-accent" />
              </div>
              <div>
-                <h1 className="text-sm font-bold text-text-primary tracking-tight">LearnHub Studio</h1>
+                <h1 className="text-sm font-bold text-text-primary tracking-tight">Student Resource Hub Studio</h1>
                 <p className="text-[10px] text-text-muted font-mono uppercase tracking-widest">Frontend Environment v1.0</p>
              </div>
           </div>
@@ -146,7 +146,7 @@ export default function WebPlayground() {
               <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-emerald-500" /> Compiled Successfully</span>
               <span>UTF-8</span>
            </div>
-           <div>LearnHub v1.0.0</div>
+           <div>Student Resource Hub v1.0.0</div>
         </div>
       </div>
     </Layout>

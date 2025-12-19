@@ -3,7 +3,7 @@ import { UserStats, XP_WEIGHTS, LEVEL_THRESHOLD } from '../types/gamification';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../components/Auth/AuthContext';
 
-const STORAGE_KEY = 'learnhub_gamification_stats';
+const STORAGE_KEY = 'Student Resource Hub_gamification_stats';
 
 const initialStats: UserStats = {
     xp: 0,

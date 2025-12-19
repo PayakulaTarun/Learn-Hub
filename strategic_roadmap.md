@@ -1,7 +1,7 @@
-# LearnHub Strategic Roadmap: The "All-in-One" Vision
+# Student Resource Hub Strategic Roadmap: The "All-in-One" Vision
 
 ## Executive Summary
-To transform LearnHub from a *content repository* into an **"All-in-One" Educational Ecosystem**, we must shift focus from "Passive Reading" to "Active Doing". The goal is to maximize **User Retention**, **Engagement**, and **Career Outcomes**.
+To transform Student Resource Hub from a *content repository* into an **"All-in-One" Educational Ecosystem**, we must shift focus from "Passive Reading" to "Active Doing". The goal is to maximize **User Retention**, **Engagement**, and **Career Outcomes**.
 
 ## Pillar 1: The "Practice" Engine (Active Learning)
 *Current State: Static code snippets.*

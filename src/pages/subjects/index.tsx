@@ -122,7 +122,7 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
   return (
     <Layout>
       <Head>
-        <title>All Subjects - LearnHub</title>
+        <title>All Subjects - Student Resource Hub</title>
         <meta
           name="description"
           content="Browse all available technology tutorials and masterclasses"

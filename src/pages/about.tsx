@@ -4,11 +4,11 @@ import { Users, Target, BookOpen, Award, Github, Heart } from 'lucide-react';
 
 export default function About() {
   return (
-    <Layout title="About - LearnHub" description="Learn about our mission to make web development accessible to everyone">
+    <Layout title="About - Student Resource Hub" description="Learn about our mission to make web development accessible to everyone">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">About LearnHub</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">About Student Resource Hub</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             We believe everyone should have access to quality programming education. 
             Our mission is to make web development skills accessible, practical, and enjoyable to learn.
@@ -134,7 +134,7 @@ export default function About() {
         {/* Stats */}
         <div className="bg-gray-100 rounded-2xl p-8 md:p-12 mb-20">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4">LearnHub by the Numbers</h2>
+            <h2 className="text-3xl font-bold mb-4">Student Resource Hub by the Numbers</h2>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -163,7 +163,7 @@ export default function About() {
             <Github className="h-12 w-12 text-gray-700 mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-4">Open Source & Community</h2>
             <p className="text-gray-600 mb-6">
-              LearnHub is built with modern web technologies and our curriculum is continuously 
+              Student Resource Hub is built with modern web technologies and our curriculum is continuously 
               updated based on industry trends and community feedback.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

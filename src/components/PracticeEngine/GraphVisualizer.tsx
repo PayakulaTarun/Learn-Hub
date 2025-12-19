@@ -155,7 +155,7 @@ export default function GraphVisualizer() {
   const currentData = steps[currentStep] || { visited: [], queue: [], stack: [], edges_active: [], message: '' };
 
   return (
-    <Layout title="Graph Visualizer | LearnHub">
+    <Layout title="Graph Visualizer | Student Resource Hub">
       <div className="bg-primary min-h-screen text-text-primary p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}

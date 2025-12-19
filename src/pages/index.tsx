@@ -9,7 +9,7 @@ export default function Home() {
   const { stats } = useGamification();
 
   return (
-    <Layout title="LearnHub - Master Engineering">
+    <Layout title="Student Resource Hub - Master Engineering">
       <section className="relative w-full h-[50vh] overflow-hidden border-b border-ui-border/20">
         <video
           autoPlay
@@ -63,7 +63,7 @@ export default function Home() {
       <section className="py-20 bg-ui-dark text-text-primary border-b border-ui-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">Why Choose LearnHub?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">Why Choose Student Resource Hub?</h2>
             <p className="text-xl text-text-secondary max-w-2xl mx-auto">
               Master 60+ technologies with structured masterclasses, interactive code examples, and portfolio-ready projects
             </p>

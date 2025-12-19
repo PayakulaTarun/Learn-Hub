@@ -387,7 +387,7 @@ export default function SortingVisualizer() {
   const algoInfo = ALGORITHM_DATA[algorithm];
 
   return (
-    <Layout title={`${algoInfo.title} | LearnHub Visualizer`}>
+    <Layout title={`${algoInfo.title} | Student Resource Hub Visualizer`}>
       <div className="bg-primary min-h-screen text-text-primary flex flex-col pt-4">
         
         {/* Top Control Bar */}

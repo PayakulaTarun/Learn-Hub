@@ -5,7 +5,7 @@ export function useLearningState() {
     const [completed, setCompleted] = useState<string[]>([]);
 
     useEffect(() => {
-        const saved = localStorage.getItem('learnhub_progress');
+        const saved = localStorage.getItem('Student Resource Hub_progress');
         if (saved) setCompleted(JSON.parse(saved));
     }, []);
 
@@ -14,7 +14,7 @@ export function useLearningState() {
             ? completed.filter(i => i !== id)
             : [...completed, id];
         setCompleted(newCompleted);
-        localStorage.setItem('learnhub_progress', JSON.stringify(newCompleted));
+        localStorage.setItem('Student Resource Hub_progress', JSON.stringify(newCompleted));
     };
 
     const isCompleted = (id: string) => completed.includes(id);

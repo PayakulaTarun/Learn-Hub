@@ -42,7 +42,7 @@ export default function LoginPage() {
   return (
     <Layout>
       <Head>
-        <title>Identity Access | LearnHub</title>
+        <title>Identity Access | Student Resource Hub</title>
       </Head>
       <div className="min-h-screen flex items-center justify-center p-4 bg-primary/30">
         <div className="max-w-xl w-full">
@@ -59,7 +59,7 @@ export default function LoginPage() {
                 </div>
                 <div>
                   <h1 className="text-2xl font-black text-text-primary tracking-tight">Identity Access</h1>
-                  <p className="text-xs font-bold text-text-muted uppercase tracking-widest">Single Sign-On for LearnHub</p>
+                  <p className="text-xs font-bold text-text-muted uppercase tracking-widest">Single Sign-On for Student Resource Hub</p>
                 </div>
               </div>
 
@@ -118,7 +118,7 @@ export default function LoginPage() {
 
               <div className="mt-10 text-center">
                 <p className="text-sm text-text-muted">
-                  New to LearnHub? <Link href="/auth/signup" className="text-indigo-400 font-bold hover:underline">Create Identity</Link>
+                  New to Student Resource Hub? <Link href="/auth/signup" className="text-indigo-400 font-bold hover:underline">Create Identity</Link>
                 </p>
               </div>
             </div>

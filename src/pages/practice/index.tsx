@@ -145,7 +145,7 @@ export default function PracticeHub() {
               <h3 className="text-2xl font-bold mb-4">Why interactive practice?</h3>
               <p className="text-text-secondary leading-relaxed">
                 Passive reading results in 10% retention. Active practice increases that to 75%. 
-                LearnHub's Practice Lab ensures you don't just "watch" code—you understand the flow, the memory usage, and the complexity firsthand.
+                Student Resource Hub's Practice Lab ensures you don't just "watch" code—you understand the flow, the memory usage, and the complexity firsthand.
               </p>
            </div>
         </section>

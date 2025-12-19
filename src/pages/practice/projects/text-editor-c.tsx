@@ -19,7 +19,7 @@ const steps = [
   {
     title: "Step 2: String Length",
     theory: "We need to track how much text we have. Use strlen from string.h.",
-    initialCode: "#include <stdio.h>\n#include <string.h>\n\nint main() {\n  char text[] = \"LearnHub IDE\";\n  // Calculate length\n  int len = 0; \n  printf(\"Length: %d\", len);\n  return 0;\n}",
+    initialCode: "#include <stdio.h>\n#include <string.h>\n\nint main() {\n  char text[] = \"Student Resource Hub IDE\";\n  // Calculate length\n  int len = 0; \n  printf(\"Length: %d\", len);\n  return 0;\n}",
     expectedOutput: "Length: 12",
     hints: ["The strlen() function returns the length of a string."]
   }
@@ -30,7 +30,7 @@ export default function TextEditorProject() {
   const step = steps[currentStep];
 
   return (
-    <Layout title="Project: Build a Text Editor in C | LearnHub">
+    <Layout title="Project: Build a Text Editor in C | Student Resource Hub">
       <div className="bg-primary min-h-screen text-text-primary p-8">
         <div className="max-w-6xl mx-auto">
           {/* Project Header */}

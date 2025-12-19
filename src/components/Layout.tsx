@@ -11,7 +11,7 @@ interface LayoutProps {
   description?: string;
 }
 
-export default function Layout({ children, title = 'LearnHub', description = 'Master web development with comprehensive tutorials' }: LayoutProps) {
+export default function Layout({ children, title = 'Student Resource Hub', description = 'Master web development with comprehensive tutorials' }: LayoutProps) {
   return (
     <>
       <Head>

@@ -73,7 +73,7 @@ export default function ProfileSetup() {
   return (
     <Layout>
       <Head>
-        <title>Setup Your Identity | LearnHub</title>
+        <title>Setup Your Identity | Student Resource Hub</title>
       </Head>
       <div className="min-h-screen py-12 px-4 bg-primary/30 flex items-center justify-center">
         <div className="max-w-4xl w-full">

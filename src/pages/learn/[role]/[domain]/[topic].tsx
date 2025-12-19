@@ -116,7 +116,7 @@ export default function LearnPage({ tutorial, role, domain, topicId, roadmapTitl
   return (
     <div className="min-h-screen bg-ui-dark flex flex-col">
       <Head>
-        <title>{tutorial ? `${tutorial.title} - LearnHub` : `${topicTitle} - LearnHub`}</title>
+        <title>{tutorial ? `${tutorial.title} - Student Resource Hub` : `${topicTitle} - Student Resource Hub`}</title>
       </Head>
 
       <Header />

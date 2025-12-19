@@ -28,7 +28,7 @@ export default function PlannerPage() {
   };
 
   return (
-    <Layout title="Smart Planner | LearnHub">
+    <Layout title="Smart Planner | Student Resource Hub">
       <div className="bg-primary min-h-screen pb-20">
         
         <section className="py-20 px-4">

@@ -25,7 +25,7 @@ export default function BattlegroundPage({ company }: BattlegroundPageProps) {
 
     if (!loading && (!user || !isVerified)) {
       return (
-        <Layout title="Access Restricted | LearnHub">
+        <Layout title="Access Restricted | Student Resource Hub">
           <div className="min-h-[70vh] flex items-center justify-center p-4">
             <div className="max-w-md w-full bg-ui-card border border-rose-500/30 rounded-[3rem] p-12 text-center shadow-2xl relative overflow-hidden">
               <div className="absolute top-0 right-0 p-8 opacity-5">
@@ -60,7 +60,7 @@ export default function BattlegroundPage({ company }: BattlegroundPageProps) {
     }
 
     return (
-        <Layout title={`${company.name} Battleground | LearnHub`}>
+        <Layout title={`${company.name} Battleground | Student Resource Hub`}>
             <div className="bg-ui-dark min-h-screen">
                 
                 {/* Company Header */}

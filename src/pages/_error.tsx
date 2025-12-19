@@ -17,7 +17,7 @@ function Error({ statusCode, message }: ErrorProps) {
   return (
     <Layout>
       <Head>
-        <title>{statusCode ? `${statusCode} Error` : 'Error'} | LearnHub</title>
+        <title>{statusCode ? `${statusCode} Error` : 'Error'} | Student Resource Hub</title>
         <meta name="description" content="An error occurred" />
       </Head>
 

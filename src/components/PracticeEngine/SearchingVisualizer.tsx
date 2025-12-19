@@ -110,7 +110,7 @@ export default function SearchingVisualizer() {
   const currentData = steps[currentStep] || { checkingIndices: [], message: '' };
 
   return (
-    <Layout title="Search Visualizer | LearnHub">
+    <Layout title="Search Visualizer | Student Resource Hub">
       <div className="bg-primary min-h-screen text-text-primary p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}

@@ -1,4 +1,4 @@
-# LearnHub Content Management System
+# Student Resource Hub Content Management System
 
 ## 🎯 Overview
 

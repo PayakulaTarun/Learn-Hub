@@ -7,7 +7,7 @@ export default function Custom404() {
   return (
     <Layout>
       <Head>
-        <title>404 - Page Not Found | LearnHub</title>
+        <title>404 - Page Not Found | Student Resource Hub</title>
         <meta name="description" content="The page you're looking for doesn't exist" />
       </Head>
 
