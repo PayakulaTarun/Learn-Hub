@@ -26,32 +26,50 @@ export default function ProfileDashboard() {
     if (!authLoading && !user) router.push('/auth/login');
 
     const fetchUserData = async () => {
-      if (!user) return;
-      
-      const [profileRes, xpRes, statsRes, eventsRes] = await Promise.all([
-        supabase.from('profiles').select('*').eq('id', user.id).single(),
-        supabase.from('user_xp').select('*').eq('user_id', user.id).single(),
-        supabase.from('user_learning_stats').select('*').eq('user_id', user.id).single(),
-        supabase.from('user_activity_events').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5)
-      ]);
+      try {
+        if (!user) return;
+        
+        const [profileRes, xpRes, statsRes, eventsRes] = await Promise.all([
+          supabase.from('profiles').select('*').eq('id', user.id).single(),
+          supabase.from('user_xp').select('*').eq('user_id', user.id).single(),
+          supabase.from('user_learning_stats').select('*').eq('user_id', user.id).single(),
+          supabase.from('user_activity_events').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5)
+        ]);
 
-      if (profileRes.data) setProfile(profileRes.data);
-      if (xpRes.data) setXpData(xpRes.data);
-      
-      // Merge all stats for easier display
-      setProfile((prev: any) => ({
-        ...prev,
-        stats: statsRes.data || { total_time_spent_ms: 0, problems_solved_count: 0, tutorials_completed_count: 0 },
-        recentEvents: eventsRes.data || []
-      }));
-      
-      setLoading(false);
+        if (profileRes.error) console.error('Profile fetch error:', profileRes.error);
+        if (xpRes.error) console.error('XP fetch error:', xpRes.error);
+
+        if (profileRes.data) setProfile(profileRes.data);
+        if (xpRes.data) setXpData(xpRes.data);
+        
+        // Merge all stats for easier display
+        setProfile((prev: any) => ({
+          ...prev,
+          stats: statsRes.data || { total_time_spent_ms: 0, problems_solved_count: 0, tutorials_completed_count: 0 },
+          recentEvents: eventsRes.data || []
+        }));
+      } catch (error) {
+        console.error('Error loading profile data:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     if (user) fetchUserData();
   }, [user, authLoading, router]);
 
-  if (authLoading || loading) return null;
+  if (authLoading || loading) {
+    return (
+      <LayoutComponent>
+        <div className="min-h-screen flex items-center justify-center bg-primary text-text-primary">
+          <div className="flex flex-col items-center gap-4">
+             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+             <p className="text-text-muted animate-pulse">Loading usage telemetry...</p>
+          </div>
+        </div>
+      </LayoutComponent>
+    );
+  }
 
   return (
     <LayoutComponent>
