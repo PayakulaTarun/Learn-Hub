@@ -8,8 +8,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <img src="/logo.png" alt="Student Resource Hub Logo" className="h-10 w-auto" />
-              <span className="text-xl font-bold text-text-primary">Student Resource Hub</span>
+              <img src="/logo.png" alt="LearnHub Logo" className="h-10 w-auto" />
+              <span className="text-xl font-bold text-text-primary">LearnHub</span>
             </div>
             <p className="text-text-muted max-w-md">
               Empowering students worldwide with comprehensive web development tutorials. 

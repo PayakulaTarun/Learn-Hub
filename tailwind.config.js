@@ -27,6 +27,7 @@ module.exports = {
       boxShadow: {
         'glow': '0 0 20px rgba(31, 209, 193, 0.4)',
         'glow-blue': '0 0 20px rgba(77, 163, 255, 0.4)',
+        'glow-indigo': '0 0 20px rgba(79, 70, 229, 0.4)',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

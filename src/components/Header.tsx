@@ -15,10 +15,10 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 bg-rose-500 rounded-xl flex items-center justify-center shadow-glow-rose group-hover:scale-110 transition-all duration-500">
-                <img src="/logo.png" alt="Student Resource Hub" className="h-6 w-auto brightness-0 invert" />
+              <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-glow-indigo group-hover:scale-110 transition-all duration-500">
+                <img src="/logo.png" alt="LearnHub" className="h-6 w-auto brightness-0 invert" />
               </div>
-              <span className="text-xl font-black text-text-primary tracking-tighter">Student Resource Hub</span>
+              <span className="text-xl font-black text-text-primary tracking-tighter">LearnHub</span>
             </Link>
 
             {/* Gamification Stats */}
