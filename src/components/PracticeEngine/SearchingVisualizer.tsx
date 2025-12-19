@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Play, Pause, RotateCcw, ChevronRight, ChevronLeft, 
-  Search, Info, Zap 
+  Search, Info, Zap, Settings 
 } from 'lucide-react';
 import Layout from '../Layout';
 
@@ -237,4 +237,4 @@ export default function SearchingVisualizer() {
   );
 }
 
-import { Settings } from 'lucide-react';
+
