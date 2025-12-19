@@ -12,12 +12,16 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useAnalytics } from '../../../hooks/useAnalytics';
+import { useAuth } from '../../../components/Auth/AuthContext';
+import { useAuthGate } from '../../../components/Auth/AuthGateContext';
 
 export default function RoadmapPage() {
   const router = useRouter();
   const { role } = router.query;
   const { isCompleted: isTopicCompleted, toggleComplete: originalToggleComplete } = useLearningState();
   const { trackTimeSpent, trackEvent } = useAnalytics();
+  const { user } = useAuth();
+  const { openGate } = useAuthGate();
   const isCompleted = isTopicCompleted;
 
   const roadmap = useMemo(() => 
@@ -28,6 +32,10 @@ export default function RoadmapPage() {
   trackTimeSpent('roadmap', roadmap?.id || 'unknown', { title: roadmap?.title });
 
   const toggleComplete = (topicId: string) => {
+    if (!user) {
+        openGate('track progress');
+        return;
+    }
     originalToggleComplete(topicId);
     if (!isTopicCompleted(topicId)) {
         trackEvent('roadmap_step', 'roadmap', roadmap?.id || 'unknown', { topicId });

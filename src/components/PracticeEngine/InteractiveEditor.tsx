@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic';
 import { Play, RotateCcw, Zap, CheckCircle2, XCircle, Info, ChevronDown } from 'lucide-react';
 import { executeCode, ExecutionResult } from '../../lib/codeRunner';
 import { useAnalytics } from '../../hooks/useAnalytics';
+import { useAuth } from '../Auth/AuthContext';
+import { useAuthGate } from '../Auth/AuthGateContext';
 
 const Editor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
@@ -33,6 +35,8 @@ export default function InteractiveEditor({
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
   const [showHints, setShowHints] = useState(false);
   const { trackEvent } = useAnalytics();
+  const { user } = useAuth();
+  const { openGate } = useAuthGate();
 
   const resetCode = () => {
     setCode(initialCode);
@@ -40,7 +44,12 @@ export default function InteractiveEditor({
     setIsSuccess(null);
   };
 
-  const run = async () => {
+  const handleRun = async () => {
+    if (!user) {
+      openGate('run code');
+      return;
+    }
+
     setIsRunning(true);
     const res = await executeCode(code, language);
     setResult(res);
@@ -57,6 +66,14 @@ export default function InteractiveEditor({
       setIsSuccess(false);
     }
   };
+
+  const handleSubmit = (codeToSubmit: string) => {
+      if (!user) {
+          openGate('submit solution');
+          return;
+      }
+      if (onSubmit) onSubmit(codeToSubmit);
+  }
 
   return (
     <div className="my-8 rounded-2xl border border-ui-border bg-ui-dark overflow-hidden shadow-2xl">
@@ -91,7 +108,7 @@ export default function InteractiveEditor({
             <RotateCcw className="w-4 h-4" />
           </button>
           <button 
-            onClick={run}
+            onClick={handleRun}
             disabled={isRunning}
             className={`flex items-center gap-2 px-6 py-1.5 rounded-xl text-xs font-bold transition-all shadow-glow ${
               isRunning ? 'bg-ui-border opacity-50' : 'bg-accent text-primary hover:bg-highlight hover:text-white'
@@ -102,7 +119,7 @@ export default function InteractiveEditor({
           </button>
           {onSubmit && (
             <button 
-              onClick={() => onSubmit(code)}
+              onClick={() => handleSubmit(code)}
               className="flex items-center gap-2 px-6 py-1.5 rounded-xl text-xs font-black transition-all bg-rose-500 text-primary hover:bg-rose-400 shadow-glow-rose"
             >
               <Zap className="w-4 h-4 fill-current" />

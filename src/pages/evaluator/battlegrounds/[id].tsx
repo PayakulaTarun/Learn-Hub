@@ -13,7 +13,9 @@ import { getCompanyQuestions } from '../../../lib/battlegroundLoader';
 import { CompanyBattleground } from '../../../types/evaluator';
 import Link from 'next/link';
 
+import { useRouter } from 'next/router';
 import { useAuth } from '../../../components/Auth/AuthContext';
+import { useAuthGate } from '../../../components/Auth/AuthGateContext';
 
 interface BattlegroundPageProps {
   company: CompanyBattleground;
@@ -21,43 +23,24 @@ interface BattlegroundPageProps {
 
 export default function BattlegroundPage({ company }: BattlegroundPageProps) {
     const { isVerified, user, loading } = useAuth();
+    const { openGate } = useAuthGate();
     const [mode, setMode] = useState<'practice' | 'interview'>('practice');
+    const router = useRouter();
 
-    if (!loading && (!user || !isVerified)) {
-      return (
-        <Layout title="Access Restricted | Student Resource Hub">
-          <div className="min-h-[70vh] flex items-center justify-center p-4">
-            <div className="max-w-md w-full bg-ui-card border border-rose-500/30 rounded-[3rem] p-12 text-center shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-8 opacity-5">
-                 <ShieldCheck className="w-40 h-40 text-rose-500" />
-              </div>
-              <div className="w-20 h-20 bg-rose-500/20 text-rose-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-glow-rose">
-                 <Lock className="w-10 h-10" />
-              </div>
-              <h1 className="text-3xl font-black text-text-primary mb-4 tracking-tight uppercase">Battleground Locked</h1>
-              <p className="text-text-secondary leading-relaxed mb-10 text-sm">
-                Corporate battlegrounds require a <b>Verified Identity</b>. <br />
-                Please verify your email or sign in to prove your architectural proficiency.
-              </p>
-              <div className="flex flex-col gap-4">
-                <Link 
-                  href="/auth/signup"
-                  className="w-full py-4 bg-rose-500 text-primary font-black rounded-2xl shadow-glow-rose hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
-                >
-                  Verify Now <ArrowRight size={18} />
-                </Link>
-                <Link 
-                  href="/auth/login"
-                  className="w-full py-4 bg-ui-dark border border-ui-border text-text-muted font-bold rounded-2xl hover:text-text-primary transition-all"
-                >
-                  Return to Dashboard
-                </Link>
-              </div>
-            </div>
-          </div>
-        </Layout>
-      );
-    }
+    const handleModeSwitch = (newMode: 'practice' | 'interview') => {
+        if (!user) {
+            openGate(`switch to ${newMode} mode`);
+            return;
+        }
+        setMode(newMode);
+    };
+
+    const handleSolveClick = (e: React.MouseEvent, qId: string) => {
+        if (!user) {
+            e.preventDefault();
+            openGate('enter battle arena');
+        }
+    };
 
     return (
         <Layout title={`${company.name} Battleground | Student Resource Hub`}>
@@ -79,13 +62,13 @@ export default function BattlegroundPage({ company }: BattlegroundPageProps) {
                         </div>
                         <div className="flex gap-4">
                             <button 
-                                onClick={() => setMode('practice')}
+                                onClick={() => handleModeSwitch('practice')}
                                 className={`px-8 py-3 rounded-2xl font-bold transition-all border ${mode === 'practice' ? 'bg-rose-500 text-primary border-rose-500 shadow-glow-rose' : 'bg-primary border-ui-border text-text-muted'}`}
                             >
                                 Practice Mode
                             </button>
                             <button 
-                                onClick={() => setMode('interview')}
+                                onClick={() => handleModeSwitch('interview')}
                                 className={`px-8 py-3 rounded-2xl font-bold transition-all border ${mode === 'interview' ? 'bg-orange-500 text-primary border-orange-500 shadow-glow-orange' : 'bg-primary border-ui-border text-text-muted'}`}
                             >
                                 Interview Mode
@@ -183,6 +166,7 @@ export default function BattlegroundPage({ company }: BattlegroundPageProps) {
                                         )}
                                         <Link 
                                             href={`/evaluator/battlegrounds/solve/${q.id}`}
+                                            onClick={(e) => handleSolveClick(e, q.id)}
                                             className="px-6 py-3 bg-rose-500 text-primary font-black rounded-xl hover:scale-105 transition-all text-xs flex items-center gap-2 shadow-glow-rose"
                                         >
                                             Solve <ChevronRight className="w-4 h-4" />
