@@ -4,188 +4,109 @@ import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { TutorialMetadata } from '../../types/content';
 import { getAllTutorials } from '../../lib/contentLoader';
-import { BookOpen, Code, Database, Cloud, Smartphone, Wrench, Globe, BarChart, Network, Cpu, Server, Brain, Layers } from 'lucide-react';
+import { BookOpen, ArrowRight } from 'lucide-react'; // BookOpen is kept for fallback, ArrowRight is new
 
 interface SubjectsPageProps {
   tutorials: TutorialMetadata[];
 }
 
-const categoryIcons: Record<string, any> = {
-  javascript: Code,
-  python: Code,
-  html: Globe,
-  css: Wrench,
-  java: Code,
-  git: Cloud,
-  django: Wrench,
-  mysql: Database,
-  mongodb: Database,
-  'web development': Globe,
-  frontend: Code,
-  backend: Wrench,
-  angular: Code,
-  'data science': BarChart,
-  'data structures': Network,
-  algorithms: Cpu,
-  'operating systems': Server,
-  dbms: Database,
-  'computer networks': Globe,
-  'artificial intelligence': Brain,
-  'machine learning': BarChart,
-  'c programming': Cpu,
-  'c++ programming': Code,
-  'software engineering': Layers,
-  'computer organization': Cpu,
-};
-
-const categoryColors: Record<string, string> = {
-  javascript: 'bg-yellow-500',
-  python: 'bg-blue-500',
-  html: 'bg-orange-600',
-  css: 'bg-blue-400',
-  java: 'bg-red-500',
-  git: 'bg-gray-700',
-  django: 'bg-green-700',
-  mysql: 'bg-blue-600',
-  mongodb: 'bg-green-500',
-  'web development': 'bg-orange-600',
-  frontend: 'bg-blue-500',
-  backend: 'bg-green-500',
-  angular: 'bg-red-600',
-  'data science': 'bg-purple-600',
-  'data structures': 'bg-indigo-600',
-  algorithms: 'bg-orange-500',
-  'operating systems': 'bg-slate-600',
-  dbms: 'bg-teal-600',
-  'computer networks': 'bg-cyan-600',
-  'artificial intelligence': 'bg-rose-600',
-  'machine learning': 'bg-violet-600',
-  'c programming': 'bg-blue-700',
-  'c++ programming': 'bg-blue-800',
-  'software engineering': 'bg-emerald-700',
-  'computer organization': 'bg-slate-800',
-};
+import { availableSubjects, iconMap } from '../../lib/navData';
 
 export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
-  // Group tutorials by subject
+  // Group tutorials by subject slug
   const grouped = tutorials.reduce((acc, tutorial) => {
-    const subject = tutorial.subject || 'General';
-    if (!acc[subject]) {
-      acc[subject] = [];
+    // Attempt to match subject title to slug or just use subject normalized
+    const subjectSlug = tutorial.category?.toLowerCase() || 'general';
+    if (!acc[subjectSlug]) {
+      acc[subjectSlug] = [];
     }
-    acc[subject].push(tutorial);
+    acc[subjectSlug].push(tutorial);
     return acc;
   }, {} as Record<string, TutorialMetadata[]>);
-
-  const sortedSubjects = Object.entries(grouped).sort(([a], [b]) => {
-    const order = [
-      'html',
-      'css',
-      'javascript',
-      'data structures',
-      'algorithms',
-      'operating systems',
-      'dbms',
-      'computer networks',
-      'artificial intelligence',
-      'machine learning',
-      'c programming',
-      'c++ programming',
-      'software engineering',
-      'computer organization',
-      'bootstrap',
-      'typescript',
-      'react',
-      'angular',
-      'next.js',
-      'java',
-      'python',
-      'data science',
-      'mysql',
-      'mongodb',
-      'git',
-      'django',
-    ];
-    const indexA = order.indexOf(a.toLowerCase());
-    const indexB = order.indexOf(b.toLowerCase());
-
-    // If both are in the list, sort by index
-    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-    // If only A is in list, A comes first
-    if (indexA !== -1) return -1;
-    // If only B is in list, B comes first
-    if (indexB !== -1) return 1;
-    // If neither, sort alphabetically
-    return a.localeCompare(b);
-  });
 
   return (
     <Layout>
       <Head>
-        <title>All Subjects - Student Resource Hub</title>
+        <title>All Curricula - Student Resource Hub</title>
         <meta
           name="description"
-          content="Browse all available technology tutorials and masterclasses"
+          content="Master the complete engineering stack with our high-fidelity, production-grade learning paths."
         />
       </Head>
-
 
       <div className="min-h-screen bg-ui-dark py-12">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl lg:text-5xl font-bold text-text-primary mb-4">
-              All Subjects
+            <h1 className="text-4xl lg:text-5xl font-extrabold text-text-primary mb-4 tracking-tighter">
+              The Intelligence <span className="text-accent underline decoration-accent/30 underline-offset-8">Curriculum</span>
             </h1>
-            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              Master modern technologies with comprehensive masterclasses and
-              hands-on examples
+            <p className="text-xl text-text-secondary max-w-2xl mx-auto font-medium">
+              Explore our comprehensive range of technical domains, designed to take you from foundation to production readiness.
             </p>
           </div>
 
           {/* Categories/Subjects */}
-          {sortedSubjects.map(([subject, tutorialList]) => {
-            const subjectKey = subject.toLowerCase();
-            const Icon = categoryIcons[subjectKey] || BookOpen;
-            const colorClass = categoryColors[subjectKey] || 'bg-gray-500';
-            const subjectId = subject.toLowerCase().replace(/\s+/g, '-');
+          {availableSubjects.map((subject) => {
+            const tutorialList = grouped[subject.slug] || [];
+            const Icon = iconMap[subject.icon] || BookOpen;
+            const subjectId = subject.slug;
 
             return (
-              <div key={subject} id={subjectId} className="mb-16 scroll-mt-32">
-                <div className="flex items-center gap-3 mb-8 border-b border-ui-border pb-4">
-                  <div className={`${colorClass} p-3 rounded-lg bg-opacity-20`}>
-                    <Icon className="text-text-primary" size={24} />
+              <div key={subjectId} id={subjectId} className="mb-20 scroll-mt-32">
+                <div className="flex items-center justify-between mb-8 border-b border-ui-border pb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="p-4 bg-ui-card rounded-2xl border border-ui-border shadow-soft relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <Icon className="text-accent group-hover:scale-110 transition-transform" size={28} />
+                    </div>
+                    <div>
+                        <h2 className="text-3xl font-black text-text-primary tracking-tight">
+                            {subject.label}
+                        </h2>
+                        <p className="text-xs text-text-muted font-bold uppercase tracking-widest mt-1">
+                            {subject.category} &bull; {tutorialList.length} Units
+                        </p>
+                    </div>
                   </div>
-                  <h2 className="text-3xl font-bold text-text-primary capitalize">
-                    {subject}
-                  </h2>
+                  
+                  {tutorialList.length === 0 && (
+                    <span className="px-4 py-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-full text-[10px] font-black uppercase tracking-widest shadow-glow-rose-sm">
+                        Coming Soon
+                    </span>
+                  )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {tutorialList.map((tutorial) => (
                     <Link
                       key={tutorial.slug}
                       href={`/subjects/${tutorial.slug}`}
-                      className="group bg-ui-card rounded-xl shadow-lg hover:shadow-glow transition-all duration-300 overflow-hidden border border-ui-border hover:border-accent"
+                      className="group bg-ui-dark border border-ui-border p-8 rounded-3xl hover:border-accent/40 transition-all duration-500 relative overflow-hidden flex flex-col justify-between h-full shadow-xl"
                     >
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-text-primary mb-2 group-hover:text-accent transition">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-accent/10 transition-colors"></div>
+                      
+                      <div>
+                        <h3 className="text-xl font-bold text-text-primary mb-3 group-hover:text-accent transition-colors">
                           {tutorial.title}
                         </h3>
-                        <p className="text-text-secondary text-sm line-clamp-2">
+                        <p className="text-text-secondary text-sm leading-relaxed line-clamp-2 mb-6">
                           {tutorial.description}
                         </p>
                       </div>
-                      <div className="px-6 pb-6">
-                        <div className="flex items-center text-accent font-medium text-sm group-hover:gap-2 transition-all">
-                          Start Learning
-                          <span className="ml-1 group-hover:ml-0 transition-all">
-                            →
-                          </span>
-                        </div>
+
+                      <div className="flex items-center gap-2 text-accent font-black text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">
+                        Incept Domain
+                        <ArrowRight size={14} />
                       </div>
                     </Link>
                   ))}
+                  
+                  {tutorialList.length === 0 && (
+                    <div className="col-span-full py-12 px-8 bg-ui-card/30 border border-dashed border-ui-border rounded-3xl text-center">
+                        <p className="text-text-muted font-medium italic">Curriculum for this domain is currently being drafted by our engineering leads.</p>
+                    </div>
+                  )}
                 </div>
               </div>
             );

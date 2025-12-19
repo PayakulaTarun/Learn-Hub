@@ -248,42 +248,55 @@ export default function ProfileDashboard() {
                  </div>
               </div>
 
-              {/* Right Column: Achievements & Stats */}
+              {/* Right Column: Intelligence & Readiness */}
               <div className="space-y-8">
-                 <div className="bg-ui-card border border-ui-border p-8 rounded-[3rem] shadow-2xl">
-                    <h2 className="text-xl font-black tracking-tight mb-8 flex items-center gap-3">
-                       <Trophy className="text-rose-500" size={24} /> Achievements
-                    </h2>
-                    <div className="grid grid-cols-3 gap-6">
-                       {[1, 2, 3, 4, 5, 6].map(i => (
-                         <div key={i} className="aspect-square bg-ui-dark border border-ui-border rounded-2xl flex items-center justify-center relative group cursor-help">
-                            <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-rose-500 rounded-lg shadow-glow-rose scale-90 opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"></div>
-                            <div className="absolute inset-0 flex items-center justify-center">
-                               <Sparkles className="text-primary w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </div>
-                         </div>
-                       ))}
+                 <div className="bg-ui-card border border-ui-border p-10 rounded-[3rem] shadow-2xl">
+                    <div className="flex items-center gap-4 mb-10">
+                       <div className="w-10 h-10 bg-rose-500/20 text-rose-400 rounded-xl flex items-center justify-center">
+                          <Zap size={22} />
+                       </div>
+                       <h2 className="text-2xl font-black tracking-tight">Readiness</h2>
                     </div>
-                    <button className="w-full mt-8 py-3 bg-ui-dark border border-ui-border rounded-2xl text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-text-primary transition-all">View Hall of Fame</button>
-                 </div>
 
-                 <div className="bg-indigo-600 border border-indigo-400 p-10 rounded-[3rem] shadow-glow-indigo relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-125 transition-transform duration-700">
-                       <Rocket className="w-40 h-40 text-white" />
-                    </div>
-                    <div className="relative z-10">
-                       <h2 className="text-3xl font-black text-white mb-4 tracking-tighter">Mission <br />Planner</h2>
-                       <p className="text-white/80 text-sm mb-10 leading-relaxed font-medium">You have 12 hours scheduled this week. 4 hours remaining to hit target.</p>
-                       <div className="flex gap-4">
-                          <Link href="/navigator/planner" className="px-6 py-3 bg-white text-indigo-600 font-black rounded-2xl shadow-xl hover:scale-105 transition-all text-xs uppercase tracking-widest">
-                             Launch
-                          </Link>
-                          <div className="flex items-center gap-2 text-white/60">
-                             <Calendar size={18} />
-                             <span className="text-[10px] font-black uppercase tracking-widest">Daily Log</span>
+                    <div className="space-y-8">
+                       <div>
+                          <p className="text-[10px] font-black uppercase text-text-muted mb-4 tracking-widest">Curriculum Reach</p>
+                          <div className="flex items-center gap-4 mb-4">
+                             <div className="flex-1 h-3 bg-primary rounded-full overflow-hidden border border-ui-border">
+                                <div className="h-full bg-accent shadow-glow-indigo" style={{ width: '15%' }}></div>
+                             </div>
+                             <span className="text-sm font-black">15%</span>
+                          </div>
+                          <p className="text-[10px] text-text-muted font-bold tracking-tight">
+                            {Math.min(profile?.stats?.tutorials_completed_count || 0, availableSubjects.length)} of {availableSubjects.length} domains activated.
+                          </p>
+                       </div>
+
+                       <div className="pt-8 border-t border-ui-border">
+                          <p className="text-[10px] font-black uppercase text-text-muted mb-6 tracking-widest">Recommended Next</p>
+                          <div className="grid grid-cols-2 gap-4">
+                             {availableSubjects.slice(0, 4).map(sub => (
+                                <Link href={`/subjects#${sub.slug}`} key={sub.slug} className="p-4 bg-ui-dark border border-ui-border rounded-2xl flex flex-col items-center text-center group cursor-pointer hover:border-accent transition-all">
+                                   <div className="w-8 h-8 bg-ui-card rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                      <span className="text-accent text-[10px]"><Sparkles size={14} /></span>
+                                   </div>
+                                   <span className="text-[10px] font-black uppercase tracking-tighter truncate w-full">{sub.label}</span>
+                                </Link>
+                             ))}
                           </div>
                        </div>
                     </div>
+                 </div>
+
+                 <div className="bg-gradient-to-br from-indigo-600 to-rose-600 p-10 rounded-[3rem] text-primary shadow-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-8 opacity-20 group-hover:scale-110 transition-transform">
+                       <Trophy size={120} />
+                    </div>
+                    <h2 className="text-3xl font-black mb-4 relative z-10 tracking-tight">Pro Upgrade</h2>
+                    <p className="text-sm font-medium mb-8 relative z-10 leading-relaxed text-indigo-100 italic">Unlock high-fidelity system design mockups and private architecture reviews.</p>
+                    <button className="w-full py-4 bg-primary text-indigo-600 font-black text-xs uppercase tracking-widest rounded-2xl shadow-xl hover:scale-105 transition-all relative z-10 border-none outline-none">
+                       Maximize Potential
+                    </button>
                  </div>
               </div>
            </div>

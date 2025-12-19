@@ -28,12 +28,12 @@ export default function SubjectNavbar() {
 
           <div className="flex items-center gap-3">
             {subjects.map((subject) => {
-              const subjectId = subject.toLowerCase().replace(/\s+/g, '-');
+              const subjectId = subject.slug;
               const isActive = router.asPath.includes(subjectId);
 
               return (
                 <Link
-                  key={subject}
+                  key={subjectId}
                   href={router.pathname === '/subjects' ? `#${subjectId}` : `/subjects#${subjectId}`}
                   className={`flex-shrink-0 px-5 py-2 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all duration-300 border ${
                     isActive
@@ -41,7 +41,7 @@ export default function SubjectNavbar() {
                       : 'bg-primary/40 text-text-muted border-ui-border hover:border-rose-500/30 hover:text-text-primary'
                   }`}
                 >
-                  {subject}
+                  {subject.label}
                 </Link>
               );
             })}
