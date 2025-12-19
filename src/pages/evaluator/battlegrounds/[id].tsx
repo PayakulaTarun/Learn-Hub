@@ -6,19 +6,58 @@ import {
   Building2, Users, Target, Info, 
   Search, Code, Brain, ChevronRight,
   ArrowLeft, Clock, Zap, BookOpen,
-  Swords, ShieldCheck
+  Swords, ShieldCheck, Lock, ArrowRight
 } from 'lucide-react';
 import { companies } from '../../../lib/evaluatorData';
 import { getCompanyQuestions } from '../../../lib/battlegroundLoader';
 import { CompanyBattleground } from '../../../types/evaluator';
 import Link from 'next/link';
 
+import { useAuth } from '../../../components/Auth/AuthContext';
+
 interface BattlegroundPageProps {
   company: CompanyBattleground;
 }
 
 export default function BattlegroundPage({ company }: BattlegroundPageProps) {
+    const { isVerified, user, loading } = useAuth();
     const [mode, setMode] = useState<'practice' | 'interview'>('practice');
+
+    if (!loading && (!user || !isVerified)) {
+      return (
+        <Layout title="Access Restricted | LearnHub">
+          <div className="min-h-[70vh] flex items-center justify-center p-4">
+            <div className="max-w-md w-full bg-ui-card border border-rose-500/30 rounded-[3rem] p-12 text-center shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-8 opacity-5">
+                 <ShieldCheck className="w-40 h-40 text-rose-500" />
+              </div>
+              <div className="w-20 h-20 bg-rose-500/20 text-rose-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-glow-rose">
+                 <Lock className="w-10 h-10" />
+              </div>
+              <h1 className="text-3xl font-black text-text-primary mb-4 tracking-tight uppercase">Battleground Locked</h1>
+              <p className="text-text-secondary leading-relaxed mb-10 text-sm">
+                Corporate battlegrounds require a <b>Verified Identity</b>. <br />
+                Please verify your email or sign in to prove your architectural proficiency.
+              </p>
+              <div className="flex flex-col gap-4">
+                <Link 
+                  href="/auth/signup"
+                  className="w-full py-4 bg-rose-500 text-primary font-black rounded-2xl shadow-glow-rose hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+                >
+                  Verify Now <ArrowRight size={18} />
+                </Link>
+                <Link 
+                  href="/auth/login"
+                  className="w-full py-4 bg-ui-dark border border-ui-border text-text-muted font-bold rounded-2xl hover:text-text-primary transition-all"
+                >
+                  Return to Dashboard
+                </Link>
+              </div>
+            </div>
+          </div>
+        </Layout>
+      );
+    }
 
     return (
         <Layout title={`${company.name} Battleground | LearnHub`}>

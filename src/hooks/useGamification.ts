@@ -1,6 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { UserStats, XP_WEIGHTS, LEVEL_THRESHOLD } from '../types/gamification';
+import { supabase } from '../lib/supabase';
+import { useAuth } from '../components/Auth/AuthContext';
 
 const STORAGE_KEY = 'learnhub_gamification_stats';
 
@@ -17,22 +18,62 @@ const initialStats: UserStats = {
 
 export function useGamification() {
     const [stats, setStats] = useState<UserStats>(initialStats);
+    const { user } = useAuth();
 
     useEffect(() => {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            const parsed = JSON.parse(saved);
-            setStats(parsed);
-            checkStreak(parsed);
-        } else {
-            // New user login
-            updateStreak(initialStats);
-        }
-    }, []);
+        const loadInitialStats = async () => {
+            if (user) {
+                // Try to load from Supabase first
+                const { data, error } = await supabase
+                    .from('user_xp')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .single();
 
-    const saveStats = (newStats: UserStats) => {
+                if (data && !error) {
+                    const mapped: UserStats = {
+                        ...initialStats,
+                        xp: data.xp,
+                        level: data.level,
+                        streak: data.streak,
+                        lastLoginDate: data.last_active_at
+                    };
+                    setStats(mapped);
+                    checkStreak(mapped);
+                    return;
+                }
+            }
+
+            // Fallback to localStorage
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                setStats(parsed);
+                checkStreak(parsed);
+            } else {
+                updateStreak(initialStats);
+            }
+        };
+
+        loadInitialStats();
+    }, [user]);
+
+    const saveStats = async (newStats: UserStats) => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newStats));
         setStats(newStats);
+
+        if (user) {
+            await supabase
+                .from('user_xp')
+                .upsert({
+                    user_id: user.id,
+                    xp: newStats.xp,
+                    level: newStats.level,
+                    streak: newStats.streak,
+                    last_active_at: newStats.lastLoginDate || new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                });
+        }
     };
 
     const checkStreak = (currentStats: UserStats) => {
