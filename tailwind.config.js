@@ -6,6 +6,21 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    // Custom breakpoints matching the required strategy
+    screens: {
+      // Extra‑small mobile (≤360px)
+      'xs': { 'max': '360px' },
+      // Mobile (361–480px)
+      'sm': { 'min': '361px', 'max': '480px' },
+      // Tablet portrait (481–768px)
+      'md': { 'min': '481px', 'max': '768px' },
+      // Tablet landscape / small laptops (769–1024px)
+      'lg': { 'min': '769px', 'max': '1024px' },
+      // Standard desktops (1025–1440px)
+      'xl': { 'min': '1025px', 'max': '1440px' },
+      // Large & ultra‑wide (1441px+)
+      '2xl': { 'min': '1441px' },
+    },
     extend: {
       colors: {
         primary: '#0A1A2F',
@@ -16,13 +31,13 @@ module.exports = {
           dark: '#070D18',
           light: '#F4F7FB',
           card: '#0F1E33',
-          border: '#233A5E'
+          border: '#233A5E',
         },
         text: {
           primary: '#EAF1FF',
           secondary: '#A9B8D9',
-          muted: '#7A8AAE'
-        }
+          muted: '#7A8AAE',
+        },
       },
       boxShadow: {
         'glow': '0 0 20px rgba(31, 209, 193, 0.4)',
@@ -33,7 +48,19 @@ module.exports = {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
+      // Fluid typography using clamp() for responsive scaling
+      fontSize: {
+        xs: 'clamp(0.75rem, 1vw + 0.4rem, 0.8125rem)',
+        sm: 'clamp(0.8125rem, 1vw + 0.5rem, 0.875rem)',
+        base: 'clamp(0.875rem, 1vw + 0.6rem, 1rem)',
+        lg: 'clamp(1rem, 1vw + 0.8rem, 1.125rem)',
+        xl: 'clamp(1.125rem, 1vw + 1rem, 1.25rem)',
+        '2xl': 'clamp(1.25rem, 1vw + 1.2rem, 1.5rem)',
+        '3xl': 'clamp(1.5rem, 1.5vw + 1.5rem, 1.875rem)',
+        '4xl': 'clamp(1.875rem, 2vw + 2rem, 2.25rem)',
+        '5xl': 'clamp(2.25rem, 2.5vw + 2.5rem, 3rem)',
+      },
     },
   },
   plugins: [],
-}
+};
