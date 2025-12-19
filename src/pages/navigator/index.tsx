@@ -120,11 +120,11 @@ export default function NavigatorHub() {
         <section className="py-20 bg-ui-dark/50 border-t border-ui-border">
            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div>
-                <p className="text-4xl font-extrabold text-accent mb-2">50+</p>
+                <p className="text-4xl font-extrabold text-accent mb-2">1000+</p>
                 <p className="text-[10px] uppercase font-bold text-text-muted tracking-widest">Guided Topics</p>
               </div>
               <div>
-                <p className="text-4xl font-extrabold text-highlight mb-2">3</p>
+                <p className="text-4xl font-extrabold text-highlight mb-2">15+</p>
                 <p className="text-[10px] uppercase font-bold text-text-muted tracking-widest">Career Paths</p>
               </div>
               <div>

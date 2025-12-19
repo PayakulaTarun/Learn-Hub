@@ -159,9 +159,9 @@ export default function RoadmapPage() {
                                     <h4 className={`text-lg font-bold mb-4 transition-colors ${completed ? 'text-emerald-400' : 'text-text-primary'}`}>{topic.title}</h4>
                                     
                                     <div className="flex gap-3">
-                                       {topic.id && (
+                                       {(topic.slug || topic.id) && (
                                          <Link 
-                                          href={`/learn/${roadmap.id}/${stage.domain}/${topic.id}`}
+                                          href={topic.slug ? `/subjects/${topic.slug}` : `/learn/${roadmap.id}/${stage.domain}/${topic.id}`}
                                           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-bold transition-all ${
                                             unlocked ? 'bg-accent text-primary hover:bg-highlight hover:text-white' : 'pointer-events-none'
                                           }`}
