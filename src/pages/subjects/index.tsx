@@ -15,12 +15,33 @@ import { availableSubjects, iconMap } from '../../lib/navData';
 export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
   // Group tutorials by subject slug
   const grouped = tutorials.reduce((acc, tutorial) => {
-    // Attempt to match subject title to slug or just use subject normalized
-    const subjectSlug = tutorial.category?.toLowerCase() || 'general';
-    if (!acc[subjectSlug]) {
-      acc[subjectSlug] = [];
+    // 1. Try to use the explicit subject from the tutorial
+    let rawSubject = tutorial.subject || tutorial.category || 'general';
+    let key = rawSubject.toLowerCase().trim().replace(/\s+/g, '-');
+
+    // 2. Try to find a direct match in availableSubjects
+    const matchingSubject = availableSubjects.find(s => 
+        s.slug === key || 
+        s.label.toLowerCase() === rawSubject.toLowerCase() ||
+        s.label.toLowerCase().replace(/\s+/g, '-') === key ||
+        (s.category.toLowerCase() === rawSubject.toLowerCase())
+    );
+
+    if (matchingSubject) {
+        key = matchingSubject.slug;
+    } else {
+        // Fallback for known mis-matches or when subject acts as category
+        if (key === 'c++' || key === 'cpp') key = 'cpp-programming';
+        if (key === 'c') key = 'c-programming';
+        if (key === 'js') key = 'javascript';
+        if (key === 'reactjs') key = 'react';
+        if (key === 'node') key = 'backend';
     }
-    acc[subjectSlug].push(tutorial);
+
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(tutorial);
     return acc;
   }, {} as Record<string, TutorialMetadata[]>);
 

@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Header from '../../components/Header';
-import { Tutorial, TutorialExample, CommonMistake, InterviewQuestion, PracticeProblem, RealWorldUseCase } from '../../types/content';
+import { Tutorial, TutorialExample, CommonMistake, InterviewQuestion, PracticeProblem, RealWorldUseCase, TutorialMetadata } from '../../types/content';
 import { getAllTutorials, getAllTutorialSlugs, getTutorialBySlug } from '../../lib/contentLoader';
 import { useState, useMemo } from 'react';
 import { BookOpen, ChevronRight, Menu, X, ArrowLeft, ArrowRight, Code, AlertTriangle, HelpCircle, GraduationCap, Briefcase } from 'lucide-react';
@@ -20,6 +20,7 @@ import { useAnalytics } from '../../hooks/useAnalytics';
 
 interface SubjectPageProps {
   tutorial: Tutorial;
+  courseTutorials: TutorialMetadata[];
   practicePack?: PracticePack | null;
   prevTutorial?: { slug: string; title: string } | null;
   nextTutorial?: { slug: string; title: string } | null;
@@ -33,7 +34,7 @@ interface UISection {
   data?: any;
 }
 
-export default function SubjectPage({ tutorial, practicePack, prevTutorial, nextTutorial }: SubjectPageProps) {
+export default function SubjectPage({ tutorial, courseTutorials, practicePack, prevTutorial, nextTutorial }: SubjectPageProps) {
   const { trackTimeSpent } = useAnalytics();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'deep' | 'cram'>('deep');
@@ -158,23 +159,20 @@ export default function SubjectPage({ tutorial, practicePack, prevTutorial, next
             <p className="text-sm text-text-secondary mb-6 line-clamp-2">{tutorial.title}</p>
 
             <div className="space-y-2">
-              {sections.map((section, idx) => (
-                <button
-                  key={section.id}
-                  onClick={() => {
-                    setActiveSection(section);
-                    setIsSidebarOpen(false);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
+              {courseTutorials.map((t, idx) => (
+                <Link
+                  key={t.slug}
+                  href={`/subjects/${t.slug}`}
+                  onClick={() => setIsSidebarOpen(false)}
                   className={`w-full text-left px-4 py-3 rounded-lg flex items-center justify-between group transition-all duration-200 ${
-                    activeSection.id === section.id
+                    t.slug === tutorial.slug
                       ? 'bg-accent/10 text-accent font-semibold border-l-4 border-accent'
                       : 'hover:bg-ui-dark text-text-secondary hover:text-text-primary'
                   }`}
                 >
-                  <span className="line-clamp-1 text-sm">{idx + 1}. {section.title}</span>
-                  {activeSection.id === section.id && <ChevronRight size={16} />}
-                </button>
+                  <span className="line-clamp-1 text-sm">{idx + 1}. {t.title}</span>
+                  {t.slug === tutorial.slug && <ChevronRight size={16} />}
+                </Link>
               ))}
             </div>
 
@@ -574,6 +572,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: { 
       tutorial,
+      courseTutorials,
       practicePack: getPracticePack(subject),
       prevTutorial: prevTutorial ? { slug: prevTutorial.slug, title: prevTutorial.title } : null,
       nextTutorial: nextTutorial ? { slug: nextTutorial.slug, title: nextTutorial.title } : null,

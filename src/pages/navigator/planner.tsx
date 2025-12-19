@@ -11,14 +11,25 @@ import { roadmaps } from '../../lib/roadmaps';
 import { generatePlan, StudyPlan } from '../../lib/planner';
 import Link from 'next/link';
 
+import { useAuth } from '../../components/Auth/AuthContext';
+import { useAuthGate } from '../../components/Auth/AuthGateContext';
+
 export default function PlannerPage() {
   const [step, setStep] = useState(1);
   const [goal, setGoal] = useState(roadmaps[0].id);
   const [duration, setDuration] = useState(4); // weeks
   const [hours, setHours] = useState(2); // daily
   const [plan, setPlan] = useState<StudyPlan | null>(null);
+  
+  const { user } = useAuth();
+  const { openGate } = useAuthGate();
 
   const handleGenerate = () => {
+    if (!user) {
+        openGate('create a study plan');
+        return;
+    }
+
     const selectedRoadmap = roadmaps.find(r => r.id === goal);
     if (selectedRoadmap) {
       const newPlan = generatePlan(selectedRoadmap, duration, hours);

@@ -13,6 +13,7 @@ import LayoutComponent from '../../components/Layout';
 import { useAuth } from '../../components/Auth/AuthContext';
 import { supabase } from '../../lib/supabase';
 import Link from 'next/link';
+import { availableSubjects } from '../../lib/navData';
 
 export default function ProfileDashboard() {
   const { user, signOut, loading: authLoading } = useAuth();

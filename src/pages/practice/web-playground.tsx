@@ -10,12 +10,34 @@ import {
 
 const MonacoEditor = dynamic(() => import('../../components/tools/MonacoEditor'), { ssr: false });
 
+import { useAuth } from '../../components/Auth/AuthContext';
+import { useAuthGate } from '../../components/Auth/AuthGateContext';
+
 export default function WebPlayground() {
   const [html, setHtml] = useState('<!-- UI Structure -->\n<div class="card">\n  <h1>Student Resource Hub Studio</h1>\n  <p>The professional playground for engineers.</p>\n  <button id="action">Click Me</button>\n</div>');
   const [css, setCss] = useState('/* Component Styling */\nbody {\n  background: #070D18;\n  color: #EAF1FF;\n  font-family: system-ui, sans-serif;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n  margin: 0;\n}\n\n.card {\n  background: #0F1E33;\n  padding: 3rem;\n  border-radius: 2rem;\n  border: 1px solid #233A5E;\n  text-align: center;\n  box-shadow: 0 0 40px rgba(31, 209, 193, 0.1);\n}\n\nh1 {\n  color: #1FD1C1;\n  font-size: 3rem;\n  margin-bottom: 1rem;\n}\n\nbutton {\n  background: #1FD1C1;\n  border: none;\n  padding: 0.8rem 2rem;\n  border-radius: 0.5rem;\n  font-weight: bold;\n  cursor: pointer;\n  transition: 0.3s;\n}\n\nbutton:hover {\n  background: #4DA3FF;\n  transform: scale(1.05);\n}');
   const [js, setJs] = useState('// Logic\ndocument.getElementById("action").addEventListener("click", () => {\n  alert("Logic connected! Welcome to the lab.");\n});');
   const [srcDoc, setSrcDoc] = useState('');
   const [activeTab, setActiveTab] = useState<'html' | 'css' | 'js'>('html');
+
+  const { user } = useAuth();
+  const { openGate } = useAuthGate();
+
+  const handleSave = () => {
+    if (!user) {
+        openGate('save your project');
+    } else {
+        alert('Project saved! (Simulation)');
+    }
+  };
+
+  const handleManualRun = () => {
+    if (!user) {
+        openGate('run production build');
+    } else {
+        runCode();
+    }
+  };
 
   const runCode = () => {
     const combinedCode = `
@@ -77,11 +99,14 @@ export default function WebPlayground() {
                 </button>
              </div>
              
-             <button className="flex items-center gap-2 px-4 py-2 bg-ui-card hover:bg-ui-border border border-ui-border rounded-xl text-xs font-bold transition-all">
+             <button 
+                onClick={handleSave}
+                className="flex items-center gap-2 px-4 py-2 bg-ui-card hover:bg-ui-border border border-ui-border rounded-xl text-xs font-bold transition-all"
+             >
                 <Save className="w-4 h-4" /> Save
              </button>
              <button 
-                onClick={runCode}
+                onClick={handleManualRun}
                 className="flex items-center gap-2 px-6 py-2 bg-accent text-primary hover:bg-highlight hover:text-white rounded-xl text-xs font-bold transition-all shadow-glow"
              >
                 <Play className="w-4 h-4 fill-current" /> Execute
