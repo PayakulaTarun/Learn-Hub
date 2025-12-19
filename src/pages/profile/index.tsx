@@ -26,36 +26,53 @@ export default function ProfileDashboard() {
     if (!authLoading && !user) router.push('/auth/login');
 
     const fetchUserData = async () => {
+      if (!user) return;
+
       try {
-        if (!user) return;
-        
-        const [profileRes, xpRes, statsRes, eventsRes] = await Promise.all([
-          supabase.from('profiles').select('*').eq('id', user.id).single(),
-          supabase.from('user_xp').select('*').eq('user_id', user.id).single(),
-          supabase.from('user_learning_stats').select('*').eq('user_id', user.id).single(),
-          supabase.from('user_activity_events').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5)
-        ]);
+        // 1. Load critical identity data first
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .maybeSingle();
 
-        if (profileRes.error) console.error('Profile fetch error:', profileRes.error);
-        if (xpRes.error) console.error('XP fetch error:', xpRes.error);
+        if (profileError) console.error('Profile load error:', profileError);
+        if (profileData) setProfile(profileData);
 
-        if (profileRes.data) setProfile(profileRes.data);
-        if (xpRes.data) setXpData(xpRes.data);
-        
-        // Merge all stats for easier display
-        setProfile((prev: any) => ({
-          ...prev,
-          stats: statsRes.data || { total_time_spent_ms: 0, problems_solved_count: 0, tutorials_completed_count: 0 },
-          recentEvents: eventsRes.data || []
-        }));
+        // 2. Load telemetry in background (don't block UI significantly)
+        const loadStats = async () => {
+          const [xpRes, statsRes, eventsRes] = await Promise.all([
+            supabase.from('user_xp').select('*').eq('user_id', user.id).maybeSingle(),
+            supabase.from('user_learning_stats').select('*').eq('user_id', user.id).maybeSingle(),
+            supabase.from('user_activity_events').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5)
+          ]);
+
+          if (xpRes.data) setXpData(xpRes.data);
+          
+          setProfile((prev: any) => ({
+            ...prev,
+            stats: statsRes.data || { total_time_spent_ms: 0, problems_solved_count: 0, tutorials_completed_count: 0 },
+            recentEvents: eventsRes.data || []
+          }));
+        };
+
+        // Trigger stats load but don't wait for it to show the page
+        loadStats();
+
       } catch (error) {
-        console.error('Error loading profile data:', error);
+        console.error('Critical profile load error:', error);
       } finally {
+        // Always show the page after the critical profile attempt
         setLoading(false);
       }
     };
 
-    if (user) fetchUserData();
+    if (user) {
+      fetchUserData();
+    } else if (!authLoading) {
+      // Should be redirected by logic above, but safety net
+      setLoading(false); 
+    }
   }, [user, authLoading, router]);
 
   if (authLoading || loading) {
