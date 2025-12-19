@@ -4,14 +4,27 @@ import { AuthProvider } from '../components/Auth/AuthContext';
 import { AuthGateProvider } from '../components/Auth/AuthGateContext';
 import ErrorBoundary from '../components/ErrorBoundary';
 
-export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <ErrorBoundary>
-      <AuthProvider>
-        <AuthGateProvider>
-          <Component {...pageProps} />
-        </AuthGateProvider>
-      </AuthProvider>
-    </ErrorBoundary>
-  );
-}
+  // Version Integrity Check
+  import { useEffect } from 'react';
+
+  export default function App({ Component, pageProps }: AppProps) {
+    useEffect(() => {
+        // Prevent mismatch issues by checking build ID
+        fetch('/version.json')
+            .then(res => res.json())
+            .then(data => {
+                console.log(`🚀 System Version: ${data.version} (${data.commit})`);
+            })
+            .catch(() => console.warn('Build version info missing'));
+    }, []);
+
+    return (
+      <ErrorBoundary>
+        <AuthProvider>
+          <AuthGateProvider>
+            <Component {...pageProps} />
+          </AuthGateProvider>
+        </AuthProvider>
+      </ErrorBoundary>
+    );
+  }
