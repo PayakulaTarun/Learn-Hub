@@ -9,8 +9,8 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center space-x-3 mb-6 group">
-              <img src="/logo.png" alt="LearnHub Logo" className="h-12 w-auto transition-transform group-hover:scale-110" />
-              <span className="text-2xl font-black text-text-primary tracking-tighter">LearnHub</span>
+              <img src="/logo.png" alt="Student Resource Hub Logo" className="h-12 w-auto transition-transform group-hover:scale-110" />
+              <span className="text-2xl font-black text-text-primary tracking-tighter">Student Resource Hub</span>
             </Link>
             <p className="text-text-muted max-w-md leading-relaxed">
               Accelerating the next generation of software engineers through production-grade 

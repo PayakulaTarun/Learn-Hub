@@ -15,8 +15,8 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center space-x-2 group">
-              <img src="/logo.png" alt="LearnHub" className="h-10 w-auto transition-transform duration-500 group-hover:scale-110" />
-              <span className="text-2xl font-black text-text-primary tracking-tighter">LearnHub</span>
+              <img src="/logo.png" alt="Student Resource Hub" className="h-10 w-auto transition-transform duration-500 group-hover:scale-110" />
+              <span className="text-2xl font-black text-text-primary tracking-tighter">Student Resource Hub</span>
             </Link>
 
             {/* Gamification Stats */}
