@@ -4,7 +4,7 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 import Layout from '../../../../components/Layout';
 import { 
   ArrowLeft, ChevronRight, Zap, Trophy, 
-  Target, Info, Code, ShieldCheck,
+  Target, Info, Code, ShieldCheck, Clock,
   Layout as LayoutIcon, MessageSquare
 } from 'lucide-react';
 import { companies } from '../../../../lib/evaluatorData';
@@ -12,6 +12,7 @@ import { CompanyQuestion, CodeReviewResult } from '../../../../types/evaluator';
 import InteractiveEditor from '../../../../components/PracticeEngine/InteractiveEditor';
 import CodeReviewPanel from '../../../../components/Evaluator/CodeReviewPanel';
 import { analyzeCode } from '../../../../lib/codeReviewer';
+import { getCompanyQuestions } from '../../../../lib/battlegroundLoader';
 import Link from 'next/link';
 
 interface SolvePageProps {
@@ -22,6 +23,20 @@ interface SolvePageProps {
 export default function SolvePage({ question, companyName }: SolvePageProps) {
     const [reviewResult, setReviewResult] = useState<CodeReviewResult | null>(null);
     const [isReviewOpen, setIsReviewOpen] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(2700); // 45 minutes default for interview
+
+    React.useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const formatTime = (seconds: number) => {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m}:${s < 10 ? '0' + s : s}`;
+    };
 
     const handleCodeSubmit = (code: string) => {
         const result = analyzeCode(code, question.language || 'javascript');
@@ -37,9 +52,14 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
                     {/* Left Panel: Question Description */}
                     <div className="w-full lg:w-1/3 space-y-8 sticky top-24">
                         <div className="bg-ui-card border border-ui-border rounded-[2.5rem] p-8 shadow-xl">
-                            <Link href={`/evaluator/battlegrounds/${question.id.split('-')[0]}`} className="text-xs font-bold text-text-muted hover:text-rose-400 mb-8 flex items-center gap-2">
-                                <ArrowLeft className="w-4 h-4" /> Back to Battleground
-                            </Link>
+                            <div className="flex justify-between items-center mb-8">
+                                <Link href={`/evaluator/battlegrounds/${question.id.split('-')[0]}`} className="text-xs font-bold text-text-muted hover:text-rose-400 flex items-center gap-2">
+                                    <ArrowLeft className="w-4 h-4" /> Back
+                                </Link>
+                                <div className={`flex items-center gap-2 px-3 py-1 bg-primary border border-ui-border rounded-lg text-xs font-black ${timeLeft < 300 ? 'text-rose-500 animate-pulse' : 'text-orange-400'}`}>
+                                    <Clock className="w-4 h-4" /> {formatTime(timeLeft)}
+                                </div>
+                            </div>
 
                             <div className="mb-8">
                                 <div className="flex items-center gap-2 mb-4">
@@ -63,7 +83,7 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
                                     </h4>
                                     <div className="bg-primary/30 rounded-2xl p-6 border border-ui-border">
                                         <ul className="space-y-2">
-                                            {question.constraints.map((c, i) => (
+                                            {question.constraints.map((c: string, i: number) => (
                                                 <li key={i} className="text-xs text-text-secondary flex gap-2">
                                                     <span className="text-rose-500">•</span> {c}
                                                 </li>
@@ -143,13 +163,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     let foundQuestion: CompanyQuestion | null = null;
     let foundCompanyName = "";
 
-    companies.forEach(c => {
-        const q = c.questions.find(q => q.id === questionId);
+    for (const c of companies) {
+        // Must load questions for each company to search
+        const questions = getCompanyQuestions(c.id);
+        const q = questions.find(q => q.id === questionId);
         if (q) {
             foundQuestion = q;
             foundCompanyName = c.name;
+            break;
         }
-    });
+    }
 
     if (!foundQuestion) return { notFound: true };
 
@@ -163,11 +186,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const paths: any[] = [];
-    companies.forEach(c => {
-        c.questions.forEach(q => {
+    for (const c of companies) {
+        const questions = getCompanyQuestions(c.id);
+        questions.forEach(q => {
             paths.push({ params: { id: q.id } });
         });
-    });
+    }
 
     return {
         paths,

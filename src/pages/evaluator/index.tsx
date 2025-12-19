@@ -46,24 +46,41 @@ export default function EvaluatorHub() {
                 </div>
               </div>
 
-              <div className="grid gap-4">
-                {companies.map(company => (
-                  <Link 
-                    key={company.id}
-                    href={`/evaluator/battlegrounds/${company.id}`}
-                    className="group flex items-center justify-between p-6 bg-ui-card border border-ui-border rounded-3xl hover:border-rose-500/40 transition-all duration-300 shadow-xl"
-                  >
-                    <div className="flex items-center gap-6">
-                       <div className="w-16 h-16 bg-primary/40 rounded-2xl flex items-center justify-center font-black text-2xl text-text-muted group-hover:text-rose-400 transition-colors">
-                          {company.name[0]}
-                       </div>
-                       <div>
-                          <h3 className="text-xl font-bold mb-1">{company.name}</h3>
-                          <p className="text-xs text-text-muted">{company.hiringPattern.hotTopics[0]} • {company.hiringPattern.pattern.substring(0, 40)}...</p>
-                       </div>
+              <div className="space-y-12">
+                {[
+                  { title: 'Product-Based Titans', ids: ['google', 'amazon', 'microsoft', 'meta', 'netflix', 'uber', 'adobe', 'flipkart'] },
+                  { title: 'Service-Based Giants', ids: ['tcs', 'infosys', 'wipro', 'accenture'] },
+                  { title: 'High-Growth Startups', ids: ['zomato', 'razorpay', 'zoho', 'atlassian'] }
+                ].map(cat => (
+                  <div key={cat.title}>
+                    <h3 className="text-xs font-black uppercase tracking-[0.2em] text-text-muted mb-6 flex items-center gap-4">
+                      {cat.title} <div className="h-px flex-1 bg-ui-border"></div>
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {cat.ids.map(id => {
+                        const company = companies.find(c => c.id === id);
+                        if (!company) return null;
+                        return (
+                          <Link 
+                            key={id}
+                            href={`/evaluator/battlegrounds/${id}`}
+                            className="group p-5 bg-ui-card border border-ui-border rounded-2xl hover:border-rose-500/40 transition-all duration-300 shadow-xl relative overflow-hidden"
+                          >
+                            <div className="absolute top-0 right-0 w-16 h-16 bg-rose-500/5 rounded-full -mr-8 -mt-8 group-hover:bg-rose-500/10 transition-colors"></div>
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center font-black text-lg text-text-muted group-hover:text-rose-400 transition-colors">
+                                {company.name[0]}
+                              </div>
+                              <div>
+                                <h4 className="text-sm font-bold group-hover:text-rose-400 transition-colors">{company.name}</h4>
+                                <p className="text-[10px] text-text-muted font-medium">{company.hiringPattern.questionTypes[0]} Focus</p>
+                              </div>
+                            </div>
+                          </Link>
+                        );
+                      })}
                     </div>
-                    <ArrowRight className="w-5 h-5 text-text-muted group-hover:text-rose-400 group-hover:translate-x-2 transition-all" />
-                  </Link>
+                  </div>
                 ))}
               </div>
             </div>

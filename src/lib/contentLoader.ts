@@ -49,6 +49,7 @@ export function getAllTutorials(): TutorialMetadata[] {
 
         const categories = fs.readdirSync(CONTENT_DIR).filter(item => {
             try {
+                if (item === 'practice' || item === 'evaluator') return false;
                 const fullPath = path.join(CONTENT_DIR, item);
                 return fs.statSync(fullPath).isDirectory();
             } catch (error) {

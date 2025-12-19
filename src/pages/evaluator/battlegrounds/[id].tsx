@@ -9,6 +9,7 @@ import {
   Swords, ShieldCheck
 } from 'lucide-react';
 import { companies } from '../../../lib/evaluatorData';
+import { getCompanyQuestions } from '../../../lib/battlegroundLoader';
 import { CompanyBattleground } from '../../../types/evaluator';
 import Link from 'next/link';
 
@@ -162,11 +163,18 @@ export default function BattlegroundPage({ company }: BattlegroundPageProps) {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const companyId = params?.id as string;
     const company = companies.find(c => c.id === companyId);
-
     if (!company) return { notFound: true };
 
+    // Deep Load questions for the specific company
+    const questions = getCompanyQuestions(companyId);
+
     return {
-        props: { company }
+        props: { 
+            company: {
+                ...company,
+                questions
+            }
+        }
     };
 };
 

@@ -50,11 +50,15 @@ export default function MockTestPage({ exam }: MockTestPageProps) {
     const calculateScore = () => {
         let score = 0;
         exam.questions.forEach(q => {
-            if (answers[q.id] === q.correctAnswer) {
-                score += q.marks;
+            if (answers[q.id]) {
+                if (answers[q.id] === q.correctAnswer) {
+                    score += q.marks;
+                } else if (exam.negativeMarking) {
+                    score -= (q.marks * Math.abs(exam.negativeMarking));
+                }
             }
         });
-        return score;
+        return Math.max(0, parseFloat(score.toFixed(2)));
     };
 
     return (

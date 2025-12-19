@@ -36,6 +36,8 @@ export interface MockExam {
     title: string;
     description: string;
     durationMinutes: number;
+    negativeMarking?: number; // e.g. -0.33
+    companyId?: string; // If specific to a company
     sections: {
         id: string;
         title: string;
