@@ -22,6 +22,12 @@ export default function ProfileDashboard() {
   const [xpData, setXpData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  // Safety: Force loading to false after 3s max to prevent infinite spinner
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     if (!authLoading && !user) router.push('/auth/login');
 
