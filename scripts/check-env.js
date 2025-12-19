@@ -10,8 +10,9 @@ console.log('🔒 Validating Environment Variables...');
 const missing = requiredVars.filter(key => !process.env[key]);
 
 if (missing.length > 0) {
-    console.error(`❌ CRITICAL FAILURE: Missing required environment variables: ${missing.join(', ')}`);
-    process.exit(1);
+    console.warn(`⚠️  WARNING: Missing required environment variables: ${missing.join(', ')}`);
+    console.warn('   The application will build, but backend features may fail at runtime.');
+    // process.exit(1); // Relaxed for user request
 }
 
 // Check for "placeholder" values that often sneak into prod
