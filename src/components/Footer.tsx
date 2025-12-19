@@ -1,43 +1,52 @@
 import React from 'react';
-import { BookOpen } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-ui-dark text-text-primary border-t border-ui-border">
+    <footer className="bg-ui-dark text-text-primary border-t border-ui-border relative z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
-              <img src="/logo.png" alt="LearnHub Logo" className="h-12 w-auto" />
+            <Link href="/" className="flex items-center space-x-3 mb-6 group">
+              <img src="/logo.png" alt="LearnHub Logo" className="h-12 w-auto transition-transform group-hover:scale-110" />
               <span className="text-2xl font-black text-text-primary tracking-tighter">LearnHub</span>
-            </div>
-            <p className="text-text-muted max-w-md">
-              Empowering students worldwide with comprehensive web development tutorials. 
-              Learn HTML, CSS, JavaScript, and more at your own pace.
+            </Link>
+            <p className="text-text-muted max-w-md leading-relaxed">
+              Accelerating the next generation of software engineers through production-grade 
+              learning paths, real-time analytics, and high-fidelity interview simulations.
             </p>
           </div>
           
+          {/* Quick Learning */}
           <div>
-            <h3 className="font-semibold mb-4 text-text-primary">Courses</h3>
-            <ul className="space-y-2 text-text-muted">
-              <li><a href="/html" className="hover:text-accent transition-colors">HTML Tutorial</a></li>
-              <li><a href="/css" className="hover:text-accent transition-colors">CSS Tutorial</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">JavaScript (Coming Soon)</a></li>
+            <h3 className="font-black mb-6 text-text-primary uppercase tracking-widest text-xs">Curriculum</h3>
+            <ul className="space-y-3 text-sm font-medium text-text-muted">
+              <li><Link href="/subjects/html-introduction" className="hover:text-accent transition-colors flex items-center gap-2">HTML Masterclass</Link></li>
+              <li><Link href="/subjects/css-introduction" className="hover:text-accent transition-colors flex items-center gap-2">Modern CSS Design</Link></li>
+              <li><Link href="/subjects" className="hover:text-accent transition-colors flex items-center gap-2">Browse All Subjects</Link></li>
             </ul>
           </div>
           
+          {/* Engineering Tools */}
           <div>
-            <h3 className="font-semibold mb-4 text-text-primary">Resources</h3>
-            <ul className="space-y-2 text-text-muted">
-              <li><a href="#" className="hover:text-accent transition-colors">Documentation</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Examples</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Community</a></li>
+            <h3 className="font-black mb-6 text-text-primary uppercase tracking-widest text-xs">Engineering Tools</h3>
+            <ul className="space-y-3 text-sm font-medium text-text-muted">
+              <li><Link href="/navigator" className="hover:text-accent transition-colors flex items-center gap-2">Career Navigator</Link></li>
+              <li><Link href="/evaluator" className="hover:text-accent transition-colors flex items-center gap-2">Interview Battlegrounds</Link></li>
+              <li><Link href="/toolkit/resume-builder" className="hover:text-accent transition-colors flex items-center gap-2">AI Resume Builder</Link></li>
             </ul>
           </div>
         </div>
         
-        <div className="border-t border-ui-border mt-8 pt-8 text-center text-text-muted">
-          <p>&copy; 2024 Student Resource Hub. Empowering students worldwide.</p>
+        <div className="border-t border-ui-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-text-muted font-bold uppercase tracking-widest leading-loose">
+            &copy; {new Date().getFullYear()} Student Resource Hub. Built for High-Performance Learning.
+          </p>
+          <div className="flex gap-8 text-[10px] font-black uppercase tracking-widest text-text-muted">
+            <Link href="/about" className="hover:text-text-primary transition-colors">About Hub</Link>
+            <Link href="/auth/signup" className="hover:text-text-primary transition-colors text-accent">Enroll Now</Link>
+          </div>
         </div>
       </div>
     </footer>
