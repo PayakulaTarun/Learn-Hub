@@ -132,11 +132,11 @@ export default function LearnPage({ tutorial, role, domain, topicId, roadmapTitl
 
         {/* Roadmap Sidebar (GPS Style) */}
         <aside className={`
-          fixed lg:sticky top-0 left-0 h-screen lg:h-[calc(100vh-120px)]
+          fixed lg:sticky left-0 h-screen lg:h-[calc(100vh-160px)]
           w-full lg:w-80 bg-ui-card border-r border-ui-border overflow-y-auto
           transition-transform duration-300 z-40 lg:translate-x-0
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          lg:top-24 lg:rounded-3xl lg:shadow-2xl
+          lg:top-36 lg:rounded-3xl lg:shadow-2xl
         `}>
           <div className="p-8">
             <div className="flex items-center gap-3 mb-8">

@@ -129,22 +129,6 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
         />
       </Head>
 
-      {/* Secondary Web Navigation (Sticky) */}
-      <div className="sticky top-16 z-40 bg-ui-card/95 backdrop-blur-sm border-b border-ui-border shadow-sm hidden md:block">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center space-x-1 overflow-x-auto py-3 no-scrollbar">
-            {sortedSubjects.map(([subject]) => (
-              <a
-                key={subject}
-                href={`#${subject.toLowerCase().replace(/\s+/g, '-')}`}
-                className="px-4 py-1.5 text-sm font-medium text-text-secondary hover:text-accent hover:bg-ui-dark rounded-full transition-all whitespace-nowrap"
-              >
-                {subject}
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
 
       <div className="min-h-screen bg-ui-dark py-12">
         <div className="container mx-auto px-4">

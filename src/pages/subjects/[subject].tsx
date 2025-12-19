@@ -133,17 +133,17 @@ export default function SubjectPage({ tutorial, practicePack, prevTutorial, next
       <main className="flex-1 container mx-auto px-4 py-8 flex items-start gap-8 relative">
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="lg:hidden fixed bottom-4 right-4 z-50 bg-[#4A90E2] text-white p-3 rounded-full shadow-lg hover:bg-[#357ABD] transition"
+          className="lg:hidden fixed bottom-24 right-6 z-50 bg-rose-500 text-primary p-4 rounded-2xl shadow-glow-rose hover:scale-110 active:scale-95 transition-all duration-300"
         >
-          {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+          {isSidebarOpen ? <X size={24} /> : <BookOpen size={24} />}
         </button>
 
         <aside className={`
-          fixed lg:sticky top-0 left-0 h-screen lg:h-[calc(100vh-100px)]
+          fixed lg:sticky left-0 h-screen lg:h-[calc(100vh-160px)]
           w-80 bg-ui-card border-r border-ui-border overflow-y-auto
           transition-transform duration-300 z-40 lg:translate-x-0
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          lg:top-24 lg:rounded-lg lg:shadow-md
+          lg:top-36 lg:rounded-3xl lg:shadow-2xl
         `}>
           <div className="p-6">
             <h2 className="text-xl font-bold text-text-primary mb-2 flex items-center gap-2">

@@ -2,6 +2,8 @@ import React from 'react';
 import Head from 'next/head';
 import Header from './Header';
 import Footer from './Footer';
+import SubjectNavbar from './SubjectNavbar';
+import MobileBottomNav from './MobileBottomNav';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -20,10 +22,12 @@ export default function Layout({ children, title = 'LearnHub', description = 'Ma
       </Head>
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1">
+        <SubjectNavbar />
+        <main className="flex-1 pb-20 md:pb-0">
           {children}
         </main>
         <Footer />
+        <MobileBottomNav />
       </div>
     </>
   );
