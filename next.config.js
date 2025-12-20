@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export', // Removed to allow Vercel standard build (fixes routes-manifest error)
+  output: 'standalone', // Required for Docker/Cloud Run
   trailingSlash: true,
-  // images: { unoptimized: true } // Removed to allow Vercel Image Optimization
+  images: {
+    domains: [], // Add domains if needed
+    unoptimized: true // Often safer for standalone if not using Vercel Image Optimization
+  }
 }
 
 module.exports = nextConfig
