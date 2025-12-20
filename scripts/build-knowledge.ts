@@ -76,7 +76,9 @@ function scanDirectory(dir: string) {
 
 function processItem(item: any) {
     // Only process items that look like content
-    if (!item.id || !item.title) return;
+    // Only process items that look like content
+    const id = item.id || item.slug;
+    if (!id || !item.title) return;
 
     // Determine type
     let type: KnowledgeItem['type'] = 'concept';
@@ -86,8 +88,8 @@ function processItem(item: any) {
     // Construct URL (approximate based on ID/Structure)
     // This is "best effort" URL generation
     let url = `/`;
-    if (type === 'problem') url = `/evaluator/solve/${item.id}`;
-    else url = `/subjects/${item.id}`;
+    if (type === 'problem') url = `/evaluator/solve/${id}`;
+    else url = `/subjects/${id}`;
 
     // Extract text content for indexing
     let rawContent = item.description || item.content || "";
@@ -108,9 +110,9 @@ function processItem(item: any) {
     const tokens = scriptTokenize(item.title + " " + rawContent);
 
     knowledge.push({
-        id: item.id,
+        id: id,
         title: item.title,
-        description: item.description?.substring(0, 150) || "",
+        description: item.description || item.summary || "",
         content: rawContent.substring(0, 500), // Store snippet only to save JSON size
         tokens: tokens, // Full tokens for search
         type,

@@ -32,10 +32,15 @@ export const generateMockResponse = (messages: AIChatMessage[], context: AIConte
         // INTENT DETECTION: "Open X", "Go to X"
         const isNavigationIntent = /open|go to|show me|navigate/i.test(lastUserMsg);
 
-        // If strong match + specific intent, Trigger Action
-        if (isNavigationIntent && topResult.url) {
+        // AUTO-OPEN: If user types EXACT title or very close match (implied navigation)
+        // We assume topResult comes from searchEngine sorted by score. 
+        // If the match is super obvious (e.g. "Arrays" -> "Arrays Intro"), treat as nav.
+        const isDirectTopicMatch = topResult.title.toLowerCase().includes(lastUserMsg.toLowerCase()) && lastUserMsg.length > 3;
+
+        // Trigger Action
+        if ((isNavigationIntent || isDirectTopicMatch) && topResult.url) {
             return JSON.stringify({
-                text: `Navigating to **${topResult.title}**...`,
+                text: `I found **${topResult.title}**. Opening it for you...`,
                 action: 'navigate',
                 path: topResult.url
             });

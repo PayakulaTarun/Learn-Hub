@@ -20,19 +20,34 @@ export function searchKnowledge(query: string, context?: string): KnowledgeItem[
 
     const scoredItems = INDEX.map(item => {
         let score = 0;
+        const lowerTitle = item.title.toLowerCase();
 
         // boost for context relevance
-        if (context && item.title.toLowerCase().includes(context.toLowerCase())) {
+        if (context && lowerTitle.includes(context.toLowerCase())) {
             score += 20;
         }
 
+        // 1. Direct Title Match (Very High Priority)
+        if (lowerTitle === query.toLowerCase()) score += 150;
+        else if (lowerTitle.includes(query.toLowerCase())) {
+            score += 50;
+            // Boost "Introduction" or "Basics" for broad queries
+            if (lowerTitle.includes('introduction') || lowerTitle.includes('overview') || lowerTitle.includes('basics')) {
+                score += 25;
+            }
+            // Slight penalty for very long titles (specific sub-topics)
+            if (item.title.length > 20 && query.length < 5) {
+                score -= 10;
+            }
+        }
+
         queryTokens.forEach(token => {
-            // Title Match (High Priority)
-            if (item.title.toLowerCase().includes(token)) score += 10;
-            // Token Match (Exact)
+            // Title Token Match
+            if (lowerTitle.includes(token)) score += 15;
+            // Token Exact Match
             if (item.tokens.includes(token)) score += 5;
-            // Content substring match (Low Priority)
-            if (item.content.toLowerCase().includes(token)) score += 1;
+            // Content substring match
+            if (item.content.toLowerCase().includes(token)) score += 2;
         });
 
         return { item, score };
