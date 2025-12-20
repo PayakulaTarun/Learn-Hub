@@ -1,3 +1,23 @@
+-- 0. Schema: Create tables if they don't exist
+CREATE TABLE IF NOT EXISTS user_activity_events (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid REFERENCES auth.users(id) ON DELETE CASCADE,
+  event_type text NOT NULL,
+  entity_type text NOT NULL,
+  entity_id text,
+  metadata jsonb DEFAULT '{}'::jsonb,
+  created_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS profiles (
+  id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  username text UNIQUE,
+  full_name text,
+  avatar_url text,
+  updated_at timestamptz,
+  website text
+);
+
 -- 1. Enable RLS on all tables (Safety Default)
 ALTER TABLE user_activity_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
