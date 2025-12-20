@@ -6,7 +6,7 @@ const eventSchema = z.object({
     event_type: z.enum(['login', 'logout', 'view', 'complete']),
     entity_type: z.string(),
     entity_id: z.string().optional(),
-    metadata: z.record(z.any()).optional(),
+    metadata: z.record(z.string(), z.any()).optional(),
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
