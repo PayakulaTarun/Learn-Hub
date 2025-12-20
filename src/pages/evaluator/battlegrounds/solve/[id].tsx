@@ -13,6 +13,8 @@ import InteractiveEditor from '../../../../components/PracticeEngine/Interactive
 import CodeReviewPanel from '../../../../components/Evaluator/CodeReviewPanel';
 import { analyzeCode } from '../../../../lib/codeReviewer';
 import { getCompanyQuestions } from '../../../../lib/battlegroundLoader';
+import { executeCode } from '../../../../lib/codeRunner';
+import confetti from 'canvas-confetti';
 import Link from 'next/link';
 
 interface SolvePageProps {
@@ -24,6 +26,9 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
     const [reviewResult, setReviewResult] = useState<CodeReviewResult | null>(null);
     const [isReviewOpen, setIsReviewOpen] = useState(false);
     const [timeLeft, setTimeLeft] = useState(2700); // 45 minutes default for interview
+
+    const [isExecuting, setIsExecuting] = useState(false);
+    const [executionLogs, setExecutionLogs] = useState<string[]>([]);
 
     React.useEffect(() => {
         const timer = setInterval(() => {
@@ -38,10 +43,145 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
         return `${m}:${s < 10 ? '0' + s : s}`;
     };
 
-    const handleCodeSubmit = (code: string) => {
-        const result = analyzeCode(code, question.language || 'javascript');
-        setReviewResult(result);
-        setIsReviewOpen(true);
+    
+    // Helper to generate driver code based on problem type
+    const generateDriver = (userCode: string, question: CompanyQuestion) => {
+        const testCases = question.testCases || [];
+        if (testCases.length === 0) return userCode;
+
+        // Common definition polyfills
+        const polyfills = `
+        function ListNode(val, next) { this.val = (val===undefined ? 0 : val); this.next = (next===undefined ? null : next); }
+        function TreeNode(val, left, right) { this.val = (val===undefined ? 0 : val); this.left = (left===undefined ? null : left); this.right = (right===undefined ? null : right); }
+        
+        function arrToList(arr) { if(!arr||!arr.length) return null; let head = new ListNode(arr[0]); let cur = head; for(let i=1; i<arr.length; i++) { cur.next = new ListNode(arr[i]); cur = cur.next; } return head; }
+        function listToArr(node) { let arr = []; while(node) { arr.push(node.val); node = node.next; } return arr; }
+        `;
+
+        let runner = `
+        const cases = ${JSON.stringify(testCases)};
+        let passed = 0;
+        
+        // Infer function name from code or question ID
+        let fnName = "";
+        if ("${question.id}" === "amz-dsa-1") fnName = "mergeKLists";
+        else if ("${question.id}" === "amz-dsa-2") fnName = "numIslands";
+        else if ("${question.id}" === "amz-dsa-3") fnName = "ladderLength";
+        else if ("${question.id}" === "amz-dsa-4") fnName = "optimalUtilization";
+        
+        try {
+            cases.forEach((tc, idx) => {
+                let args = JSON.parse(tc.input);
+                
+                // Pre-processing
+                if ("${question.id}" === "amz-dsa-1") {
+                    args = args.map(arrToList);
+                }
+
+                // Execution
+                // dynamically find function if not hardcoded (naive regex)
+                if (!fnName) {
+                    const match = "${userCode}".match(/var\\s+(\\w+)\\s*=/);
+                    if(match) fnName = match[1];
+                }
+
+                const fn = eval(fnName);
+                if (typeof fn !== 'function') throw new Error("Function " + fnName + " not found");
+
+                // If args is not an array (single arg), wrap it
+                // Logic: testCases.input usually raw string like "[1,2]" -> JSON parse -> [1,2]. 
+                // If the function epxects (arr), then we pass [1,2].
+                // If function expects (a, b), then input should be "[1, 2]" -> JSON Parse -> [1, 2] -> apply?
+                // For simplicity, we assume input JSON parses to the arguments array if more than 1 arg, or single value if 1 arg.
+                // BUT my amazon.json inputs are: "[[1,4,5]...]" (one arg: array of arrays).
+                // Word Ladder input: "['hit', 'cog', ...]" (3 args).
+                
+                let result;
+                if (Array.isArray(args) && "${question.id}" !== "amz-dsa-1") {
+                     // Spread args for multi-arg functions
+                     // EXCEPTION: amz-dsa-1 input is ONE array of linked lists, so we don't spread the outer array, we pass the array itself.
+                     if ("${question.id}" === "amz-dsa-3") result = fn(...args);
+                     else result = fn(args);
+                } else {
+                     result = fn(args);
+                }
+
+                // Post-processing
+                if ("${question.id}" === "amz-dsa-1") result = listToArr(result);
+
+                const outStr = JSON.stringify(result);
+                const expectedStr = JSON.stringify(JSON.parse(tc.output));
+                
+                if (outStr === expectedStr) {
+                    passed++;
+                    console.log("✅ Test " + (idx+1) + ": PASS");
+                } else {
+                    console.log("❌ Test " + (idx+1) + ": FAIL. Expected " + expectedStr + ", Got " + outStr);
+                }
+            });
+            console.log("FINAL_SCORE:" + Math.floor((passed / cases.length) * 100));
+        } catch(e) {
+            console.log("🚨 Runtime Error: " + e.message);
+            console.log("FINAL_SCORE:0");
+        }
+        `;
+        
+        return polyfills + "\n" + userCode + "\n" + runner;
+    };
+
+    const handleCodeSubmit = async (code: string) => {
+        setIsExecuting(true);
+        setExecutionLogs([]);
+        
+        try {
+            // 1. Generate Driver Code
+            const executableCode = generateDriver(code, question);
+            
+            // 2. Execute on Piston
+            const result = await executeCode(executableCode, question.language || 'javascript');
+            
+            // 3. Parse Output
+            const logs = result.stdout.split('\n');
+            const scoreLine = logs.find(l => l.startsWith("FINAL_SCORE:"));
+            const score = scoreLine ? parseInt(scoreLine.split(':')[1]) : 0;
+            const displayLogs = logs.filter(l => !l.startsWith("FINAL_SCORE:"));
+            
+            if (result.stderr) displayLogs.push("⚠️ Stderr: " + result.stderr);
+
+            setExecutionLogs(displayLogs);
+
+            // 4. Generate Analysis Result
+            const review: CodeReviewResult = {
+                score: score,
+                cleanCodeScore: score > 80 ? 90 : 50, // Mocked secondary stats
+                readabilityScore: 85,
+                complexityAnalysis: {
+                    time: score === 100 ? "O(N log K)" : "N/A",
+                    space: "O(1)"
+                },
+                findings: displayLogs.map((l: string) => ({ // Explicit typing
+                    type: (l.includes('FAIL') || l.includes('Error')) ? 'error' : 'optimization',
+                    message: l,
+                    suggestion: l.includes('FAIL') ? 'Check your logic against the failing case.' : 'Good job!'
+                }))
+            };
+
+            setReviewResult(review);
+            setIsReviewOpen(true);
+            
+            if (score === 100) {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+
+        } catch (e) {
+             console.error(e);
+        } finally {
+            setIsExecuting(false);
+        }
     };
 
     return (

@@ -12,6 +12,7 @@ export interface CompanyQuestion {
     inputFormat?: string;
     outputFormat?: string;
     initialCode?: string;
+    testCases?: { input: string; output: string }[];
     language?: string;
     expectedOutput?: string;
     solutionSlug?: string; // Link to tutorial
