@@ -12,6 +12,12 @@ export interface CompanyQuestion {
     inputFormat?: string;
     outputFormat?: string;
     initialCode?: string;
+    // Per-language configuration
+    templates?: Record<string, {
+        initialCode: string;
+        driverCode?: string; // Optional custom driver if generic one fails
+        timeLimit?: number;
+    }>;
     testCases?: { input: string; output: string }[];
     language?: string;
     expectedOutput?: string;

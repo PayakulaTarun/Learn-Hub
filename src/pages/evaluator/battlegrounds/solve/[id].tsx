@@ -16,6 +16,7 @@ import { getCompanyQuestions } from '../../../../lib/battlegroundLoader';
 import { executeCode } from '../../../../lib/codeRunner';
 import confetti from 'canvas-confetti';
 import Link from 'next/link';
+import { SUPPORTED_LANGUAGES } from '../../../../lib/languages';
 
 interface SolvePageProps {
   question: CompanyQuestion;
@@ -29,6 +30,7 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
 
     const [isExecuting, setIsExecuting] = useState(false);
     const [executionLogs, setExecutionLogs] = useState<string[]>([]);
+    const [currentLanguage, setCurrentLanguage] = useState('javascript');
 
     React.useEffect(() => {
         const timer = setInterval(() => {
@@ -44,11 +46,88 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
     };
 
     
-    // Helper to generate driver code based on problem type
-    const generateDriver = (userCode: string, question: CompanyQuestion) => {
+    // Helper to generate driver code based on problem type and language
+    const generateDriver = (userCode: string, question: CompanyQuestion, lang: string) => {
         const testCases = question.testCases || [];
         if (testCases.length === 0) return userCode;
 
+        if (lang === 'python') {
+            const runner = `
+import sys
+import json
+
+${userCode}
+
+cases = json.loads('${JSON.stringify(testCases).replace(/'/g, "\\'")}')
+passed = 0
+
+def list_to_arr(head):
+    arr = []
+    while head:
+        arr.append(head.val)
+        head = head.next
+    return arr
+
+def arr_to_list(arr):
+    dummy = ListNode(0)
+    curr = dummy
+    for val in arr:
+        curr.next = ListNode(val)
+        curr = curr.next
+    return dummy.next
+
+# Test Logic
+try:
+    for i, tc in enumerate(cases):
+        args = json.loads(tc['input'])
+        expected = json.loads(tc['output'])
+        
+        # Preprocessing for Linked Lists
+        if "${question.id}" == "amz-dsa-1":
+            args = [arr_to_list(a) for a in args]
+        
+        sol = Solution()
+        
+        # Call based on problem ID
+        if "${question.id}" == "amz-dsa-1":
+            res = sol.mergeKLists(args)
+            if res: res = list_to_arr(res)
+            else: res = []
+        elif "${question.id}" == "amz-dsa-2":
+            res = sol.numIslands(args)
+        # Fallback eval for generic
+        else:
+            # Python dynamic call is harder without specific names
+            # Assume Solution class has only one method or fallback
+            method_name = [m for m in dir(Solution) if not m.startswith('__')][0]
+            method = getattr(sol, method_name)
+            if isinstance(args, list):
+                res = method(*args)
+            else:
+                res = method(args)
+        
+        # Comparison
+        original_res = res
+        if "${question.id}" == "amz-dsa-1":
+             # Already converted
+             pass
+             
+        # Normalize comparison (JSON dump)
+        if json.dumps(res) == json.dumps(expected):
+            passed += 1
+            print(f"✅ Test {i+1}: PASS")
+        else:
+            print(f"❌ Test {i+1}: FAIL. Expected {expected}, Got {res}")
+
+    print(f"FINAL_SCORE:{int((passed/len(cases))*100)}")
+except Exception as e:
+    print(f"🚨 Runtime Error: {str(e)}")
+    print("FINAL_SCORE:0")
+            `;
+            return runner;
+        }
+
+        // Default: JavaScript Driver
         // Common definition polyfills
         const polyfills = `
         function ListNode(val, next) { this.val = (val===undefined ? 0 : val); this.next = (next===undefined ? null : next); }
@@ -87,14 +166,6 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
 
                 const fn = eval(fnName);
                 if (typeof fn !== 'function') throw new Error("Function " + fnName + " not found");
-
-                // If args is not an array (single arg), wrap it
-                // Logic: testCases.input usually raw string like "[1,2]" -> JSON parse -> [1,2]. 
-                // If the function epxects (arr), then we pass [1,2].
-                // If function expects (a, b), then input should be "[1, 2]" -> JSON Parse -> [1, 2] -> apply?
-                // For simplicity, we assume input JSON parses to the arguments array if more than 1 arg, or single value if 1 arg.
-                // BUT my amazon.json inputs are: "[[1,4,5]...]" (one arg: array of arrays).
-                // Word Ladder input: "['hit', 'cog', ...]" (3 args).
                 
                 let result;
                 if (Array.isArray(args) && "${question.id}" !== "amz-dsa-1") {
@@ -135,10 +206,10 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
         
         try {
             // 1. Generate Driver Code
-            const executableCode = generateDriver(code, question);
+            const executableCode = generateDriver(code, question, currentLanguage);
             
             // 2. Execute on Piston
-            const result = await executeCode(executableCode, question.language || 'javascript');
+            const result = await executeCode(executableCode, currentLanguage);
             
             // 3. Parse Output
             const logs = result.stdout.split('\n');
@@ -182,6 +253,14 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
         } finally {
             setIsExecuting(false);
         }
+    };
+
+    // Get boilerplate from template map or fallback
+    const getInitialCode = () => {
+        if (question.templates && question.templates[currentLanguage]) {
+            return question.templates[currentLanguage].initialCode;
+        }
+        return question.initialCode || `// Write your ${currentLanguage} solution here`;
     };
 
     return (
@@ -254,13 +333,33 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
 
                     {/* Right Panel: Editor & Review */}
                     <div className="flex-1 w-full space-y-8">
+                        {/* Language Selector */}
+                        <div className="flex items-center gap-4">
+                            <h3 className="text-sm font-bold text-text-muted uppercase tracking-widest">Language:</h3>
+                            <div className="flex gap-2">
+                                {Object.values(SUPPORTED_LANGUAGES).map((lang: any) => (
+                                    <button
+                                        key={lang.id}
+                                        onClick={() => setCurrentLanguage(lang.id)}
+                                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                                            currentLanguage === lang.id
+                                            ? 'bg-rose-500 text-white border-rose-500 shadow-glow-rose'
+                                            : 'bg-primary/50 text-text-muted border-ui-border hover:border-text-muted'
+                                        }`}
+                                    >
+                                        {lang.name}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
                         <div className="relative">
                             <InteractiveEditor 
                                 title={`${question.title} Lab`}
-                                initialCode={question.initialCode || `// Write your ${question.language} solution here\nfunction solution() {\n\n}`}
-                                language={question.language || 'javascript'}
+                                initialCode={getInitialCode()}
+                                language={currentLanguage}
                                 onSubmit={handleCodeSubmit}
-                                submitLabel="Submit for Review"
+                                submitLabel={isExecuting ? "Executing..." : "Run Tests"}
                                 challengeMode={true}
                             />
 
@@ -277,6 +376,7 @@ export default function SolvePage({ question, companyName }: SolvePageProps) {
                                 </div>
                             )}
                         </div>
+
 
                         {/* Tip */}
                         <div className="bg-ui-card border border-ui-border p-8 rounded-3xl flex flex-col md:flex-row items-center gap-8 border-dashed">
