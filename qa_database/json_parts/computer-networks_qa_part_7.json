@@ -1,0 +1,592 @@
+{
+    "dataset": "computer-networks_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_7",
+            "questions": [
+                {
+                    "id": 61,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "What is 'TCP Window Scaling' and why is it needed for high-speed long-distance links?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Window scaling is a 'Magnifying Glass' for the TCP header that allows it to hold a much larger number, so you can send more data at once over fast, far-away links."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The standard TCP window is limited to 64KB, which is too small for 'Long Fat Networks' (LFNs). Window Scaling (RFC 7323) introduces a scale factor that increases the maximum window size to 1GB, ensuring the pipe stays full even with high latency."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Header option negotiated during SYN. Uses a 1-byte shift count (0-14). Window = Header_Value * 2^Shift. Essential for saturating links where the Bandwidth-Delay Product (BDP) exceeds 65,535 bytes."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Mechanism for expanding the available TCP receive window beyond the original 16-bit limit using an exponential multiplier."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Increasing the Size of a Delivery Truck'. Instead of sending 100 small vans (standard window) that each have to come back before the next leaves, you send one massive 18-wheeler (scaled window) so the factory can keep working at full speed."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Expands the TCP window size limit to support high-throughput, high-latency network paths."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Without scaling, a 1Gbps link between NY and London (latency ~70ms) would be limited to ~7Mbps because the 'In-Flight' data buffer would fill up faster than the 'OK' messages (ACKs) could return. Scaling allows the sender to keep pouring data into the pipe."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like making the 'Inbox' on your computer bigger so you can receive a huge file without having to tell the sender 'Okay, got it' after every tiny chunk."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Both sides must support it during the initial SYN. If a firewall 'strips' this option during the handshake, your high-speed internet will suddenly feel like 1995 dial-up speed because the window is capped."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A TCP option to increase the receive window size allowed in the Transmission Control Protocol above its former maximum value of 65,535 bytes."
+                        }
+                    ]
+                },
+                {
+                    "id": 62,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "What are 'Selective Acknowledgments' (SACK)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "SACK lets the receiver say: 'I got packets 1, 2, and 4, but I'm missing number 3'. This way, the sender only has to resend the missing piece instead of everything from 3 onwards."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "SACK (RFC 2018) allows the receiver to report non-contiguous blocks of data received. Without SACK, TCP uses 'Cumulative ACKs', meaning it must re-transmit EVERY packet from the point of loss, wasting bandwidth."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "TCP option extending ACK functionality. The receiver includes 'Left Edge' and 'Right Edge' pointers of successful data blocks in the header, enabling 'Selective Retransmission' for multiple lost segments in a single window."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Improvement over standard TCP acknowledgments allowing the specification of out-of-order data segments correctly received."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Ordering a set of 10 chairs'. If chair #5 arrives broken, SACK lets you tell the store: 'Send me just one new #5'. Without SACK, the store would make you send all 10 chairs back and wait for a completely new set."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Informing the sender of specific data blocks received to minimize redundant retransmissions."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "SACK is critical for 'Lossy' links (like Wi-Fi or Satellite). If you lose 3 random packets in a window of 100, SACK recovers them in one go. Standard TCP Reno would take 3 separate time-out cycles to realize each one was missing, making the connection stall repeatedly."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a more 'Detailed Receipt' for the data chunks you received, so the other computer doesn't waste time sending what you already have."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "D-SACK (Duplicate SACK) uses the same mechanism to tell the sender 'You sent Packet 10 twice'. This helps the sender realize that the network isn't 'congested', just 'slow', so it doesn't drop its speed unnecessarily."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An extension to the TCP protocol that allows the receiver to acknowledge non-contiguous blocks of data."
+                        }
+                    ]
+                },
+                {
+                    "id": 63,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "Explain 'Zero-Copy' Networking and its benefits.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Zero-copy is a way for a server to send a file straight from the 'Hard Drive' to the 'Internet' without the computer's CPU having to touch it or copy it around in memory."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Zero-copy operations (like Linux's `sendfile()` system call) avoid copying data between Kernel-space and User-space. By keeping the data in the kernel and handing it directly to the Network Card, you drastically reduce CPU usage and memory bandwidth bottlenecks."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Optimization bypasses the 'Intermediate Buffer' copy. Involves DMA (Direct Memory Access) from disk to kernel buffer, then the network card reads directly from that kernel buffer via descriptors. Perfect for high-volume static file serving."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Efficiency technique minimizing the number of data copies between memory regions during I/O operations."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Standard networking is like a 'Postman' taking a letter, hand-copying it into a new envelope, then handing it to a driver. Zero-copy is the postman just handing the original envelope straight to the driver. It's much faster."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Avoiding redundant data cloning between software layers to maximize throughput."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Nginx and Kafka rely heavily on zero-copy. Every time you 'copy' data (e.g., from the disk buffer to the app's buffer), you are using CPU cycles and flushing the CPU cache. Zero-copy allows a single server to handle 10x more traffic because it isn't 'busy' moving bits around locally."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a 'Slide' that lets data travel effortlessly from the storage to the wire without any person having to carry it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "RDMA (Remote Direct Memory Access) is the 'Ultimate Zero-Copy'—it allows one computer's network card to read data directly from a 'Second' computer's RAM without the second computer's CPU even knowing it happened."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A computer operation in which the CPU does not perform the task of copying data from one memory area to another."
+                        }
+                    ]
+                },
+                {
+                    "id": 64,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "What is 'Jumbo Frames' and what are the trade-offs?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Jumbo frames are 'Extra Large' data packets. They make big file transfers faster because the router spends less time looking at 'Labels' and more time moving 'Cargo'."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Jumbo frames increase the standard Ethernet MTU from 1,500 bytes to 9,000 bytes. This reduces the number of interrupts the CPU has to handle and lowers the 'Header-to-Payload' ratio, significantly boosting throughput in controlled environments like storage networks."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Non-standard Ethernet frame extension. Benefits: Fewer framing headers, fewer CRC calculations, lower CPU interrupt overhead. Risks: Higher Latency (Serialization Delay), and 'MTU Mismatch' black holes if even one switch in the path doesn't support them."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Ethernet frames with payloads larger than 1500 bytes, typically used to improve efficiency in local Area Networks."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Standard frames are like 'Packing a house into 1,000 small boxes'. Jumbo frames are like using 'One massive shipping container'. It's easier to move, provided the doors in the new house (the routers) are wide enough to fit the container."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Enlarged data packets used to reduce per-packet processing overhead in back-end networks."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Jumbo frames are 'Never' used on the public internet. Because the internet is a mix of millions of devices, you can't guarantee every router supports 9K. If a jumbo frame hits a 1.5K router, it has to be 'fragmented', which is so slow that it completely cancels out any speed benefit you gained."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like sending 'Economy Size' packages instead of individual servings—it saves money and time, but only if the delivery truck is big enough."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "With modern '100Gbps' network cards, Jumbo frames are actually BECOMING less important because modern 'LRO' (Large Receive Offload) hardware can 'fake' them by combining small packets into one big one automatically without anyone knowing."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Ethernet frames with more than 1500 bytes of payload."
+                        }
+                    ]
+                },
+                {
+                    "id": 65,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "What is 'Receive Side Scaling' (RSS)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "RSS is a way to share the work of 'Reading Internet Traffic' across all the cores of your CPU, instead of forcing one single core to do all the heavy lifting."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "RSS is a network driver technology that distributes incoming network traffic across multiple CPU cores. It uses a hash of the Source/Dest IP and Ports to ensure all packets from the same 'Conversation' stay on the same core, preventing out-of-order delivery while enabling parallel processing."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Hardware-level hash-based traffic distribution. The NIC (Network Interface Card) sorts incoming traffic into multiple 'RX Queues', triggering interrupts on different CPUs to prevent a single-core bottleneck during high-speed (10Gbps+) intake."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Driver technique for parallelizing receive-data processing across multiple processors."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Multiple Lane Toll Booth'. Without RSS, only one lane is open and every car (packet) has to wait. With RSS, the toll booth opens 8 lanes, so the traffic flows 8x faster."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Spreading network interrupt processing across multiple CPU cores to improve scalability."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "RSS is critical for modern 'Multi-core' servers. Without it, you could have a 64-core server where Core 0 is at 100% usage (processing the NIC) while the other 63 cores are idle. RSS makes the server 'feel' 64x faster for incoming web traffic."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's how your computer 'Multitasks' when it's downloading something at super-high speed."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "A related technology is 'RPS' (Receive Packet Steering), which is the 'Software' version of RSS. If your cheap network card doesn't support RSS, the OS kernel can manually 'steer' the frames to other cores, though it costs a bit more CPU power."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A feature of some network interface controllers that enables the efficient distribution of network receive processing across multiple CPUs in multiprocessor systems."
+                        }
+                    ]
+                },
+                {
+                    "id": 66,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "Explain Google's 'BBR' Congestion Control.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "BBR is a smarter way for a computer to guess 'How fast can I send data?' It doesn't wait for things to break; instead, it looks for the 'Sweet Spot' of speed and delay."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "BBR (Bottleneck Bandwidth and Round-trip propagation time) is a model-based congestion control algorithm. Unlike standard TCP (Cubic/Reno) which wait for 'Packet Loss' to slow down, BBR measures throughput and latency to find the 'Maximum Bandwidth' and 'Minimum Delay', resulting in 10x-100x better speeds on high-loss links."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Non-loss-based congestion control. Uses a pacing rate and a 'Gain' factor. It attempts to operate at the 'Kleinrock's Optimal Operating Point'. It is specifically effective against 'Bufferbloat' because it doesn't fill the queue."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Advanced congestion control algorithm utilizing bandwidth and latency measurements rather than packet loss as primary signals."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Standard TCP is like 'Driving till you hit a wall, then reversing'. BBR is like 'Using a Radar' to see the wall 100 yards away and slowing down to exactly 1mph before you touch it. You never crash, and you stay moving."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A performance-focused congestion algorithm that optimizes for throughput and latency simultaneously."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "BBR is a 'game-changer' for YouTube. Google found that BBR handles the 'noise' of random Wi-Fi interference much better, because BBR doesn't get 'scared' and slow down just because one packet went missing; it only slows down if it sees the actual 'Delay' getting longer."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a 'Pro Driver' who knows exactly how fast they can go through a narrow tunnel without ever scratching the car."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "A 'Problem' with BBR is that it is 'Aggressive'. If BBR and standard TCP are sharing a single wire, BBR will often 'bully' the standard TCP, taking 80-90% of the bandwidth for itself because it ignores the loss signals that make standard TCP slow down."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A congestion control algorithm that builds a model of the network to estimate the maximum available bandwidth and minimum round-trip time."
+                        }
+                    ]
+                },
+                {
+                    "id": 67,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "What is 'TTFB' and how to optimize it in a network?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "TTFB is 'Time to First Byte'. It's the 'Silence' between clicking a link and when your browser actually starts receiving the first tiny bit of data. Lower is better."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Time to First Byte measures the responsiveness of a web server. To optimize it from a network perspective, we use CDNs to reduce the 'Physical Distance' (RTT), HTTP/3 to reduce handshake latency, and Edge Caching to serve the HTML without touching the origin server."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Metric encompassing: DNS Lookup time + TCP Handshake + TLS Handshake + Server Processing Time. Optimization requires low-latency peering, 'Fast Open' mechanisms, and minimizing 'Database Lookups' before the first chunk is flushed to the socket."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Measurement of the duration from the initial request to the receipt of the first byte of response data."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Ordering at a Drive-Thru'. You say 'I want a burger', and there is a 10-second pause before the guy says 'That'll be $5'. That 10 seconds of silence is the TTFB."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The sum of network and server delay before the first piece of content arrives at the client."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Even if your 'Total Download' is 100Mbps, a high TTFB will make the internet 'feel' slow. If a site takes 1.5 seconds just to say 'Hello', you'll feel like it's broken. This is why Google uses TTFB as a ranking factor for SEO—user patience is short."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the 'Revolving Door' of the internet. If the door is stuck for a second before letting you in, that's what makes the site feel 'clunky'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Early Hints' (HTTP 103) is a modern way to cheat TTFB. The server sends a tiny 'header-only' message immediately while it's still calculating the main page, telling the browser which fonts/CSS to start downloading early."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A measurement used as an indication of the responsiveness of a webserver or other network resource."
+                        }
+                    ]
+                },
+                {
+                    "id": 68,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "What is 'Connection Multiplexing' in HTTP/2?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Multiplexing lets a browser send 100 requests for images all at the same time through one single pipe, instead of having to wait for each one to finish one-by-one."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In HTTP/1.1, browsers were limited to ~6 concurrent TCP connections per domain. HTTP/2 solved this with 'Binary Framing', allowing multiple 'Streams' to coexist on a single TCP connection. This eliminates 'Head-of-Line' blocking at the application layer."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Interleaved delivery of multiple requests/responses over a single socket. Data is broken into small 'Frames', each with a 'Stream ID'. This allows the server to prioritize traffic and prevents one large image from 'stalling' the whole page load."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Full bi-directional concurrency over a single TCP connection through stream-based framing."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "HTTP/1 is like a 'Narrow Single-Lane Bridge' where only one car can cross at a time. HTTP/2 is like a 'Teleporter' that breaks all the cars into dust, mixes them together, sends them through the tunnel, and rebuilds them perfectly on the other side."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Sending multiple data streams simultaneously over a single network connection."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A major benefit is 'Header Compression' (HPACK). In HTTP/1, every request repeated the same 'User-Agent' and 'Cookies' text (wasting KB of data). In HTTP/2, the server remembers the headers, and the multiplexed streams only send 'What changed'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like being able to talk to 5 different people at once during the same phone call without getting their voices mixed up."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Multiplexing is why we don't 'Sprite' images (one big image) or 'Concatenate' JS files anymore. Since many small requests are now 'free' and fast, it's actually better for browser caching to keep files separate."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A method by which multiple HTTP requests can be sent over a single TCP connection without waiting for individual responses."
+                        }
+                    ]
+                },
+                {
+                    "id": 69,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "Explain 'TCP Fast Open' (TFO) Optimization.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "TCP Fast Open lets a computer send data inside the very first 'Hello' message, skipping the usual 3-step 'Getting Ready' process."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "TCP Fast Open (RFC 7413) reduces latency by allowing data to be exchanged during the initial 3-way handshake. On the 2nd visit, the client sends a 'TFO Cookie' with the SYN + Data. The server validates the cookie and processes the data immediately, saving one full RTT."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Client-server cookie-based authentication within the SYN packet. Eliminates the 'Handshake RTT' penalty for repeat connections. Requires support in the kernel, the application, and specifically the firewalls (which must not drop SYN-with-data)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Performance extension for the Transmission Control Protocol that allows data to be sent during the initial handshake."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Ordering your regular coffee' from the doorway. instead of waiting to get to the counter, saying hello, waiting for them to say hello back, and THEN ordering, you just shout 'One Latte!' the moment you walk in. The coffee is ready by the time you reach the register."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Enabling data transfer inside the initial TCP SYN packet to reduce setup latency."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "For small web requests (like an API call), the 'Handshake' takes up 50% or more of the total time. TFO combined with TLS 1.3 (which also has a 0-RTT mode) means a secure connection can be established and the data received in just ONE round trip."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the 'Express Lane' for your internet connection that forgets the formal greetings and gets straight to the point."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "A 'Security Risk' of TFO is 'Replay Attacks'. Because the data is sent in the SYN, a hacker could 'record' that SYN and send it again. Servers must only use TFO for 'Safe' requests (GET) that don't do things like 'Withdraw Money' or 'Delete User'."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An extension to the Transmission Control Protocol that speeds up the opening of successive TCP connections between two endpoints."
+                        }
+                    ]
+                },
+                {
+                    "id": 70,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "What is 'Latency vs. Throughput' in a High-Frequency Trading (HFT) network?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "In HFT, Throughput is 'How many trades can I do in an hour?' but Latency is 'How fast can I beat my neighbor to the one single trade that makes money?' Latency is 100x more important here."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "For HFT, we optimize 'Tail Latency' (p99) over Throughput. We use Kernel Bypass (like Solarflare's Onload), InfiniBand instead of Ethernet, and custom-length fiber cables to ensure our data arrives nanoseconds before the competition."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Throughput: Bitrate (Gbps). Latency: Inter-node delay (microseconds). HFT uses 'Cut-through Switching' (starts forwarding before the packet arrived fully) and 'FPGA-based' packet processing to bypass the slow OS networking stack."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Performance metrics focusing on minimum transit delay (Latency) as the primary success factor over total volume capacity (Throughput)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Throughput is a 'Cargo Train'. Latency is a 'Sniper Bullet'. If you are trying to win a race to a single item, you don't care how many boxes the train can carry—you only care how fast the bullet hits the target."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Maximizing speed of individual signals (Latency) vs volume of data moved (Throughput)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In these networks, we even worry about the 'Length of the Wire'. Light travels at ~300,000 km/s, but in glass, it's 30% slower. HFT firms pay millions to have 'Hollow Fiber' or direct 'Microwave' links because air is faster than glass by a few nanoseconds."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the difference between 'Having a big empty truck' and 'Having the fastest car in the world'. In trading, the fast car always wins."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "HFT engineers use 'Busy Polling' where the CPU constantly checks the network card for data (100% usage) rather than waiting for an 'Interrupt'. This saves the ~5 microsecond 'wake-up' delay of the CPU."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The relationship between the time delay of a data packet and the rate at which data is successfully delivered over a communication channel."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

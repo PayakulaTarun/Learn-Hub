@@ -1,0 +1,592 @@
+{
+    "dataset": "cpp_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_2",
+            "questions": [
+                {
+                    "id": 11,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is the C++ compilation process?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Compiling C++ involves four steps: Preprocessing (handling # commands), Compiling (code to assembly), Assembling (assembly to binary), and Linking (combining binary files into an app)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The transformation from source code to executable involves four stages: Preprocessing (macros and header expansion), Compilation (translating source to assembly), Assembly (generating object files), and Linking (resolving external references and creating the final binary)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "1. Preprocessor: Expands directives and generates a `.i` file. 2. Compiler: Generates `.s` assembly code from the translation unit. 3. Assembler: Creates relocatable `.o` or `.obj` machine code. 4. Linker: Pulls in library code and resolves symbols to build the executable."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The four stages are: Preprocessing, Compilation, Assembly, and Linking. Preprocessing handles `#include` and `#define`. Compilation converts to assembly. Assembly creates machine code. Linking merges object files."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Building a House'. Preprocessor: Ordering materials. Compiler: Blueprints. Assembler: Laying bricks (binary blocks). Linker: Plumbing and Electricity (connecting the blocks so they work together)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Preprocessing, Compiling, Assembling, and Linking."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Each stage can be inspected. For instance, `g++ -E` shows the preprocessor output. Errors at the linking stage (like 'undefined reference') happen because the compiler successfully translated your file but the linker couldn't find the definition for a function you called."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the multi-step journey of turning your text file into a real computer program that you can click and run."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern compilers often perform LTO (Link Time Optimization) which allows the compiler to look across object files during the linking stage to perform additional optimizations like cross-file inlining."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The multi-stage process of translating high-level C++ source code into machine-executable binary code."
+                        }
+                    ]
+                },
+                {
+                    "id": 12,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between Stack and Heap memory?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The stack is for temporary variables (automatically cleaned up), while the heap is for manually managed data (you must delete it yourself)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Stack memory is small, fast, and managed by the compiler (LIFO). Heap memory is large, slower, and requires manual management via `new` and `delete`. Variables on the stack are destroyed when a function exits, whereas heap data persists until explicitly freed."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Stack uses static memory allocation, managed by the CPU via a stack pointer. Heap use dynamic allocation, requiring search and fragmentation management. Accessing stack memory is typically faster due to cache locality and zero-overhead allocation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Stack: Automatic allocation, fixed size, fast, local scope. Heap: Dynamic allocation, variable size, slower, global access (until freed)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Stack is like 'Sticky Notes' on your desk (easy to use, toss them when done). Heap is like 'Rentable Storage' (you can store huge stuff, but you have to pay/manage the lease and return the key)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Automatic local storage (Stack) vs manual global storage (Heap)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Stack overflow occurs if you use too much local memory (like deep recursion). Heap exhaustion occurs when you run out of physical/virtual RAM. Modern C++ uses 'Smart Pointers' to manage the heap automatically so it feels more like the stack."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use the stack for most things because it's safer. Only use the heap when you need to store something very large or something that needs to survive after a function ends."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The heap uses a 'Free List' or 'Buddy System' for allocation. Frequent heap allocation can lead to 'Fragmentation', where total free memory exists but not in a single contiguous block large enough for a request."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Two distinct areas of a computer's memory where variables and data are stored during program execution."
+                        }
+                    ]
+                },
+                {
+                    "id": 13,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is a 'VTable' (Virtual Table)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A VTable is a hidden lookup table C++ uses behind the scenes to find the correct version of a function when you use inheritance and polymorphism."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A VTable is a mechanism used to support dynamic dispatch (runtime polymorphism). When a class has virtual functions, the compiler creates a table of function pointers. Each object contains a 'vptr' that points to this table."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "VTable is a static array for each class containing virtual functions. It enables 'late binding'. When a virtual function is called through a base class pointer, the CPU follows the vptr in the object to the VTable and calls the address listed there."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The mechanism by which C++ enables dynamic polymorphism, consisting of a table of function addresses for classes with virtual members."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Contact List'. You know you want to call 'Mom' (the function name). The VTable provides the actual phone number (the address) that goes to the correct person based on who you actually are."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A runtime lookup table for resolving virtual function calls."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Virtual functions add a small performance overhead (one extra memory indirection) and increase the object size by the size of a pointer (`vptr`). This is why C++ follows the 'Zero Overhead' principle: if you don't use `virtual`, you don't pay for the VTable."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the 'Brain' C++ uses to make sure if a dog barks, it sounds like a dog, and if a cat barks, it sounds like a cat (if they both come from an 'Animal' group)."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In cases of multiple inheritance, an object might contain multiple vptrs. Destructors must also be virtual; otherwise, the VTable lookup for the destructor will only see the base class version, causing memory leaks in the derived class."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The dispatch table used by C++ to implement runtime polymorphism."
+                        }
+                    ]
+                },
+                {
+                    "id": 14,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Name Mangling'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when the compiler changes your function names into weird strings to keep track of overloaded functions that have the same name but different input types."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Name mangling is the process where the C++ compiler encodes function/variable names into unique strings for the linker. This is necessary because C++ allows function overloading (multiple functions with the same name but different parameters)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A technique used by compilers to solve the problem of function overloading by adding type information of parameters into the symbol name. E.g., `void f(int)` might become `_Z1fi` in the binary."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The decoration of function names with type information to allow the linker to distinguish between overloaded functions."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Unique Identifiers'. In a database, you might have two people named 'John'. You mangle their names into 'John_1985' and 'John_1992' so the computer doesn't get confused."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Compiler-generated unique symbols for overloaded functions."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Name mangling is why C++ code is not directly compatible with C code by default. To disable mangling (for C compatibility), you use the `extern \"C\"` block, which tells the compiler to use the simple C-style naming convention."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a secret language the compiler uses to keep your functions perfectly organized behind the scenes."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Different compilers use different mangling schemes (e.g., GCC vs MSVC), which is why you generally cannot link object files from two different compilers together into one program."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The mechanism used to resolve naming conflicts between identifiers in different scopes or with different signatures."
+                        }
+                    ]
+                },
+                {
+                    "id": 15,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Object Slicing'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when you try to fit a 'Big' child object into a 'Small' parent variable. The extra data of the child gets 'sliced' off and lost."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Object slicing occurs when a derived class object is assigned to a base class variable by value. The derived parts of the object are removed, leaving only the base part. This typically happens when passing by value instead of by pointer or reference."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The loss of derived class data and behavior when assigning a derived object to a base type. The copy constructor of the base class is called, ignoring the derived class members."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A phenomenon where data of a derived class is lost when that class is assigned to a base class by value."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "If you have a 'Luxury House' (derived) and you try to fit it into a 'Standard Tent' (base) plan, you lose the pool, the garage, and the extra rooms. All you're left with is the tent."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Loss of derived data during by-value assignment to a base class."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Slicing is a common source of bugs in polymorphism. If a function takes a base class by value, any derived object passed to it will be 'sliced', and its overridden virtual functions will no longer behave as expected (they'll use the base version)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always pass objects by reference (with `&`) to avoid this. If you don't, your objects might 'forget' they are special and act like their parents."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Object slicing can be prevented by making the base class 'Abstract' (adding at least one pure virtual function) or by declaring the copy constructor of the base class as deleted or private."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An unintended side effect where an object is reduced to its base class component."
+                        }
+                    ]
+                },
+                {
+                    "id": 16,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is the role of the 'Linker'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The linker is the 'Glue'. It takes all your separate compiled files and sticks them together into one single runnable program."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The linker is responsible for merging object files into a single executable. Its primary task is symbol resolution (finding where functions are defined) and relocation (assigning final memory addresses)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A tool that resolves external references between modules and libraries. It patches call instructions with the relative or absolute addresses of the functions once all object files are collected."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A system program that collects and combines various object files and libraries generated by the assembler to form an executable file."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Map Maker'. The compiler gives sections of the world, but the linker draws the roads that connect them so you can travel from one function to another."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Resolving symbols and merging object files into a binary."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Linker errors like 'LNK2019: unresolved external symbol' mean you declared a function (promised it existed) but never provided the body (the definition) in any of the linked files."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you write code across multiple files, the Linker is what makes sure they can all talk to each other."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The linker also handles 'Static' vs 'Dynamic' linking. Static libraries are copied directly into the executable, while dynamic libraries (.dll or .so) are linked at load-time or runtime."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A computer utility program that takes one or more object files generated by a compiler and combines them into a single executable file."
+                        }
+                    ]
+                },
+                {
+                    "id": 17,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is a 'Translation Unit'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A translation unit is a single `.cpp` file plus all the header files that were pasted into it by the preprocessor."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A translation unit is the basic unit of compilation. It consists of a source file (.cpp) and all included headers (.h) after the preprocessor has expanded them and handled all macros."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The ultimate input to the compiler phase. It is a single source file with all its inclusions and macro expansions processed. The compiler generates one object file per translation unit."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The set of code processed by the compiler in a single invocation, including the source file and all included headers."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Completed Paper'. You wrote a draft (the .cpp), and you pasted in quotes/citations (the headers). The whole thing you hand to the teacher is the translation unit."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A preprocessed source file ready for compilation."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Understanding translation units is key to avoiding duplicate definition errors. Defining a variable in a header file without `extern` will cause errors because every translation unit that includes that header will try to define that variable."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the giant block of text the computer actually 'reads' when it tries to understand your C++ file."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "C++20 Modules aim to replace the concept of translation units by allowing pre-compiled, isolated units of code that don't suffer from the massive textual inclusion overhead of the preprocessor."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Everything in a source file except those portions that are skipped by preprocessor conditional directives."
+                        }
+                    ]
+                },
+                {
+                    "id": 18,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Undefined Behavior'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when you write code that doesn't follow the rules, and C++ doesn't tell you what will happen. It might work, crash, or do something totally crazy."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Undefined Behavior (UB) occurs when the code violates the C++ language standard rules. The compiler is not required to handle these cases predictably. Possible outcomes include silent corruption, program crashes, or the code appearing to work normally."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A state where the C++ standard imposes no requirements on the implementation. The compiler is permitted to optimize assuming UB never occurs, which often results in nonsensical machine code if UB actually happens at runtime."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Behavior for which the C++ standard does not specify a result; often caused by array out-of-bounds, null pointer dereference, or signed integer overflow."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Driving on the sidewalk'. The lawbook (the standard) doesn't say what happens next—you might get a ticket, hit a pole, or just cross the street. It's totally unpredictable."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Program behavior that is not guaranteed by the C++ standard."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Common examples of UB: accessing a deleted pointer, using uninitialized variables, and dividing by zero. UB is dangerous because it can vary between different compilers or even different optimization levels of the same compiler."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Think of it as the 'Danger Zone'. Always double-check your logic to stay away from it, or your program will become a glitchy mess."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern compilers use UB as an optimization opportunity. For example, since signed integer overflow is UB, a compiler may assume `i + 1 > i` is always true and remove the check entirely, even if `i` is the maximum integer."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Behavior that result from the use of nonportable or erroneous program constructs or of erroneous data."
+                        }
+                    ]
+                },
+                {
+                    "id": 19,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'RAII' (Resource Acquisition Is Initialization)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "RAII is a rule that says resources (like memory) should be tied to the life of an object. When the object is born (constructor), it grabs the memory; when it dies (destructor), it lets it go automatically."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "RAII is a core C++ idiom where resource management is bound to object lifetime. You acquire resources in a constructor and release them in a destructor. This ensures no resource leaks even if an exception occurs."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A design pattern that uses the C++ scope of objects for resource management. Resources are owned by objects; when the object goes out of scope, its destructor is deterministically called, releasing the resources."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A programming technique which binds the life cycle of a resource to the lifetime of an object."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Borrowing a Book'. You get the book (Resource) when you enter the library (Constructor). You MUST return it when you leave the library (Destructor)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Binding resource management to object lifetime."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "RAII is what makes C++ exception-safe. If an exception is thrown, all local objects have their destructors called (stack unwinding), meaning memory, locks, and files are automatically cleaned up without needing a `finally` block."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It helps you avoid 'Memory Leaks'. Instead of remembering to delete everything yourself, you let the object handle its own trash."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Standard library types like `std::unique_ptr`, `std::lock_guard`, and `std::fstream` are perfect examples of RAII in action. They prevent leaks of memory, mutexes, and file handles respectively."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A design pattern used in several object-oriented, statically-typed programming languages to describe a particular system of object lifecycle management."
+                        }
+                    ]
+                },
+                {
+                    "id": 20,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How does 'RTTI' (Run-Time Type Information) work?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "RTTI is a feature that lets C++ figure out the 'True Type' of an object at runtime, even if you are just using a generic pointer."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "RTTI allows the program to discover the type of an object during execution. It is implemented using `dynamic_cast` and the `typeid` operator. It requires the class to have at least one virtual function to work."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The mechanism by which C++ stores type information for objects with polymorphic base classes. The compiler adds extra metadata to the VTable to allow identification of the exact derived class at runtime."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A C++ mechanism that provides information about data types during execution, primarily via `typeid` and `dynamic_cast`."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Hidden ID Badge'. Even if someone is wearing a 'Uniform' (Base Class), you can check their badge (RTTI) to see their 'Personal Name' (Derived Class)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Discovering an object's real type at runtime."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "RTTI has a performance cost and can be disabled in some compiler settings (`-fno-rtti`). `dynamic_cast` uses RTTI to safely cast pointers down a hierarchy, returning `nullptr` if the object is not actually of the target type."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It helps you ask the computer: 'Hey, I know this is an Animal, but is it specifically a Dog?'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The `type_info` object returned by `typeid` is implementation-defined. While it can provide the name of the class using `.name()`, the string returned is often mangled and not portable across compilers."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A mechanism that exposes information about data types when a program is running."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

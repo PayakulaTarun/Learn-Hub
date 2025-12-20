@@ -32,7 +32,7 @@ export default function Home() {
             {stats.xp > 0 && (
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full mb-6">
                 <Star className="w-4 h-4 text-accent fill-accent" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-accent">Welcome back Level {stats.level} Developer</span>
+                <span className="text-[10px] font-medium uppercase tracking-widest text-accent">Welcome back, Level {stats.level} Developer</span>
               </div>
             )}
             <h1 className="text-5xl md:text-8xl font-black mb-8 text-text-primary tracking-tighter leading-none">
@@ -46,7 +46,7 @@ export default function Home() {
               <Link href="/subjects" className="px-10 py-5 bg-accent text-primary rounded-2xl font-black shadow-glow hover:bg-highlight hover:scale-105 transition-all text-sm uppercase tracking-widest">
                 Start Learning
               </Link>
-              <Link href="/evaluator" className="px-10 py-5 bg-ui-dark border-2 border-ui-border text-text-primary rounded-2xl font-black hover:border-accent hover:text-accent transition-all text-sm uppercase tracking-widest">
+              <Link href="/evaluator" className="px-10 py-5 bg-transparent border-2 border-accent text-accent rounded-2xl font-black hover:bg-accent/10 transition-all text-sm uppercase tracking-widest">
                 Job Ready Check
               </Link>
             </div>
@@ -118,11 +118,11 @@ export default function Home() {
                 Step into our <strong>Interactive Practice Lab</strong>. From visualizing complex algorithms to building frontend components in our live studio, we provide the tools to master engineering by actually <em>doing</em> it.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link href="/practice/sorting-visualizer" className="px-8 py-3 bg-accent text-primary font-bold rounded-xl hover:bg-highlight hover:text-white transition-all shadow-glow">
-                  Explore Visualizers
-                </Link>
-                <Link href="/practice/web-playground" className="px-8 py-3 bg-ui-card border border-ui-border text-text-primary font-bold rounded-xl hover:border-accent transition-all">
+                <Link href="/practice/web-playground" className="px-8 py-3 bg-accent text-primary font-bold rounded-xl hover:bg-highlight hover:text-white transition-all shadow-glow">
                   Open Web Studio
+                </Link>
+                <Link href="/practice/sorting-visualizer" className="px-8 py-3 bg-transparent border-2 border-primary text-primary font-bold rounded-xl hover:bg-primary/10 transition-all">
+                  Explore Visualizers
                 </Link>
               </div>
             </div>
@@ -249,7 +249,7 @@ export default function Home() {
             <div className="bg-ui-dark rounded-xl border-2 border-dashed border-ui-border p-6 flex flex-col items-center justify-center text-center opacity-70">
               <Database className="h-8 w-8 text-text-muted mb-2" />
               <h3 className="font-bold text-text-secondary">MySQL & SQL</h3>
-              <p className="text-xs text-text-muted">Coming Soon</p>
+              <span className="px-3 py-1 bg-ui-border rounded-full text-[10px] font-bold text-text-muted uppercase tracking-widest mt-2">Coming Soon</span>
             </div>
           </div>
 

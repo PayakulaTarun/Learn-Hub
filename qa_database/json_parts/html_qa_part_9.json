@@ -1,0 +1,592 @@
+{
+    "dataset": "HTML_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_9",
+            "questions": [
+                {
+                    "id": 81,
+                    "topic": "HTML Security",
+                    "difficulty": "Advanced",
+                    "question": "What is Content Security Policy (CSP) and how does it prevent XSS?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "CSP is a security layer (HTTP header) that restricts where resources (scripts, images) can load from, preventing the execution of unauthorized malicious scripts (XSS)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. It is defined via the `Content-Security-Policy` HTTP header."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "It's a whitelist for your website. You tell the browser 'Only trust scripts from Me and Google.com'. If a hacker tries to load a script from 'EvilHacker.com', the browser blocks it."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "It disables `eval()` and inline scripts by default (unless `unsafe-inline` is allowed). You define policies like `script-src 'self' https://trusted.cdn`. This neutralizes XSS because even if a hacker injects a script tag, the browser refuses to execute it."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "CSP can be enforced or Report-Only. `upgrade-insecure-requests` is a useful CSP directive to force HTTP links to HTTPS. Nonces (`nonce-'...'`) allow specific inline scripts to run while blocking others. It is the gold standard for XSS defense."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's the Guest List at a party. The Bouncer (Browser) checks the ID of every guest (Script). If they aren't on the list (CSP), they get kicked out."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Hacker injects `<script src='evil.js'>`. 2. Browser parses tag. 3. Browser checks CSP Header. 4. 'evil.js' not in whitelist. 5. Block request."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "CSP allows whitelisting of resource origins. It mitigates XSS by disallowing inline scripts and only allowing scripts from trusted domains. Implementing a strict CSP is one of the most effective security hardenings for a frontend."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It stops bad scripts from running. You say 'Only allow scripts from my site', and the browser blocks everything else."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "CSP restricts the capabilities of the browser context. By defining directives (`default-src`, `script-src`, `img-src`), developers significantly reduce the attack surface. It effectively neuters Reflected and Stored XSS attacks by preventing the execution of the injected payload."
+                        }
+                    ]
+                },
+                {
+                    "id": 82,
+                    "topic": "Security attributes",
+                    "difficulty": "Advanced",
+                    "question": "What is Subresource Integrity (SRI) and which attribute implements it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "SRI ensures fetched files (like CDN scripts) haven't been tampered with; implemented using the `integrity` attribute containing a cryptographic hash."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "Subresource Integrity (SRI) is a security feature that enables browsers to verify that resources they fetch (from a CDN) are delivered without unexpected manipulation. It uses the `integrity` attribute with a base64-encoded hash."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "If you load jQuery from a public server, how do you know a hacker didn't change the code? SRI is a fingerprint. You put the fingerprint in your HTML. If the file's fingerprint doesn't match, the browser throws it away."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Syntax: `<script src='...' integrity='sha384-...' crossorigin='anonymous'>`. If the file on the CDN changes (hacked or updated), the hash mismatch causes the browser to block execution. Critical for Fintech/Health apps using 3rd party libs."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "Requires CORS (`crossorigin='anonymous'`) because the browser needs permission to read the file bytes to compute the hash. Without CORS, the script is opaque and SRI fails security checks. It defends against 'Supply Chain Attacks'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's a Wax Seal on a letter. If the seal is broken or looks different (Hash mismatch), you know someone messed with the letter, so you don't read it."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Generate Hash of `lib.js`. 2. Add `integrity='sha-hash'` to tag. 3. Browser downloads file. 4. Computes file hash. 5. Match? Run. Mismatch? Block."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "SRI uses the `integrity` attribute to verify asset integrity via hashing. It prevents Content Injection attacks where a CDN is compromised. We mandate SRI for all external scripts in our production environment."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It's a security checkout code. It makes sure the script you downloaded is exactly the one you expected."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "SRI allows the user agent to verify the integrity of a retrieved resource. By comparing the cryptographic hash of the downloaded bytes (e.g., SHA-384) against the hash provided in the markup, the browser ensures code execution safety in a distributed hosting environment."
+                        }
+                    ]
+                },
+                {
+                    "id": 83,
+                    "topic": "Clickjacking",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Clickjacking' and how does the `X-Frame-Options` header prevent it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "Clickjacking hides your site in an invisible iframe to trick users into clicking buttons; `X-Frame-Options: DENY` stops your site from being put in an iframe."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "Clickjacking occurs when an attacker uses transparent iframes to overlay content, tricking a user into clicking a button on another page. `X-Frame-Options` (values: DENY, SAMEORIGIN) instructs the browser to refuse rendering the page in a `<frame>` or `<iframe>`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "Hackers put an invisible version of your bank website on top of a button like 'Win a Prize'. When you click 'Prize', you actually click 'Transfer Money'. This header forbids your bank site from being invisible inside other sites."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "The modern replacement is Content Security Policy: `frame-ancestors 'none'`. However, `X-Frame-Options` is still widely supported. Use `SAMEORIGIN` to allow your own site, but block outsiders."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "X-Frame-Options is a response header, not a meta tag (browsers ignore XFO in meta). It serves to mitigate UI Redress Attacks. If a site attempts to frame you, the browser console logs an error and the frame remains blank."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's like puting a 'Do Not Copy' watermark on your paper. Except here, it's a 'Do Not Frame' command that makes the paper disappear if someone tries to frame it."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Attacker creates `<iframe>` of your site. 2. Sets Opacity 0. 3. Browser checks Header. 4. Header says `X-Frame-Options: DENY`. 5. Browser blocks render."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "Clickjacking is UI Redressing. We prevent it by sending `X-Frame-Options: SAMEORIGIN` or CSP `frame-ancestors`. This ensures our application/modals cannot be embedded and exploited by malicious domains."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It stops people from putting your website inside an iframe on their website. It prevents fake clicks."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "Clickjacking leverages the visual rendering layers to intercept user interactions. The `X-Frame-Options` HTTP response header allows a site to declare whether its content is permitted to be rendered within a frame, effectively nullifying the attack vector."
+                        }
+                    ]
+                },
+                {
+                    "id": 84,
+                    "topic": "Link Security",
+                    "difficulty": "Intermediate",
+                    "question": "Why is `javascript:void(0)` considered a bad practice in `href` attributes?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "It breaks semantic meaning (links should navigate) and relies on JS; use `<button>` for actions instead."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "Using the `javascript:` pseudo-protocol in `href` executes code but provides no fallback if JS fails. Semantically, anchors `<a>` are for navigation to a resource. Buttons `<button>` are for on-page actions."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "Links take you somewhere. Buttons do something. Using a Link to do a Button's job (like opening a menu) confuses screen readers and breaks the 'Open in New Tab' feature."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Accessibility issue: Screen readers announce 'Link', but it doesn't go anywhere. UX issue: Hovering shows 'javascript:void(0)' in the status bar, which looks broken. Solution: Use `<button type='button'>` styled as a link."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "It is an anti-pattern called 'Unobtrusive JavaScript' violation. CSP might block `javascript:` URIs depending on policy. Also, `void(0)` evaluates to `undefined`, which prevents the browser from navigating, but it is a hack."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's using a Door handle (Link) to turn on the lights (Action). It works, but it confuses everyone who expects the door to open. Use a Switch (Button)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Code: `<a href='javascript:void(0)' onclick='...'>`. 2. Bad semantics. 3. Fix: `<button onclick='...'>`. 4. Use CSS to remove border/bg."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "It is semantically incorrect. `<a>` tags should point to a URI. Ideally, if an element performs a JavaScript action, it should be a `<button>`. Using `void(0)` is a legacy hack that harms accessibility and CSP compliance."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It's ugly and old. Just use a button if you aren't going to a new page."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "The `javascript:` URI scheme executes string-based code in the context of the page. This practice entangles behavior with structure (violating separation of concerns) and fails gracefully when scripts are disabled or blocked. Semantic HTML requires `<a>` for navigation and `<button>` for interaction."
+                        }
+                    ]
+                },
+                {
+                    "id": 85,
+                    "topic": "Data Sanitization",
+                    "difficulty": "Advanced",
+                    "question": "What is the difference between 'Sanitization' and 'Validation' of HTML input?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "Validation checks if data fits a format (Yes/No); Sanitization cleans data by removing unsafe characters (Mutation)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "Validation ensures input conforms to expected rules (e.g., 'Is this an email?'). It rejects bad input. Sanitization modifies input to ensure safety (e.g., stripping `<script>` tags from a comment). It accepts but cleans input."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "Validation is the bouncer checking ID. 'You aren't 21, go away.' Sanitization is the airport security. 'You can come in, but we are taking away your knife' (removing dangerous parts)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Validation prevents bad data quality (e.g., `age=-5`). Sanitization prevents security exploits (e.g., `name=<script>alert(1)</script>`). You usually Validate first, then Sanitize before storage/display."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "Sanitization is context-dependent. Sanitizing for HTML context (escaping `<`) is different from sanitizing for SQL (escaping `'`). Use established libraries (DOMPurify for HTML) rather than Regex. Validation should occur on both Client (UX) and Server (Security)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "Validation: Is this water? Sanitization: Filter the water to remove bacteria."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Input: `hello <script>`. 2. Validation: 'Is it text?' Yes. 3. Sanitization: Remove `<script>`. 4. Output: `hello`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "Validation asserts correctness (Type/Format) and rejects invalid data. Sanitization enforces safety (Stripping/Encoding) and modifies data. XSS is prevented by output encoding (Sanitization), not just input validation."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "Validation checks if it's right. Sanitization cleans it up so it doesn't hack the site."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "Validation is a boolean logic gate (checks constraints), preserving data integrity. Sanitization is a transformation process (removes/encodes vectors), preserving system security. Relying solely on validation is unsafe because malicious payloads can often pass format checks (e.g., a valid email string containing XSS vectors)."
+                        }
+                    ]
+                },
+                {
+                    "id": 86,
+                    "topic": "Secure Contexts",
+                    "difficulty": "Intermediate",
+                    "question": "Why do modern APIs like Geolocation or Camera access require HTTPS?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "To prevent Man-in-the-Middle (MitM) attacks from snooping on sensitive data or injecting fake coordinates/video."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "These are classified as 'Powerful Features' by W3C. They expose sensitive PII (location, AV feed). Operating on HTTP (plaintext) allows network intruders to intercept this data or tamper with the request, so browsers block them in non-Secure Contexts."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "Would you shout your credit card number in a crowded room? No. HTTPS creates a private room. Cameras and GPS reveal private stuff, so the browser refuses to turn them on unless the room is private (HTTPS)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Browsers (Chrome/Firefox) explicitly deprecated these APIs on HTTP. `navigator.geolocation` will essentially return an error or fail silently on `http://`. This is part of the 'Secure Contexts' standard."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "Secure Context means authenticated origin (HTTPS or localhost). Without it, Service Workers, Push Notifications, and Media Capture are disabled. This mitigates spying and spoofing vectors."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's like an armored truck. You don't put gold (Camera data) in a shopping cart (HTTP). You put it in the armored truck (HTTPS)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. User visits `http://site`. 2. JS calls Camera. 3. Browser checks Protocol. 4. Not Secure. 5. Browser blocks API."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "Sensitive APIs are restricted to Secure Contexts. This mandates HTTPS. It ensures that the data transit is encrypted and the code requesting permission hasn't been tampered with by a man-in-the-middle."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "Because it's private info. HTTPS encrypts it so hackers can't see your camera stream."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "The restriction safeguards user privacy and system integrity. In an insecure context, a network attacker could inject malicious scripts to request permissions without the user's knowledge or spoof the API responses. Secure Contexts (HTTPS) authenticate the server identity and encrypt the transport layer."
+                        }
+                    ]
+                },
+                {
+                    "id": 87,
+                    "topic": "Referrer Policy",
+                    "difficulty": "Advanced",
+                    "question": "What is the purpose of the `Referrer-Policy` header or meta tag?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "It controls how much information about the current page (URL) is sent to the destination site when a user clicks a link."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "The `Referrer-Policy` directive governs which referrer information, sent in the `Referer` [sic] header, should be included with requests made. Common values: `no-referrer`, `origin`, `strict-origin-when-cross-origin`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "When you click a link, the new website usually knows exactly where you came from. If your URL has secrets (like `reset-password?token=123`), you don't want to tell them. This setting keeps your URL secret."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Default is usually `strict-origin-when-cross-origin` (sends path on same site, only domain on other sites). Use `no-referrer` for maximum privacy. This prevents data leakage via URL parameters in analytics logs of 3rd parties."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "It can be set via HTTP Header, Meta tag, or `referrerpolicy` attribute on individual `<a>`/`<img>`. Critical for privacy and security (preventing Session ID leakage in URLs). Note: 'Referer' is historically misspelled in the HTTP spec."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's Caller ID. You can choose to show your full number, just your area code, or 'Unknown Caller' (`no-referrer`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Current URL: `site.com/secret`. 2. Click Link to `other.com`. 3. Policy: `origin`. 4. `other.com` sees came from `site.com`. 5. Secret is safe."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "Referrer Policy controls the `Referer` header. I typically use `strict-origin-when-cross-origin` to balance security (hiding private URL paths from external sites) with analytics utility (internal tracking works)."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It decides if the next website knows you came from my website. It helps hide private URLs."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "Referrer Policy is a privacy mechanism. By analyzing the policy, the User Agent determines whether to strip the path/query components or the entire header from the outgoing request. This prevents the unintentional leakage of sensitive data often found in query strings (tokens, search queries) to third-party servers."
+                        }
+                    ]
+                },
+                {
+                    "id": 88,
+                    "topic": "Cookie Security",
+                    "difficulty": "Advanced",
+                    "question": "Why can't JavaScript access a cookie marked as `HttpOnly`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "The browser enforces a security block, making `HttpOnly` cookies invisible to `document.cookie` to prevent XSS attacks from stealing session tokens."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "`HttpOnly` is a flag included in the Set-Cookie HTTP response header. When set, the browser does not expose the cookie to client-side scripting (JavaScript). It is strictly included in HTTP headers for requests."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "It's a 'Server-Only' sticker. The server puts a cookie in the jar and locks it. The browser can send the jar back, but the JavaScript running on the page cannot open the jar or see what's inside."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "It is the primary defense against Session Hijacking via XSS. If a hacker injects JS (`alert(document.cookie)`), they will see nothing if the Auth Cookie is `HttpOnly`. The browser handles the cookie automatically for network requests."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "While it mitigates XSS token theft, it doesn not prevent XSS itself (attacker can still perfrom requests, just can't read the token). It should be paired with `Secure` (HTTPS only) and `SameSite` (CSRF protection) attributes."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "Identity Badge. `HttpOnly` means the badge is sewn onto your shirt. You can walk into secure rooms (Server), but you can't take the badge off and give it to someone else (JavaScript)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Server response: `Set-Cookie: session=123; HttpOnly`. 2. JS: `console.log(document.cookie)`. 3. Output: `""`. 4. JS cannot steal '123'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "`HttpOnly` cookies are inaccessible to the `document.cookie` API. This is a deliberate security feature to prevent Cross-Site Scripting (XSS) attacks from exfiltrating sensitive session identifiers."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "Because it's for the server only. JS can't touch it. It stops hackers from stealing your login cookie."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "The `HttpOnly` flag creates a sandboxed scope for the cookie. The User Agent stores usage strictly for HTTP transport layers. This breaks the chain of an XSS exploitation; even if an attacker executes code, they cannot query the DOM for the persistence token."
+                        }
+                    ]
+                },
+                {
+                    "id": 89,
+                    "topic": "CORS",
+                    "difficulty": "Intermediate",
+                    "question": "What is the role of `crossorigin='anonymous'` on script tags?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "It tells the browser to fetch the script without sending cookies/credentials, enabling standard CORS checks (required for error logging and SRI)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "The `crossorigin` attribute configures the CORS credentials mode. 'anonymous' requests the resource without user credentials (cookies/HTTP auth). If the server does not send `Access-Control-Allow-Origin`, the request fails."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "When you grab a script from another website (CDN), browsers are suspicious. This attribute is like a 'Guest Pass'. It asks for the safe, public version of the file without sharing your private login cookies."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Two reasons: 1. Subresource Integrity (SRI) requires it. 2. Better Error Logging. Without CORS, errors from external scripts just say 'Script Error' (redacted) for security. With `crossorigin`, you get the full stack trace."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "Values: `anonymous` (No Credentials), `use-credentials` (Send Cookies). Default is No CORS (Opaque). Opaque responses hide the content implementation from the API, which blocks SRI hashing."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's asking for a document 'Off the Record'. You don't sign your name (No Cookies), and they give you a public copy."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Script on `cdn.com`. 2. Page on `site.com`. 3. `crossorigin` triggers CORS request. 4. CDN sends `Access-Control-Allow-Origin: *`. 5. Browser accepts."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "It enables Cross-Origin Resource Sharing for the script request. I primarily use it to enable Subresource Integrity (SRI) checks and to ensure global error handlers (like Sentry) can capture detailed error messages from CDN-hosted scripts."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It fixes the CORS error when loading scripts. Also lets you see what actually went wrong if the script crashes."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "The attribute toggles the request mode to CORS. By default, script tags can load cross-origin resources opaquely (legacy behavior). `crossorigin='anonymous'` opts-in to the modern CORS standard, requiring the server to explicitly permit the request via headers, unlocking access to the response body for hashing and error reporting."
+                        }
+                    ]
+                },
+                {
+                    "id": 90,
+                    "topic": "Autocomplete Attributes",
+                    "difficulty": "Easy",
+                    "question": "Why is `autocomplete='off'` often ignored by modern browsers?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "Browsers prioritize User Agency (Password Managers) over Developer Intent; they will autofill login fields even if you ask them not to."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "While `autocomplete='off'` suggests disabling autofill, strict adherence would block password managers, which is considered user-hostile. User Agents (Chrome/Firefox) deliberately ignore this for `<input type='password'>` fields."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "You tell the browser 'Don't help the user'. The browser says 'No, the user wants me to remember their password', and fills it anyway. The browser listens to the user, not the developer."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "To truly disable it (e.g., for a 'Create User' admin tool where you don't want your own potential junk), use `autocomplete='new-password'` or random semantic attributes. But generally, accept that users want autofill."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "It works for non-login fields (e.g., specific search boxes). But for Credentials, heuristic analysis overrides it. This is a feature, not a bug, ensuring security (users don't type passwords) and convenience."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's like telling a dog not to eat a dropped steak. The instinct (Autofill) overrides the command."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Dev writes `autocomplete='off'`. 2. User saves password. 3. User returns. 4. Browser ignores Dev. 5. Browser fills password."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "Browsers ignore it for password fields to support Password Managers. This improves overall security by encouraging complex passwords. For cases where we strictly need no autofill (like captcha), we use random name attributes or `new-password`."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "Browsers ignore it because saving passwords is more important. It usually works on normal text boxes though."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "The browser implements 'Autofill heuristics' that prioritize the user's saved credentials over the DOM attribute. The Consensus in browser vendors is that preventing password management is a security anti-pattern, hence the attribute is disregarded for credential-related input types."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,592 @@
+{
+    "dataset": "HTML_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_8",
+            "questions": [
+                {
+                    "id": 71,
+                    "topic": "Browser Rendering",
+                    "difficulty": "Advanced",
+                    "question": "Describe the 'Critical Rendering Path' from HTML bytes to pixels.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "Bytes -> Characters -> Tokens -> Nodes -> DOM -> CSSOM -> Render Tree -> Layout -> Paint -> Composite."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "The Critical Rendering Path is the sequence of steps the browser performs to convert HTML, CSS, and JS into actual pixels. Key stages: 1. DOM Construction, 2. CSSOM Construction, 3. Render Tree (DOM+CSSOM), 4. Layout (Geometry), 5. Paint (Pixels)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "1. Read HTML code. 2. Build the 'Map' of elements (DOM). 3. Read CSS styles. 4. Combine them to decide what goes where. 5. Draw the boxes. 6. Color the boxes."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Optimizing the CRP improves load speed. Blocking resources (CSS/JS) pause the construction of the Render Tree. The goal is to minimize the number of critical resources to get to the 'Paint' event faster."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "DOM and CSSOM are constructed in parallel (mostly). However, JS execution blocks DOM construction and usually waits for CSSOM. The 'Composite' step is where layers are flattened; GPU acceleration happens here. Minimizing Reflows (Layout thrashing) affects the Layout phase."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "Building a house: 1. Blueprint (HTML). 2. Interior Design Plan (CSS). 3. Framing the walls (Layout). 4. Painting the walls (Paint). 5. Moving in (Interactive)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Parse HTML. 2. Parse CSS. 3. Match Styles to Nodes (Render Tree). 4. Calculate positions (Layout). 5. Fill pixels (Paint)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "It's the pipeline: DOM, CSSOM, Render Tree, Layout, and Paint. My job as a frontend engineer is to optimize this path by reducing blocking resources, utilizing async/defer, and minimizing layout thrashing."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It's how the browser turns code into the website. It reads HTML, then styles, then calculates size, then draws it."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "The Critical Rendering Path represents the dependency graph of the browser's paint engine. HTML parsing yields the DOM. CSS parsing yields the CSSOM. These trees merge to form the Render Tree (excluding non-visible nodes). The engine then runs 'Flow' (Layout) to calculate geometry per viewport, followed by 'Rasterization' (Paint) to fill pixels."
+                        }
+                    ]
+                },
+                {
+                    "id": 72,
+                    "topic": "Browser Performance",
+                    "difficulty": "Advanced",
+                    "question": "What is the difference between 'Reflow' and 'Repaint'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "Reflow calculates layout/geometry (expensive); Repaint changes visual appearance/color (cheaper)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "Reflow (Layout) occurs when the browser calculates the positions and dimensions of elements. Repaint (Draw) occurs when changes affect visibility (color, shadow) but not geometry. Reflow always triggers a Repaint."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "Reflow is like knocking down a wall and rebuilding it—everything nearby has to move. Repaint is just painting the wall a new color—nothing moves, it just looks different."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Changing `width`, `margin`, `font-size` triggers Reflow (Slow). Changing `color`, `opacity`, `background` triggers Repaint (Faster). Transforms (`transform: translate`) avoid both by using the Compositor thread (Fastest)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "Optimization strategy: Batch DOM changes to avoid 'Layout Thrashing' (reading dimensions immediately after writing them). Use `will-change` to promote elements to their own layer, so changes only trigger Composite, skipping Reflow/Repaint entirely."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "Reflow: Arranging furniture in a room (Heavy lifting). Repaint: Changing the lightbulb (Quick fix)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Edit Geometry? -> Reflow (e.g., width). 2. Edit Color? -> Repaint (e.g., background). 3. Reflow causes Repaint. 4. Repaint doesn't cause Reflow."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "Reflow involves recalculating the layout of the document (geometry), while Repaint involves updating pixels (color). Reflow is computationally expensive and blocks the UI. We avoid it by using CSS transforms and avoiding layout thrashing in loops."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "Reflow is checking the size of things. Repaint is checking the color. Reflow is slower."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "Reflow is the process of computing the layout of the Render Tree nodes. It is recursively executed from the root. Repaint is the process of converting the Render Tree nodes to pixels on the screen. Since layout changes necessitate pixel updates, Reflows dictate Repaints, but Repaints can occur independently."
+                        }
+                    ]
+                },
+                {
+                    "id": 73,
+                    "topic": "Data Attributes",
+                    "difficulty": "Intermediate",
+                    "question": "How do `data-*` attributes work and how can you access them in JavaScript?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "They store custom data on elements (`data-id='1'`); access via `element.dataset.id` (CamelCase) or `getAttribute('data-id')`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "Custom data attributes allow proprietary information to be exchanged between the HTML and its DOM representation. They must start with `data-`. JavaScript accesses them via the `dataset` DOMStringMap interface."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to attach invisible post-it notes to your HTML tags. You can write `data-user='bob'`, and then your Javascript code can read 'bob' later."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "HTML: `<div data-user-id='123' data-role='admin'>`. JS: `div.dataset.userId` (Note the camelCase conversion) or `div.dataset.role`. Useful for storing state without using messy class names."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "Performance note: Frequent reading of `dataset` is generally fast, but writing to it triggers DOM updates (MutationObserver events). It is strictly for data private to the page, not for external software (Microdata is for external). CSS can also access it via `attr(data-user-id)`."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's the hidden pocket in a jacket. The jacket (Element) looks normal, but you can pull a secret note (Data) out of the pocket."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Add attribute `data-score='10'`. 2. JS: `elem.dataset.score`. 3. JS: Returns `'10'` (String). 4. Convert to Number if needed."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "Data attributes allow us to embed custom data on standard HTML elements. We access them via the `dataset` API. For example, `data-product-id` becomes `element.dataset.productId`. I use them for state hooks or configuration passing."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "You write data-whatever. Then in JS roughly you use .dataset to get it."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "The `data-*` attributes provide a standard interface for embedding non-visual data. The Dataset API (`HTMLElement.dataset`) exposes a live map of these attributes, automatically handling hyphen-to-camelCase conversion (`data-foo-bar` -> `fooBar`)."
+                        }
+                    ]
+                },
+                {
+                    "id": 74,
+                    "topic": "Web Components",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Shadow DOM' and how does it relate to HTML encapsulation?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "It provides a scoped DOM tree attached to an element, keeping its CSS and JS isolated from the specific main document (No style leakage)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "Shadow DOM is a browser technology designed to scope variables and CSS. It allows a hidden DOM tree to be attached to an element (Shadow Host). Styles defined inside the Shadow Root do not leak out, and global styles do not bleed in."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "Imagine building a widget (like a video player) that needs to look exactly the same on any website. Shadow DOM puts a forcefield around your widget so the website's bad CSS doesn't break your player's look."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Key concepts: Shadow Host (regular DOM node), Shadow Tree (hidden DOM), Shadow Boundary (the wall between them). Used heavily in Web Components (`<custom-element>`). Access via `element.shadowRoot`."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "`mode: 'open'` allows JS access via `.shadowRoot`. `mode: 'closed'` denies it. Standard HTML elements like `<video>` or `<input type='range'>` actually use Shadow DOM internally to render their controls (User Agent Shadow DOM)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's a submarine. The people inside (Shadow DOM elements) breathe their own air (Scoped CSS). The ocean outside (Global CSS) doesn't crush them."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Host: `<div>`. 2. JS: `div.attachShadow({mode:'open'})`. 3. Add styles to Shadow. 4. Result: Styles apply ONLY to Shadow content."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "Shadow DOM offers true encapsulation for HTML/CSS. It prevents global style pollution, which is critical for building reusable Web Components/Micro-frontends. We attach it via `attachShadow()`."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It makes a private area in the HTML code where CSS doesn't mess things up. It's for making components."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "The Shadow DOM specification introduces a mechanism for DOM tree encapsulation. By attaching a Shadow Root to a Host, developers create a disjoint scope. This ensures that id-collisions and style-cascades do not cross the Shadow Boundary, enabling the development of robust, portable UI widgets."
+                        }
+                    ]
+                },
+                {
+                    "id": 75,
+                    "topic": "Event Propagation",
+                    "difficulty": "Advanced",
+                    "question": "Explain the difference between Event Bubbling and Event Capturing in the HTML DOM.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "Capturing flows down (Root -> Target); Bubbling flows up (Target -> Root). Most events bubble by default."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "Event propagation has three phases: 1. Capturing Phase (Window down to Target), 2. Target Phase, 3. Bubbling Phase (Target up to Window). Event listeners default to the Bubbling phase unless `useCapture: true` is set."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "Imagine throwing a rock into a pond. Bubbling is the ripples going OUT. Capturing is the rock falling IN. If you click a button inside a div, Capturing sees the Div first, then Button. Bubbling sees Button first, then Div."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "You usually want Bubbling (Delegation). e.g., Click listener on a `<ul>` catches clicks from all `<li>`s bubbling up. You can stop propagation via `e.stopPropagation()`. Capturing is rarely used but useful for intercepting events before they reach the target."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "Some events do not bubble (e.g., `focus`, `blur`), but they *do* capture. Alternatively, utilize `focusin`/`focusout` which buble. `addEventListener('click', fn, true)` enables the capture listener. Useful for global analytics tracking where you want to catch clicks before app logic potentially stops them."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "Capturing is the Boss passing an order down to the Worker. Bubbling is the Worker reporting the result back up to the Boss."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Click inner Div. 2. Capture: Window->Body->Outer->Inner. 3. Target: Inner. 4. Bubble: Inner->Outer->Body->Window."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "Events propagate in two directions: Capture (Down) and Bubble (Up). By default, listeners fire on the Bubble phase. This behavior is foundational for the 'Event Delegation' pattern, allowing us to attach one listener to a parent rather than thousands to children."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "Bubbling goes up like bubbles in water. Capturing goes down. We usually use bubbling to catch clicks on lists."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "Event dispatch occurs in a validated path. The 'Capture' phase descends the DOM tree to the EventTarget. The 'Bubble' phase ascends back to the root. This bi-directional flow allows parent elements to implement 'Delegation' (handling children's events) or 'Interception' (blocking children's events)."
+                        }
+                    ]
+                },
+                {
+                    "id": 76,
+                    "topic": "HTML templating",
+                    "difficulty": "Intermediate",
+                    "question": "What is the specialized behavior of the `<template>` tag?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "It holds HTML content that is parsed but NOT rendered; it is inert until activated via JavaScript (e.g., cloning)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "The `<template>` mechanism holds client-side content that is not to be rendered when a page is loaded but may subsequently be instantiated during runtime. Its content is hidden from the document and does not trigger script execution or image fetching."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a cookie cutter. It sits in the drawer (page) doing nothing. It doesn't appear on screen. You use JavaScript to stamp out copies (Clones) of it whenever you need a new item."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Inside `<template>`, `<script>` tags don't run and `<img>` tags don't download images. This makes it performant for repeated structures (like list items). You use `content.cloneNode(true)` to bring it to life."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "It is the standard for Web Components. Unlike `display: none` elements, template contents are truly inert (no network requests, no DOM footprint in the live tree). It solves the problem of arbitrary HTML fragments breaking the parser (like `<td>` outside a table) because template content parsing is context-free."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's a frozen meal. It contains food (HTML), but you can't eat it (render it) until you put it in the microwave (JS)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Define `<template id='t'><b>Hi</b></template>`. 2. JS: `let clone = document.getElementById('t').content.cloneNode(true)`. 3. Append clone to Body. 4. 'Hi' appears."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "The `<template>` tag allows us to define inert DOM fragments. The contents are parsed but not rendered or executed. We use it to stamp out repetitive UI elements efficiently without the performance cost of `display: none` or string concatenation."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It's invisible HTML. You clone it with JS to make lists or cards."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "The `<template>` element represents a distinct document fragment. Its `content` property enables the storage of dormant HTML. Crucially, its contents are 'inert'—scripts do not run, media does not load, and it plays no part in layout until the nodes are explicitly cloned and adopted into the active DOM."
+                        }
+                    ]
+                },
+                {
+                    "id": 77,
+                    "topic": "Browser Storage",
+                    "difficulty": "Intermediate",
+                    "question": "Differentiate between `localStorage`, `sessionStorage`, and `cookies` in terms of data persistence.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "`cookies` expire or persist and are sent to server; `localStorage` persists forever; `sessionStorage` dies when the tab closes."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "`cookies`: 4KB limit, sent with every HTTP request, expiry set manually. `localStorage`: 5MB+, persists until explicit deletion, client-side only. `sessionStorage`: 5MB+, persists only for the window/tab session duration."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "Cookies = ID card you show the server every time. LocalStorage = Notebook you keep in your desk forever. SessionStorage = Scrap paper you throw away when you leave the room (close tab)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Use Cookies for Auth Tokens (so server can read them). Use LocalStorage for user preferences (Dark Mode) that should last. Use SessionStorage for sensitive/temporary flow data (Form progress) that should clear on closure."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "Scope: `sessionStorage` is unique to the TAB (opening same site in new tab = new session). `localStorage` is shared across tabs/windows of the same origin. Cookies are shared too but impose network overhead. `localStorage` is synchronous (blocking) I/O, so avoid large JSON blobs."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "Cookie: Mail (Sent back and forth). LocalStorage: Tattoo (Stays forever). SessionStorage: Whiteboard (Erased when meeting ends)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Close Tab? -> SessionStorage gone. 2. Restart Browser? -> LocalStorage stays. 3. HTTP Request? -> Cookies travel."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "The key differences are Lifespan and Server-Transmission. Cookies are small and sent to the server (Auth). LocalStorage is large and permanent (Settings). SessionStorage is temporary per tab (Form State). I chose LocalStorage/SessionStorage to avoid bloating request headers."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "Local storage is forever. Session storage is until you close the tab. Cookies are for the server."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "Web Storage (Local/Session) provides key-value persistence detached from the HTTP cycle. `localStorage` implies no expiry. `sessionStorage` is bound to the top-level browsing context (tab). Cookies are primarily an HTTP state management mechanism, distinct because they are automatically transmitted in request headers."
+                        }
+                    ]
+                },
+                {
+                    "id": 78,
+                    "topic": "Resource Hints",
+                    "difficulty": "Advanced",
+                    "question": "What is the difference between `dns-prefetch` and `preconnect`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "`dns-prefetch` only resolves the domain name (DNS lookup); `preconnect` resolves DNS + establishes TCP Handshake + TLS negotiation."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "`dns-prefetch`: Performs background DNS resolution for a domain. `preconnect`: Performs DNS resolution, TCP handshake, and TLS negotiation. `preconnect` is more expensive but faster if you are certain a request will happen."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "`dns-prefetch` looks up the phone number in the book. `preconnect` looks up the number AND dials it so the line is open waiting for you to speak. Preconnect saves more time."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Use `preconnect` for critical 3rd parties (like Google Fonts or Analytics) where you know you will need the connection immediately. Use `dns-prefetch` as a lightweight fallback or for links user *might* click."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "Browser limit: Browsers usually cap `preconnect` connections (e.g., to 6). Overusing it competes for bandwidth. `dns-prefetch` is practically free. Best practice: `<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>` for fonts."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "DNS-Prefetch is looking up the address on Google Maps. Preconnect is driving there and parking in the driveway."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Need fonts? -> Preconnect (Full setup). 2. Maybe need Analytics? -> DNS Prefetch (Lookup only). 3. Don't overuse Preconnect."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "`preconnect` sets up the full socket (DNS+TCP+TLS), eliminating round-trip latency for subsequent requests. `dns-prefetch` only handles the DNS lookup. I use `preconnect` for critical external assets (CDN) and `dns-prefetch` for speculative ones."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "Preconnect gets the connection completely ready. DNS prefetch just finds the IP address."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "Latency reduction mechanisms differ in depth. `dns-prefetch` initiates the DNS Lookup. `preconnect` initiates the DNS Lookup, TCP Handshake, and TLS Negotiation. While `preconnect` offers greater savings (often 100ms+), it consumes socket resources, so it should be used judiciously for high-probability origins."
+                        }
+                    ]
+                },
+                {
+                    "id": 79,
+                    "topic": "Browser API",
+                    "difficulty": "Advanced",
+                    "question": "What is the Geolocation API and does it require user permission?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "It allows access to the user's location (lat/long); strict privacy rules require explicit user permission prompt before working."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "The Geolocation API (`navigator.geolocation`) allows the user providing their location to the web application. Per W3C spec, User Agents must not send location information without the user's express permission."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "It lets the website know where you are. Because this is creepy/private, the browser puts up a popup asking 'Allow Location Access?' If you say No, the site gets nothing."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "Usage: `navigator.geolocation.getCurrentPosition(success, error)`. It works differently on mobile (GPS - Accurate) vs Desktop (WiFi/IP - Approximate). HTTPS is required for this API in modern browsers."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "Handling denial is critical. If `error.code === 1` (PERMISSION_DENIED), the UI should gracefully fallback (e.g., ask user to type City). The prompt cannot be triggered programmatically; it triggers on the API call."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "It's asking a stranger for their home address. They have the right to say 'No', and you must ask politely first."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Call `getCurrentPosition`. 2. Browser shows Prompt. 3. User clicks Allow. 4. JS receives Lat/Long. 5. User clicks Block. 6. JS receives Error."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "The Geolocation API provides coordinates. Crucially, it is a 'Powerful Feature' that requires HTTPS and explicit user consent via a browser prompt. We must handle the 'Permission Denied' state robustly."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It gets your GPS. You have to click 'Allow' on the popup or it fails."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "The Geolocation API is an interface to the device's location services. Privacy security models mandate an opt-in mechanism. Modern User Agents enforce usage only within Secure Contexts (HTTPS) and provide non-blocking UI for permission requests."
+                        }
+                    ]
+                },
+                {
+                    "id": 80,
+                    "topic": "Document Mode",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Quirks Mode' and how can you programmatically detect if a browser is in it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "one_liner",
+                            "answer": "Quirks Mode emulates old bugs for legacy sites; detect it via `document.compatMode` (returns 'BackCompat' for Quirks, 'CSS1Compat' for Standards)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "strict_definition",
+                            "answer": "Quirks Mode is a rendering mode used by browsers to maintain backward compatibility with web pages designed for archaic browsers (IE5/Netscape). It is detected using the `document.compatMode` property."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "beginner_friendly",
+                            "answer": "It's a 'Zombie Mode'. If you forget the Doctype, the browser acts like it's 1999 to stop the site from breaking. You can check this in the console."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "intermediate",
+                            "answer": "In Quirks mode, the Box Model behavior changes (width includes padding/border), creating layout chaos. Check `document.compatMode`. If it says 'BackCompat', you are in Quirks Mode. 'CSS1Compat' means Standards Mode."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "advanced",
+                            "answer": "There is also 'Almost Standards Mode' (transitional). Quirks mode is triggered by missing/invalid DOCTYPE. It also disables some modern APIs. Detecting it is useful for analytics to see if you have broken pages."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "analogy",
+                            "answer": "Standards Mode is speaking modern English. Quirks Mode is speaking Shakespearean. `compatMode` is asking 'Which language are we speaking?'."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "step_by_step",
+                            "answer": "1. Open Console. 2. Type `document.compatMode`. 3. See `CSS1Compat`? Good. 4. See `BackCompat`? Bad (Refix Doctype)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "interview",
+                            "answer": "Quirks Mode is a fallback state triggered by invalid Doctypes. It radically alters CSS parsing (Box Model). We detect it via `document.compatMode === 'BackCompat'`. Ensuring `<!DOCTYPE html>` exists prevents this."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "student_style",
+                            "answer": "It's the old buggy mode. You check `document.compatMode` to see if you are in it."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "deep_explanation",
+                            "answer": "Quirks Mode is a violation of the specs intended to support legacy markup. It affects the CSS cascade and DOM handling. Programmatic detection via `document.compatMode` allows developers to validate that the rendering engine is operating in 'Standards Compliance' mode."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

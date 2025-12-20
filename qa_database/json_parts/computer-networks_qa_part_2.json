@@ -1,0 +1,592 @@
+{
+    "dataset": "computer-networks_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_2",
+            "questions": [
+                {
+                    "id": 11,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "Explain the TCP Three-Way Handshake.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's the 3-step 'Hello' process TCP uses to start a connection: Client says SYN, Server says SYN-ACK, Client says ACK."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The 3-way handshake ensures both parties are ready and synchronizes sequence numbers. The client sends a SYN packet, the server responds with a SYN-ACK, and the client finishes with an ACK. This establishes a reliable virtual circuit."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Connection establishment protocol: 1. Client sends SYN (ISN_c). 2. Server sends SYN (ISN_s) + ACK (ISN_c + 1). 3. Client sends ACK (ISN_s + 1). This negotiates Initial Sequence Numbers and window sizes."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Process involving SYN, SYN-ACK, and ACK messages to synchronize state before data transmission."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a formal greeting: 'Can you hear me?' (SYN), 'Yes, I can hear you. Can YOU hear me?' (SYN-ACK), 'Yes, I can hear you too. Let's talk!' (ACK)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The mechanism of SYN, SYN-ACK, and ACK used to establish a reliable TCP session."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The handshake is vulnerable to 'SYN Flooding' attacks, where an attacker sends thousands of SYN packets but never sends the final ACK, filling up the server's 'Half-Open Connection' table until it crashes."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's how two computers agree to start a conversation so they don't accidentally talk over each other."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "TCP Fast Open (TFO) allows data to be sent inside the very first SYN packet, skipping the handshake latency for repeat visitors, provided a cookie has been previously exchange."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The method used in a TCP/IP network to create a connection between a local host/client and a server."
+                        }
+                    ]
+                },
+                {
+                    "id": 12,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Encapsulation' in networking?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Encapsulation is like putting a letter in an envelope, then putting that envelope in a box, then putting the box in a shipping container. Each layer adds its own 'address' info."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Encapsulation is the process of wrapping data with protocol headers as it moves down the OSI model. For example, data from the Application layer is wrapped in a Transport header (Segment), then a Network header (Packet), then a Data Link header (Frame)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The process where lower-layer protocol data units (PDUs) include higher-layer PDUs as their data payload. At the Physical layer, the result is a bitstream including all headers and footers."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Serial wrapping of data with headers and trailers as it traverses the protocol stack."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Russian Nesting Dolls'. The smallest doll is the data, and each bigger doll is a layer's header (TCP, IP, Ethernet) protecting and directing the smaller ones inside."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Adding headers/trailers to data as it moves from higher to lower OSI layers."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "De-encapsulation is the reverse process at the destination. The Network card strips the Ethernet header, the OS strips the IP header, the socket strips the TCP header, and the application finally reads the raw message."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's how your message gets 'dressed up' for its long journey across the internet so it doesn't get lost."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Tunneling' (like VPNs) is essentially 'Double Encapsulation'—you wrap an IP packet inside ANOTHER IP packet to hide the original destination or bypass firewalls."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The localization of data within a protocol header and/or trailer to enable its transmission between layered systems."
+                        }
+                    ]
+                },
+                {
+                    "id": 13,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How does 'ARP' (Address Resolution Protocol) work internally?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "ARP is how a computer turns an IP address into a MAC address. It shouts 'Who has this IP?' to everyone on the local network until someone answers with their ID."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "When a device knows the destination IP but not the MAC address, it sends an 'ARP Broadcast'. The device with that IP sends back an 'ARP Reply' with its MAC address, which the sender then caches in its ARP table."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A Layer 2 protocol that maps Layer 3 IP addresses to Layer 2 MAC addresses. Operates via broadcast requests (FF:FF:FF:FF:FF:FF) and unicast replies."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Discovery protocol used to determine the hardware address associated with an IP address."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Substitute Teacher' shouting 'Who is John Doe?' (IP) in a crowded hallway. When John Doe (the hardware) raises his hand (MAC), the teacher knows exactly which person to hand the paper to."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Maps IP addresses to hardware MAC addresses on a local network segment."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "ARP is 'stateless' and 'trust-based', which leads to 'ARP Spoofing' vulnerabilities. A hacker can send fake ARP replies telling your computer that THEIR MAC address belongs to the ROUTER, allowing them to steal your traffic."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the computer's way of finding the 'physical location' of a digital address on your home Wi-Fi."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In IPv6, ARP has been replaced by 'Neighbor Discovery Protocol' (NDP), which uses ICMPv6 Multicast instead of Broadcasts for better efficiency."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The communication protocol used for discovering the link-layer address associated with a given internet layer address."
+                        }
+                    ]
+                },
+                {
+                    "id": 14,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Flow Control' in the context of transport layer protocols?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Flow control is a way for a receiver to tell a sender: 'Slow down, I'm getting too much data and can't process it all!'"
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Flow control prevents a fast sender from overwhelming a slow receiver. In TCP, this is implemented using a 'Sliding Window' mechanism where the receiver specifies how much data it can handle in its buffer."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Management of data rates between two nodes. Uses the 'Window Size' field in the TCP header to communicate the available buffer space in real-time."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Technique to manage data transfer speed ensuring the receiver's buffer space is not exceeded."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Feeding a Baby'. If you shove spoonfuls of food too fast, the baby will spit it out (data loss). You have to wait for the baby to swallow (acknowledge and clear buffer) before the next spoon."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The management of data transmission speed to prevent buffer overflow at the receiver."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Without flow control, the receiver would have to drop packets, forcing the sender to retransmit everything. This would lead to a massive waste of bandwidth and potentially cause a 'Congestion Collapse' for the entire network."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a 'Stoplight' that ensures the traffic doesn't arrive so fast that it causes a pile-up."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern systems use 'Selective Acknowledgments' (SACK) to allow the receiver to acknowledge non-contiguous blocks of data, making flow control recovery much more efficient during packet loss."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The process of managing the rate of data transmission between two nodes to prevent a fast sender from overwhelming a slow receiver."
+                        }
+                    ]
+                },
+                {
+                    "id": 15,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "Explain 'Congestion Control' in TCP.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when the network is too crowded. TCP detects 'traffic jams' by looking for lost packets and slows down its sending speed to let the network clear."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Congestion control differs from flow control; it protects the 'Network' rather than the receiver. It uses algorithms like 'Slow Start' and 'Congestion Avoidance' to dynamically adjust the sending window based on packet loss or delay."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Mechanism to prevent network saturation. Phases include: Slow Start (exponential window growth), Congestion Avoidance (linear growth), and Fast Retransmit/Fast Recovery upon packet loss detection."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Network resource management using CWND (Congestion Window) and SSTHRESH (Slow Start Threshold)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Merging onto a Highway'. You enter slowly to see how many cars are there. If you hit a traffic jam (lost packet), you immediately pull over or slow down until the jam clears."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Adapting data transfer rates based on network capacity to prevent bottlenecking."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Standard TCP (Reno/Cubic) treated any packet loss as a sign of congestion. However, in modern high-speed or wireless networks, loss can be random. Newer algorithms like 'BBR' (developed by Google) use latency/throughput measurements instead of loss to predict congestion."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's how the internet works out how much traffic it can handle at once without it all breaking."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "ECN (Explicit Congestion Notification) allows routers to flag packets with a 'congestion bits' rather than dropping them, telling the sender to slow down before actual loss occurs."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The mechanism that prevents a sender from injecting too much data into the network at once, which would otherwise lead to bufferbloat and packet drops."
+                        }
+                    ]
+                },
+                {
+                    "id": 16,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'VLAN Tagging' (802.1Q)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "VLAN tagging is adding a small 'ID number' to a data packet so a switch knows which mini-network that packet belongs to."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "802.1Q is the industry standard for tagging frames in a VLAN. It inserts a 4-byte tag into the Ethernet header, which includes a VLAN ID (1-4094). This allows multiple virtual networks to share the same physical cable (Trunking)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Layer 2 frame augmentation. The 802.1Q header is inserted between the Source MAC and the Type/Length fields, allowing switches to maintain isolation across multi-switch topologies."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Ethernet frame extension using 12-bit VLAN IDs to facilitate virtual network segmenting."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Wristbands at a Music Festival'. Everyone uses the same hallway, but the color of your wristband (the Tag) tells the security (the Switch) which specific rooms or VIP sections you are allowed into."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Adding a virtual network ID to Ethernet frames for cross-switch traffic separation."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Tagging is essential for 'Trunking'. A trunk port can carry traffic for 100 different VLANs simultaneously using these tags to keep 'Guest Wi-Fi' separate from the 'Finance Department' traffic on the same physical wire."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like putting a label on every box in a warehouse so you know which shelf it goes on."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Double-tagging (Q-in-Q) allows service providers to wrap a customer's tagged VLANs inside the provider's own VLAN tags, facilitating large-scale metropolitan networks."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The networking standard that supports virtual LANs (VLANs) on an IEEE 802.3 Ethernet network."
+                        }
+                    ]
+                },
+                {
+                    "id": 17,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How does 'Collision Detection' (CSMA/CD) work?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's the old way Ethernet handled two computers talking at once. They'd stop, wait a random amount of time, and then try again."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "CSMA/CD (Carrier Sense Multiple Access with Collision Detection) requires a device to 'listen' before sending. If two devices send at once and a collision occurs, they send a 'Jam Signal', wait a random interval (Backoff), and retry."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Shared medium access control. Includes 1. Carrier sensing, 2. Transmission, 3. Collision monitoring via voltage spikes, 4. Exponential backoff algorithm for retransmission timing."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Half-duplex Ethernet arbitration method using sensing, collision detection, and random backoff."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Dinner Party' with no host. You wait for a gap in conversation to speak. If two people start talking at once, you both say 'Whoops!', stop, wait a few seconds, and whoever starts first stays talking."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Listen before talk; stop and wait random time if a collision occurs."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "CSMA/CD is largely obsolete in modern switched Ethernet because switches provide a dedicated path for every device (Full-Duplex), meaning collisions are physically impossible. It is still a core concept for legacy 'Hub-based' networks."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way for computers on the same wire to take turns talking without shouting over one another."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Wi-Fi uses CSMA/CA (Collision Avoidance) instead of detection, because a wireless radio cannot listen for collisions while it is busy transmitting on the same frequency."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A media access control method used to improve CSMA performance by terminating transmission as soon as a collision is detected."
+                        }
+                    ]
+                },
+                {
+                    "id": 18,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Segmentation' vs 'Fragmentation'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Segmentation is the Transport layer (TCP) splitting big files into manageable chunks. Fragmentation is the Network layer (IP) splitting packets because they are too big for a specific wire."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Segmentation occurs at Layer 4 (TCP), where data is broken into Segments to fit the Maximum Segment Size (MSS). Fragmentation occurs at Layer 3 (IP), where packets are broken into smaller fragments to fit a link's Maximum Transmission Unit (MTU)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Segmentation: L4 process using sequence numbers and MSS. Fragmentation: L3 process using Identification/Flags/Offset fields in the IP header. Fragmentation is generally avoided as it creates CPU overhead for reassembly."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Transport-level data carving (Segmentation) vs Network-level packet resizing (Fragmentation)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Segmentation is the 'Kitchen' pre-slicing a pizza into 8 slices. Fragmentation is a 'Delivery Driver' cutting one of those slices in half because their delivery box is too narrow."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "TCP splits data for reliability (Segments); IP splits data for wire-size limits (Fragments)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If a single Fragment is lost, the entire IP packet must be retransmitted. To prevent this, modern systems use 'Path MTU Discovery' (PMTUD), which uses ICMP messages to find the smallest 'hole' in the path and ensures TCP never sends segments bigger than that hole."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's two different ways the internet chops up your data into tiny bits so they can travel through cables."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "IPv6 does not allow routers to perform fragmentation. If a packet is too large, it is simply dropped, and an ICMPv6 'Packet Too Big' message is sent to the sender, forcing THEM to resize it."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The division of data into units for transportation across different protocol layers."
+                        }
+                    ]
+                },
+                {
+                    "id": 19,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How do 'Dynamic Routing Protocols' (like OSPF) work?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "They are like a 'Live GPS' for the internet. Routers talk to each other to share maps of the network so they always know the fastest way to get to a destination."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Dynamic routing protocols allow routers to automatically learn about remote networks. OSPF (Open Shortest Path First) is a 'Link-State' protocol that builds a complete topological map of the network and uses Dijkstra's algorithm to find the shortest path."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Interior Gateway Protocols (IGP). Uses Link-State Advertisements (LSAs) to build a Link-State Database (LSDB). Shortest Path First (SPF) algorithm calculates the routing table based on 'Cost' metrics (usually bandwidth)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Automated path determination using metrics (bandwidth, delay, hop count) and algorithmic evaluation."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Group Chat' of taxi drivers. If one driver sees a road closure, they tell everyone else instantly so every driver can pick a better route."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Algorithms used by routers to maintain and update a map of the network automatically."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Distance-Vector protocols (like RIP) only know 'how far' and 'which direction' a target is. Link-State protocols (like OSPF) know the 'entire topology'. OSPF converges much faster and handles large, complex networks better."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the brain of the internet that finds the best path for your data even if a cable somewhere gets cut."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "BGP (Border Gateway Protocol) is the 'External' routing protocol that connects different organizations (ASNs) together. Unlike OSPF, which looks for the 'fastest' path, BGP often picks paths based on business policies and trust."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A process where routers exchange information to program the best paths into their routing tables."
+                        }
+                    ]
+                },
+                {
+                    "id": 20,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is the purpose of the 'TTL' (Time to Live) field in an IP header?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "TTL is a 'self-destruct' timer. Every time a packet passes through a router, its TTL goes down by 1. If it hits 0, the packet is deleted so it doesn't wander the internet forever."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "TTL prevents 'infinite loops'. If a network has a routing loop, the packet would spin forever. TTL ensures that after a certain number of 'hops' (usually 64 or 128), the packet is dropped and an ICMP error is sent back."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "An 8-bit field in the IPv4 header. Each Layer 3 device decrements the value by at least one. When TTL reaches 0, the router discards the packet and sends an ICMP 'Time Exceeded' message."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Hop-count limit intended to prevent packet looping in unmanaged network topologies."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Ticket' with 20 punches. Every time you change buses (routers), you get a punch. If you run out of punches, the driver kicks you off the bus so you don't ride it for eternity."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A hop counter that discards looping or unresponsive packets to save network resources."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The 'Traceroute' tool uses TTL for its entire operation. It sends a packet with TTL=1 to find the first router, then TTL=2 to find the second, and so on, by waiting for the 'Time Exceeded' errors that each router sends back."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to keep the internet clean by making sure lost data packets don't pile up in the corners."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In IPv6, this field has been renamed to 'Hop Limit', which is a more accurate description of its modern function (it's no longer measured in seconds, only hops)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A mechanism that limits the lifespan or lifetime of data in a computer or network."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

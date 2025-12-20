@@ -1,0 +1,592 @@
+{
+    "dataset": "JavaScript_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_9",
+            "questions": [
+                {
+                    "id": 81,
+                    "topic": "Browser Storage",
+                    "difficulty": "Advanced",
+                    "question": "When should you use `IndexedDB` over `localStorage`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Use `IndexedDB` when you need to store large amounts of data, complex objects, or need to search through them quickly like a real database."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`localStorage` is synchronous, string-only, and limited to ~5MB. `IndexedDB` is asynchronous, can store binary data and complex objects, has a much higher storage limit (hundreds of MBs), and supports indexing for high-performance searches. Use `IndexedDB` for offline-capable apps or large data sets."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Persistent Object Store vs Key-Value String Store. `IndexedDB` provides transactional database capabilities, cursor traversal, and range queries. `localStorage` is a blocking I/O operation on the main thread which can cause frame drops."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "IndexedDB: Large, complex, async data. localStorage: Small, simple, sync strings."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`localStorage` is like a sticky note on your monitor (quick, small, simple text). `IndexedDB` is like a filing cabinet in your office (holds everything, organized, but takes a little longer to open)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Async object database (`IndexedDB`) vs Sync string store (`localStorage`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Because `IndexedDB` is a low-level API, many developers use wrappers like 'Dexie.js' or 'idb' to make the syntax easier to manage with Promises."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you just want to save a 'Dark Mode' setting, use `localStorage`. If you want to save a whole book or a user's entire photo gallery, use `IndexedDB`."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "`IndexedDB` is the storage engine that powers many Progressive Web Apps (PWAs) by allowing them to cache large amounts of application state for offline use."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "IndexedDB is a low-level API for client-side storage of significant amounts of structured data."
+                        }
+                    ]
+                },
+                {
+                    "id": 82,
+                    "topic": "Networking",
+                    "difficulty": "Advanced",
+                    "question": "How do you implement 'Retry Logic' for a failing API call in JavaScript?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Wrap your fetch call in a loop or a recursive function that waits a few seconds and tries again if it fails, up to a maximum number of times."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "You can use a recursive `async` function. In the `catch` block, check if the maximum number of retries has been reached. If not, use a `setTimeout` (or a helper like `sleep`) to wait before calling the function again. Ideally, use 'Exponential Backoff' where the wait time increases with each failure."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Retry pattern implementation. Involves iterative or recursive promise-chaining with stateful tracking of attempt counts and graduated delay intervals (Exponential Backoff)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Implement recursion or loops with delay and maximum attempt tracking."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like calling a friend who doesn't pick up. You wait 1 minute, try again. If they still don't pick up, you wait 5 minutes, then 10 minutes, before giving up."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Recursive async calls with delay and count tracking."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Exponential backoff formula: `delay = initialDelay * 2^attempt`. Adding 'Jitter' (randomness) helps prevent 'Thundering Herd' problems where all failing clients retry at the exact same millisecond."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If the internet is glitchy, you can tell your code to 'Wait 3 seconds and try again' instead of just showing an error message immediately."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern libraries like 'React Query' or `fetch-retry` handle this logic automatically with configurable policies."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Retry logic is a resilience pattern that re-executes a failed operation a specified number of times."
+                        }
+                    ]
+                },
+                {
+                    "id": 83,
+                    "topic": "Auth Patterns",
+                    "difficulty": "Architect-Level",
+                    "question": "How does a JWT (JSON Web Token) authentication flow usually work in a JavaScript app?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "User logs in, server sends a token, the browser stores the token, and then the browser sends that token back with every future request to prove who the user is."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "1. User sends credentials to server. 2. Server validates and returns a signed JWT. 3. Client stores it (ideally in an `HttpOnly` cookie or memory). 4. For subsequent requests, the client attaches the token in the `Authorization: Bearer <token>` header. 5. Server verifies the signature to authorize the user."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Stateless authentication. Server-side signing of claims (HS256/RS256). Token-based authorization header management. Token contains Header, Payload, and Signature."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Client logs in -> server issues token -> client attaches token to headers for auth."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a VIP wristband at a club. You show your ID once (Login), get the wristband (JWT), and for the rest of the night, you just show the wristband to get into different rooms."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Stateless Bearer token auth via Authorization headers."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Crucial security: JWTs are NOT encrypted by default, only signed. Never put passwords or sensitive data in the payload. Use Refresh Tokens for long-lived sessions to avoid long-lived access tokens."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a digital key. The computer gives it to you once you prove you are you, and you use it to open all the doors on the website."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Tokens are decoded using `atob()` or `js-base64` on the client, but should only be verified on the server side."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "JSON Web Token is an open standard for securely transmitting information between parties as a JSON object."
+                        }
+                    ]
+                },
+                {
+                    "id": 84,
+                    "topic": "UI Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "How do you build a 'Dark Mode' toggle that persists across page reloads?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Save the choice ('dark' or 'light') in `localStorage`. When the page loads, check that value and apply the correct CSS class to the `<body>`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "1. Listen for the toggle click. 2. Update the `theme` variable in `localStorage`. 3. Toggle a `.dark-mode` class on the root element. 4. On initial load, run a script to check `localStorage` and optionally `window.matchMedia('(prefers-color-scheme: dark)')` to respect system settings."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "State persistence via Web Storage. Implementation involves a blocking script in the `<head>` to prevent 'Flash of Unstyled Content' (FOUC) by applying the theme class before the first render."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Store user preference in localStorage; apply CSS class on load."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a light switch that remembers its position even if you leave the house and come back."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "LocalStorage key-value storage synced with a body CSS class."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Using CSS Variables (`--bg-color`) makes this much cleaner, as you only need to toggle a single class or attribute on the `<html>` tag to update the entire application colors."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Ask the computer: 'What did the user pick last time?' If it was 'Dark', make the screen black. If it was 'Light', make it white."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You should also listen for the `storage` event in case the user changes the theme in a different tab, so it syncs across all open windows."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A theme toggle involves switching CSS variables or classes and persisting the state using persistent client-side storage."
+                        }
+                    ]
+                },
+                {
+                    "id": 85,
+                    "topic": "Performance",
+                    "difficulty": "Expert",
+                    "question": "What is 'Window Virtualization' (or List Virtualization)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It only creates and renders the items that are actually visible on the screen, instead of the whole list of 10,000 items."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Virtualization is a performance technique for rendering long lists. Instead of creating 10,000 DOM nodes, it only renders the small subset currently in the viewport. As the user scrolls, it recycles the DOM nodes and updates their content, keeping the total node count constant and the memory usage low."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Dynamic viewport-based occlusion culling. Maintains a fixed number of DOM elements and positions them absolutely based on the scroll offset."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Rendering only visible elements in a large list to save memory."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a film strip. You only see one frame at a time, but it feels like a whole movie. The projector doesn't show the whole mile of film at once."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Rendering only visible nodes in massive lists."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Essential for 'infinite scroll' feeds. Without it, the browser's memory and layout calculation engine would slow to a crawl once children count reaches the thousands."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you have 1 million names, don't ask the computer to draw 1 million boxes. Just draw 10 boxes and swap the names inside them as the user scrolls."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Libraries like 'react-window' or 'ag-grid' are industry standards for implementing this efficiently with variable row heights."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Virtualization is the process of minimizing the number of rendered DOM elements by displaying only what is currently visible to the user."
+                        }
+                    ]
+                },
+                {
+                    "id": 86,
+                    "topic": "PWA",
+                    "difficulty": "Architect-Level",
+                    "question": "What is the primary role of a 'Service Worker'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a background script that sits between your website and the internet, allowing you to cache files so the site works offline."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A Service Worker is a type of web worker that acts as a programmable 'Network Proxy'. It can intercept network requests, cache assets, and serve them even when the user is offline. It also enables features like Push Notifications and Background Sync."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Event-driven background proxy. Operates on a separate thread with no DOM access. Implements 'Cache-First' or 'Network-First' strategies using the Cache API."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Proxying network requests for offline support and background tasks."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a local secretary for your website. Instead of the website calling the main office (the server) every time, it asks the secretary first. If the secretary has the files, she gives them to you instantly."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Network proxy for offline caching and PWA features."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "They must run on HTTPS. They follow a lifecycle (Installing, Activated, Running). Unlike regular variables, they persist across sessions, which is why they are perfect for caching."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to make your website feel like a real app on your phone that works even in an airplane."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Workbox is the most popular library from Google that simplifies writing Service Worker logic."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction."
+                        }
+                    ]
+                },
+                {
+                    "id": 87,
+                    "topic": "Architecture",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Prop Drilling' and why is it considered a 'Code Smell'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when you pass data through 5 different components just because the 6th one needs it. It makes code hard to read and change."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Prop Drilling occurs when you pass data through several layers of components that don't actually need it, just to get it to a deeply nested child. It makes code brittle and hard to maintain. Solutions include the Context API or State Management libraries (Redux/Zustand)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Excessive prop propagation across non-consuming intermediate layers. Increases coupling and inhibits component reusability."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Passing data through intermediate components that do not use the data themselves."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like passing a bucket of water through a human chain of 10 people to reach a fire, where the 8 people in the middle don't even know why they are holding the bucket."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Manual data propagation through non-consuming component layers."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In React, `Context` allows you to 'teleport' data directly from a provider at the top to a consumer at the bottom, skipping all the middle-men."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't play 'telephone' with your data. If the grandchild needs a variable, give it to them directly using a global state."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Component composition (passing components as children) is another effective way to avoid drilling without needing complex state libraries."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Prop drilling is the process by which you pass data from one part of the React Component tree to another by going through other entities that do not need the data."
+                        }
+                    ]
+                },
+                {
+                    "id": 88,
+                    "topic": "Networking",
+                    "difficulty": "Advanced",
+                    "question": "What is the difference between 'Long Polling' and 'WebSockets'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Polling is the browser asking 'Any updates?' every 5 seconds. WebSockets is an open tube where the server can push updates instantly whenever it wants."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Long Polling is an HTTP trick where the client waits for the server to reply until there's new data. WebSockets is a full-duplex, persistent connection that stays open, allowing real-time two-way communication with much lower overhead than HTTP."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Unidirectional HTTP polling vs Bidirectional TCP socket connection. WebSockets use a special handshake to upgrade the HTTP protocol."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Long Polling: Periodic HTTP requests. WebSockets: Continuous two-way connection."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Polling is like a kid in a car asking 'Are we there yet?' every 5 minutes. WebSockets is a walkie-talkie where both people can talk whenever they want."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Simulated real-time (Polling) vs Native real-time (WebSockets)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Server-Sent Events (SSE) is a middle-ground: it's one-way (Server to Client) but stays open like a WebSocket, using standard HTTP."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use WebSockets if you are making a chat app or a game where speed is everything."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "WebSockets require specialized backend support (like Socket.io or WS in Node) because they aren't standard stateless HTTP requests."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "WebSockets provide full-duplex communication while long-polling is an emulation of real-time communication using HTTP."
+                        }
+                    ]
+                },
+                {
+                    "id": 89,
+                    "topic": "UI Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "How do you prevent 'Double Submission' when a user clicks a 'Submit' button twice fast?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Disable the button immediately after the first click."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The most effective way is to set the `disabled` attribute to `true` as the very first line in your click handler. You can also add a 'loading' spinner for better UX. On the backend, you should use 'Idempotency Keys' for critical operations like payments."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "State-based concurrency control. Immediate mutation of DOM `disabled` state combined with a loading flag in the application state."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Disabling the button element on click to prevent multiple submissions."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like an elevator button. Once you press it, it lights up and doesn't do anything more if you keep mashing it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "DOM `disabled` property toggle on submission start."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Using a variable like `isSubmitting` in React is cleaner, as the UI automatically updates to reflect the state. If the request fails, remember to re-enable the button so the user can try again."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "When someone clicks, turn the button gray and make it un-clickable until the work is done."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For data-driven UIs, using 'Optimistic Updates' can make the site feel faster by assuming success and only showing error if it fails later."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Preventing double submission is the process of ensuring that a single user action does not trigger multiple identical server requests."
+                        }
+                    ]
+                },
+                {
+                    "id": 90,
+                    "topic": "Data Processing",
+                    "difficulty": "Architect-Level",
+                    "question": "How to sort a large array of objects on the client efficiently without freezing the UI?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If it's huge, do it in a `Web Worker` so the main page stays responsive."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "For arrays over 100k items, standard `.sort()` can take hundreds of milliseconds. 1. **Offload**: Use a Web Worker. 2. **Pre-sort**: Have the server send sorted data. 3. **Algorithms**: For specific data types (like integers), TypedArrays and non-comparison sorts (like Radix Sort) are faster than the default Timsort used by JS."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Off-thread execution using `Worker`. Minimizing data cloning overhead via `Transferable Objects` (like SharedArrayBuffer) if high-frequency sync is needed."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Moving computation to Web Workers to avoid blocking the main thread."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like organizing a massive library. If you do it in the lobby (Main thread), nobody can enter. If you move the books to the back room (Worker), the lobby stays open."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Web Worker background execution for large datasets."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Modern engines are very fast at sorting. Usually, the 'freeze' isn't the sort itself, but the RE-RENDERING of 10,000 DOM nodes after the sort. Combine with 'Virtualization' for real performance."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you have a massive list, don't make the user's browser do all the work on the main page. Send the 'hard thinking' to a background helper."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In V8, the `sort` algorithm is highly optimized but still O(n log n). For truly 'big data', you might need to use WebAssembly (Wasm) for performance."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Efficient sorting involves selecting appropriate algorithms and leveraging background threads for large-scale data manipulation."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

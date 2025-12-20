@@ -14,22 +14,23 @@ import { CompanyBattleground } from '../../../types/evaluator';
 import Link from 'next/link';
 
 import { useRouter } from 'next/router';
-import { useAuth } from '../../../components/Auth/AuthContext';
-import { useAuthGate } from '../../../components/Auth/AuthGateContext';
+import { useAuth } from '../../../context/AuthContext'; // UPDATED
+// import { useAuthGate } from '../../../components/Auth/AuthGateContext';
 
 interface BattlegroundPageProps {
   company: CompanyBattleground;
 }
 
 export default function BattlegroundPage({ company }: BattlegroundPageProps) {
-    const { isVerified, user, loading } = useAuth();
-    const { openGate } = useAuthGate();
+    const { user, loading } = useAuth(); // removed isVerified
+    // const { openGate } = useAuthGate();
     const [mode, setMode] = useState<'practice' | 'interview'>('practice');
     const router = useRouter();
 
     const handleModeSwitch = (newMode: 'practice' | 'interview') => {
         if (!user) {
-            openGate(`switch to ${newMode} mode`);
+            if(confirm('Login required. Go to login?')) router.push('/login');
+            // openGate(`switch to ${newMode} mode`);
             return;
         }
         setMode(newMode);
@@ -38,7 +39,8 @@ export default function BattlegroundPage({ company }: BattlegroundPageProps) {
     const handleSolveClick = (e: React.MouseEvent, qId: string) => {
         if (!user) {
             e.preventDefault();
-            openGate('enter battle arena');
+            if(confirm('Login required. Go to login?')) router.push('/login');
+            // openGate('enter battle arena');
         }
     };
 

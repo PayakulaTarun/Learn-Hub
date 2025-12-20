@@ -1,0 +1,592 @@
+{
+    "dataset": "software-engineering_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_8",
+            "questions": [
+                {
+                    "id": 71,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'SQL Injection' and how do you prevent it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "SQL Injection is when a hacker types 'Database Commands' into a login box to steal data. You prevent it by 'Cleaning' (Escaping) the input or using 'Prepared Statements' so the database knows the text is just text, not a command."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "SQL Injection (SQLi) is a vulnerability where an attacker can interfere with the queries that an application makes to its database. The definitive way to prevent it is by using **Parameterized Queries** (Prepared Statements). This ensures that user input is never executed as code."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The vulnerability occurs when user-supplied data is concatenated into a raw SQL string. Defenders should: 1. Use an ORM or Prepared Statements, 2. Apply the 'Principle of Least Privilege' to the DB user, and 3. Use 'Stored Procedures' with input validation. Blacklisting specific characters is 'ineffective' against sophisticated bypasses."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Explain the mechanics of a 'Boolean-based blind SQL injection' attack."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Giving a note to a Bank Teller'. If the note says 'Withdraw $100 AND THEN Burn down the bank', a naive teller (A vulnerable app) might actually do both. A smart teller (Prepared Statement) puts the second part of the note in quotes: 'Withdraw $100 for the person named \"Burn down the bank\"'. Nothing happens because it's just a name."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Inserting malicious SQL code into input fields to manipulate backend databases."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Modern frameworks like Rails or Django prevent SQLi by default by using ORMs that automatically parameterize every query. However, 'Raw SQL' is often used for performance optimization in complex reports, which is where 90% of SQLi bugs are introduced. Static analysis tools (SAST) should be run on the CI/CD pipeline to catch these 'Raw' calls."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't let users talk directly to your database! Use a middle-man to check their messages first."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Beyond basic parameterization, developers should use 'WAF' (Web Application Firewalls) that use signatures and AI to detect SQLi patterns in the HTTP stream. In high-security environments, the database should be 'Read-Only' for most public-facing roles to minimize the 'Blast Radius' of a successful injection."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A code injection technique that exploits a security vulnerability in an application's software by inserting malicious SQL statements into an entry field for execution."
+                        }
+                    ]
+                },
+                {
+                    "id": 72,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'XSS' (Cross-Site Scripting)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "XSS is when a hacker puts 'JavaScript code' into a website (like in a comment). When other people visit the site, that code runs on their computer and steals their cookies or passwords."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "XSS is a vulnerability where an attacker injects malicious client-side scripts into web pages viewed by other users. There are three types: Reflected (in the URL), Stored (in the database), and DOM-based. Prevention involves 'Encoding' all user-supplied data before rendering it in the HTML."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Prevention requires a multi-layered defense: 1. Output Encoding (convert `<` to `&lt;`), 2. Content Security Policy (CSP) to restrict scripts to trusted domains, and 3. HttpOnly cookies to prevent JS from reading session tokens. Modern frameworks like React prevent most XSS by default by auto-escaping values."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Describe the differences between 'Stored XSS' and 'Reflected XSS' with an example scenario for each."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Graffiti on a Public Billboard'. Someone (The hacker) writes 'Everyone give me 5 dollars' on the billboard. Everyone who walks past (Other users) reads the sign and thinks it's an official message from the city (The website). They follow the instructions and lose their money."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Injecting malicious scripts into otherwise benign and trusted websites."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "XSS is often used for 'Session Hijacking'. The malicious script reads the `document.cookie` and sends it to the attacker's server. Once the attacker has the cookie, they can 'impersionate' the user without needing their password. This is why 'HttpOnly' flags on cookies are a non-negotiable best practice for any modern web application."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Stop strangers from writing 'secret code' on your website that other visitors might run by mistake!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The 'Content Security Policy' (CSP) is the ultimate XSS shield. By sending a special header (`Content-Security-Policy: script-src 'self'`), you tell the browser: 'Never run a script unless it comes from my own server'. Even if a hacker successfully injects a `<script>` tag, the browser will refuse to run it, making the attack useless."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A type of security vulnerability typically found in web applications that enables attackers to inject client-side scripts into web pages viewed by other users."
+                        }
+                    ]
+                },
+                {
+                    "id": 73,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'CSRF' (Cross-Site Request Forgery)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "CSRF is 'Tricking your browser'. You visit a bad site, and it secretly tells your bank (where you're already logged in) to 'Send Money to the Hacker'. Your bank thinks YOU clicked the button, so it does it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "CSRF is an attack that forces an authenticated user to execute unwanted actions on a web application in which they're currently authenticated. We prevent this by using 'Anti-CSRF Tokens'—a unique code included in every 'Write' request that the server must verify."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Detailed prevention: 1. Synchronizer Token Pattern (un-guessable tokens), 2. SameSite Cookie attributes (Set to 'Lax' or 'Strict'), and 3. Verifying the 'Origin' and 'Referer' headers. CSRF doesn't steal data; it forces state-changing requests (transferring funds, changing email)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "How does the 'SameSite=Lax' cookie attribute prevent Cross-Site Request Forgery?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Forged Signature on a Check'. The hacker writes a check that says 'Pay Hacker $1000'. They bring it to the bank. The bank knows your 'Signature' (The login cookie) is real, so they process the check. An 'Anti-CSRF Token' is like the bank calling you on your phone to ask for a 'One-time code' to prove you actually wrote that check."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Tricking a victim into submitting a malicious request to a web application using their existing session."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In modern 'Single Page Apps' (SPA), CSRF is less common because we use 'Authorization' headers (Bearer tokens) instead of 'Cookie' authentication. Browser's don't 'Auto-attach' headers to cross-site requests like they do with cookies, making SPAs naturally resistant to traditional CSRF attacks."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Make sure that every 'Action' button on your site is actually clicked by your real user, not by a hidden script from a bad website!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Double-Submit Cookies' is a stateless prevention method. You send the CSRF token in both a cookie and a hidden form field. The server checks if they match. This is great for 'Stateless' microservices because the server doesn't need to 'Store' tokens in a session DB, saving CPU and memory."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A type of malicious exploit of a website where unauthorized commands are transmitted from a user that the web application trusts."
+                        }
+                    ]
+                },
+                {
+                    "id": 74,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Principle of Least Privilege' (PoLP)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Least Privilege means only giving people (or apps) the EXACT powers they need to do their job, and nothing more. If a program only needs to 'read' a file, don't give it permission to 'delete' it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "PoLP is a security concept in which a user or process is given only the minimum levels of access—or permissions—needed to perform its task. This limits the 'Blast Radius'—if the account is hacked, the attacker can only do a tiny bit of damage."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Implementation involves 'Granular RBAC' (Role-Based Access Control). For example: A DB user for a web app should have `SELECT, INSERT, UPDATE` but NEVER `DROP TABLE` or `GRANT`. This prevents 'Privilege Escalation' attacks where a small bug is used to take over the whole machine."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Define the Principle of Least Privilege and give an example of its application in a Cloud (AWS/Azure) environment."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Hotel Key Card'. When you stay at a hotel, your card opens your room and the gym. It DOES NOT open the manager's office or other people's rooms. If you lose your card (Get hacked), the thief can only get into your room, not the whole hotel."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Restricting access to the minimum level necessary for a task to be performed."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A common violation of PoLP is 'Running as Root'. Many developers run their Docker containers or web servers as the 'Root' user because it's 'Easier' to debug. If that container is compromised via an RCE (Remote Code Execution), the hacker instantly owns the entire host machine. Always define a 'non-root' user for your production runtimes."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't hand out 'Master Keys' to people who only need to open one door!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In 'Zero Trust' architectures, PoLP is dynamic. Instead of a 'Permanent' permission, a developer gets 'Just-In-Time' (JIT) access. They request access to the production DB for 1 hour. After 1 hour, the permission is automatically revoked. This eliminates the risk of 'Stale' permissions sitting around for years."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A computer security concept in which a user is given the minimum levels of access necessary to complete his or her job functions."
+                        }
+                    ]
+                },
+                {
+                    "id": 75,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Defense in Depth'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Defense in depth is having 'Many layers of security' like a castle. You have a moat, then a wall, then a locked door, then a guard. If a hacker gets through one layer, they still have 3 more to beat."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Defense in depth is a security strategy that provides multiple redundant layers of control. If one mechanism fails (e.g., the firewall is breached), others (e.g., encryption, MFA, and logging) are in place to stop the attacker or alert the team."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It involves 'Multilayered' controls: 1. Physical (Data center security), 2. Network (Firewalls/VLANs), 3. Application (Input validation/Auth), 4. Data (Encryption at rest), and 5. Administrative (Policies/Audits). It assumes that any single security control WILL eventually fail."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Identify and explain three layers of security in a typical 'Defense in Depth' model for a web application."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Securing your Home'. You lock the front door (Firewall). You have an alarm system (IDS). You put your jewelry in a safe (Encryption). You have a neighbor watching (Logging/Monitoring). If a thief picks the door lock, the alarm still goes off and they still can't open the safe."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Using multiple independent layers of security to protect a system."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A 'Single Point of Failure' is the enemy. For example, relying ONLY on a firewall is a bad strategy because an 'Insider Attack' (a disgruntled employee) is already past the firewall. Defense in Depth ensures that even an internal user is still restricted by encryption and 'Identity-based' access controls."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't just rely on one lock; use a lock, a camera, and an alarm!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern DevSecOps integrates security layers directly into the code. We use 'SCA' (Software Composition Analysis) to find bugs in our libraries, 'SAST' to find bugs in our code, and 'DAST' to find bugs while the site is running. These are 'Defensive Layers' for the source code itself."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An information assurance concept in which multiple layers of security controls are placed throughout an information technology system."
+                        }
+                    ]
+                },
+                {
+                    "id": 76,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Hashing' vs 'Encryption' for Passwords?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Hashing is a 'One-Way' street. You turn a password into a scramble, and you can NEVER turn that scramble back into the password. Encryption is a 'Two-Way' street with a key. You should ALWAYS hash passwords, never encrypt them."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Passwords should be hashed using a 'Salted, slow-hashing' algorithm like Bcrypt or Argon2. Unlike encryption, hashing is not reversible. This means if the database is leaked, the attacker cannot 'Decrypt' the passwords; they would have to guess billions of times to find a match."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Hashing maps data to a fixed-size string (Digest). A 'Salt' (random data added to each password) prevents 'Rainbow Table' attacks (pre-computed hashes). A 'Pepper' (extra secret key on the server) adds further protection. Encryption uses a key and is intended for data that needs to be read again later (like credit cards)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Why is 'MD5' or 'SHA-1' considered unsafe for password hashing in modern systems?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Hashing is like 'Turning a Cow into Hamburger Meat'. You can do it easily, but you can NEVER turn the hamburger back into a cow. Encryption is like 'Locking a Cow in a Box'. If you have the key, you can open the box and get the original cow back."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Hashing is for verifying identity without storing the secret; encryption is for keeping data secret but recoverable."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Security is a 'Time game'. Bcrypt is 'Slow' by design. It takes about 100ms to check a password. This is invisible to a human but makes it impossible for a hacker to try 100 million passwords per second. If you use a fast hash (like SHA-256) for passwords, a hacker with a modern GPU will crack any simple password in minutes."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always scramble your user's passwords so even YOU don't know what they are!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The 'Argon2' hash is the current winner of the Password Hashing Competition. It is 'Memory-hard', meaning it uses a lot of RAM. This makes it extremely expensive for hackers to build 'Custom Chips' (ASICs) to crack passwords, providing the highest level of protection available today."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Hashing is a one-way mathematical function; encryption is a two-way function that requires a key to return to the original plaintext."
+                        }
+                    ]
+                },
+                {
+                    "id": 77,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Broken Access Control'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Broken access control is like a 'Hidden Door' that was left unlocked. An attacker finds a way to see someone else's messages or delete someone else's account just by changing the 'ID' in the URL."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Ranked #1 on the OWASP Top 10, Broken Access Control occurs when users can act outside of their intended permissions. A common example is 'IDOR' (Insecure Direct Object Reference), where changing `user/101` to `user/102` gives you access to another user's private page."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It results from failing to check permissions on the 'Server-side'. Just because a 'Delete' button is hidden in the UI doesn't mean the API is safe. An attacker can use 'Postman' or 'Curl' to send a DELETE request directly. Every single API endpoint must independently verify that the current user owns the resource they are touching."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Explain the 'Insecure Direct Object Reference' (IDOR) vulnerability and how to mitigate it."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Hotel where the room number is the key'. If you're in room 12, you just tell yourself 'I want room 13' and the door opens. The hotel (The App) believes you should be allowed in room 13 just because you know the number. A secure hotel checks your ID Card (Session/Token) for every single door you try to open."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The inability to restrict users to their authorized permissions."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "We often use 'UUIDs' (like `a1b2-c3d4...`) instead of sequence IDs (1, 2, 3) to make 'Guessing' harder. However, 'Obscurity is not Security'. Even with UUIDs, you MUST still check if the user is authorized. If you don't, a single leaked URL can expose private data to the entire world forever."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Never assume someone is allowed to see a page just because they found the link!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Advanced access control uses 'ABAC' (Attribute-Based Access Control). Permissions are evaluated based on attributes like: 'User is over 18', 'User is in the HR department', and 'User is connecting from the office Wi-Fi'. If any of these attributes are False, the access is rejected, providing a very fine-grained and intelligent security model."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A category of security vulnerabilities that allow an attacker to access data or perform actions outside of their intended permissions."
+                        }
+                    ]
+                },
+                {
+                    "id": 78,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Security thru Obscurity' and why is it bad?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Security thru obscurity is 'Hiding the key under the doormat'. It feels safe because nobody can see it, but a smart burglar knows exactly where to look. Real security should be safe even if a hacker knows exactly how the lock works."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Security thru obscurity is the reliance in design or implementation on secrecy as the main method of providing security. It is bad because once the secret (e.g., a hidden URL or a custom encryption algorithm) is discovered, the entire system is instantly compromised. Real systems should be secure even if the attacker has the source code."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It violates 'Kerckhoffs's Principle', which states that a cryptosystem should be secure even if everything about the system, except for the key, is public knowledge. Relying on 'non-standard ports' (e.g., SSH on port 2222) or 'secret URLs' only stops 1% of automated bots; it won't stop a determined human attacker."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Compare 'Security through Obscurity' with 'Security through Design'."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Hiding from a Bear behind a thin bush'. You think you're safe because you can't see the bear, but the bear can still smell you and walk through the bush. Real security is getting inside a 'Steel Cage'. Even if the bear sees you, it can't get to you."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Relying on the secrecy of a system's internal workings as the primary security mechanism."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A common 'Obscurity' mistake is 'Encoding vs. Encrypting'. Adding 'Base64' to a password doesn't make it secure; it just makes it look weird. Any developer with 5 minutes of experience can 'Decode' it back to the original text. If it doesn't require a 'Key', it's not security—it's just a costume."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't just 'hide' things; 'lock' them properly!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In 'Open Source' security, obscurity is literally impossible. The source code for Linux and OpenSSL is public. Because everyone can see it, thousands of 'White Hat' hackers have checked it for holes. This 'Open Peer Review' makes it much more secure than 'Secret' corporate code that might have a vulnerability that nobody has noticed for 10 years."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The use of secrecy in design or implementation as the primary method of providing security for a system."
+                        }
+                    ]
+                },
+                {
+                    "id": 79,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Audit Logging' and why is it crucial for security?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Audit logging is 'Recording everything' that happens in the app, like who logged in and who deleted a file. If a hacker gets in, the logs are the 'security camera tape' that shows you exactly what they stole and how they got in."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Audit logs are chronological records of system activities. They are crucial for 'Post-Mortem' analysis—without them, you cannot tell the scope of a data breach. They also help in detecting ongoing attacks in real-time through **SIEM** (Security Information and Event Management) tools."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Logs must be 'Immutable' and stored on a separate server. If a hacker takes over the web server, they will try to 'Clear the logs' to hide their tracks. If the logs are already moved to a 'Write-Once' cloud bucket, the hacker cannot erase the evidence of their entry."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "What are the common elements that should be included in every security-relevant log entry?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'The Flight Data Recorder (Black Box)' on a plane. It doesn't stop the plane from crashing, but if it does crash, the black box tells the investigators exactly which part broke. This allows them to fix every other plane in the world so it doesn't happen again."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Chronological records of security-relevant system events."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Be careful NEVER to log sensitive data like Passwords or Credit Cards. This is a common pitfall called 'Log Injection'. If you log a user's password because of a 'Debug' mode, you have now created a new security hole: anyone with access to the logs (like a junior developer) now knows every user's password."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Keep a list of who did what, so you can solve mysteries later!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Advanced logging uses 'Anomaly Detection'. Instead of a human reading logs, a machine learning model learns the 'Normal' pattern (e.g., User A logs in from New York at 9 AM). If User A suddenly logs in from Russia at 3 AM and tries to download 5GB of data, the system automatically 'Alerts' the security team in seconds."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A security-relevant chronological record, set of records, or destination and source of records that provide documentary evidence of the sequence of activities."
+                        }
+                    ]
+                },
+                {
+                    "id": 80,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Code Signing'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Code signing is 'The digital seal on a package'. It proves that the software really came from the company it claims (like Apple or Microsoft) and that no hacker has 'Opened the box' and added a virus to the code."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Code signing is the process of digitally signing executables and scripts to confirm the software author and guarantee that the code has not been altered or corrupted since it was signed. It uses a **Public Key Infrastructure (PKI)**."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A 'Hash' of the code is encrypted with the developer's private key. The browser/OS uses the corresponding public key to decrypt the hash and compare it to its own calculation. If they don't match, the OS gives a 'Security Warning: Unknown Publisher' to the user."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "How does code signing protect against 'Man-in-the-Middle' attacks during software updates?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'The Wax Seal' on a medieval letter. If the king sends a letter with his ring's seal, the soldier knows it's really from the king. If the seal is broken or missing, the soldier knows someone tampered with the letter on the way and he should ignore the orders."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The process of using a digital signature to confirm the identity of a software developer and the integrity of the code."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Code signing is vital for 'Supply Chain' security. If a hacker breaks into a company's server and replaces the `installer.exe` with a virus, users with code-signing-enabled systems won't be able to run it. The OS will block the installer because the 'Hash' for the new virus-filled file won't match the 'Signature' created by the original company."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "A digital fingerprint that proves an app is safe and hasn't been messed with!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In 'Container' security, we use 'Notary'. Before a Docker image is allowed to run on a production cluster, a 'Policy Engine' checks if the image has been 'Signed' by the security team. If the image is unsigned (meaning it was built on a developer's laptop without a security scan), the cluster refuses to start it."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The process of digitally signing executables and scripts to confirm the software author and guarantee that the code has not been altered or corrupted since it was signed."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

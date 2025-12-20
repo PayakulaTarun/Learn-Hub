@@ -1,0 +1,592 @@
+{
+    "dataset": "JavaScript_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_5",
+            "questions": [
+                {
+                    "id": 41,
+                    "topic": "Async JavaScript",
+                    "difficulty": "Advanced",
+                    "question": "What is the difference between `Promise.all()` and `Promise.allSettled()`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`Promise.all` stops if one fails. `Promise.allSettled` waits for all to finish, success or failure."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`Promise.all()` is 'all-or-nothing'; it rejects immediately if any promise in the array fails. `Promise.allSettled()` waits for every promise to either resolve or reject and returns an array of objects describing the outcome of each."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`Promise.all` short-circuits on the first rejection. `Promise.allSettled` (ES2020) provides an array of `{ status: 'fulfilled', value: ... }` or `{ status: 'rejected', reason: ... }` objects."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "all() rejects on first error; allSettled() returns status of all promises."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`Promise.all` is a relay race (if one person falls, the team loses). `Promise.allSettled` is an exam (everyone finishes, and you check who passed and who failed at the end)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Short-circuit rejection (`all`) vs inclusive status reporting (`allSettled`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Use `allSettled` when tasks are independent and you want to process successes regardless of failures. Use `all` when the tasks depend on each other and failure of one makes the rest useless."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you need every single thing to work perfectly, use `all`. If you just want to see how many of them worked, use `allSettled`."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "There is also `Promise.any()` which resolves as soon as the FIRST promise succeeds, ignoring failures until all fail."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Promise.all rejected if any promise fails. Promise.allSettled resolves after all promises have settled, regardless of outcome."
+                        }
+                    ]
+                },
+                {
+                    "id": 42,
+                    "topic": "Closures",
+                    "difficulty": "Advanced",
+                    "question": "How can Closures be used to implement 'Private Variables' in JavaScript?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "By defining variables inside a function and only returning a function that can access them."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Closures allow for data encapsulation. By declaring variables inside a function scope and returning an object with methods that reference those variables, the variables remain inaccessible to the outside world, creating 'private' state."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Leveraging lexical scope to create an environment record that is persistent but not exposed. Methods returned from the outer function form a closure over the inner variables."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Encapsulating state within a function's scope, exposed only via returned methods."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a vending machine. The money and snacks (variables) are inside. You can't touch them directly, you only interact through the buttons (methods) provided."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Lexical scoping to hide variables from external access."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Before ES2022 private class fields (`#`), closures were the primary way to implement the 'Module Pattern'. It provides a clean API while protecting internal logic from side-effects."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "You put your data in a box (function) and only give out a couple of tools (inner functions) to look at or change it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This pattern is the foundation for the 'Factory Function' pattern, which is often preferred over classes in some functional styles."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Closures allow for state to be associated with a function, enabling data privacy and encapsulation."
+                        }
+                    ]
+                },
+                {
+                    "id": 43,
+                    "topic": "Prototypes",
+                    "difficulty": "Expert",
+                    "question": "What happens when you look up a property on a JavaScript object? (The Prototype Chain).",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It checks the object, then its parent, then its grandparent, until it finds it or hits `null`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "JS first searches for the property in the object itself. If not found, it follows the `[[Prototype]]` link to its prototype object and continues the search up the 'Prototype Chain' until it finds the property or reaches `Object.prototype`, which links to `null`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Property resolution via the Internal `[[Prototype]]` slot. If lookup on the own properties fails, the engine recursively traverses the chain of objects referenced by `__proto__`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Recursive search through the object's prototype chain until the property is found or null is reached."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like looking for a tool. You check your pockets first (own properties), then your toolbox (prototype), then your garage (parent prototype), until you give up."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Upward traversal of the `[[Prototype]]` links."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is shadows properties: if an object and its prototype both have 'name', the one on the object wins. This is why all objects have `.toString()`—it's at the very top of the chain (Object.prototype)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If an object doesn't have an answer, it asks its parent. If that parent doesn't know, it asks the grandparent."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "`Object.create(null)` creates an object with NO prototype, which is useful for dictionaries that shouldn't have default methods."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Prototypal inheritance works by linking objects to other objects via the [[Prototype]] internal property."
+                        }
+                    ]
+                },
+                {
+                    "id": 44,
+                    "topic": "OOP",
+                    "difficulty": "Intermediate",
+                    "question": "What is the purpose of `super()` in a class constructor?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It calls the parent class's constructor."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In a derived (child) class, `super()` must be called before accessing `this`. it executes the constructor of the parent class, ensuring that the parent's properties are properly initialized."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Invokes the parent class constructor and binds the current instance to the parent's logic. Necessary for maintaining the prototype chain and `this` initialization in subclasses."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Calls the constructor of the superclass."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like calling your parents to set up your room (Parent class) before you start putting your toys (Child properties) in it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Initializes parent class logic within a child class."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "You can also use `super` to call parent methods: `super.methodName()`. Failing to call `super()` in a constructor of an extended class leads to a ReferenceError when using `this`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way for a 'Baby' class to borrow the 'Parent' class's brain and settings."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Under the hood, `super()` effectively does something similar to `Parent.call(this)` in ES5 prototypical inheritance."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The super keyword is used to access and call functions on an object's parent."
+                        }
+                    ]
+                },
+                {
+                    "id": 45,
+                    "topic": "Functional Programming",
+                    "difficulty": "Intermediate",
+                    "question": "What is a 'Higher-Order Function'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A function that either takes a function as a parameter or returns one."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A higher-order function is a function that operates on other functions, either by taking them as arguments (like `map` or `addEventListener`) or by returning them. This is possible because functions are first-class citizens in JS."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A function exhibiting functional composition. It accepts a callback as an input or generates a lambda function as an output."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A function that takes or returns another function."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a manager. A regular worker (function) does 'stuff'. A manager (Higher-order) directs workers or hires new ones."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Function that takes/returns a function."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "HOFs allow for abstraction of actions, not just values. They enable patterns like composition, currying, and middleware in frameworks like Express."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's just a fancy name for a function that deals with other functions instead of just numbers or text."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "All built-in array methods (`map`, `filter`, `reduce`, `sort`) are examples of HOFs."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A function that takes one or more functions as arguments, or returns a function."
+                        }
+                    ]
+                },
+                {
+                    "id": 46,
+                    "topic": "Memory Management",
+                    "difficulty": "Advanced",
+                    "question": "How does the 'Mark-and-Sweep' algorithm work?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It starts from global variables, marks everything it can reach, and deletes anything left over."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "It's the primary Garbage Collection algorithm. It starts from 'roots' (global object, local variables), and 'marks' all objects reachable from them. Anything NOT marked is considered unreachable and is 'swept' (deleted) from memory."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Graph traversal (usually DFS/BFS) starting from the root set. Mark phase: set bit on reachable nodes. Sweep phase: reclaim memory of unmasked nodes."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Garbage collection algorithm identifying unreachable objects for removal."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Imagine you have many strings tied to your finger. Every balloon tied to those strings stays. Any balloon floating away (unreachable) gets popped."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "GC algo: Mark reachable objects, delete the rest."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This handles circular references (A -> B, B -> A) correctly, which the older 'Reference Counting' algorithm failed at. If the whole cycle is unreachable from the root, it gets deleted."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If the code can't find a way to use an object anymore, the computer cleans it up automatically."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern engines use 'Generational' GC, separating new objects from long-lived ones to improve sweep efficiency."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Mark-and-sweep represents a strategy for garbage collection based on reachability."
+                        }
+                    ]
+                },
+                {
+                    "id": 47,
+                    "topic": "Async JavaScript",
+                    "difficulty": "Intermediate",
+                    "question": "Why use `async/await` instead of `.then()` callback syntax?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It makes your async code look like normal synchronous code and is easier to read."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`async/await` is syntactic sugar over Promises. It provides a more readable and cleaner way to handle asynchronous flow, avoiding 'Promise nesting' and allowing for standard `try/catch` error handling."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Synchronous-looking abstraction for asynchronous control flow. Built on generators and auto-settling promises."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Improved readability and simplified error handling for asynchronous code."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`.then()` is like reading a choose-your-own-adventure book where you jump around pages. `await` is like reading a normal book front-to-back."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Cleaner syntax and standard `try/catch` support."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "It virtually eliminates 'Callback Hell'. Under the hood, the engine pauses execution of the async function (yielding the thread) until the promise resolves, but doesn't block the main thread."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It is way more natural to write. It reads like a list of instructions: Wait for this, then do that."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Looping over async tasks is much simpler with `for...of` and `await` compared to `Promise.all` mapping."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Async/await functions act as syntactic sugar for promises, providing a more imperative style of writing asynchronous code."
+                        }
+                    ]
+                },
+                {
+                    "id": 48,
+                    "topic": "Type Conversion",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Type Coercion'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when JavaScript automatically converts a value from one type to another (like text to number)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Type Coercion is the automatic (implicit) conversion of values from one data type to another by the JS engine during operations, often leading to unexpected results like `1 + '2' === '12'`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Dynamic type conversion triggered by operators or context. Follows internal `ToPrimitive`, `ToNumber`, and `ToString` abstract operations."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The automatic conversion of a value from one type to another."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a bilingual translator who automatically changes a word's language so the sentence still makes sense (even if the meaning changes slightly)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Automatic implicit type conversion."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Coercion is why `5 == '5'` is true but `5 === '5'` is false. Explicit conversion (`Number('5')`) is preferred to avoid the 'Wat' logic of implicit coercion."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "JavaScript tries to be 'helpful' by guessing what you meant when you mix types, but it frequently guesses wrong."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Objects can control their own coercion behavior by implementing `Symbol.toPrimitive` or `valueOf()`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Type coercion is the conversion of a value from one type to another (such as string to number, object to boolean, etc.)."
+                        }
+                    ]
+                },
+                {
+                    "id": 49,
+                    "topic": "OOP",
+                    "difficulty": "Expert",
+                    "question": "Compare Functional Inheritance vs Class-based Inheritance.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Functional uses functions to 'decorate' objects; Classes use blueprints and `extends`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Functional inheritance involves using a 'factory function' to create an object and then adding properties/methods to it directly. Class-based inheritance uses the `class` and `extends` syntax. Functional style is often easier for composition and avoiding 'The Gorilla/Banana' problem of deep class hierarchies."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Concatenative/Prototypal Inheritance vs Blueprint-based Syntactic Sugar inheritance. Functional avoids prototype chain complexity in favor of simple object decoration."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Functional: Object decoration/factories. Class: Blueprint/extends."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Class inheritance is a family tree (rigid). Functional inheritance is like a LEGO set: you just snap on the pieces (features) you need."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Decoration (`Functional`) vs Blueprints (`Class`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Functional inheritance is more flexible for 'Mixins'. In modern JS, the trend is moving away from deep class hierarchies toward functional composition."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "One uses the 'class' keyword and the other just uses regular functions to build objects."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Classes in JS are actually still using prototypal inheritance under the hood, so they aren't 'real' classes like in Java."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Functional inheritance is an object creation pattern while class inheritance is a language construct for structuring code."
+                        }
+                    ]
+                },
+                {
+                    "id": 50,
+                    "topic": "Functional Programming",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Currying'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Breaking a function with many arguments into a series of functions that each take one argument."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Currying is a technique where a function with multiple arguments is transformed into a sequence of functions, each taking a single argument. E.g., `f(a,b,c)` becomes `f(a)(b)(c)`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Functional transformation using closures to partially apply arguments in sequence."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Transforming a multi-argument function into a nested unary function chain."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a restaurant where you pick your bread first, then your meat, then your toppings (ordered steps), instead of shouting your whole order at once."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Sequential single-argument function transformation."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Extremely useful for 'Partially Applying' data. You can create a specialized version of a helper function by passing some data now and the rest later."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a function that gives you another function to finish the job."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Named after Haskell Curry. It is a cornerstone of point-free programming style."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Currying is the process of converting a function that takes multiple arguments into a function that takes them one at a time."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

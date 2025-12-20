@@ -1,0 +1,592 @@
+{
+    "dataset": "java_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_6",
+            "questions": [
+                {
+                    "id": 51,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What happens if you return a value inside a 'finally' block?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The value in the 'finally' block wins! Even if the 'try' block said 'return 10', if the 'finally' block says 'return 20', the answer will be 20."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "If a `finally` block contains a `return` statement, it will override any previous `return` statements or `Exceptions` thrown in the `try` or `catch` blocks. This is considered a 'Pitfall' and bad practice as it can lead to silent data loss or bugs."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The JVM's completion of the `try` block is preempted by the `finally` block's abrupt completion. This clears the operand stack of any previous results (including exceptions) and replaces them with the value from the `finally` block's return instruction."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The return statement in the finally block will execute, suppressing any exceptions or return values from the try/catch blocks."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Heated Argument'. The child (Try block) shouted 'I'm going to the park!' (Return 10). But the Mom (Finally block) comes in and says 'No, you're going to your room!' (Return 20). The Mom ALWAYS gets the last word."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Finally-block returns override try/catch returns and suppress any unhandled exceptions."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Wait, it gets worse! If the `try` block throws an exception like `NullPointerException`, but the `finally` block returns a value, the exception is totally 'Swallowed'. The caller will never know an error happened, making this one of the hardest bugs to track down in production."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Just remember: Never put a 'return' in your finally block. Use finally ONLY for cleaning up (like closing a file)."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This happens due to the bytecode instruction `jsr` (jump to subroutine) or its equivalent in modern JVMs. The subroutine (finally) is executed before the stack is 'popped' for the method return. If the subroutine itself issues a return, the stack is modified permanently before the original block can finish."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A condition where a control flow statement within a finally block causes the suspension of the current return or exception propagation."
+                        }
+                    ]
+                },
+                {
+                    "id": 52,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Does 'finally' always execute in Java?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Almost always! The only times it doesn't are if the computer crashes, the power goes out, or you 'Force-Quit' the program using `System.exit()`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "No, there are three main cases where `finally` will not execute: 1. `System.exit(0)` is called, 2. A system/hardware failure (kernel panic/power loss), and 3. In infinite loops or if the JVM crashes/terminates unexpectedly."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Abrupt termination of the Virtual Machine bypasses the stack unwinding process. Specifically, `System.exit()` triggers shutdown hooks but doesn't necessarily finish the currently active `try-finally` blocks. Also, a daemon thread might be killed if the last non-daemon thread finishes while the daemon is in a `try` block."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "No. It does not execute if System.exit() is called or if the JVM crashes."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Cleaning up after a party'. You always do it (Finally block). But if the house is hit by a meteor (System Crash) or you are arrested and taken away (System.exit), you aren't going to be finishing the dishes."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Nearly always, except for JVM termination, system crashes, or power loss."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "One very sneaky case is 'Infinite Recursion' or 'Infinite Loops'. If the `try` block never ends, the `finally` block can never start. Similarly, if a thread is killed using the deprecated `Thread.stop()` or if the OS sends a `SIGKILL`, the JVM doesn't get a chance to run the finally logic."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Expect it to run 99.9% of the time, so put your important 'cleanup' code there."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If you use a 'Daemon Thread', and all other normal threads finish, the JVM will 'Halt' the daemon thread instantly. If that daemon was inside a `finally` block, it will be interrupted mid-execution, which is why cleanup in daemon threads is inherently unreliable."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The Java language contract states that the finally block will execute unless the threat of execution is terminated before it can reach the block."
+                        }
+                    ]
+                },
+                {
+                    "id": 53,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Can you override a 'Static' or 'Private' method?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "No! You can write a new method with the same name, but that's 'Method Hiding' for static ones and 'New Method' for private ones. It's not real overriding because polymorphism won't work."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "No. Private methods are not visible to subclasses, so they can't be overridden. Static methods belong to the class, not the instance, so if you redefine them in a subclass, it is called 'Method Hiding'. Polymorphic calls (`Parent p = new Child(); p.staticMethod()`) will still call the parent's version."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Private and Static methods use 'Static Binding' (resolved by the compiler at compile-time) rather than 'Dynamic Binding' (v-table lookup at runtime). Because they aren't part of the virtual method dispatch, they cannot participate in overriding."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "No. Redefining a static method is called hiding. Private methods are not accessible for overriding."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Private methods are like 'Secrets'. If you don't know the secret, you can't change it. Static methods are like 'Rules of the Building'—no matter which room (Instance) you are in, the building's rule (Static) stays the same for everyone."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "No. Private is invisible; Static redefinition is just 'hiding'."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The `@Override` annotation is your best friend here. If you try to put `@Override` on a static method that you think you are overriding, the compiler will give you a big red error, letting you know that you are actually just 'Hiding' it, which can cause subtle logic bugs when using parent references."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you want polymorphism to work (the 'magic' part of Java), never use 'static' or 'private' for those methods."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This is related to 'Early' vs 'Late' binding. Static methods are bound using the `invokestatic` bytecode instruction, which carries the exact class name in the call. Overridden methods use `invokevirtual`, which looks up the object type at runtime."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Overriding is not possible for static and private methods due to their resolution at compile-time rather than runtime."
+                        }
+                    ]
+                },
+                {
+                    "id": 54,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Memory Leak' in Java since it has Garbage Collection?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A memory leak in Java is when you 'Forget to throw away' a reference. If a list contains a million objects you don't need, but the list itself is still 'alive', Java can't delete those objects."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A leak occurs when objects are no longer needed but are still 'reachable' by the GC root. Examples include: 1. Unclosed resources (connections), 2. Static collections that keep growing, and 3. Unchecked 'Listeners' or 'Callbacks' that keep objects in memory."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Accumulation of unreferenced objects in the heap that cannot be reclaimed because they are technically reachable. Common causes include 'Inner classes' holding a reference to the outer class, or thread-local variables that are not cleared after thread usage."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "When memory is allocated but not released because references to the objects still exist after they are no longer needed."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Losing a Balloon' in a room. Normally, the janitor (GC) takes any balloon on the floor. But if you have a string (Reference) tied to the balloon, the janitor thinks you are still 'Using' it and won't touch it, even if you are asleep!"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Unused objects remaining reachable by the GC root, preventing reclamation."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The most dangerous leak is often a 'Static List'. Since static variables live for the entire life of the program, if you keep adding objects to a static list and never call `.clear()`, your memory usage will climb until the app eventually crashes with an `OutOfMemoryError`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't worry too much, but always remember to 'Close' your files and 'Clear' your big lists when you're done with them."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'ThreadLocal' variables and 'ClassLoader' leaks are the hardest to debug. If a server like Tomcat redeploys an app, but a thread still holds an object from the OLD deployment, the entire old ClassLoader stays in memory, potentially leaking 100MB+ per redeploy."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A type of resource leak that occurs when a computer program incorrectly manages memory allocations in a way that memory which is no longer needed is not released."
+                        }
+                    ]
+                },
+                {
+                    "id": 55,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Serialization Proxy Pattern' and why is it used?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's like 'Shipping a Kit instead of a Finished House'. Instead of saving the messy object, you save a small, clean 'Proxy' that knows how to rebuild the object once it arrives."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "It's a pattern to fix security and versioning issues in default Java Serialization. You create a private static inner class (the Proxy) that represents the object's data. Only this proxy is actually serialized, making it impossible for hackers to inject 'Bad Data' that bypasses the real constructor."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Involves replacing the object during serialization via `writeReplace()` with a proxy that implements `Serializable`. On the other end, `readResolve()` converts the proxy back into the real class. This ensures all invariants are checked by the official constructor during deserialization."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A design pattern used to increase the robustness and security of serializable classes by substituting the class with a proxy."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'An Architect's Blueprint'. Instead of mailing a fragile 3D model (the object), you mail the blueprint (the proxy). The construction crew at the other end builds a brand new model using the blueprint, ensuring it follows all the safety codes."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A pattern that substitutes a safe proxy for an object during serialization to ensure data integrity."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Standard serialization is like a 'back door' into your code. It creates objects without calling your constructor! This is a nightmare for security. The Proxy Pattern forces the object to go through the 'front door' (the constructor), so you can validate all fields before the object exists in your system."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a pro-level way to make sure your data doesn't get corrupted when you save it to disk."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This pattern is highly recommended by Joshua Bloch in 'Effective Java'. It eliminates the 'readObject' method entirely, which is where 90% of serialization security vulnerabilities (like Gadget Chains) reside."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A technique designed to provide a higher level of security during the process of Java Object Serialization."
+                        }
+                    ]
+                },
+                {
+                    "id": 56,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Why is 'Double comparison' with == dangerous in Java?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because of 'Rounding Errors'. To a computer, 0.1 + 0.2 is actually something like 0.30000000000000004 according to the IEEE standard, so it will NOT equal 0.3."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Floating-point numbers follow the IEEE 754 standard, which cannot represent certain decimal values exactly in binary. These 'Precision Errors' accumulate, making `==` unreliable. You should use a 'Epsilon' (a very small threshold) to see if the difference is negligible."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Comparison fails due to representation inaccuracy. Use `Double.compare(d1, d2) == 0` for basic checks, or `if (Math.abs(a - b) < 0.0001)` for range-based equality to account for cumulative floating-point drift."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Due to precision limitations in floating-point representation, leading to unexpected results in equality tests."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Measuring with a blurry Ruler'. Two sticks might look 1 meter long, but if you look through a microscope, one is 1.0000001 and the other is 0.9999999. They are 'Equal enough' for a human, but 'Different' to a robot (the computer)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Binary representation errors in floating-point numbers make direct equality unreliable."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Never use `float` or `double` for 'Money'. If you use them for bank balances, after 1000 transactions, a few cents will literally just 'Vanish' or appear from nowhere. Use `BigDecimal` for currency, as it handles decimal precision exactly."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always give yourself a little 'Wiggle Room' when checking if two decimals are the same."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Special values like `NaN` (Not a Number) make it even weirder. In Java, `Double.NaN == Double.NaN` is always FALSE. However, `Double.valueOf(Double.NaN).equals(Double.valueOf(Double.NaN))` is TRUE. This is an intentional inconsistency in the API!"
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A problem arising from the inability of binary floating-point systems to represent most decimal fractions exactly."
+                        }
+                    ]
+                },
+                {
+                    "id": 57,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Infinite Recursion' trap and how to detect it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Infinite recursion is a function that 'Calls itself' forever. Eventually, you run out of office space (Stack Memory) and the computer gives up with a `StackOverflowError`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "It occurs when a recursive method lacks a 'Base Case' or the base case is unreachable. The JVM keeps pushing new 'Stack Frames' until the stack memory is exhausted. You detect it using `jstack` or by analyzing the stack trace of the `StackOverflowError`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Exhaustion of thread-local stack segments. Each call consumes a frame (local vars, operand stack, etc.). Detection involves look for cycles in the trace. Prevention involves ensuring a 'Termination Condition' and considering 'Tail-Call Optimization' (though Java currently doesn't support TCO natively)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A recursive process that never terminates, leading to a StackOverflowError. Lacks a valid base case."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Holding two Mirrors' against each other. The reflection goes on forever. In Java, each reflection (Function call) takes up real 'Mirror Space', and you only have so much mirror before it shatters."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A recursive function lacking a termination condition, causing a StackOverflowError."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Watch out for 'Indirect Recursion'. Method A calls Method B, which calls Method A. This is harder to spot than Method A calling itself. It usually happens when you have complex 'Circular Dependencies' in your logic or accidentally trigger an event that triggers the same event."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your program crashes and you see the same line of code repeated 1000 times in the error message, you've found a recursion trap!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can increase the stack size using `-Xss`, but this is usually a 'Band-aid' for a bad algorithm. Better to rewrite the function using a 'While-loop' (Iterative approach), which uses the 'Heap' or just reuses local variables, avoiding stack growth entirely."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A bug in which a program's function calls itself perpetually, eventually resulting in the depletion of the call stack."
+                        }
+                    ]
+                },
+                {
+                    "id": 58,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'String Concatenation' efficiency and the loop pitfall?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you use `+` to join strings inside a big loop, it's super slow! Every time you add a letter, Java creates a BRAND NEW string. Use `StringBuilder` to avoid this."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Strings are immutable. In a loop, `s += \"next\"` creates a new String object and copies the old content every single time (O(n^2) complexity). Use `StringBuilder` or `StringJoiner` which uses a mutable internal buffer for O(n) performance."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The compiler optimizes single-line `+` operations into `StringBuilder.append()` calls. However, it cannot optimize this 'across' loop iterations. This causes massive allocation pressure and memory fragmentation as intermediate string objects are created and immediately discarded."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Using the + operator for strings in a loop is inefficient due to the creation of multiple immutable objects. StringBuilder is the efficient alternative."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Writing a Letter'. If you use `+` in a loop, every time you add a word, you throw the old paper away and copy the whole letter onto a new one. `StringBuilder` is just writing on the same piece of paper until you're done."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Avoid using '+' in loops for string concatenation; use StringBuilder for linear time complexity."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Java 9+ uses 'Indy String Concatenation' (`invokedynamic`), which is slightly faster than older versions, but the 'Loop Pitfall' still exists! The fundamental problem is that each loop iteration is a separate statement, so the JVM can't 'see' that it should just reuse the same buffer across iterations."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Whenever you see a 'for' loop and a '+' with Strings, stop! Change it to 'StringBuilder' immediately."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If you know the final size of the string, you can initialize `new StringBuilder(totalSize)` to avoid 'Buffer Resizing'. Whenever the buffer fills up, `StringBuilder` has to create a new double-sized array and copy everything, which is a hidden performance cost."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A performance issue arising from the repeated allocation of immutable string objects during concatenation operations."
+                        }
+                    ]
+                },
+                {
+                    "id": 59,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Boxing' behavior in generic maps (NullPointerException trap)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you ask a Map for a number (`int`), but the key doesn't exist, the Map returns `null`. Java then tries to turn that `null` into a real number, which crashes the site."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is the 'Unboxing Null' pitfall. If you have a `Map<String, Integer>`, and you call `int val = map.get(\"missing\")`, Java returns `null`. To put it into an `int`, it calls `null.intValue()`, causing an immediate `NullPointerException`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Implicit unboxing of wrapper types. If the expression evaluates to null, any attempt at automatic conversion to a primitive type triggers an NPE. Use `Integer` (the wrapper) as the local variable type, or use `map.getOrDefault()` to avoid this."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A NullPointerException occurs when unboxing a null wrapper object into a primitive type."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Expecting a Box of Pizza'. You open the box (Unboxing) to grab a slice (the int). But if the box is 'Null' (it doesn't even exist), you can't reach inside. Trying to reach into 'Thin Air' is what crashes the program."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Implicitly unboxing a null wrapper value into a primitive causes a NullPointerException."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is one of the most common production bugs. Developers often assume the key exists, or forget that `get()` returns a wrapper. The fix is to always use the wrapper type (`Integer`) on the left side of the assignment until you've checked that it isn't null."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Be extra careful when taking 'Numbers' out of 'Lists' or 'Maps'. They might not be there!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Java's 'Optional' type is the modern way to signal 'Maybe this isn't here'. However, `Map.get()` doesn't return an `Optional`, so we must manually wrap it or use `getOrDefault(key, 0)` to provide a 'safe' primitive value."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A runtime error produced by the Java compiler's automatic unboxing of an object reference that is null."
+                        }
+                    ]
+                },
+                {
+                    "id": 60,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Explain 'Raw Types' pitfall in Generics.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Raw types are lists without a 'Label'. If you just say `ArrayList` instead of `ArrayList<String>`, Java lets you put 'Apples' and 'Oranges' in the same box, which leads to crashes later."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Using a generic class without the type parameter (`List` instead of `List<String>`). This is 'Legacy-only' behavior (pre-Java 5). It disables all compile-time type checking, forcing you to cast objects manually and risking `ClassCastException` at runtime."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Disables 'Assignment Compatibility' checks. The compiler issues a 'Warning' but allows it for backward compatibility. Because of 'Type Erasure', the JVM sees both raw and generic types as simple `Object` lists, but the lack of compiler-level guardrails is the main danger."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Using generic types without their type parameters. It should be avoided as it loses type safety."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Losing the Luggage Tags' at an airport. You have a bag (the list), but no tag saying what's inside. You might open it expecting a suit (String) and find a bowling ball (Integer). Surprise!"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Using generic classes without type parameters, leading to loss of type safety."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you pass a `List<String>` to a method that accepts a raw `List`, that method can now 'Sneakily' add an `Integer` to your string list. When your code tries to get a value from that list later, it will EXPLODE, even though your code looks perfectly safe. This is why raw types are 100% forbidden in modern Java."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always use the `< >` brackets. They are your best shield against weird errors."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Type Erasure' means that at runtime, everything is effectively a raw type. But use `List<?>` (Unbounded Wildcard) instead of raw `List`. `List<?>` tells the compiler: 'I don't know the type, but I promise NOT to let anyone add something unsafe to it', providing a safer form of flexibility."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The name of a generic type that is used without its type arguments."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

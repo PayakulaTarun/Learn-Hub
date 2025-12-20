@@ -1,0 +1,591 @@
+{
+    "dataset": "angular_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_6",
+            "questions": [
+                {
+                    "id": 51,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Intermediate",
+                    "question": "What is the 'ExpressionChangedAfterItHasBeenCheckedError'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's an error that happens when you change a variable in your code so soon after Angular finished checking it that it gets confused."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This error occurs when a data-bound property is modified after Angular has finished its change detection pass for that cycle. This usually happens in lifecycle hooks like ngAfterViewInit when code updates a property that was already rendered."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A safety check in development mode to ensure unidirectional data flow. Angular runs change detection twice: once to update and once to verify. If values differ between passes, this error is thrown."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Development-mode error indicating state change during/after validation pass."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a waiter bringing you a bill for $10, and as you're reaching for your wallet, they scribble '+$2' on it. Angular wants to be 100% sure the bill is final before you pay."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "An error signifying state changes after a rendering pass has finalized."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This usually indicates a flaw in component design where a child component triggers a change in a parent's property via a side-effect. The fix often involves using ChangeDetectorRef.detectChanges() or wrapping the code in a promise/timeout."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the most common 'head-scratcher' for Angular devs. It means you're trying to update the page while Angular is still in the middle of drawing it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This error only appears in development mode. In production, Angular skips the second verification pass, meaning the error won't crash the app, but the UI might be inconsistent."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An error indicating that the state of an application changed during the change detection cycle."
+                        }
+                    ]
+                },
+                {
+                    "id": 52,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Why is it dangerous to use 'ElementRef' directly?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Touching the DOM directly can make your app insecure (XSS) and break parts of Angular like Server-Side Rendering."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Directly manipulating the DOM via ElementRef couples your app to the browser. This breaks compatibility with non-browser environments like Angular Universal (SSR) or Web Workers, and bypasses Angular's security sanitization, potentially leading to XSS vulnerabilities."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It grants direct access to the native element, which is problematic for platform abstraction. Renderer2 should be used instead for safer DOM manipulation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Security risks (XSS) and SSR incompatibility."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Using ElementRef is like doing surgery on yourself instead of letting a professional surgeon (Angular) do it. You might fix the problem, but you're much more likely to cause an infection or make a mistake."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Direct DOM access risks security and platform portability."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Angular templates are sanitized by the framework to prevent malicious scripts from running. By using `nativeNode.innerHTML` via ElementRef, you bypass this protection entirely."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Angular wants to be in charge of the HTML. If you start changing things behind its back, it gets confused and your site can become glitchy."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The Renderer2 service provide methods like `setProperty` and `addClass` that work abstraction-first, ensuring that if you later run your app on a server, those calls won't just crash."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A risk to application security and cross-platform compatibility."
+                        }
+                    ]
+                },
+                {
+                    "id": 53,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Intermediate",
+                    "question": "The 'Memory Leak' pitfall with Observables.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you subscribe to something in your code and never stop it, it keeps running even after the user leaves the page, slowly eating up all the memory."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Failing to unsubscribe from long-lived Observables in components leads to memory leaks. This is because the subscription remains active in memory even after the component is destroyed. The best practice is to use the `async` pipe or the `takeUntil` pattern."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Subscriptions create a reference that prevents garbage collection of the observer. Must be cleared in ngOnDestroy or managed via operators like `take(1)` or `first()`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Active subscriptions in destroyed components; fix via Unsubscribe or AsyncPipe."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a leaky faucet. If you don't turn it off (unsubscribe), it keeps dripping one drop at a time until the whole house is flooded (your app crashes)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Unclosed subscriptions causing excessive memory consumption."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Some observables complete automatically (like HTTP calls), while others are infinite (like intervals or route params). Infinite ones are the primary culprits for leaks."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always remember to say 'stop listening' when your component is gone, otherwise the component will stay hidden in the background forever."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In modern Angular, the `takeUntilDestroyed()` operator (part of the DestroyRef API) provides a cleaner, functional way to handle cleanup without needing an explicit subscription variable."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Accumulation of heap memory due to orphaned observable subscriptions."
+                        }
+                    ]
+                },
+                {
+                    "id": 54,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "When does 'ngOnChanges' NOT fire?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It won't fire if you change a property inside an object but keep using the same object itself."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "ngOnChanges only fires when the reference of an @Input property changes. If you mutate a property inside an object (e.g., `user.name = 'Bob'`), the object reference remains the same, so Angular doesn't trigger ngOnChanges."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Fires only on identity change of input properties. Mutation of object internals is transparent to the change detector's reference check."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Fails to fire on internal object mutation; requires new reference."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a security guard who only checks ID cards. If you get a haircut but keep the same ID card, the guard doesn't notice anything changed."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Fails to detect internal mutations of objects or arrays."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "To fix this, you should treat your data as immutable. Instead of updating an array, use `[...oldArray, newItem]`. This creates a new reference and forces ngOnChanges to trigger."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your 'updates' aren't showing up, you're probably just changing a value inside a box instead of getting a whole new box."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This is exactly why libraries like NgRx or Immer are popular—they enforce the immutability that makes Angular's change detection predictable."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The condition under which the ngOnChanges lifecycle hook is bypassed."
+                        }
+                    ]
+                },
+                {
+                    "id": 55,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Intermediate",
+                    "question": "What is the 'Provider' circular dependency error?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when Service A needs Service B, and Service B also needs Service A. Angular gets stuck in a loop."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A circular dependency happens when two or more services depend on each other directly or indirectly. Angular cannot resolve this because it doesn't know which one to create first."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "An injection error (Circular dependency detected). It indicates an architectural flaw where service instantiation forms a cycle in the dependency graph."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Cyclic reference between injected services; results in DI failure."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like the 'Chicken and the Egg' problem. You can't have one without the other, so neither can ever start existing."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Recursive dependencies preventing service instantiation."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The solution is usually to refactor common logic into a third service that both of the original services can depend on, breaking the cycle."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way Angular tells you: 'Hey, your services are chasing their own tails!'"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In desperate cases, you can use the `forwardRef(() => MyService)` function to delay the resolution, but this is usually a sign that your architecture needs a redesign."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A situation in which two or more modules depend on each other directly or indirectly."
+                        }
+                    ]
+                },
+                {
+                    "id": 56,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Intermediate",
+                    "question": "Why does 'routerLink' work but 'href' doesn't in SPAs?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "'href' makes the whole browser reload the page, which is slow. 'routerLink' only changes the part of the page that needs to move."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "'href' is a native HTML attribute that triggers a full page reload. 'routerLink' is an Angular directive that intercepts the click and uses the Router service to navigate without refreshing the browser, preserving the application state."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "routerLink prevents the default anchor click event and invokes `navigateByUrl()`, which only updates the view associated with the matched route."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "routerLink (SPA navigation); href (full page reload)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "'href' is like moving to a new house. 'routerLink' is like walking into a different room in the same house—much faster and you don't lose your stuff."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "In-app navigation (routerLink) vs full browser reload (href)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "When the page reloads via 'href', all of your service data and variable states are wiped clean. With 'routerLink', the app's memory is kept intact."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always use routerLink if you want your website to feel 'snappy' and fast."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "routerLink also handles 'active' states automatically via the 'routerLinkActive' directive, adding CSS classes to links when their route is currently viewed."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Comparison between client-side routing and server-side navigation."
+                        }
+                    ]
+                },
+                {
+                    "id": 57,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "The 'async' pipe and multiple subscriptions.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you use the 'async' pipe three times for the same variable, your code might actually run three times (like making three API calls)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Using the 'async' pipe multiple times on the same observable in a template can trigger multiple separate subscriptions. For an HTTP call, this could mean multiple network requests. The fix is to use the `shareReplay()` operator or wrap the content in an `*ngIf=\"data$ | async as data\"` block."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Redundant subscriptions on cold observables. Each pipe instance creates a new execution context unless the source is 'Share-Replayed' or piped into a common variable."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Async pipe redundancy; results in duplicate side-effects (e.g. API calls)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like three different people subscribing to a newspaper and getting three identical copies delivered to the same house. It's a waste; one copy is enough for everyone to read."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Multiple template subscriptions triggering duplicate data-fetching logic."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The `as` keyword in `*ngIf=\"... | async as value\"` is the standard pattern for sharing the unwrapped value among multiple child elements without re-triggering the pipe."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Be careful when using 'async' more than once in the same HTML file; you might accidentally slow down your own site."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This also applies to 'Signal' conversions; if you convert an observable to a signal using `toSignal()`, multiple reads of that signal will not trigger multiple subscriptions."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A common performance trap involving the redundant use of the AsyncPipe."
+                        }
+                    ]
+                },
+                {
+                    "id": 58,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is 'Template Reference Variables' (the # symbol)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It is a tag you put on an HTML element (like #myData) so you can refer to that element elsewhere in the same HTML file."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Template reference variables allow you to reference a DOM element or a component instance from within the template itself. You can then access its properties, like `myInput.value` or call methods on it directly in the HTML."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A local template variable defined with `#`. Its scope is restricted to the template it's defined in (and children, if shared via inputs)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Syntax: #name. Refers to a DOM element, component, or directive within a template."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like slapping a post-it note on a box. Now, instead of describing the box, you can just say 'Look at the box with the label' (the # name)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "one_liner": "Local variable for template-level element access."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If applied to a component, the variable refers to the component instance. If applied to a standard HTML element, it refers to the DOM element. If used with 'exportAs', it can refer to a specific directive instance (like #f=\"ngForm\")."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to give an HTML tag a 'nickname' so you can use it in your code later."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Template variables are great for simple interactions (like clearing an input field) that don't really need a full round-trip to the TypeScript class."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A local variable reference for a template element."
+                        }
+                    ]
+                },
+                {
+                    "id": 59,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Intermediate",
+                    "question": "Avoid using functions in Interpolation {{ func() }}.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you put a function inside double curly braces, Angular will run that function over and over, hundreds of times, which makes the site slow."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Interpolating functions is a performance anti-pattern. Because functions don't have stable values, Angular must re-execute them in every single change detection cycle to see if anything changed. It's much better to use a variable or a pipe."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Violation of idempodence in change detection. Functions in templates are evaluated with O(n) frequency relative to the detection ticks, leading to high CPU usage."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Avoid functions in expressions ({ }); use pipes or properties for performance."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like asking a calculator 'What's 2+2?' every single second of the day, even if you already know the answer. It's much better to just write '4' on a piece of paper."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Avoid template functions to prevent excessive re-renders."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Pipes (especially pure pipes) are the solution because they only re-run if their inputs change. Interpolated functions run even if something completely unrelated changes on the page."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you notice your fans spinning up when you use Angular, check if you put a function inside your HTML curly braces."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Angular 17+ Signals solve this problem by providing a 'Computed' signal that only re-evaluates when its dependencies change, making it safe to use in templates."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A performance pitfall caused by re-executing logic during every CD cycle."
+                        }
+                    ]
+                },
+                {
+                    "id": 60,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Architect",
+                    "question": "What happens if you provide a service in two different modules?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You might end up with two completely different copies of the service data, which can confuse your app."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "If a service is provided in two different eager-loaded modules, only one instance is created. However, if one module is lazy-loaded, a second separate instance of the service is created for that module, breaking the singleton pattern."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "DI shadowing in the hierarchical injector. Lazy-loaded modules create a child injector, which will create a new instance of any provider assigned specifically to it."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Shadowing occurs in lazy-loaded modules; results in multiple service instances."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like two different offices having two different 'Employee of the Month' boards. Even if they are the same company, the lists might be different, leading to confusion about who actually won."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Accidental multiple instances in lazy-loaded modules."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is why the `forRoot()` pattern exists (or the `providedIn: 'root'` syntax). It ensures that no matter how and where a module is loaded, only the root injector manages the service."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Keep your services in 'root' unless you have a very special reason to do otherwise."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This can actually be used intentionally for 'Sandboxing', where a specific part of the app needs its own private playground of data that doesn't leak out to the rest of the site."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Instantiation of separate service copies due to hierarchical injection points."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

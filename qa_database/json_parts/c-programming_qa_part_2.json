@@ -1,0 +1,593 @@
+{
+    "dataset": "C-programming_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_2",
+            "questions": [
+                {
+                    "id": 11,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How does the C compilation process work (from Source to Executable)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It goes through four main steps: Preprocessing, Compilation, Assembly, and Linking."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The source code first goes to the Preprocessor. Then the Compiler converts it to Assembly code. The Assembler turns that into Object code, and finally, the Linker combines object files and libraries to create the executable."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The stages are: 1. Preprocessor (macro expansion), 2. Compiler (translates C to assembly), 3. Assembler (converts assembly to machine-level object code/ELF), 4. Linker (resolves external references)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Preprocessing -> Compilation -> Assembly -> Linking."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like building a prefab house: 1. Unpack parts (Preprocess), 2. Turn blueprints into wood cuts (Compile), 3. Assemble walls (Assembly), 4. Connect plumbing/lights (Linking)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Four stages: Preprocessing, Compiling, Assembling, and Linking."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The Compiler phase checks syntax and semantics. The Assembler produces relocatable code (often .o or .obj files). The Linker is critical because it finds functions like `printf` in the system libraries and 'wires' them into your program's entry points."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Your code goes through several 'translation' steps where it gets turned from human words into robot numbers, and then all those numbers are glued together into a finished app."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern compilers perform 'Link Time Optimization' (LTO), where the linker can actually go back and re-optimize code blocks across different .c files for better final performance."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The multi-stage translation of high-level source text into binary machine instructions compatible with a target processor."
+                        }
+                    ]
+                },
+                {
+                    "id": 12,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is the 'Stack' and 'Heap' in C memory management?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The Stack is for local variables (fast and automatic), while the Heap is for dynamic memory (large and manual via malloc)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The Stack follows LIFO (Last-In-First-Out) and stores function frames and local variables. The Heap is a larger, unstructured memory area where data is persistent until explicitly freed by the programmer."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Stack: automatic allocation, fixed size, CPU managed. Heap: dynamic allocation, variable size, programmer managed. Accessing the stack is faster due to memory locality."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Stack (static/auto allocation); Heap (dynamic allocation)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "The Stack is a 'Plate Dispenser' (organized, easy to reach top plate). The Heap is a 'Closet' (you can throw anything in, but you have to remember where you put it and clean it up later)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Stack for local auto-variables; Heap for dynamically allocated persistent data."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Each function call creates a 'Stack Frame.' If too many functions are called (like deep recursion), it leads to 'Stack Overflow.' Heap memory is flexible but slow, and forgetting to free it causes 'Memory Leaks'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Stack is the 'fast shelf' for things you're using right now. Heap is the 'big warehouse' for things you need to keep around for a long time."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The Stack grows downwards on x86, while the Heap grows upwards. The boundary between them (if they meet) is what modern OSs try to protect with 'Guard Pages' and 'ASLR'."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Abstract memory segments serving distinct storage durations and allocation strategies."
+                        }
+                    ]
+                },
+                {
+                    "id": 13,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "Explain the role of 'Pointers' in C.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A pointer is a variable that stores the memory address of another variable."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Pointers are fundamental for dynamic memory allocation, efficient array handling, and passing variables by reference so they can be modified inside functions."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A variable of type `T*` whose value is the numeric memory address of an object of type `T`. Dereferencing (*) allows access to the value at that address."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Variables that hold memory addresses; used for indirect addressing and performance-optimized data structure manipulation."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "If a variable is a 'House', a pointer is a 'Business Card' with the house's address on it. You can pass the card around more easily than you can move the house."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A variable that holds the memory address of another entity."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Pointers allow C to overcome the 'Pass-by-value' limitation. Without pointers, a function would only get a copy of data, unable to update the caller's variables directly. They also enable linked lists and trees."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Instead of handing someone a heavy book, you just tell them which page number to look at in their own copy. That page number is the pointer."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Function pointers allow for callbacks and polymorphic-like behavior in C, providing a way to pass 'logic' as data to other functions."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An object whose value refers to another value stored elsewhere in the computer memory using its address."
+                        }
+                    ]
+                },
+                {
+                    "id": 14,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What are 'Header Files' and how do include guards work?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Header files (.h) contain declarations shared across multiple .c files. Include guards prevent the same header from being included twice."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Headers describe 'what' code is available (prototypes, types). Include guards use #ifndef and #define to ensure a file is only processed once by the compiler, avoiding redefinition errors."
+                        },
+                        {
+                            "variant_id": 3,
+                            "technical": "Header files are included via `#include`. Guards consist of a preprocessor wrapper like `#ifndef HEADER_NAME_H / #define HEADER_NAME_H ... #endif`. Modern compilers also support `#pragma once`.",
+                            "variant_id": 3,
+                            "style": "technical"
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Shared declaration files; include guards prevent multiple inclusion during preprocessing."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Heads are 'Contract Agreements'. Include guards are like a 'Stamp' that says 'I've already read this contract' so you don't read it twice and get confused."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Files containing declarations; guards prevent redefinition errors via conditional compilation."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If header A includes header B, and header C includes both A and B, without guards, header B's contents would appear twice in the final code, leading to 'redifinition of struct' errors. Guards detect this and skip the second copy."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "They are shared lists of rules. The 'guards' are just a way to make sure the computer doesn't read the same list twice and have a panic attack."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "System headers use `<header.h>` for searching in system paths, while custom headers use `\"header.h\"` to search the current directory first."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A file containing C declarations and macro definitions intended to be shared among source files."
+                        }
+                    ]
+                },
+                {
+                    "id": 15,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Endianness' and why does it matter in C?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Endianness is the order in which bytes of a multi-byte variable (like an int) are stored in memory: Big-Endian or Little-Endian."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Little-Endian stores the least-significant byte at the lowest address. Big-Endian does the opposite. It's crucial for networking and low-level data transfer between different hardware architectures."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The byte-ordering scheme. Intel/AMD are typically Little-Endian. PowerPC/ARM can be Big-Endian. `0x12345678` in memory could be `78 56 34 12` (Little) or `12 34 56 78` (Big)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Byte storage order: Little-Endian (LSB first) vs Big-Endian (MSB first)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like writing a date. Do you write 2024-12-31 (Big-Endian-ish) or 31-12-2024 (Little-Endian-ish)? Both mean the same day, but you have to know which system is being used."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The order of byte storage in memory (sequential bytes of a multi-byte word)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "C compilers usually hide this, but if you cast an `int` pointer to a `char` pointer, you will see the difference. Networking protocols (like TCP/IP) are strictly Big-Endian, so C systems must use `htons` or `htonl` to convert data before sending it."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Computers don't always store big numbers in the same order. Some start with the 'ones' place, some start with the 'millions' place. You just have to know which kind of computer you're on."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Some architectures like ARM are 'Bi-Endian', meaning the operating system can switch the endianness mode at boot time or even per-process."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The sequential order in which bytes are arranged into larger numerical values when stored in memory."
+                        }
+                    ]
+                },
+                {
+                    "id": 16,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is an 'L-value' and an 'R-value'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "L-values can appear on the left side of an assignment (they have a memory address), while R-values are the values being assigned."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "An L-value refers to a memory location (it identifies an object), while an R-value refers to a data value (like a literal 5) that doesn't have a stable memory address."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "L-value (locator value): an expression that persists beyond a single expression. R-value (read value): temporary value, often a literal or return value, which lacks a persistent memory identifier."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "L-value (left-hand side compatible); R-value (right-hand side only expressions)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "L-value is a 'Box'. R-value is the 'Item' you put in the box. You can put an item in a box, but you can't put a box inside a single temporary item."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "L-value: memory-resident object; R-value: temporary data value."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A variable `x` is an L-value. The expression `x + 10` is an R-value. You can't say `x + 10 = 20;` because `x + 10` doesn't 'live' anywhere in a way that you can assign new data into it."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "An L-value is something you can change (like a variable name). An R-value is a simple number or result that just exists for a second."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Pointers are L-values, but a dereferenced pointer `*ptr` is also an L-value. However, the numeric address returned by `&x` is an R-value."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Classification of expressions based on their ability to represent a storage location versus a pure value."
+                        }
+                    ]
+                },
+                {
+                    "id": 17,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How does 'Recursion' work in C at the stack level?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "When a function calls itself, a new copy of its variables is pushed onto the stack each time."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Recursion involves creating multiple stack frames for the same function. Each frame holds unique local variables and return addresses until the base case is hit and the stack begins to unwind."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Recursive calls push new activation records onto the call stack. Each record tracks state. Without a base case, it consumes stack space indefinitely, causing overflow."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Sequential creation of stack frames for nested function calls, requiring a base case to initiate return-propagation."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Russian Nesting Doll'. Every time you call the function, you open a smaller doll (a new stack frame) inside the previous one."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Repeated pushing of function frames onto the stack until a base case is reached."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Recursion can be elegant for math or trees, but it's risky in C due to limited stack size. Iteration (loops) are often more memory-efficient as they use a single frame and just update values within it."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a function that calls its own name. The computer keeps a 'memory of where it was' so it can come back up once it's finished the inner task."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Tail-call optimization (TCO) is a compiler trick where if the last action is the recursion, it can reuse the same stack frame, but standard C doesn't always guarantee this."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A method of program execution where a function invokes itself, resulting in a stack-based state accumulation."
+                        }
+                    ]
+                },
+                {
+                    "id": 18,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Static' vs 'Dynamic' Linking?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Static linking puts the library code inside your app, while dynamic linking connects to libraries at runtime."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Static linking (.lib/.a) merges all code into one binary, making it portable but large. Dynamic linking (.dll/.so) keeps libraries separate, allowing for smaller binaries and shared memory usage among multiple apps."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Static: Linker resolves symbols at compile-time. Dynamic: The OS's dynamic loader (ld.so) resolves symbols when the program is launched or via `dlopen`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Static (compiled-in library code); Dynamic (runtime external library dependency)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Static is like 'Buying a House with a Pool' (it's yours, but it's one big thing). Dynamic is like 'Using a Community Pool' (anyone can use it, and you don't have to build it yourself)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Static merges library code into binary; Dynamic loads libraries at runtime."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Dynamic linking is efficient for OS updates. If a bug is fixed in `libc.so`, all dynamic apps get the fix without needing to be recompiled. Static apps are 'stuck' with the version they were built with."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Static is 'carrying everything in your backpack'. Dynamic is 'renting what you need from the library when you get there'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Dynamic libraries use 'Position Independent Code' (PIC) so they can be mapped to different memory addresses in different processes for security (ASLR)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Approaches for integrating library functions into an application's executable image."
+                        }
+                    ]
+                },
+                {
+                    "id": 19,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What happens when you 'Dereference' a NULL pointer?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The program will crash, usually causing a 'Segmentation Fault'."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Dereferencing NULL is undefined behavior. On modern OSs, it triggers a memory protection fault (Segfault) and the operating system terminates the process immediately."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Accessing address 0x0. The CPU's MMU (Memory Management Unit) detects an access to an unmapped page and raises an exception (SIGSEGV or Access Violation)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Undefined behavior, typically resulting in a runtime Segmentation Fault."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like trying to 'Open a House' that doesn't exist. You have the concept of a house, but no address. When you try to walk through the door, you fall into a bottomless pit."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Triggers a Segmentation Fault due to accessing invalid/unmapped memory."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Always check `if (ptr != NULL)` before dereferencing. Some high-security compilers or architectures can catch this at compile-time with 'Null Pointer Analysis', but C itself allows you to try it until it fails at runtime."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The program gets confused because you're telling it to look for data where there is absolutely nothing. It just stops working right away."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In embedded systems without MMUs, dereferencing NULL might actually return a value from the real address zero (like an interrupt vector), which is even more dangerous as it won't crash but will return garbage."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The attempt to access memory through a pointer value that does not point to a valid object, leading to undefined execution states."
+                        }
+                    ]
+                },
+                {
+                    "id": 20,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is the purpose of the 'Symbol Table'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a big list used by the compiler and linker to keep track of variable names and function addresses."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The symbol table stores names of identifiers along with their types, scopes, and memory locations. It allows the linker to resolve external function calls between different files."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A data structure containing information about signatures, visibility (external/static), and storage offsets of symbols. Essential for debugging (Dwarf/PDB) and linking."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Compiler/linker structure mapping identifiers to their attributes and addresses."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like an 'Address Book' for the program. When the computer sees the name 'John', it looks in the address book (Symbol Table) to find where John actually lives in memory."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A dictionary mapping program identifiers to their respective memory addresses and types."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "When you compile with `-g`, the symbol table is kept in the final file so bug-finding tools (like GDB) can tell you 'Variable X caused the error' instead of just giving you a raw hex address."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a 'Name Tag' system so the computer knows which number belongs to which name you gave it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Stripping symbols (using `strip`) removes this table from production files, making them smaller and much harder for hackers to reverse-engineer."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An associative array created and maintained by a compiler in order to store information about the occurrence of various entities such as variable names and functions."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

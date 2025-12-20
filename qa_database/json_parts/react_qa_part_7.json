@@ -1,0 +1,592 @@
+{
+    "dataset": "react_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_7",
+            "questions": [
+                {
+                    "id": 61,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'React.memo' and when should you use it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`React.memo` is a 'Memory' tool for components. It tells React: 'If the data coming into this component hasn't changed, don't bother redrawing it'. It's great for making your website feel faster by skipping unnecessary work."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`React.memo` is a Higher-Order Component that memoizes the result of a component. React will skip rendering the component if its props are the same as they were during the last render, performing a shallow comparison by default."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`React.memo` implements a shallow reference check on props. It's the functional component equivalent of `PureComponent`. You should use it when you have a component that renders often with the same props and involves heavy logic or a deep child tree that is expensive to re-reconcile."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "What is the second argument of React.memo, and how can it be used to customize the re-rendering logic?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Asking for directions'. If you ask 'How do I get to the airport?' and the answer hasn't changed, the person doesn't need to look at a map again; they just repeat the answer they already know. It saves time and mental energy."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A performance tool that prevents a component from re-rendering unless its props change."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Don't wrap everything in `memo`! It has a cost—performing the shallow comparison itself takes time. It is best used for 'Terminal' or 'Leaf' components that are large and sit in frequently updating parent lists. If the props *always* change (like a timestamp), `memo` actually makes your app slower because it performs a check and then renders anyway."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "A way to tell React: 'Hey, I already draw this perfectly, don't do it again unless I give you new instructions!'"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To use `memo` effectively with objects or functions, you MUST pair it with `useMemo` and `useCallback` in the parent. Otherwise, the reference will change on every render, the shallow check in `memo` will fail, and the component will re-render anyway, rendering the optimization useless."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A higher-order component that optimizes functional components through memoization of previous render outcomes based on shallow prop identity."
+                        }
+                    ]
+                },
+                {
+                    "id": 62,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'useMemo' hook and how is it used?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`useMemo` is for saving the result of a 'Math Problem'. If you have to do a slow calculation, you use `useMemo` so React only does the math once and remembers the answer until the inputs actually change."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`useMemo` is a hook that memoizes the result of a computation and only re-calculates it when one of its dependencies changes. It is used to avoid expensive calculations on every render and to maintain referential identity for objects."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`useMemo` takes a creator function and a dependency array. It returns the result of the function. It is purely an optimization; React may choose to discard the memoized value and re-compute it if memory usage becomes an issue during the render phase."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Write an example where useMemo is used to filter a large list of 10,000 items based on a search term."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Writing down the answer to a long multiplication problem'. Instead of doing 987 times 654 every time someone asks, you do it once, write '645,498' on a sticky note, and just point to the note the next time you're asked."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A hook that caches the result of an expensive calculation between re-renders."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "One of the most powerful uses of `useMemo` is 'Referential Stability'. If you pass an object `{ name: 'React' }` as a prop to a memoized child, that child will re-render every time because a new object is created in memory. Wrapping it in `useMemo(() => ({ name: 'React' }), [])` ensures the *same* object reference is reused, preventing the child from re-rendering."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a 'Cheat Code' to help your website do heavy calculations much faster!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Overusing `useMemo` for simple math like `1 + 1` is an 'Anti-pattern'. The overhead of the hook itself and the memory allocation for the dependency array is often higher than just doing the math again. Reserve it for complex transformations, sorting big arrays, or reference stability for sub-trees."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A React hook that facilitates the memoization of a value derived through a pure function, dependent on a specific set of identifying inputs."
+                        }
+                    ]
+                },
+                {
+                    "id": 63,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'useCallback' and how does it differ from 'useMemo'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`useMemo` remembers a **Value** (like a number), while `useCallback` remembers a **Function** (like a button click handler). Both prevent React from making things from scratch every time it draws the screen."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Both hooks are used for memoization. `useMemo` returns a memoized **value**, while `useCallback` returns a memoized **function**. `useCallback(fn, deps)` is effectively a shorthand for `useMemo(() => fn, deps)`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`useCallback` maintains the referential identity of a function between re-renders. This is crucial when passing callbacks to child components that are optimized with `React.memo`, as it prevents the child from re-rendering due to a change in the function reference."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Why is it often necessary to use useCallback when passing a function into a useEffect dependency array?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "If `useMemo` is a 'Saved Document', `useCallback` is a 'Saved Phone Number'. You don't want to re-learn the phone number every morning. You just want to keep the same number so your friends (the child components) always know how to call you correctly."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A hook that prevents functions from being recreated on every re-render."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "When a function is defined inside a component, it is 're-created' in memory on every render. If that function is a dependency in another hook, that second hook will fire every time. `useCallback` stops this by returning the *original* function reference as long as the dependencies haven't changed. This is the cornerstone of preventing 'Update Cascades' in deep component trees."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "A way to make sure your 'Click' functions don't change their identity and confuse the rest of your app."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In large-scale applications with frequent updates (like a stock ticker), using `useCallback` is mandatory for any function passed across 'Component Boundaries'. Even if the child isn't memoized today, maintaining stable references is a best practice for future-proofing and easier profiling with React DevTools."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An optimization primitive that returns a stable referential instance of a given function across rendering iterations."
+                        }
+                    ]
+                },
+                {
+                    "id": 64,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Virtualization' (Windowing)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Virtualization is a trick for big lists. If you have 10,000 items, you don't actually put all 10,000 on the screen at once. You only draw the 10 that the user can see right now. As they scroll, you 'recycle' the items to show new data."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Virtualization (or Windowing) is a technique for rendering massive data sets efficiently. Instead of rendering all items in a list, we only render the subset currently visible in the user's viewport, significantly reducing memory usage and DOM nodes."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Windowing libraries like `react-window` or `react-virtualized` calculate the scroll position and dynamically mount/unmount components. This keeps the DOM tree lightweight ($O(1)$ relative to total items) and ensures that the browser remains responsive even with astronomical amounts of data."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "How does virtualization improve 'Time to Interactive' for a social media feed with thousands of posts?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Movie Projector'. Even though a movie has 100,000 frames of film, the projector only shows the ONE frame you are looking at right now. It would be impossible and wasteful to try and shine all the frames onto the wall at the same time."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Rendering only the visible items of a list to save memory and processing power."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The 'Hidden Cost' of large lists in React isn't just the draw time—it's the memory. 10,000 `div`s consume a massive amount of RAM and slow down the entire browser tab. Virtualization usually requires fixed heights for items to calculate scroll offsets correctly, though modern libraries support dynamic height measuring via 'ResizeObserver'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "A super-fast way to show millions of items without crashing the user's phone!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For maximum performance, virtualization should be combined with 'Memoization' of individual rows. This ensures that as the user scrolls, only the 'new' row coming into view is rendered, while others are simply shifted in position, avoiding any new component logic execution."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The optimization of large collection rendering by restricting the instantiation of DOM nodes to those present within the active viewport."
+                        }
+                    ]
+                },
+                {
+                    "id": 65,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "How do you avoid 'Anonymous Functions' in the render phase?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Try not to write `() => handleClick()` inside your tags. Instead, define the function at the top of the component. Writing it inside the tags creates a new function every single time the screen draws, which can slow things down."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Creating anonymous functions in JSX (e.g., `onClick={() => doSomething()}`) is a performance concern because a new function instance is created on every render. This breaks `React.memo` for the child receiving that function. The fix is to use `useCallback` or stable class methods."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Arrow functions in 'render' aren't just about overhead; they are about referential identity. To React, `{ prop: () => {} } !== { prop: () => {} }`. This inequality triggers a re-render of any sub-tree that uses that prop as an optimization checkpoint, leading to an 'update cascade'."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Identify the performance issue in `<Button onClick={() => setVal(val + 1)} />` and provide a refactored version."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Giving someone a new set of keys every time you see them'. Even if the keys open the same door, the person has to stop and check the new set every single time. It's much faster to just give them one reliable key that stays the same for life."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Defining functions outside of JSX to maintain a stable reference identity between renders."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "On modern computers, the cost of creating a function is tiny. The 'Real' problem is the child-re-render. If you have an expensive list of 100 items and you pass an anonymous function to each, all 100 items will re-render whenever the parent state changes, even if their data didn't change at all. This is 'Death by a thousand cuts' for your frame rate."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't write your code 'inside' the tags. Keep the tags clean and move the logic up to the top of the file!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In some cases like `map()`, you *must* pass an ID or argument. The best pattern here is 'Currying' or moving the function to the child component so the child handles the specific argument logic internally, keeping the parent's props stable."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The avoidance of ephemeral function instantiation within the return statement to preserve deterministic prop identity."
+                        }
+                    ]
+                },
+                {
+                    "id": 66,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Debouncing' and 'Throttling' in React?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Debouncing: Wait for the user to 'Finish' (like waiting for someone to stop typing before searching). Throttling: Limits speed (like only checking the mouse position once every second instead of 100 times)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Debouncing ensures that a function is only called after a certain amount of time has passed since the last event. Throttling ensures that a function is called at most once every specified time interval. Both are used to optimize performance for high-frequency events."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "In React, we typically wrap expensive state updates (like searching or window resizing) in these functions. Using `lodash.debounce` or `useMemo` with a custom debounce function ensures that we don't spam API calls or trigger 60 re-renders per second while the user is actively interacting."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Which technique (Debouncing or Throttling) is better suited for a search bar that fetches results from an API? Justify your choice."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Debouncing is 'Waiting for someone to stop speaking' before you reply. Throttling is 'Only allowing one person into a club every 5 minutes' no matter how many people are waiting in line outside."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Techniques to limit the frequency of expensive function calls triggered by events."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "When implementing these in React, you must be careful with 'Instance Persistence'. If you create a new debounced function inside a render, it will be a fresh copy every time and will never actually delay anything! You MUST wrap the debounced function in `useCallback` or `useMemo` so the *same* timer is shared across all renders of that component."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Two clever ways to stop your website from doing too much work at once!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "With Concurrent React (v18), `useTransition` and `useDeferredValue` are often superior to 'fixed-time' debouncing. They allow React to process the task 'as fast as possible' without blocking the user, rather than forcing an artificial and often jarring 300ms delay."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Strategies for controlling the rate of execution of event handlers to mitigate excessive CPU utilization and network overhead."
+                        }
+                    ]
+                },
+                {
+                    "id": 67,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'React Profiler'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The Profiler is a 'Diagnostic Tool' in Chrome. It shows you exactly which parts of your website are slow, which components are re-drawing too much, and how long each 'update' takes to show up on the screen."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The React Profiler records how often a component renders and the 'cost' of that render. It helps identify performance bottlenecks by visualizing which components took the longest to render and *why* a particular re-render occurred (e.g., 'Props changed' or 'State changed')."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Accessed via the React DevTools, the Profiler tracks the 'Commit Phase'. It provides 'Flame Charts' and 'Ranked Charts'. You can filter for 'Commit Thresholds' to find renders that took over 16ms, which indicates a dropped frame on a standard 60Hz monitor."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Explain the difference between 'Base duration' and 'Actual duration' in the React Profiler's ranked chart."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'An X-Ray' for your code. It lets you see under the 'skin' of your website to find the 'broken bone' (the slow function) that is making the whole body move slowly."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A developer tool used to measure and analyze the rendering performance of React components."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "One of the most useful settings in the Profiler is 'Record why each component rendered'. This will explicitly tell you: 'This component rendered because its parent rendered' or 'Because `context.user` changed'. This is the #1 way to discover that you need to add `React.memo` or clean up a Context provider."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The best way to see what's going on 'under the hood' of your React app!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The Profiler can also be used programmatically via the `<Profiler>` component. You provide an `onRender` callback that receives timing metadata, allowing you to track the performance of specific critical sub-trees in production and send telemetry back to your servers."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An instrumentation tool for collecting and visualizing telemetry data regarding component reconciliation and commit intervals."
+                        }
+                    ]
+                },
+                {
+                    "id": 68,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Tree Shaking' in React?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Tree shaking is a 'Cleanup' process during building. If you download a giant library but only use one small feature, tree shaking 'shakes the tree' until all the unused leaves (unused code) fall off, so the user only downloads the tiny part you actually used."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Tree Shaking is a form of dead-code elimination. It relies on the static structure of ES6 module syntax (`import` and `export`) to determine which pieces of the code go unused and then excludes them from the final production bundle."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Bundlers like Webpack and Rollup implement tree shaking at the static analysis phase. To be tree-shakeable, a library must be in ESM format. If a library uses CommonJS (`module.exports`), the bundler can't be 100% sure the code isn't used somewhere, so it includes everything, bloating the bundle."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Why is 'side-effects' in a package's package.json file relevant to successful tree-shaking?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Packing a suitcase for a trip'. Instead of throwing your whole closet into the bag, you only pack the 3 shirts you are actually going to wear. Your bag is much lighter and easier to carry (faster to download)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Automatically removing unused code from the final bundle during building."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "React itself is tree-shakeable. In React 18, if you don't use 'Transitions', that code is never sent to your users. When choosing third-party libraries (like Icon sets), you should check if they support tree-shaking. Importing icons like `import { Icon } from 'library'` is usually better than importing the whole set, as long as the library is built correctly."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "A smart way to keep your website file size small and fast!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Pure' markers like `/*#__PURE__*/` in intermediate build steps help bundlers identify that a function call has no side effects and is safe to remove if its result is unused. This results in far more aggressive and effective code elimination in complex utility libraries."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The static-analysis driven elimination of unreachable code facilitated by the deterministic nature of ECMAScript module imports."
+                        }
+                    ]
+                },
+                {
+                    "id": 69,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "The 'State Lifting' vs 'Context' performance trade-off.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Lifting state can cause 'Prop Drilling' (messy code). Context is cleaner, but if not careful, Context can make EVERY component on the page redraw even if they only needed one tiny piece of data. Lifting state is often actually faster if you can target it correctly."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "While Context simplifies data passing, it can cause excessive re-renders because any change to the provider's value triggers a re-render for ALL consumer components. 'Lifting state' is often more efficient because only the subtree receiving the new props is affected, allowing for better use of `React.memo`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The Context API lacks 'Fine-grained updates'. If a context value is an object `{ a: 1, b: 2 }`, a component only using `a` will still re-render when `b` changes. Solutions include splitting context into multiple smaller providers, or using external state libraries (like Zustand/Redux) that implement 'Selectors' to prevent unnecessary updates."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Explain why splitting a single large Context into multiple smaller Contexts is better for performance."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Lifting state up is 'Carrying a package up the stairs'. It's hard work (more code), but only the people on the stairs see you. Context is 'A Loudspeaker in the whole building'. It's easy for you to talk, but you disturb everyone in the whole building, even those who were sleeping (unnecessary re-renders)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Lifting state is more localized/efficient; Context is easier to write but riskier for re-renders."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The performance of Context can be improved by wrapping the child tree of the Provider in `useMemo`. This ensures that unless the props of the children *themselves* change, React won't re-render them just because the Provider's value changed. Only the components that explicitly call `useContext` will be affected."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Context is easier to use, but don't over-use it or your website will start to feel laggy."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Architectural Pattern: 'Colocated Context'. Instead of one Global Provider, place Providers as low as possible in the tree. This limits the 'Blast Radius' of a state change to only the specific branch of the app that needs it, combining the cleanliness of Context with the performance of lifted state."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The architectural balance between the prop-injection complexity of state-lifting and the broadcast-reconciliation overhead of the Context API."
+                        }
+                    ]
+                },
+                {
+                    "id": 70,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'why-did-you-render' library?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "This is a helpful tool that shouts at you in the console: 'Hey! This component just redrew itself but nothing actually changed!' It's the best way to find 'Stupid' re-renders that are slowing down your app for no reason."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`why-did-you-render` (WDYR) is a library that monkey-patches React to notify you about avoidable re-renders. It's particularly useful for detecting 'Same-value different-reference' issues, where a component re-renders because an identical object or function was recreated."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "WDYR performs a deep comparison of props whenever a component re-renders. If the deep comparison shows no change but the shallow comparison (which React uses) showed a change, it logs a warning. This is invaluable for debugging why your `React.memo` optimizations are failing."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "How does 'why-did-you-render' detect re-renders that are caused by unstable object references?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Helpful Coach' watching your training. If you keep doing the same exercise over and over without getting better, the coach blows their whistle and says: 'Stop! You're wasting energy! Do it a different way!'"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A debugging tool that alerts you to unnecessary or avoidable component re-renders."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In large teams, WDYR is often enabled temporarily during 'Optimization Sprints'. It can be configured to watch specific 'Suspect' components. It helps junior developers understand that `style={{ color: 'red' }}` defined inline in a prop is actually creating a 'new object' on every render, which is a common but subtle performance killer."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "A must-have tool for making sure your website is as fast as it can possibly be!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To avoid noise, WDYR should be disabled in production and strictly limited to development builds. It can be integrated into a CI/CD pipeline to flag components that exceed a certain 'Wasteful Render' threshold, ensuring that performance doesn't degrade as new features are added."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An auxiliary instrumentation library that identifies and logs redundant reconciliation cycles caused by reference identity mismatch."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

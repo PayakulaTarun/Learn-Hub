@@ -1,0 +1,592 @@
+{
+    "dataset": "data-science_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_7",
+            "questions": [
+                {
+                    "id": 61,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Hyperparameter Tuning' (Grid Search vs Random Search)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Hyperparameter tuning is finding the 'best settings' for your model (like the number of trees). Grid search tries every possible combination, while Random search picks settings at random. Surprisingly, Random is often better and faster."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Hyperparameters are external settings not learned from the data. Grid Search is an exhaustive search through a manually-specified subset of the hyperparameter space. Random Search samples parameters from a distribution. Random Search is generally more efficient because it doesn't waste time on unimportant parameters, covering the space more broadly."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Automated model selection. Grid search suffers from the 'Curse of Dimensionality' as the number of combinations grows exponentially. Random search (Bergstra & Bengio, 2012) identifies the most influential hyperparameters more effectively by trying different values for each parameter in every trial."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Methods for choosing a set of optimal hyperparameters for a learning algorithm. Grid search: exhaustive. Random search: probabilistic."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Finding the best Temperature and Time to bake a cake'. Grid search is trying exactly 300, 310, 320 degrees. Random search is throwing darts at a board of possible times and temps. Often, the 'Perfect' temp is 312 degrees, which the Grid might miss but the Darts might hit."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Optimizing model settings through exhaustive or stochastic search strategies."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Beyond these two is 'Bayesian Optimization' (using tools like Optuna or Hyperopt). It builds a 'surrogate model' of the score and uses it to intelligently pick the *next* setting to try, avoiding zones that have failed in the past."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't just use the 'Default' settings. Spending time on tuning can often turn a 'Good' model into a 'Winning' one."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In Deep Learning, we also use 'Hyperband', which starts many models with different settings but 'Kills' the poor-performing ones early, focusing all resources on the most promising ones (Successive Halving)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The problem of choosing a set of optimal hyperparameters for a learning algorithm."
+                        }
+                    ]
+                },
+                {
+                    "id": 62,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Distributed Training' (Data Parallelism vs Model Parallelism)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Distributed training is using multiple computers/GPUs to train a model. Data Parallelism puts the same model on all GPUs but gives them different data. Model Parallelism splits a giant model into pieces (layers) and puts different pieces on different GPUs."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Distributed training is necessary for LLMs. In Data Parallelism, the dataset is split, and each worker computes gradients locally. Gradients are then averaged. In Model Parallelism, the network is too big for one GPU's VRAM, so we split the weights across multiple devices."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Scaling deep learning. Data Parallelism (DP/DDP) uses 'All-Reduce' algorithms to synchronize gradients after each step. Pipeline Parallelism (a type of model parallelism) handles deep stacks by processing micro-batches across different stages to avoid idle GPU time (bubbles)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Systems for parallelizing the training of ML models across multiple nodes. Categories: Data parallel and Model parallel."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Data Parallelism is like '10 Chefs all making the same recipe' from separate bowls of ingredients. Model Parallelism is like an 'Assembly Line'—Chefs 1-3 make the dough, 4-6 add the sauce, and 7-9 bake it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Splitting data or model architecture across multiple compute units for speed."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The main bottleneck in distributed training isn't compute, it's 'Network Latency'. The time it takes for GPUs to share their learned weights (Gradients) can sometimes be longer than the actual math, requiring high-speed links like NVLink."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "You only need this when your dataset is measured in Terabytes or your model has Billions of parameters."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "A new hybrid is 'ZeRO' (Zero Redundancy Optimizer) used in DeepSpeed, which partitions the model states (weights, gradients, optimizer states) across GPUs to provide the memory benefits of model parallelism with the speed of data parallelism."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A set of paradigms for using multiple compute clusters to increase the training speed of machine learning models."
+                        }
+                    ]
+                },
+                {
+                    "id": 63,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Pruning' and 'Quantization' in Deep Learning?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Pruning is 'cutting off' the least useful neurons in a network to make it smaller. Quantization is lowering the precision of numbers (like changing 3.14159 to 3.1) so the model uses less memory and runs faster on phones."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "These are model compression techniques. Pruning removes redundant weights with low magnitudes. Quantization converts 32-bit floating point weights into 8-bit integers (INT8). Both drastically reduce model size and latency with minimal impact on accuracy."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Inference optimization. Weight pruning induces 'Sparsity' in matrices. Quantization-Aware Training (QAT) simulates low-precision errors during training so the model learns to be robust to the rounding noise that occurs during deployment."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Techniques to reduce the complexity and size of artificial neural networks. Pruning: synapse/neuron removal. Quantization: bit-depth reduction."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Pruning is like 'Removing unnecessary branches from a tree' to keep it healthy. Quantization is like 'Downsampling a High-Def movie to fit on a thumb drive'—it looks slightly worse if you squint, but it's much easier to carry."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Reducing network size by deleting weights and reducing bit-precision."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Quantization is vital for 'Edge AI' (running AI on chips with no fans). By using INT8, we can use 'Vector Instructions' on standard CPUs that are much faster than floating-point math, allowing models to run in real-time on smart cameras."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your AI is too 'Heavy' to run on a phone, use these tricks. You can often make a model 10x smaller without losing much quality."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The 'Lottery Ticket Hypothesis' suggests that inside every large network, there is a tiny 'winning' sub-network that could have reached the same accuracy if trained from scratch. Pruning's ultimate goal is to find that ticket."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Process of reducing the redundant parameters in a model (pruning) and reducing the precision of the remaining parameters (quantization)."
+                        }
+                    ]
+                },
+                {
+                    "id": 64,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Early Stopping'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Early stopping is a rule that says 'Stop training once the model stops improving on the test data'. It prevents the model from just 'memorizing' the training data (overfitting)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Early stopping is a form of regularization. We monitor the 'Validation Loss' during training. When validation loss stops decreasing or starts to rise (even if training loss is still going down), we stop the process to preserve the best generalization performance."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Optimization regularization. It treats the number of epochs as a tunable hyperparameter. We use a 'patience' parameter—the number of epochs to wait before concluding that no further improvement will occur."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A cross-validation strategy used to prevent overfitting by terminating training before the model starts learning noise in the training set."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Studying for an Exam'. At first, you learn new things (Training + Validation improvement). After 10 hours, you start just memorizing specific page numbers (Overfitting). Early Stopping is the alarm that says 'Go to sleep, you're not actually learning anymore!'"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Halting the training process to avoid overfitting based on validation trends."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is particularly useful when you don't know the exact number of iterations needed. It saves 'Compute Time' and money by cutting off unnecessary work, making experiments much faster for Data Scientists."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "In almost every library (Keras, PyTorch, XGBoost), you should ALWAYS include an early stopping callback. It's the easiest way to improve your score."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For Bayesian models or models with stochastic noise, validation loss can be 'jumpy'. We often use a 'smoothed' loss or 'lookahead' validation to ensure we don't stop prematurely on a temporary bad batch."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A form of regularization used to avoid overfitting when training a learner with an iterative method."
+                        }
+                    ]
+                },
+                {
+                    "id": 65,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Batch Normalization'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Batch normalization re-scales the data between the layers of a neural network. It keeps the numbers stable, which makes the model train much faster and more reliably."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Batch Normalization normalizes the activation of a layer for each 'mini-batch'. It reduces 'Internal Covariate Shift'—where the distribution of inputs to a layer changes as previous layers update their weights. This allows for higher learning rates and acts as a minor regularizer."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Calculated as (x - μ) / σ, followed by a learnable scaling (γ) and shifting (β). During inference, it uses 'running averages' of statistics captured during training. It reduces dependency on precise weight initialization."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A method used to make training of artificial neural networks faster and more stable through normalization of the input layer by re-centering and re-scaling."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Aligning all the runners at the start of every lap'. Without it, some runners might get way ahead or fall way behind in their 'magnitude'. Batch Norm pulls everyone back to a 'Standard' range before they start the next layer."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Stabilizing neural networks by normalizing layer outputs periodically."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Batch Norm is slightly controversial because it makes the output of an example dependent on 'who else is in the batch'. For tasks like 'Image Generation' or very small batch sizes, 'Layer Normalization' or 'Group Normalization' are often preferred instead."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your deep learning model is 'Crashing' or the weights are turning into infinity, try adding Batch Normalization layers. Usually, it's a magic fix."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Recent research suggests Batch Norm works not because of 'Covariate Shift' (as the original paper claimed) but because it 'Smooths the Loss Landscape', making the gradient more predictable and the optimizer's job much easier."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A technique for improving the speed, performance, and stability of artificial neural networks."
+                        }
+                    ]
+                },
+                {
+                    "id": 66,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Cold vs Hot' data in storage optimization?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Hot data is what you need 'right now' (like today's sales). Cold data is old stuff you rarely look at (like sales from 10 years ago). You keep Hot data on fast, expensive drives and Cold data on cheap, slow drives to save money."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Data Tiering. 'Hot' data requires low latency and high IOPS for frequent access. 'Cold' data (archival) is rarely accessed and can be stored on cheaper object storage (like AWS S3 Glacier). Data Scientists should move old project logs to cold storage to manage cloud costs."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Multi-temperature data management. Hot: SSD/RAM. Warm: HDD. Cold: Tape/Offline/Cold-Object. Automating this 'Lifecycle policy' is critical for scaling data lakes to Petabyte levels without linear cost growth."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The classification of data based on access frequency. Hot: Frequently accessed. Cold: Rarely accessed."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Hot data is 'The money in your pocket' (fast access). Warm data is 'The money in your ATM' (takes 1 minute). Cold data is 'The gold bar in a bank vault' (takes 2 days to get, but very cheap/safe to store)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Categorizing data by access speed requirements for cost efficiency."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Using 'Columnar storage' (like Parquet) for warm/cold data is excellent for Data Science because it allows you to query just the 'columns' you need without reading the entire file, acting as a middle ground for cost and speed."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Most cloud companies will charge you 90% less if you label your old data as 'Cold'. It's a huge win for your budget."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In 'Real-time Analytics', we use 'In-memory' databases (like Redis) for the 'Red Hot' data, and then 'Flush' it to a permanent database once it 'Cools down' (e.g. after the user session ends)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A data management strategy that assigns data to different storage media based on the importance and frequency of access."
+                        }
+                    ]
+                },
+                {
+                    "id": 67,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Curriculum Learning'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Curriculum learning is training an AI by giving it 'Easy' examples first and then slowly making them harder as the AI gets smarter."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Curriculum Learning is inspired by how humans learn. Instead of feeding the model random samples, we present data in an increasing order of 'Difficulty'. This helps the model find a better starting point and can lead to faster convergence and better generalization."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Staged training. It requires a 'Scoring function' to rank data difficulty and a 'Pacing function' to decide when to introduce more complex samples. It often results in finding a 'better' local minimum in the non-convex loss surface of deep networks."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A training strategy where the model is first presented with simpler concepts and then gradually with more complex ones."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "You don't teach a baby 'Calculus' on day one. You teach them '1 + 1', then '10 x 10', and THEN Calculus. Curriculum learning is doing exactly that for a Neural Network."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Ordering training samples from simple to complex to improve learning speed."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "For Image models, this might mean starting with 'High Resolution' clear images and then adding 'Blurry' or 'Noisy' ones. For NLP, it might mean starting with short 5-word sentences and moving to 1,000-word essays."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your model is struggling with a hard dataset, try sorting the data. Let it gain some 'Confidence' on the easy ones first!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Self-Paced Learning' is an evolution of this where the model itself decides which samples are 'easy' or 'hard' based on its current loss, rather than a human defining the difficulty manually."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A strategy for training a machine learning model by presenting it with data in increasing order of complexity."
+                        }
+                    ]
+                },
+                {
+                    "id": 68,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Profiling' in Data Science code?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Profiling is 'measuring' your code to see exactly which line is slow and which line is using too much memory. It's how you know what to fix to make your program 100x faster."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Profiling involves using tools (like Python's `cProfile` or `line_profiler`) to identify bottlenecks in your analysis pipeline. A 'Hot Spot' is a small piece of code that consumes the majority of execution time. Optimizing these spots (e.g. by vectorizing them) gives the biggest performance boost."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Execution analysis. It differentiates between 'CPU bound' tasks (math) and 'I/O bound' tasks (reading files). Memory profiling (`memory_profiler`) is also essential to detect 'Memory Leaks' where a dataframe isn't being deleted after use."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The dynamic analysis of programs that measures, for example, the memory or time complexity of a program, the usage of particular instructions, or the frequency and duration of function calls."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Putting trackers on every car in a city'. Instead of just knowing there is a 'traffic jam', you can see exactly which specific intersection is the problem."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Analyzing code execution to identify and eliminate performance bottlenecks."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Many Data Scientists make the mistake of 'Premature Optimization'—trying to make every single line fast. Profiling teaches you that 99% of your lines don't matter; you should only optimize the 1% that is actually slowing everything down."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Before you buy a more expensive computer, use a Profiler. Your code might just be 'Wasting time' on something silly like printing to the screen in a loop."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For GPU code, 'NVIDIA Nsight' or 'PyTorch Profiler' allow you to see the timing of 'Kernels' on the GPU, helping you find where 'CPU-to-GPU transfer' is the bottleneck."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A form of dynamic program analysis that measures various properties of a program's execution."
+                        }
+                    ]
+                },
+                {
+                    "id": 69,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Precision-Recall Trade-off'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a balance. If you want to be 'Super Sure' about your results (High Precision), you'll miss a lot of them (Low Recall). If you want to catch 'Everything' (High Recall), you'll catch a lot of garbage too (Low Precision)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Increasing the decision threshold of a classifier makes it 'stricter', which increases Precision (less false positives) but decreases Recall (more false negatives). Decreasing the threshold does the opposite. The choice depends on the business cost of a 'False Alarm' vs a 'Missed Case'."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Navigation of the PR characteristic curve. The F1-Score (harmonic mean) provides a single metric to balance these, but in 'Safety-critical' systems, one often optimizes for Recall @ Fixed Precision."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The relationship where an increase in precision leads to a decrease in recall, and vice-versa, when changing model thresholds."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Think of a 'Police Dragnet'. If they arrest *everyone* on the street, they definitely caught the thief (100% Recall) but arrested 1,000 innocents (0% Precision). If they only arrest people with the exact fingerprints, they catch the thief and no innocents (100% Precision) but might miss him if he wore gloves (0% Recall)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The inverse relationship between being right and catching every instance."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In 'Cancer Screening', we favor Recall (high sensitivity). A 'False Alarm' leads to a stressful but safe second test. A 'Miss' (False Negative) leads to death. In 'Spam Filters', we favor Precision. A 'False Alarm' means you miss an important email. A 'False Negative' is just a tiny annoyance."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "You can't have it all! You must decide which 'Mistake' is more expensive for your specific project."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This trade-off is often visualized using a 'Prevision-Recall Curve'. The 'Average Precision' (Area under the Curve) is a single number that summarizes how well the model handles this trade-off across all possible thresholds."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The compromise between precision and recall in a classification task."
+                        }
+                    ]
+                },
+                {
+                    "id": 70,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Stochastic Gradient Descent' (SGD) vs Batch GD?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Batch GD looks at the *whole* data before taking 1 step. SGD looks at just *1* random item and takes a step. SGD is much faster and can 'jump out' of bad spots, but it's much more 'jumpy' and chaotic."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Batch GD (Full Batch) uses the entire dataset to compute one gradient update, which is slow for big data. SGD uses a single sample. 'Mini-batch GD' is the compromise: it uses a small random slice (e.g. 32 or 64 samples). It combines the stability of Batch with the speed and noise-tolerance of SGD."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Variance of the gradient estimate. SGD introduces 'Noise' into the optimization, which acting as a regularizer, helps avoid 'local minima' or saddle points. Batch GD is guaranteed to converge to the minimum for convex functions but is computationally infeasible for datasets larger than VRAM."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Optimization algorithms. Batch: compute gradient on all points. Stochastic: compute on one random point. Mini-batch: compute on a subset."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Batch GD is like '1,000 people debating for an hour' before taking 1 step. SGD is like 'One person running forward immediately'. The person might run the wrong way for a second, but they'll reach the destination while the 1,000 people are still talking."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Individual vs. collective weight updates in model optimization."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The 'Noise' in SGD is actually a feature! It allows the model to 'bounce' out of sharp local minima that might overfit, eventually settling into 'broad' minima that generalize better to new data."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always use 'Mini-batch' (usually 32 or 64). It's the 'Sweet Spot' that every professional Data Scientist uses."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Sophisticated optimizers like 'Adam' or 'RMSprop' adapt the learning rate for *each* parameter based on the history of gradients, which further stabilizes the 'jumpiness' of SGD while keeping its speed."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An iterative method for optimizing an objective function with suitable smoothness properties."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

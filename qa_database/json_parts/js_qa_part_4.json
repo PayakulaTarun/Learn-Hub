@@ -1,0 +1,592 @@
+{
+    "dataset": "JavaScript_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_4",
+            "questions": [
+                {
+                    "id": 31,
+                    "topic": "DOM Manipulation",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between `textContent` and `innerHTML`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`textContent` gets only the text; `innerHTML` gets the text and any HTML tags inside."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`textContent` returns the raw text content of all nodes, whereas `innerHTML` returns the HTML markup. `textContent` is safer because it prevents XSS (Cross-Site Scripting) by not parsing HTML tags, and it is generally faster as it doesn't trigger a reflow of the DOM."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`textContent` retrieves the text of the node and its descendants without parsing HTML entities. `innerHTML` invokes the HTML parser to convert a string into a DOM tree (setter) or serialize a DOM tree into a string (getter)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "textContent returns text only; innerHTML returns text including HTML tags."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`textContent` is like reading the script of a play. `innerHTML` is like watching the play with all the sets and costumes (HTML tags) included."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Raw text (`textContent`) vs HTML-parsed content (`innerHTML`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A key difference is that `innerText` (similar to textContent) is aware of CSS styling (it won't return hidden text), while `textContent` returns all text regardless of visibility. `innerHTML` allows for dynamic HTML creation but is a security risk if the data is user-provided."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use `textContent` when you just want to change words. Use `innerHTML` if you want to add new bold or italic tags."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modification of `innerHTML` destroys all existing child nodes and rebuilds them, which can be computationally expensive compared to targeted DOM manipulation using `createElement`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "textContent property of the Node interface represents the text content of a node and its descendants. innerHTML gets or sets the HTML markup contained within the element."
+                        }
+                    ]
+                },
+                {
+                    "id": 32,
+                    "topic": "Events",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Event Delegation' and why is it useful?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's putting one listener on a parent instead of many on every child."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Event Delegation is a pattern where you attach a single event listener to a parent element to manage events for all current and future child elements. It leverages 'Event Bubbling' to detect which child was clicked via `event.target`. It improves performance and simplifies memory management."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A mechanism utilizing the bubbling phase of the DOM event flow. Instead of registering handlers on individual leaf nodes, a handler is registered on a common ancestor to intercept bubbled events."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Managing events for child elements via a single parent listener using bubbling."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Instead of every student in a class raising their hand to tell the principal something (multiple listeners), they tell their teacher (parent listener), who then informs the principal."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Parent-level handling of child events via bubbling."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "It solves the problem of dynamically added elements. If you add a new list item to a `<ul>`, it automatically inherits the click behavior from the parent's delegated listener without needing a new `addEventListener` call."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you have 100 buttons, don't give each one a listener. Give the box holding them one listener instead."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Requires manual filtering using `target.matches()` or checking `target.tagName` to ensure the correct child triggered the logic."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Event delegation allows you to avoid adding event listeners to specific nodes; instead, the event listener is added to one parent."
+                        }
+                    ]
+                },
+                {
+                    "id": 33,
+                    "topic": "Events",
+                    "difficulty": "Advanced",
+                    "question": "What is the difference between 'Event Bubbling' and 'Event Capturing'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Bubbling goes up; Capturing goes down."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "They are the two phases of event propagation. Bubbling travels from the target element up to the root (`window`). Capturing travels from the root down to the target element. By default, `addEventListener` uses the bubbling phase."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Propagation phases. Capturing (Phase 1) is sink-to-target. Bubbling (Phase 3) is target-to-source. You can activate capture mode by passing `{ capture: true }` as the third argument to `addEventListener`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Bubbling: Target to Root. Capturing: Root to Target."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Capturing is like an eagle diving from the sky to catch a fish (target). Bubbling is like air bubbles rising from a diver (target) back to the surface (root)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Target-to-Root (Bubbling) vs Root-to-Target (Capturing)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Strictly speaking, there is also a 'Target Phase'. If you have listeners on both, the sequence is: Capturing -> Target -> Bubbling. You can stop both with `event.stopPropagation()`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "When you click a button, the website checks the 'Outer Box' first (Capture), then the button (Target), then tells the 'Outer Box' you clicked something (Bubble)."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Capturing is rarely used but helpful for intercepting events before they reach a specific component (e.g., global UI logging)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Event bubbling and capturing are two ways of event propagation in the HTML DOM API."
+                        }
+                    ]
+                },
+                {
+                    "id": 34,
+                    "topic": "JSON",
+                    "difficulty": "Intermediate",
+                    "question": "What do `JSON.parse()` and `JSON.stringify()` do?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`parse` turns text into an object; `stringify` turns an object into text."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`JSON.parse()` converts a JSON-formatted string into a JavaScript object. `JSON.stringify()` converts a JavaScript object into a JSON-formatted string. These are essential for sending and receiving data over HTTP."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Serialization and Deserialization. `stringify` serializes a JS object/value to a UTF-16 JSON string. `parse` deserializes a JSON string into a JS data structure."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "parse: String to Object. stringify: Object to String."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`stringify` is like packing a suitcase (turning your bedroom stuff into a transportable box). `parse` is unpacking that suitcase back into your bedroom."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "JS-Object ↔ JSON-String conversion."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Limitations: `stringify` will strip out functions, `undefined`, and Symbols. It also converts `Date` objects to ISO strings, which `parse` will NOT automatically turn back into Date objects."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use `parse` when you get data from the internet. Use `stringify` when you want to send data to the internet."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Both take optional 'replacer' or 'reviver' functions for fine-grained control over how specific properties are processed."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "JSON.parse() deserializes a JSON string. JSON.stringify() serializes a JavaScript object."
+                        }
+                    ]
+                },
+                {
+                    "id": 35,
+                    "topic": "Modules",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between a 'Named Export' and a 'Default Export'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Named exports need curly braces; Default exports don't."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A module can have multiple Named exports but only one Default export. Named exports must be imported using their exact name in curly braces (`import { x } from ...`). Default exports can be imported with any name and without braces."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Export types in ESM. Named exports provide multiple exports per module using specific identifiers. Default export allows a single fallback export value."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Named: many per file, uses braces. Default: one per file, no braces."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Named exports are like items on a menu (you must ask for them by name). Default export is the 'Chef's Special' (you just get it when you ask for 'food' from that file)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Specific identifiers (`{ }`) vs One primary export per file."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Named exports are better for tree-shaking (removing unused code). Default exports can be harder to search for in large codebases because they can be renamed during import."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use curly braces for 'named' ones. Don't use them for the 'default' one."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can mix both in the same module, but it is often considered a confusing pattern: `import DefaultVal, { NamedVal } from './module.js'`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Named exports are explicitly named while default exports are specified as the module's main export."
+                        }
+                    ]
+                },
+                {
+                    "id": 36,
+                    "topic": "Timers",
+                    "difficulty": "Advanced",
+                    "question": "Does `setTimeout(func, 0)` execute the function immediately?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "No, it waits until the rest of the current code is finished."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "No. It places the function in the 'Task Queue' (Macrotask). It will only execute after the Current Call Stack is empty. Effectively, it defers the code to the next cycle of the Event Loop."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Asynchronous deferral to the next task event. It yields control back to the event loop. The 0ms is actually a minimum clamp (typically 4ms by spec for nested timers)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "No, it executes after the call stack is empty."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like telling a busy worker 'Do this next!' They won't stop what they're doing right now, but they'll do it as soon as they finish their current task."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Deferred until the call stack is clear."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Useful for breaking up long-running synchronous tasks to allow the browser to remain responsive/render UI frames."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It means 'Wait 0 seconds', but in reality, JavaScript finishes everything else on its plate first."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Compare this to `requestAnimationFrame` which waits for the next screen paint, or `Promise.resolve()` which cuts in line before the timer."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "setTimeout(func, 0) schedules the provided function for the next possible macrotask."
+                        }
+                    ]
+                },
+                {
+                    "id": 37,
+                    "topic": "Practical Usage",
+                    "difficulty": "Architect-Level",
+                    "question": "What is the difference between 'Debouncing' and 'Throttling'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Debounce waits for silence; Throttle limits the speed."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Debouncing ensures a function is only called once after a specified period of inactivity (e.g., search input). Throttling ensures a function is called at most once every X milliseconds (e.g., window resize/scroll)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Debounce: Resets timer on every call (Trailing/Leading). Throttle: Guarantees execution at regular intervals."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Debounce: Execute after delay. Throttle: Execute at fixed intervals."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Debounce is an elevator: it waits for the last person to get on before closing. Throttle is a revolving door: it only lets one person through every few seconds."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Wait for stop (Debounce) vs Maximum rate (Throttle)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Essential for performance optimization in browser events. Without these, a scroll listener might fire 100 times a second, crashing the UI."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Debouncing is for typing in search boxes. Throttling is for heavy scrolling."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Lodash provides robust implementations for both, including options for 'leading' (run first) or 'trailing' (run last) edges."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Debouncing delays invoking a function until after wait milliseconds have elapsed since the last time it was invoked. Throttling restricts the number of times a function can be triggered within a specific time period."
+                        }
+                    ]
+                },
+                {
+                    "id": 38,
+                    "topic": "Practical Usage",
+                    "difficulty": "Advanced",
+                    "question": "How do you handle errors in a `fetch()` request?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Check if `response.ok` is true; catching errors only catches network failure."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`fetch()` only rejects if there is a network failure. For HTTP errors (like 404 or 500), it 'succeeds'. You MUST manually check `response.ok` or `response.status` after the promise resolves."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The fetch promise resolves even if the server responds with an error status code. Network errors trigger `.catch()`; logic errors require checking the `Response` object properties."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Check response.ok; fetch does not reject on HTTP error codes."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Fetch is like a mailman. He 'succeeds' if he delivers the letter, even if the letter says 'I hate you!' (404 Error). He only 'fails' if his truck breaks down (Network Error)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Manual check of `response.ok` required."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Commonly used with `try/catch` and `async/await`. Without checking `.ok`, your code might try to parse non-existent JSON from a 404 page, causing a crash later."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "When you get an answer back, check if it was 'OK'. If not, treat it as a mistake."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern patterns often involve a wrapper function that throws an error if `.ok` is false to unify error handling."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Fetch API requires explicitly checking the 'ok' property of the response object to verify request success."
+                        }
+                    ]
+                },
+                {
+                    "id": 39,
+                    "topic": "Practical Usage",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Object Destructuring' and why is it used?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a shortcut to pull properties out of an object and turn them into variables."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Destructuring is an ES6 feature that allows you to extract data from objects (or arrays) into distinct variables using a syntax that mirrors the object literal. It makes code cleaner and more concise."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Pattern matching for variables. Syntax: `const { name, age } = person;` replaces `const name = person.name; ...`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Extracting object properties into variables."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like having a box of tools and just grabbing the hammer and screwdriver you need, instead of taking the whole box every time."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Shorthand for extracting object properties."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Supports default values, nested destructuring, and renaming: `const { name: fullName = 'Guest' } = user;`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Instead of writing `user.name` ten times, you can just pull `name` out once at the top."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Extremely common in React for props destructuring: `const MyComponent = ({ title, date }) => ...`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables."
+                        }
+                    ]
+                },
+                {
+                    "id": 40,
+                    "topic": "Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "What are the benefits of using `'use strict'` mode?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It stops you from doing 'bad' JavaScript things that cause bugs."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "'Strict Mode' catches common coding bloopers. It prevents the creation of accidental global variables, throws errors for 'unsafe' actions (like deleting non-deletable properties), and disables confusing features like `with`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Opt-in restricted variant of JS. Changes silent errors into throw errors. Fixes mistakes that make it difficult for JS engines to perform optimizations."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Prevents silent errors and accidental globals."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a spell-checker for your code logic. It marks mistakes that would normally just create weird behavior."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Enforces cleaner, safer code execution."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Modern ES6 Modules and Classes are in 'Strict Mode' by default, making the explicit directive less necessary in modern codebases."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a safety setting that yells at you if you make a silly mistake."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "It also simplifies how `this` works, setting it to `undefined` in functions instead of the global `window` object."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Strict mode makes it easier to write 'secure' JavaScript by changing previously accepted 'bad syntax' into real errors."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,594 @@
+{
+    "dataset": "C-programming_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_5",
+            "questions": [
+                {
+                    "id": 41,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Memory Alignment' and 'Padding' in C structs?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "CPUs read memory in chunks (like 4 or 8 bytes). To make reading faster, the compiler adds 'empty space' (padding) between variables in a struct."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Memory alignment ensures that data types are stored at addresses that are multiples of their size. To maintain this alignment, the compiler inserts padding bytes between struct members, which can increase the total size of the struct."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Alignment requirements for primitives (e.g., a 4-byte int must start on a 4-byte boundary). The compiler inserts padding to satisfy these CPU architectural constraints. Total struct size is also padded to be a multiple of its largest member's alignment."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Insertion of extra bytes to satisfy hardware alignment requirements for data fetching efficiency."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Packing a Shipping Container'. Even if a box is small, it has to be placed in a grid. If it doesn't fit the grid perfectly, you leave a gap (padding) so the next box starts at the right grid line."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Compiler-inserted gaps to align data types with CPU word boundaries for performance."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "You can reduce padding by ordering struct members from largest to smallest. A struct with `(char, int, char)` might be 12 bytes, whereas `(int, char, char)` might only be 8 bytes because the smaller types can 'snuggle' together without needing extra gaps."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the reason why adding up the size of every item in a box sometimes equals a bigger number than you expected—the 'packaging material' takes up space too."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In performance-critical code, you can use `__attribute__((packed))` (in GCC) to remove all padding, but this may cause a significant slowdown or even a crash on architectures that don't support unaligned access."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The structural organization of data in memory that satisfies hardware-imposed address granularity constraints."
+                        }
+                    ]
+                },
+                {
+                    "id": 42,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What are 'Dangling Pointers' and 'Wild Pointers'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A wild pointer is one that hasn't been initialized, while a dangling pointer points to memory that was already deleted (freed)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A Wild Pointer is a pointer that points to a random memory address because it wasn't set to NULL or an actual variable. A Dangling Pointer is a pointer that still 'holds' an address, but the memory at that address has been freed."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Wild pointer: Uninitialized pointer variable containing garbage. Dangling pointer: Reference to an object that has been deallocated (stale reference). Both lead to undefined behavior or crashes."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Wild (uninitialized); Dangling (invalid memory address after deallocation)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Wild pointer is a 'Blank Map' where someone just guessed an address. Dangling pointer is a map to a 'House that was demolished'—the address still exists, but the house is gone."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Wild is uninitialized; Dangling points to deallocated memory."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "To prevent dangling pointers, always set a pointer to `NULL` immediately after calling `free(ptr)`. To prevent wild pointers, always initialize them: `int *p = NULL;` at declaration."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "They are 'Broken Links' for your computer's memory. If you try to follow them, your program will likely break."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Returning the address of a local function variable (stack variable) to the caller creates a dangling pointer, as that memory is repurposed as soon as the function returns."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Pointer states characterized by the lack of association with a valid, accessible object."
+                        }
+                    ]
+                },
+                {
+                    "id": 43,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Volatile' keyword in C?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It tells the compiler, 'Hey, this variable can change at any time from outside this code, so don't try to optimize it!'"
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Volatile is a type qualifier that informs the compiler that the variable's value can be changed by external factors (like hardware or other threads). It prevents the compiler from caching the value in a CPU register."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Suppresses compiler optimizations for a specific memory location. Every read/write must be performed directly on memory, ensuring consistency for shared variables or memory-mapped I/O."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Keyword used to prevent compiler optimization on variables that can change unexpectedly."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Stock Prices'. You can't just write down the price once and assume it's true for the rest of the day—you have to check the actual screen (memory) every single time you want to know the value."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Prevents the compiler from optimizing or caching a variable's value."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Without volatile, a loop like `while(!flag);` might be turned into an infinite loop by the compiler because it sees that `flag` isn't changed *inside* the loop. Volatile forces it to re-fetch `flag` from memory every iteration."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use this when you have a piece of data that can be changed by a sensor or a different part of the computer without your main code knowing about it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Volatile is NOT a thread-synchronization primitive. It doesn't guarantee atomicity or memory barriers; for that, you must use mutexes or C11 atomic types."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A qualifier intended to indicate that an object can be modified in ways unknown to the compiler."
+                        }
+                    ]
+                },
+                {
+                    "id": 44,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "Understanding 'Opaque Pointers' (Handles).",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "An opaque pointer is a pointer to a struct that is declared but not defined in the header, so users can't see what's inside it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Opaque pointers allow for 'Information Hiding' or Encapsulation in C. You provide a pointer to a struct but keep the struct definition private in the `.c` file, essentially creating a 'Handle' for an object."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Application of 'Forward Declaration'. Users handle the pointer (e.g., `typedef struct MyStruct* MyHandle;`), but cannot dereference it, ensuring they only interact through API functions."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Technique for encapsulation using pointers to undefined structures."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Ticket' for a cloakroom. You have the ticket (the pointer), but you don't know the layout of the back room (the struct). You just hand the ticket to the attendant (the API) to get your coat."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A pointer to an undefined structure used to hide implementation details."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is how many professional libraries (like SDL or the OS kernel) work. It prevents users from accidentally changing internal data they shouldn't touch, and allows the library author to change the struct's internal layout without breaking user code."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way for a programmer to say 'You can use this, but don't look at how it works on the inside!'"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This pattern is the foundation for polymorphism and 'Object-Oriented' style C, where pointers to structs are passed to 'methods' that act as interfaces."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A design pattern where a pointer type is used to refer to data whose declaration is hidden."
+                        }
+                    ]
+                },
+                {
+                    "id": 45,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What are 'Variadic Functions' (printf style)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A variadic function is one that can take a different number of arguments every time you call it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Using the `<stdarg.h>` header, you can define functions like `my_log(fmt, ...)` that accept any number of inputs. You use `va_start`, `va_arg`, and `va_end` to step through the arguments."
+                        },
+                        {
+                            "variant_id": 3,
+                            "technical": "Function signature with ellipsis (`...`). The compiler uses stack-walking or register-spilling (depending on calling convention) to pass arguments without a fixed count.",
+                            "variant_id": 3,
+                            "style": "technical"
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Variable-argument functions implemented using the stdarg.h macro suite."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Family Bucket' at a restaurant. You can choose to put 3 items in it, or 10 items. The bucket (the function) doesn't care exactly how many you put in, as long as you tell it what they are."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Functions defined with an ellipsis to accept an arbitrary number of parameters."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "They are powerful but dangerous. Since C doesn't know the types of the 'extra' arguments, you must provide a 'Format String' or a 'Count' so the function knows when to stop reading from the stack."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Think of printf: you can print one number, or three strings, or nothing at all. That's a variadic function in action."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Because of 'Default Argument Promotions', a `char` passed to a variadic function is automatically promoted to an `int`, and a `float` becomes a `double`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A function that has a variable number of arguments, denoted by an ellipsis in its prototype."
+                        }
+                    ]
+                },
+                {
+                    "id": 46,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Memory-Mapped I/O' (MMIO)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a way where specific hardware (like a screen or keyboard) is 'mapped' to a memory address, so you talk to the hardware just by writing to that address."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "MMIO allows a CPU to interact with peripheral devices using standard load/store instructions. By accessing specific addresses, the C program can control hardware registers directly, which is common in driver development."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "An I/O mechanism where hardware registers are assigned to the system's physical address space. Accessing these addresses triggers peripheral bus operations rather than standard DRAM access."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Hardware communication via the standard memory address space."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Universal Remote'. Usually you have to walk over to the TV to change the channel. With MMIO, the TV's buttons are 'stuck' onto your couch (memory), so you can change the channel without leaving your seat."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Technique connecting hardware registers to the CPU's memory address space."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "MMIO is highly performance-sensitive. You must always use the `volatile` keyword when talking to MMIO addresses, otherwise the compiler might skip a 'write' that it thinks is redundant, but which the hardware actually needs."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "This is how your computer hardware (like the video card) knows what to do by looking at a special 'instruction board' in memory."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern OSs use Virtual Memory to keep user programs away from MMIO space. To access it, a driver must use kernel-level functions like `ioremap` to map the physical hardware address into its virtual space."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A method of performing input/output between the CPU and peripheral devices using the same address space."
+                        }
+                    ]
+                },
+                {
+                    "id": 47,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Restrict' keyword (C99)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It tells the compiler, 'I promise this pointer is the only way to reach this block of memory', which helps the code run faster."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The `restrict` qualifier is an optimization hint. It guarantees to the compiler that the pointer is the exclusive reference for its data, allowing for better vectorization and cache optimizations."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Indicates that for the lifetime of the pointer, only that pointer (or pointers based on it) will be used to access the object it points to. Eliminates 'Pointer Aliasing' concerns for the optimizer."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Optimization hint asserting that pointers do not alias the same memory region."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like having a 'Private Lane' on a highway. Usually code has to worry about other cars (pointers) cutting in. With `restrict`, the compiler knows it's the only car in that lane and can go as fast as it wants."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "An optimization qualifier indicating exclusive pointer access to a specific memory block."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Pointer aliasing happens when two pointers overlap. If the compiler is unsure, it has to constantly re-fetch data from memory because performing an operation on pointer A might have changed pointer B. `Restrict` says 'this won't happen', so keep it in the registers."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to tell the computer 'This is my private space' so it doesn't double-check to see if someone else changed things."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Misusing `restrict` by having two pointers actually overlap leads to undefined behavior that is very difficult to debug, as it depends on the compiler's specific optimization level."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A type qualifier for pointers that serves as a promise to the compiler for optimization purposes."
+                        }
+                    ]
+                },
+                {
+                    "id": 48,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is a 'Self-Referential Structure'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It is a struct that contains a pointer to another struct of the same type, like a 'Next' link in a chain."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Self-referential structures are the building blocks of Linked Lists, Trees, and Graphs. They contain one or more pointers that store the address of another instance of the same structure."
+                        },
+                        {
+                            "variant_id": 3,
+                            "technical": "A structure whose definition includes at least one member that is a pointer to an object of the same structure type. Example: `struct Node { int data; struct Node *next; };`.",
+                            "variant_id": 3,
+                            "style": "technical"
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Structure definition including a pointer member of its own type; used for dynamic data structures."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Treasure Map'. Each location has a chest (the data) and a piece of paper (the pointer) telling you where the next identical chest is hidden."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Structures containing pointers to objects of their own type."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A struct cannot contain a REAL instance of itself (that would be infinite size), but it can contain a POINTER to itself because pointers have a fixed size regardless of what they point to. This allows the creation of recursive data models."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Imagine a person holding hands with another person. Each person is a 'struct', and their hands are the 'pointers' to the next person."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Doubly linked lists are self-referential structures with two pointers (`next` and `prev`), allowing bidirectional traversal of the graph."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A recursive structure declaration where a field refers back to the structure's own type identifier."
+                        }
+                    ]
+                },
+                {
+                    "id": 49,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "Explain 'Storage Classes' in C (auto, register, static, extern).",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "They tell the compiler how long a variable should last and who is allowed to see it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Storage classes define the scope and lifetime of variables. `auto` is the default for locals. `register` suggests using CPU registers. `static` keeps the value across calls. `extern` is for global sharing across files."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Specifiers defining duration and linkage. `static` (internal linkage/persistent lifetime), `extern` (external linkage), `register` (hint for no-memory-address requirements), `auto` (default stack storage)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Auto, Register, Static, and Extern: modifiers for variable scope, storage, and visibility."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like the 'Contract' of a variable. `Auto` is a 'Day Laborer' (dies at 5 PM). `Static` is a 'Full-time Employee' (stays there forever). `Extern` is a 'Freelancer' (works for everyone)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Keywords defining the lifetime and visibility (scope) of variables."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "`Static` is the most complex: in a function, it preserves its value between calls; at the file level, it hides variables from other files. `Extern` is basically a way to say 'This variable is defined somewhere else, just let me use it here'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "These special words help you decide if a number should be public, private, long-lasting, or super fast."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The `register` keyword is mostly ignored by modern compilers (like GCC/Clang) because the compiler's own register allocation algorithms are usually superior to manual hints."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Descriptive identifiers that dictate the lifetime, scope, and linkage properties of declared objects."
+                        }
+                    ]
+                },
+                {
+                    "id": 50,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Inline' function in C?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "An inline function tells the compiler to literally copy-paste the function's code into every place it is used, rather than jumping to it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Inline functions are an optimization hint to replace a function call with its body. This removes the 'overhead' of the function call (stack frames, jumping) but can increase the binary size."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "An optimization request to the compiler to perform inlining where appropriate. The compiler evaluates the trade-off between execution speed and code bloat (instruction cache pressure)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Request for compiler to substitute function calls with the actual code body."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Instead of saying 'Call John for the recipe' (a function call), 'Inline' is like just 'Copying the Recipe' onto every page of your cooking book so you never have to put down the book to make a call."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A compiler hint to substitute function call sites with the function's definition."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Inline functions are safer than macros because they have type checking and regular scoping rules. However, the compiler is not OBLIGATED to inline; it might ignore the `inline` keyword if the function is too long or recursive."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to make tiny, frequently used functions run faster by getting rid of the 'back-and-forth' work the computer usually has to do."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Definitions for inline functions should typically be placed in header files because the compiler needs access to the source code at every call site to perform the expansion."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A function whose definition is inserted directly into the instruction stream of its caller."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

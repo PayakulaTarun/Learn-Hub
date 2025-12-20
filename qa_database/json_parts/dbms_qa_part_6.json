@@ -1,0 +1,592 @@
+{
+    "dataset": "dbms_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_6",
+            "questions": [
+                {
+                    "id": 51,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What are 'Dirty Reads' and how do they occur?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A dirty read is when one user reads data that another user is currently editing but hasn't finalized (committed) yet. If that second user 'undoes' their work, the first user's info becomes a lie."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A dirty read occurs when a transaction reads data that has been modified by another concurrent transaction that is not yet committed. This usually happens when the isolation level is set to 'Read Uncommitted'. If the writing transaction rolls back, the data read by the first transaction becomes invalid."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The violation of transactional isolation where T1 reads a value written by T2 that has not yet reached the 'Commit' state. This is the lowest level of isolation (Read Uncommitted) and is dangerous for financial integrity."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A situation where a transaction reads data that has been modified by another transaction that has not yet committed."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Reading over someone's shoulder while they write a check'. If they cross it out and throw it away, you have a memory of a transaction that never actually happened."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Reading uncommitted data from a concurrent transaction."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Dirty reads are prevented by most modern databases by default (e.g., Postgres uses Read Committed as the minimum). They essentially allow queries to bypass the row-level locks of writers, which improves performance but at the cost of massive data corruption risks."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Think of it like looking at a 'Work in Progress'. It's not the final answer, and it might change before it's officially saved, leading to confusion."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Databases that use MVCC (like Oracle/Postgres) naturally prevent dirty reads even without traditional locking because they can simply show the reader the most recent 'Committed' version of the row, bypassing the 'In-flight' write version entirely."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An SQL transaction isolation level property that describes the possibility of a transaction reading uncommitted changes made by other transactions."
+                        }
+                    ]
+                },
+                {
+                    "id": 52,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Explain the 'Phantom Read' anomaly.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A phantom read is when a user searches for a group of rows twice and gets a different number of rows the second time because someone else snuck in a new row in the middle."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A phantom read happens when two identical queries are executed by one transaction, and the collection of rows returned is different. This usually occurs because a different transaction 'Inserted' or 'Deleted' rows after the first query but before the second. It requires 'Serializable' isolation or range-locking to prevent."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The phenomenon where a transaction T1 repeats a range-query and finds that the set of tuples satisfying the condition has changed due to a concurrent transaction T2 committing an INSERT or DELETE."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "When a transaction reads data matching a search criterion and a subsequent search with the same criterion returns different rows."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Counting the people in a room'. You count 5. You turn away for 1 second, and someone sneaks in through the window. You count again and find 6. The 6th person is the 'Phantom'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "New rows appearing in a subsequent query within the same transaction."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Phantom reads are harder to prevent than 'Non-Repeatable Reads' because you can't just lock the *rows* you found—you have to lock the 'Unoccupied Space' between the rows (Gap Locks) or the whole table to ensure nobody else adds something new into that specific range."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a 'Ghost' in the machine! New information pops up out of nowhere while you're still working on the old information."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Technically, Postgres 'Repeatable Read' isolation level prevents Phantoms, which is stricter than the SQL Standard requirement. In SQL Server, you would specifically need the 'SERIALIZABLE' isolation level to stop Phantoms."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A situation that occurs when a transaction reads a set of rows twice and returns different results because another transaction has committed a change between the first and second reads."
+                        }
+                    ]
+                },
+                {
+                    "id": 53,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Index Splaying' (or Bloat) and how does it affect database performance?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Index Bloat is when a database index gets 'Fat' and full of empty holes because of many deletes and updates. It takes up too much room and makes the database crawl."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Index Bloat happens when many rows are deleted or updated, but the physical space on disk isn't reclaimed. The B-tree index becomes sparse with many empty 'slots'. This leads to increased disk I/O and memory usage because the database has to read many mostly-empty pages into RAM. It's solved by running 'REINDEX' or 'VACUUM FULL'."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The accumulation of dead tuples or empty space in B-tree leaf nodes due to MVCC expiration. This increases the tree's height and total page count, reducing the effective 'Fill Factor' and significantly impacting range-scan performance."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The excessive growth of database index files beyond their required size, causing degradation in performance."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Physical Filing Cabinet'. Every time you throw a paper away, you leave the empty folder in the drawer. Soon, you have 10 cabinets full of empty folders, and finding any real paper takes forever because you have to flip through so much 'Nothing'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Degraded performance caused by sparsely populated index pages."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Postgres is particularly susceptible to this due to its MVCC implementation (where updates are a DELETE + INSERT). Without an aggressive 'Autovacuum' worker, the indexes can easily double in size in a few days, leading to a catastrophic collapse in query performance as working sets no longer fit in RAM."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a 'Swelling' in your database. It gets bigger and bigger but isn't actually holding more useful info, just wasted space."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Monitoring 'Fragmentation' levels is key. In SQL Server, you look at `avg_fragmentation_in_percent`. Once it crosses 30%, you should 'Rebuild' the index. Between 5% and 30%, you can usually just 'Reorganize' it, which is less disruptive."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A condition in which a database index consumes more space than necessary and performs poorly due to non-sequential data insertion and deletion."
+                        }
+                    ]
+                },
+                {
+                    "id": 54,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Lost Update' anomaly?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A lost update is when two people try to change the same thing at once, and one person's work is simply deleted and overwritten by the other's, as if it never happened."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The Lost Update problem occurs when two transactions read the same value, modify it, and then write it back. Transaction B's final write overwrites Transaction A's modifications without Transaction B even seeing what A did. This is usually solved with 'SELECT FOR UPDATE' (Pessimistic) or 'Version Columns' (Optimistic)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A write-write conflict where T1 reads X, then T2 reads X, then T1 updates X, then T2 updates X. T1's work has been completely superseded by T2's write because T2's update was based on an 'Old' value of X."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "An anomaly where two transactions both update the same record and the first update is overwritten by the second without consideration of the first change."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Collaborating on a document' without a cloud sync. You open the file, I open the file. You save your changes (v2). I save mine 1 second later (which I built off v1). My v2 now ELIMINATES your v2 as if you never typed a word."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Concurrent updates resulting in the overwrite and loss of one transaction's changes."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Most databases at 'Read Committed' level DO NOT prevent lost updates. Why? Because the individual 'Read' and 'Write' commands are consistent, but the 'Logic' between them is not protected. You must use 'FOR UPDATE' to lock the row during the entire 'Read-Modify-Write' cycle."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the 'I was here first' problem. If you don't use locks, the last person to hit Save wins, and everyone else's hard work disappears."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Some databases (like Postgres) have a special check at 'Repeatable Read' isolation called 'First-Updater-Wins'. If T1 and T2 both try to update the same row, T2 will be blocked until T1 finishes. If T1 commits, T2 will fail with a serialization error instead of overwriting."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A database anomaly that occurs when two transactions read the same data and kemudian attempt to update it simultaneously."
+                        }
+                    ]
+                },
+                {
+                    "id": 55,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Cursor Leakage'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Cursor leakage is when an application keeps 'too many doors open' to the database. Each open door takes up memory, eventually crashing the server."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A cursor leak occurs when an application opens a result set (Cursor) but fails to close it properly after processing. Each open cursor consumes resources in the 'Global Area' of the database. Over time, this leads to an 'Oceans of cursors open' error (like ORA-01000 in Oracle), preventing any new connections."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The failure to deallocate server-side cursors in the database memory. This causes an exhaustion of the 'Max Cursors' semaphore, leading to a denial of service for any operation requiring a statement handle."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A resource management error where database cursors are not closed after use, leading to resource exhaustion."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Leaving a tap running'. One drop doesn't hurt, but if you leave 1,000 taps halfway open, you'll eventually drain the entire reservoir and the whole city (application) will run out of water."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Resource exhaustion caused by unclosed database result-set pointers."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is almost always an application-level bug. Developers use a `ResultSet` in Java or a `cursor` in Python and forget to put the `.close()` command in a `finally` block. If the code throws an error, the close command is skipped, and the cursor stays 'Alive' on the server forever."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like taking out library books and never returning them. Eventually, there are no books left for anyone else to borrow."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In some high-performance scenarios, cursors are 'Held' intentionally (Cursor Caching) to avoid the overhead of re-parsing SQL. However, if this is not managed by a pooling library, it quickly turns from an optimization into a 'Leak'."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A condition in a computer program where database cursors are not released after they are no longer needed."
+                        }
+                    ]
+                },
+                {
+                    "id": 56,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Hash Flooding' in a database contexts?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Hash Flooding is a cyber-attack where someone sends specifically crafted 'Bad Data' that turns a fast hash-index into a slow list, making the database 1,000x slower."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Hash Flooding is a DOS (Denial of Service) attack. An attacker provides many keys that are different but all have the same 'Hash Code'. This causes massive collisions in the database's hash table, turning O(1) lookups into O(N) linear scans. The CPU becomes overwhelmed trying to resolve the collisions."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "An algorithmic complexity attack targeting hash-based structures. By exploiting a known hash function, an adversary submits N keys that map to the same bucket, forcing the hash table to resort to its collision resolution (like linked lists), degrading performance from constant to quadratic."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "An attack that exploits hash collisions to cause a denial-of-service condition in systems using hash tables."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "A Mailroom has 26 boxes (A to Z). Usually, mail is spread evenly. An attacker sends 1,000,000 letters all addressed to 'Zirconium'. Suddenly, box Z is overflowing and the mailman has to spend all day digging through one box while other boxes are empty."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A DOS attack exploiting hash collisions to tank lookup performance."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "To prevent this, modern databases use 'Seeded Hash Functions' (like SipHash). The seed (a random number) is chosen when the database starts. Because the attacker doesn't know the seed, they can't predict which values will collide, making the attack mathematically impossible."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like an 'Everything in one bucket' prank. It makes the system work much harder than it needs to for no reason."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This doesn't just affect indexes. It can also affect 'Hash Joins'. If an attacker can control the join keys, they can make a query that should take 1 second take 4 hours, effectively 'Freezing' the database instance."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A type of denial-of-service attack that targets hash-based data structures by providing a large amount of data with the same hash value."
+                        }
+                    ]
+                },
+                {
+                    "id": 57,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Explain 'Write Skew' in Snapshot Isolation.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Write skew is when two people make changes that *together* break a rule, even though each person's change *alone* looked okay when they started."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Write Skew is a subtle anomaly in snapshot isolation. Two transactions read a common data set, see that it satisfies a rule (e.g., 'At least one doctor is on call'), and then both modify a part of it. Since they didn't touch the SAME row, locks don't stop them, and the final state breaks the rule (e.g., now zero doctors are on call)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Generalization of the Lost Update problem. Occurs in Snapshot Isolation when two transactions T1 and T2 read disjoint sets of data, then modify them such that the combined effect violates a predicate integrity constraint. This is avoided only in 'Serializable' isolation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "An anomaly where two transactions both read the same data, but each updates a different row based on that data, resulting in a state that violates a business rule."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Two people check a bank account. It has $100. The rule is: 'Don't let it go below $0'. Person A withdraws $80. Person B withdraws $80. Both transactions see $100 and think 'I have enough!'. Together, they leave the account at -$60."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A race condition where two valid transactions combine to create an invalid state."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The most famous example is the 'Doctor on Call' problem. In standard 'Repeatable Read', row locks won't help because Doctor A locks Row A and Doctor B locks Row B. To stop Write Skew, you need 'Predicate Locks' (locking a set of rows satisfying a condition) or to manually use `FOR UPDATE` on all rows involved."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the 'Team Miscommunication' error. Everyone thought they were doing the right thing, but they didn't realize what the other person was doing at the exact same time."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Postgres uses 'SSI' (Serializable Snapshot Isolation). It detects write skew by tracking 'Dependencies' between transactions in a graph. If a cycle is detected that *could* lead to an anomaly, it simply aborts one of the transactions."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A non-serializable effect where two concurrent transactions each decide what change to make based on a shared state, but do not update the same specific data object."
+                        }
+                    ]
+                },
+                {
+                    "id": 58,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Split-Brain' in a clustered database?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Split-brain is when a group of database servers lose connection and divide into two groups. Both groups think they are the 'Boss' and start saving different data, causing a mess."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Split-brain is a condition in a high-availability cluster where nodes lose communication and begin to act as separate 'Master' nodes. This results in data divergence because two different versions of the truth are being written in different places. It's prevented using 'Quorums' and 'Fencing' (STONITH)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A state in which a cluster network partition occurs, leading to multiple independent 'islands' of nodes. Both islands attempt to take ownership of shared resources, leading to data inconsistency and corruption. Solved via Paxos-based consensus or Majority voting."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A phenomenon where two or more nodes in a cluster think they are the primary node and concurrently attempt to update data."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A King and a Queen' in two different castles. A messenger is killed. The King thinks the Queen is dead and remarries. The Queen thinks the King is dead and remarries. Now you have two 'High Courts' and no way to know which marriage is the real one."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Loss of cluster coordination leading to multiple primary nodes and data divergence."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "To fix this, we use 'Fencing'. STONITH ('Shoot The Other Node In The Head') is a real term! One node can use specialized hardware (like a power switch) to physically cut the electricity to the other node to guarantee only one remains standing."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the ultimate 'Confusion' for computers. Two leaders, two different orders, and nobody knows who to follow."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Quorum-based systems require an 'Odd' number of nodes (3, 5, 7). If a 3-node cluster splits into [2] and [1], the [2] side has a majority and can work, while the [1] side realizes it is alone and automatically shuts itself down to prevent split-brain."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "In cluster computing, a state in which nodes in a high-availability cluster have lost connectivity but are still running."
+                        }
+                    ]
+                },
+                {
+                    "id": 59,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Hotspot Contention'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A hotspot is when everyone tries to edit the exact same row at the same time (like the 'Last ticket' on a sale). The database becomes a bottleneck and everything slows down."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Hotspot contention happens when a specific area of the database receives a disproportionately high amount of traffic. For example, if you use an 'Auto-Incrementing ID' as a Shard Key, every new insert will hit the exact same shard, defeating the purpose of distributed storage."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Resource contention resulting from highly skewed data access patterns. It leads to lock queues, increased tail latency (P99), and decreased throughput as a single CPU core/Disk IO becomes the system-wide bottleneck."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A performance bottleneck caused by a high volume of concurrent transactions accessing the same data item or database page."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Funnel'. You can have a giant stadium, but if there is only 'One Door' to enter, it doesn't matter how big the field is—everyone is stuck waiting in the hallway."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Performance degradation caused by concentrated access to a single data point."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Indexing can cause hotspots. In a B-tree, 'Append-only' keys always target the 'Rightmost' leaf page. This causes 'Buffer Contention' where every thread is fighting for a 'Latch' on that one single memory page to insert their data."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the 'Traffic Jam' of the database world. One busy spot makes the whole trip take twice as long."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To solve this in sharded systems, use 'Salting'. You append a random number (0-9) to your ID. Now the traffic is spread across 10 different spots instead of 1. You just have to remember to check all 10 spots when you search!"
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A situation where multiple threads or processes compete for synchronization of a single resource."
+                        }
+                    ]
+                },
+                {
+                    "id": 60,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Deadlock Victim Selection'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "When two people are stuck in a deadlock, the database has to pick one to 'Kill' (Rollback) so the other can finish. This is called picking the Victim."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "When a deadlock cycle is detected, the database must choose one transaction to abort. The selection is based on heuristics like: 'Which one has the least work done?', 'Which one started last?', or 'Which one has modified fewer rows?'. The goal is to minimize the cost of re-running the work."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The heuristic-based selection of a transaction for preemption in a wait-for-graph cycle. It aims to minimize the aggregate rollback penalty (Work Loss) while ensuring forward progress for the system."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The process of identifying and terminating one or more processes to resolve a deadlock."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Lifeboat Rules'. If the boat is sinking because it's too heavy, you have to decide who gets out. Usually, you'd pick the person who just got on, rather than the person who has been rowing for 5 hours."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The criteria used by a DBMS to decide which transaction to abort during a deadlock."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In real-time systems, 'Priority' is also a factor. Some databases allow you to set a 'Deadlock Priority'. If a low-priority 'Report' and a high-priority 'Payment' are stuck, the database will always 'Kill' the report to let the money clear."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the 'Sacrifice'. One process has to die so the rest of the system can live."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Starvation' is a risk here. If the algorithm is poorly designed, the same transaction might get picked as the victim every single time it tries to run, preventing it from ever finishing. Modern algorithms track how many times a transaction has been aborted to prevent this."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A methodology used by a database management system to resolve a deadlock by deciding which transaction to roll back."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

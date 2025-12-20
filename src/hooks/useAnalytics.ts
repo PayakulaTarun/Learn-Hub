@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
-import { useAuth } from '../components/Auth/AuthContext';
+import { db } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useAuth } from '../context/AuthContext'; // UPDATED
 
 export type ActivityEventType = 'view' | 'solve' | 'run' | 'login' | 'test_attempt' | 'roadmap_step' | 'resume_usage';
 export type EntityType = 'tutorial' | 'problem' | 'mock_test' | 'roadmap' | 'tool';
@@ -20,20 +21,17 @@ export function useAnalytics() {
         if (!user) return;
 
         try {
-            const { error } = await supabase.from('user_activity_events').insert({
-                user_id: user.id,
+            await addDoc(collection(db, 'user_activity_events'), {
+                user_id: user.uid,
                 event_type: eventType,
                 entity_type: entityType,
                 entity_id: entityId,
                 metadata: metadata,
-                duration_ms: durationMs
+                duration_ms: durationMs,
+                created_at: serverTimestamp()
             });
-
-            if (error) {
-                console.warn('[Analytics] Failed to track event:', error.message);
-            }
         } catch (err) {
-            console.error('[Analytics] Error:', err);
+            console.warn('[Analytics] Failed to track event:', err);
         }
     };
 

@@ -10,8 +10,8 @@ import {
 
 const MonacoEditor = dynamic(() => import('../../components/tools/MonacoEditor'), { ssr: false });
 
-import { useAuth } from '../../components/Auth/AuthContext';
-import { useAuthGate } from '../../components/Auth/AuthGateContext';
+import { useAuth } from '../../context/AuthContext'; // UPDATED
+import { useRouter } from 'next/router';
 
 export default function WebPlayground() {
   const [html, setHtml] = useState('<!-- UI Structure -->\n<div class="card">\n  <h1>Student Resource Hub Studio</h1>\n  <p>The professional playground for engineers.</p>\n  <button id="action">Click Me</button>\n</div>');
@@ -21,22 +21,18 @@ export default function WebPlayground() {
   const [activeTab, setActiveTab] = useState<'html' | 'css' | 'js'>('html');
 
   const { user } = useAuth();
-  const { openGate } = useAuthGate();
+  const router = useRouter();
 
   const handleSave = () => {
     if (!user) {
-        openGate('save your project');
+        if(confirm('You must be logged in to save. Go to login?')) router.push('/login');
     } else {
         alert('Project saved! (Simulation)');
     }
   };
 
   const handleManualRun = () => {
-    if (!user) {
-        openGate('run production build');
-    } else {
-        runCode();
-    }
+    runCode();
   };
 
   const runCode = () => {

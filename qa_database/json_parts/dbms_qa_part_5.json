@@ -1,0 +1,592 @@
+{
+    "dataset": "dbms_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_5",
+            "questions": [
+                {
+                    "id": 41,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is the CAP Theorem and how does it affect database choice?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The CAP theorem says a distributed system can only have two of three things: Consistency (everyone sees same data), Availability (system is always up), and Partition tolerance (works even when wires are cut)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "CAP stands for Consistency, Availability, and Partition Tolerance. In a distributed database, network failures (Partitions) are inevitable. Therefore, you must choose between 'Consistency' (strong consistency but the system might be down if nodes can't talk) or 'Availability' (system stays up but some nodes might have old data)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "In any distributed data store, you can only provide two of the three guarantees. Since 'P' (Partition tolerance) is mandatory in a real network, the architecture must be CP (Consistency/Partition) or AP (Availability/Partition). RDBMS are typically CP, while many NoSQL databases (like Cassandra) are AP."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A principle in distributed computing stating that it is impossible for a distributed data store to simultaneously provide more than two out of three guarantees: Consistency, Availability, and Partition Tolerance."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Fast, Cheap, and Good' project. You can have it fast and cheap, but it won't be good. In a database, if the connection to your friend's computer is cut, you have to decide: do you give an answer that might be wrong (Available), or do you just refuse to answer until the wire is fixed (Consistent)?"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The distributed system trade-off between consistency, availability, and partition tolerance."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Eric Brewer's theorem highlight that in the 'P' state, a system must either drop 'A' (sending an error for all requests) or drop 'C' (violating linearizability). Modern systems often use 'PACELC', which extends CAP by also considering 'Latency' during normal operation."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the rule of 'You can't have it all'. When computers talk across the internet, sometimes they lose the connection. This theorem explains the choices developers have to make when that happens."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Consistency in CAP refers to 'Linearizability', not ACID consistency. Distributed databases like Spanner achieve 'External Consistency' using Atomic Clocks (TrueTime), which effectively blurs the line of CAP by making the 'Consistent' path extremely fast and reliable."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A theorem that states that a distributed system cannot simultaneously guarantee consistency, availability, and partition tolerance."
+                        }
+                    ]
+                },
+                {
+                    "id": 42,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Polyglot Persistence'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's the idea of using several different types of databases in one single application—like a relational one for money and a graph one for social connections."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Polyglot Persistence is an architectural pattern where an application uses different database technologies to store different data based on the specific requirements. For instance, using Redis for caching, Postgres for transactions, and Elasticsearch for searching."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The use of multiple data storage technologies, chosen based on the data's structure and usage patterns. This optimizes for 'Write' vs 'Read' speeds and complexity, moving away from the 'One Size Fits All' RDBMS approach."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A software architecture where different types of data are stored in the most suitable database for the specific task at hand."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Toolbelt'. You could use a heavy hammer (SQL) to hang a tiny picture frame, but it's much better to use a small hammer for the frame and the big one for the wall. Polyglot persistence is using the right tool for every job."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Using multiple specialized databases within a single software architecture."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The term was popularized by Martin Fowler. While it increases efficiency, it also massively increases operational complexity. You now need experts in 4 different database systems and a way to keep data 'Eventually Consistent' across all of them (often using Messasge Queues like Kafka)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't try to make one database do everything! Some databases are great at math, some are great at lists, and some are great at maps. Use all of them together!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In microservices, Polyglot Persistence is the default. Every service owns its own database. The 'User Service' might use a fast Key-Value store, while the 'Reporting Service' might use a Columnar database for big data analysis."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The practice of using different data storage technologies to handle different data storage needs within a single application."
+                        }
+                    ]
+                },
+                {
+                    "id": 43,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Multi-Version Concurrency Control' (MVCC)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "MVCC allows the database to keep several versions of the same row. This means one person can 'Read' the old version while another person is 'Writing' the new version without them blocking each other."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "MVCC is a concurrency control method that provides a snapshot of the database at a specific point in time. It eliminates the need for 'Read Locks', which drastically improves performance in read-heavy applications. Each transaction sees the data as it existed when the transaction began."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A method used to provide concurrent access to data. Every write creates a new 'tuple version' with a transaction ID (XID). Readers compare their XID with the tuple's creation and expiration XIDs to determine visibility, achieving 'Snapshot Isolation'."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A database concurrency control method where multiple versions of an object are maintained to ensure that a transaction never has to wait for a database object to be unlocked."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Taking a photo of a whiteboard'. While you are looking at your photo (The Snapshot), someone else can walk up to the board and start erasing it. You aren't affected by their changes, and they aren't stopped by your reading."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Achieving high concurrency by maintaining multiple timestamped versions of data records."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "MVCC requires 'Vacuuming' or 'Compaction'. Since we never overwrite data (we just add new versions), the database grows indefinitely. A background process must periodically find versions that are 'too old to be seen by anyone' and physically delete them to reclaim space."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's 'Time Travel' for data! You can look at the past while someone else is building the future."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Isolation levels in MVCC can be tricky. 'Repeatable Read' in Postgres (which uses MVCC) actually prevents 'Phantom Reads' because it takes a snapshot at the start of the transaction, unlike traditional 2PL which needs 'Range Locks' for the same result."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A database management system feature that allows multiple users to access and modify the same data at the same time without interfering with each other."
+                        }
+                    ]
+                },
+                {
+                    "id": 44,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What are 'OLTP' and 'OLAP'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "OLTP is for 'Day-to-day' transactions (like buying a coffee), while OLAP is for 'Giant analysis' (like seeing which month had the most coffee sales over the last 10 years)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "OLTP (Online Transactional Processing) is optimized for high volumes of small, fast writes/updates (e.g., Row-store). OLAP (Online Analytical Processing) is optimized for complex read-only queries on massive datasets, usually involving aggregations (e.g., Column-store)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "OLTP: Normalized schema, low latency, ACID focus, optimized for single-row lookups. OLAP: Denormalized/Star schema, high throughput, optimized for full-table aggregations and multi-dimensional analysis."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "OLTP: data processing that facilitates transaction-oriented applications. OLAP: processing that provides answers to multi-dimensional analytical queries."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "OLTP is a 'Receptionist' taking phone calls one by one. OLAP is a 'Statistician' at the end of the year looking at a spreadsheet of a million calls to find patterns."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Transactional processing (OLTP) versus Analytical processing (OLAP)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "We often use 'ETL' (Extract, Transform, Load) to move data from OLTP to OLAP. Doing analysis on an OLTP database can 'lock' the tables and crash your website, which is why we replicate the data to a separate 'Data Warehouse' specifically designed for analytics."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "One is for the 'Cashier' (fast and simple), the other is for the 'CEO' (slow and deep)."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "HTAP (Hybrid Transactional/Analytical Processing) is the new frontier. Databases like TiDB or SingleStore maintain both a Row-store and a Column-store in the same engine, providing 'Real-time Analytics' directly on transactional data."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "OLTP is a category of data processing that involves executing a large number of transactions at the same time. OLAP is an approach to answering multi-dimensional analytical queries swiftly."
+                        }
+                    ]
+                },
+                {
+                    "id": 45,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Distributed Consensus' (e.g., Paxos, Raft)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's the mechanism that lets a pack of computers 'Vote' and agree on a single truth, even if some of the computers are broken or lying."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Distributed Consensus ensures that a cluster of nodes agrees on a single value or state. Protocols like 'Raft' involve electing a 'Leader' and replicating an 'Entry Log'. This is fundamental for building highly available distributed databases that can tolerate server crashes."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Fault-tolerant protocols for reaching agreement in a decentralized network. Raft is commonly used for its simplicity over Paxos, involving leader election, log replication, and safety guarantees that ensure all nodes eventually converge on the same state."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The process by which a distributed system achieves agreement on a data value or state among several participating nodes."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Jury Duty'. Twelve people have to agree on a verdict. If one person falls asleep or goes to the bathroom, the rest can still talk, but you can't have a final decision until a 'Majority' (Quorum) agrees on the same thing."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Algorithmic agreement on state across multiple unreliable nodes."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "These protocols prevent 'Split Brain'—a scenario where two different nodes both think they are the leader and start accepting different data. By requiring a Quorum (N/2 + 1), the system mathematically guarantees that only one truth can be committed at a time."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's 'Teamwork' for computers. It makes sure no computer makes a big decision without checking with the rest of the team first."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Zookeeper (using ZAB) and etcd (using Raft) are the 'Coordination' backbones of the modern cloud. They store the 'Metadata' for almost every large database, deciding who is Master and who is Slave at any given microsecond."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A fundamental problem in distributed computing where multiple nodes must agree on a single data value."
+                        }
+                    ]
+                },
+                {
+                    "id": 46,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is a 'Materialized View' and how does it differ from a standard View?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A Materialized View actually 'saves' the search result to the disk like a real table. A standard View just runs the search every time you ask for it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A Materialized View physically stores the data on disk to speed up complex queries. While a regular view is just a 'saved query' that runs on-demand, a materialized view provides O(1) read speed but requires 'Refresh' logic to stay updated as the source data changes."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A database object that contains the results of a query. It is used to precompute and store aggregates or joins, offloading heavy processing from the execution phase to a scheduled background job."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A database object that contains the results of a query and is periodically refreshed from the original source tables."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "View: 'Cooking a fresh meal every time you're hungry'. Materialized View: 'Frozen dinners'. You cook once, freeze it, and just heat it up later. It's much faster, but several days later, the frozen food might be 'stale' compared to a fresh meal."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Physically stored query results used for cache-like read performance."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The main challenge is 'Cache Invalidation'. You can refresh them 'On Demand', 'On Commit' (slows down writes), or 'On Schedule'. Some advanced DBs offer 'Incremental Refresh', where only the small changes are merged into the view, which is much faster than rebuilding it."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a 'Cheat Sheet'. Why do the hard math a thousand times? Do it once, write down the answer, and just read the answer next time."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Materialized views can have their own 'Indexes'. This is incredibly powerful—you can join 10 tables, filter the result, save it as a materialized view, and then put an index on that result to make sub-millisecond lookups on data that was originally chaotic."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A database object that contains the results of a query and is typically used to precalculate and store heavy joins and aggregations."
+                        }
+                    ]
+                },
+                {
+                    "id": 47,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Two-Phase Commit' (2PC)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a way for two different databases to 'Shake hands' and agree to save a transaction at the exact same moment. One asks 'Are you ready?' and the other says 'Yes'."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "2PC is a protocol for atomic commitment in distributed systems. It has two phases: The 'Prepare' phase (coordinator asks participants if they can commit) and the 'Commit' phase (consensus reached, all commit). It ensures atomicity across multiple servers."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Distributed coordination protocol. Phase 1: Voting/Prepare (nodes write to undo/redo logs). Phase 2: Completion (Commit or Abort). It handles failure by forcing participants to wait for the coordinator's final word, which can lead to 'Blocking' if the coordinator dies."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A type of atomic commitment protocol used in distributed systems to ensure that all participating databases either all commit or all roll back."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'At a Wedding'. The priest asks 'Do you take...?' (Prepare). Both people say 'I do'. Only after BOTH say yes does the priest say 'I now pronounce...' (Commit). If one says 'No', the wedding is rolled back."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Ensuring atomic transactions across multiple network nodes via a coordinator."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "2PC is a 'Blocking' protocol. If the coordinator crashes between phases, participants stay 'Locked' indefinitely because they don't know the result. 'Three-Phase Commit' (3PC) addresses this by adding a 'Pre-commit' state, but it is rarely used due to even higher networking overhead."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's 'The Pinky Promise' for data. It's the only way to make sure two different computers don't get out of sync."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Because of the performance cost (multiple network round trips and locking), many modern architectures avoid 2PC in favor of the 'Saga Pattern', where each step is a separate transaction and we use 'Compensating Transactions' to fix things if a later step fails."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A type of atomic commitment protocol used in distributed database systems to ensure that all participants in a transaction either commit or roll back."
+                        }
+                    ]
+                },
+                {
+                    "id": 48,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Columnar Storage' and why use it for Data Warehousing?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Normal databases save data 'Row by Row'. Columnar databases save it 'Column by Column'. This makes it incredibly fast to say 'What is the sum of all prices?' because all the prices are sitting together in a row on the disk."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Columnar storage (like in Redshift or BigQuery) stores data column-wise. This improves performance for analytical queries because the database only reads the specific columns needed for a report, rather than reading entire rows of useless data. It also allows for much higher 'Compression' because similar data types are grouped together."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "An architecture where data is physically stored in columnar blocks. This minimizes I/O by enabling 'Projective' scanning and maximizes compression (e.g., Run-Length Encoding) because column data contains similar patterns and cardinality."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A database storage model that stores data tables by column rather than by row, optimized for analytical processing."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Row-store: 'A grocery store where every item is organized by the shopper who bought it'. Column-store: 'A grocery store where all the milk is in one spot and all the bread is in another'. If you only want milk, the column-store is 100x faster."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Storing data by columns to optimize analytical aggregation and compression."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Columnar stores are terrible for 'Single Row Insets'. To add one user, you have to find and update 10 different files (one per column). This is why they are used for 'Batch Uploads' in Data Warehouses and not for live web apps where users sign up one at a time."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's 'Filing' for professionals. Keep like with like to find it as fast as possible!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Columnar stores take advantage of 'L1 Cache' and 'SIMD' (Single Instruction, Multiple Data). Since an entire block of prices fits into the CPU cache, the computer can sum millions of rows in just a few micro-seconds by using hardware-level parallel math."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A storage architecture that partitions data by column, allowing for efficient access to specific attributes during large-scale analytical queries."
+                        }
+                    ]
+                },
+                {
+                    "id": 49,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Consistent Hashing'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Consistent hashing is a way to distribute data across many servers so that if one server breaks or a new one is added, you only have to move a tiny bit of data instead of resetting everything."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Consistent Hashing is a strategy for distributed caching and database sharding. It maps both servers and data to a 'Hash Ring'. When a server is added or removed, only K/n keys need to be remapped on average, preventing the 'Cache Stampede' that occurs with simple modulo-based hashing."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A decentralized load-balancing technique where keys are mapped to a range (0 to 2^n - 1) arranged in a circle. Each node 'owns' a segment of the ring. It minimizes the reshuffling of data during node scaling in distributed DHTs (Distributed Hash Tables)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A special kind of hashing such that when a hash table is resized, only a few keys need to be remapped."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Imagine 5 friends standing in a circle. You throw a ball at a random spot in the circle. The ball belongs to whoever is 'Closest' to it in the clockwise direction. If one friend leaves, their balls just 'move' to the next person. Everyone else's balls stay exactly where they were."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A hashing technique that minimizes remapping during server scaling."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Consistent Hashing is used in DynamoDB, Cassandra, and Akamai's CDN. It often uses 'Virtual Nodes' (VNodes)—one physical server represents 100 spots on the ring. This ensures that even if you have servers of different sizes, the load is distributed perfectly according to their power."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the 'Flexible' way to share work. It makes sure that adding more hands to the job doesn't mess up the progress everyone else has already made."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The main benefit is 'High Availability'. In a simple `ID % server_count` system, adding server #4 moves 100% of your data to new spots. In consistent hashing, it only moves 25%. This prevents your database from crashing under the load of moving data during a scale-up event."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A hashing scheme that provides hash table functionality in a way that minimizes the number of keys to be remapped when the table is resized."
+                        }
+                    ]
+                },
+                {
+                    "id": 50,
+                    "topic": "Advanced Concepts",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Query Execution Plan'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A query plan is the 'Map' the database draws after you say what you want. It shows exactly which tables it will open first and which indexes it will use to get your answer."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A Query Execution Plan (generated by `EXPLAIN`) is a sequence of operations used to access data in a database. It details the 'Join Strategy' (Nested Loops, Hash, Merge), 'Access Method' (Index Scan, Seq Scan), and the estimated 'Cost' of each step. Analyzing this plan is the first step in performance tuning."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A set of primitive relational algebra operators as an Ordered Tree. The Relational Engine transforms the SQL Abstract Syntax Tree (AST) into this physical plan using cost-based heuristics to minimize estimated I/O and CPU usage."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "An ordered set of steps used to access data in a SQL relational database management system."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Directions on a Pizza Box'. Step 1: Preheat oven. Step 2: Unwrap pizza. Step 3: Bake for 10 mins. The SQL is just 'I want pizza'. The plan is the 'How' that the database figures out based on what its kitchen (The server) can do."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The physical internal roadmap for fulfilling a SQL query."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Plans can be 'Stale'. If you added 1 million rows yesterday but didn't run `ANALYZE`, the database might still have a plan for a 'Small' table and try to do a Full Table Scan on a 'Big' table, causing your server to hang. Keeping 'Statistics' up to date ensures the engine draws a good plan."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the database 'Thinking out loud'. It's telling you its plan so you can double-check that it isn't doing anything silly."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern databases use 'Parallel Plans'. If a query is big, the engine will split the plan across 8 CPU cores. You'll see a 'Gather' node in the execution plan which indicates where the parallel workers' results are being merged back into the final answer."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An ordered set of steps used to access data in a SQL relational database management system, representing the strategy chosen by the query optimizer."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

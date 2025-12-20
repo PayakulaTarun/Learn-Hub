@@ -1,0 +1,592 @@
+{
+    "dataset": "java_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_10",
+            "questions": [
+                {
+                    "id": 91,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "Does `System.gc()` guarantee that Garbage Collection will happen?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "No! It's just a 'Polite Suggestion'. The computer might listen to you, or it might just ignore you if it feels busy."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "No. `System.gc()` is a 'hint' to the JVM. The spec explicitly states that the JVM is under no obligation to act on it. In some production environments, it is even disabled entirely using the `-XX:+DisableExplicitGC` flag."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Triggering `System.gc()` typically requests a 'Stop-The-World' Full GC. This is almost never what you want in a high-performance app. It can cause massive latency spikes and disrupt the self-tuning nature of the G1 or ZGC collectors."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "It suggests the JVM to run the Garbage Collector, but does not guarantee it."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Pressing the Crosswalk Button'. Sometimes it speeds up the light, and sometimes it doesn't do anything at all because the computer knows better when the 'Traffic' (Memory) should flow."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A non-binding request for JVM garbage collection, often ignored in production."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The JVM is 'Self-Tuning'. It monitors heap pressure and decides when it's most efficient to clean up. Forcing it manually is like 'Backseat Driving'—you usually just make the driver angry and the trip takes longer. Only use it for things like 'Finalization' testing in controlled environments."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Basically: 'Don't call us, we'll call you'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "One reason to keep it enabled is RMI (Remote Method Invocation) or 'Direct Buffer' cleanup. If you use `-XX:+DisableExplicitGC`, the JVM might fail to clean up 'Off-heap' memory, eventually causing an OOM because it didn't know those buffers were eligible for collection until a GC ran."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A method call that suggests that the Java Virtual Machine expend effort toward recycling unused objects."
+                        }
+                    ]
+                },
+                {
+                    "id": 92,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is the result of `1.0 / 0.0` vs `1 / 0` in Java?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`1 / 0` (integers) crashes the program with an 'ArithmeticException'. `1.0 / 0.0` (decimals) results in a special value called 'Infinity' and does NOT crash."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Integer division by zero throws an `ArithmeticException`. Floating-point division by zero (Double/Float) results in `Positive Infinity` (or `NaN` for 0.0/0.0), following the IEEE 754 standard. This is a common trap for developers assuming consistent error handling."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Integer division (idiv) is strict; it must result in a valid integer or trap. Floating-point (fdiv) handles edge cases via 'Sentinel Values' (Infinity, -Infinity, NaN). Operationally, `1.0/0.0` is a valid calculation in the eyes of the JVM."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Integer division by zero throws ArithmeticException; floating-point division results in Infinity."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Integer is 'Counting Apples'. You can't give 1 apple to 0 people—it makes no sense, so you scream 'ERROR!'. Double is 'Measuring Water'. If you try to pour water into nothing, you just get a 'Waterfall' that goes on forever (Infinity)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Integer division throws an exception; floating-point returns double Infinity."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Because `1.0/0.0` doesn't crash, it's very easy for 'Infinities' to sneak into your data and ruin your charts or database. If you then say `Infinity * 0`, you get `NaN` (Not a Number). Once NaN enters your project, every calculation it touches also becomes NaN, creating a 'Silent Data Plague'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Java is more 'Forgiving' with decimal numbers than with whole numbers."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Check `Double.isInfinite()` or `Double.isNaN()` immediately after complex math. Even better, use `StrictMath` or `BigDecimal` if you need absolute control over edge cases and rounding, rather than relying on the hardware-level IEEE 754 behavior."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A behavioral difference in Java's handling of division operations based on the data types involved (integer vs floating-point)."
+                        }
+                    ]
+                },
+                {
+                    "id": 93,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "Can you use `this` inside a Static method?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "No! `this` refers to a specific 'Instance'. A static method belongs to the 'Class' as a whole and doesn't know which specific object you are talking about."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "No. The keyword `this` represents the 'current object instance'. Static methods are associated with the class, not an instance, so no `this` reference exists in that context. Attempting to use it will cause a compile-time error."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "At the bytecode level, non-static methods receive an implicit 'Local Variable 0' which is the reference to `this`. Static methods do not have thisSlot. Therefore, there is no stack-local variable that `this` could possibly map to."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "No. Static methods belong to the class and therefore do not have access to an instance's this reference."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Asking for a seat' in a Building (Static) without picking a specific Room (Instance). You can talk about the 'Whole Building' (Address, Name), but you can't say 'My chair' if you haven't entered a room yet."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "No, because static methods lack a specific object instance context."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Wait, what about 'Anonymous Inner Classes' inside a static method? They can use `this`, but it refers to the *Inner Class instance*, not the surrounding class! This is a major source of confusion for junior developers who think `this` always points to the file they are in."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Just remember: 'Static' = 'Class', 'This' = 'Object'. They are like oil and water; they don't mix."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In modern Java, 'Virtual Threads' and 'Scoped Values' provide a way to share context without `this`. If you need information from an instance inside a static method, you must pass that instance as an argument: `public static void work(MyClass obj) { obj.doStuff(); }`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The restriction on utilizing the 'this' keyword within static contexts because static members are not bound to an object instance."
+                        }
+                    ]
+                },
+                {
+                    "id": 94,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "Why is `Arrays.asList(array)` dangerous?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because it's a 'Fake List'. It's still connected to the original array. If you change a value in the list, the array changes too. And if you try to 'Add' or 'Delete' things, it will crash."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "It returns a 'fixed-size' list backed by the original array. This means: 1. You cannot `.add()` or `.remove()` elements (throws `UnsupportedOperationException`), and 2. It is 'State-linked'—modifying the array modifies the list and vice versa."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It returns a private inner class `java.util.Arrays$ArrayList` (not the standard `java.util.ArrayList`). It lacks structural modification support because the underlying array size is immutable. For a 'True' copy, use `new ArrayList<>(Arrays.asList(array))`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "It creates a fixed-size list that is linked to the original array. Modifications to one affect the other."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Window' looking at a field. You can see the field (the array) and even paint the grass (Change values), but you can't 'Add more grass' or 'Enlarge the window' (Add/Remove items). The window is just a different way of looking at the same spot."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Returns a fixed-size view of an array; structurally immutable and state-synchronized."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you pass this 'Fake List' to a method that expects to be able to sort it or add to it, your app will blow up at runtime. In Java 9+, use `List.of(array)` instead; it's truly immutable and much safer, as it prevents ANY changes, which is usually what you want when making a list from an array."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's one of those 'Gotchas' in Java. It looks like a normal List, but it behaves very differently."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If the original array is huge, `Arrays.asList` is actually very 'Memory Efficient' because it doesn't copy the data. But if that array is then garbage collected, but the 'List' is kept, the entire array stays in memory, potentially causing a memory leak if you only needed a small part of the data."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A method that returns a fixed-size list backed by the specified array, providing a bridge between array-based and collection-based APIs."
+                        }
+                    ]
+                },
+                {
+                    "id": 95,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is 'String Interning' and when is it a bad idea?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Interning is 'Saving space'. It puts every unique string in a special 'Pool'. It's bad when you have millions of DIFFERENT strings (like User ID's), because the pool gets too big and slows down everything."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Interning ensures only one copy of a string exists in the 'String Pool'. It allows for faster `==` comparisons. It's a bad idea for highly dynamic data (like random IDs) because the pool survives GCs differently and can cause 'Metaspace' (or PermGen) OOM errors."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Maintained by the `String.intern()` method. Interned strings are stored in a native hash table. If the table gets too full, the 'Hash Collision' rate increases, making every NEW interning operation O(n) slow. Since Java 7, the pool is in the regular Heap, but it's still globally shared."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A method of storing only one copy of each distinct string value. Bad for large sets of unique strings due to memory overhead."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Library of Phrases'. Instead of everyone writing 'Hello' on their own paper, they all point to the 'Hello' book in the library. If everyone wants a unique 'One-time Password' book, the library will run out of shelves (Memory) and the librarian will go crazy."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Sharing unique string instances globally; memory-wasteful for non-repeating data."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Most strings you write (Literals) are interned automatically. You only call `.intern()` manually if you are reading millions of 'City Names' from a file and want to deduplicate them. If you do this with 'Usernames', the intern table will grow to millions of entries, making `String` creation in your WHOLE APP slower."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to let Java deduplicate your text automatically."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can tune the pool size with `-XX:StringTableSize`. In modern Java (17+), the default is 65536. If you have 1 million interned strings, you have 15 strings per 'bucket' on average, which is bad for performance. You'd need to increase the table size to ~1,000,000."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A method of storing only one copy of each distinct string value, which must be immutable."
+                        }
+                    ]
+                },
+                {
+                    "id": 96,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "Can you 'Catch' an Error like LinkageError or VirtualMachineError?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You 'can' catch them, but you 'shouldn't'. If an 'Error' happens, it means the computer is seriously broken (like out of RAM), and trying to 'Resume' is like trying to drive a car with no wheels."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Yes, but it's strongly discouraged. Catching `Error` (the parent of `Exception`) can 'Hide' fatal issues like `StackOverflowError` or `OutOfMemoryError`. Recovery from these is often impossible or dangerous because the JVM state is non-deterministic."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Errors are designed to signal 'Abnormal conditions' that a reasonable application should not try to catch. Catching `VirtualMachineError` is particularly risky as the JVM might not even be able to execute the 'Catch' block logic correctly if memory is exhausted."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Yes, but they represent serious problems that usually indicate the JVM should be terminated."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "An `Exception` is a 'Flat Tire'—you can change it and keep going. An `Error` is the 'Engine Exploding'—you can try to 'Catch' the fire, but you definitely aren't getting home in that car."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Technically possible but architecturally wrong, as it hides unrecoverable system failures."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The only real reason to catch `Error` is in 'Container' code (like Tomcat or JUnit) where you want to log that an app crashed before shutting it down. You should never 'Swallow' an error and try to continue your business logic."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you see the word 'Error' instead of 'Exception', it usually means it's time to call the IT department."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "`NoClassDefFoundError` is a common 'Interview Trap'. This is NOT a `ClassNotFoundException`. It happens when the class was there at compile-time but 'vanished' at runtime. Catching this might allow your app to 'Fallback' to a different library, but search your dependencies first!"
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A subclass of Throwable that indicates serious problems that a reasonable application should not try to catch."
+                        }
+                    ]
+                },
+                {
+                    "id": 97,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is 'Type Erasure' (Bridge Methods)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Type Erasure is Java 'Forgetting' your types once the program starts to run. It turns `List<String>` into just a plain `List` to save memory and stay compatible with old Java."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Type Erasure is the process where the compiler removes all generic type info and replaces it with 'Object' (or the bound). To maintain polymorphism, the compiler automatically generates 'Bridge Methods'—extra methods that handle the casting between the generic type and Object."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Ensures backward compatibility with pre-Generics code. Because of erasure, `List<String>.class` does not exist; only `List.class` exists. Bridge methods are marked with the `ACC_BRIDGE` flag in bytecode and are used to prevent `ClassCastException` during polymorphic calls."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The removal of generic type information during compilation to maintain backward compatibility."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Erasure is like 'A Secret Code'. The developer uses a secret code (`<String>`). The compiler 'Decodes' it into plain English (`Object`) so the oldest computer can read it, but it adds a 'Translator' (Bridge Method) to make sure nothing is lost in translation."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Removal of generics at runtime, necessitating compiler-generated bridge methods for polymorphism."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Type Erasure is why you can't do `new T()` or `instanceof List<String>`. Since the JVM doesn't know what 'T' is, it doesn't know how to build it! This is one of the biggest 'Frustrations' for developers coming from C# where generics are available at runtime."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's why you sometimes get 'Unchecked Warning' messages in your editor."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can 'Beat' type erasure using the 'Super Type Token' pattern (GSON's `TypeToken`). By extending a generic class (`new ArrayList<String>() {}`), the type info is actually saved in the 'Class Metadata' and can be retrieved via reflection. This is the only way to know the generic type at runtime."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A procedure by which the Java compiler elides all type parameters and replaces them with their bounds or Object if the type parameters are unbounded."
+                        }
+                    ]
+                },
+                {
+                    "id": 98,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "How can two 'Threads' enter a 'Synchronized' block at the same time?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "They can't! That's the whole point of 'Synchronized'. If you see it happening, it means they are actually looking at 'Two different locks' (two different boxes)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Technically, they can't enter the same 'monitor'. If it appears they are both inside, it's usually because they are synchronizing on 'different instances'. For example, if you synchronize on a non-static method but use two different objects, each thread gets its own lock."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It only happens if the monitor reference changes. If you do `synchronized(myLock)` and then someone re-assigns `myLock = new Object()`, the next thread will lock the 'New' object while the first thread is still holding the 'Old' one. Never synchronize on mutable variables!"
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "They cannot if they are synchronizing on the same object monitor. It only appears to happen if different objects are used for locking."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Bathroom with two doors'. If one says 'Men' and one says 'Women' (Different objects), two people can go in. If you want only one person in the whole building, you need 'One door' (One shared lock) that everyone must use."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Impossible for the same monitor; only occurs if threads use distinct object instances for locking."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Another trap: 'String Constant Pool'. If you `synchronized(\"LOCK\")`, and another developer in another library also `synchronized(\"LOCK\")`, you are now 'Deadlocking' against each other's code even though you aren't in the same project! Always use `private final Object lock = new Object();`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Just make sure you are always 'Pointing' at the exact same box."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Wait, what about 'Wait/Notify'? When a thread calls `.wait()`, it temporarily 'releases' its lock! So a second thread CAN enter the block while the first is still technically 'inside' the code, just not 'active'. This is a common confusion in multithreading interviews."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A condition only achievable if the threads are synchronizing on distinct object instances or if a thread has yielded its monitor via wait()."
+                        }
+                    ]
+                },
+                {
+                    "id": 99,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is the 'Liskov Substitution Principle' (LSP) and how is it violated in Java?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "LSP means 'A Child should be able to do everything a Parent does'. You violate it if you make a 'Square' that inherits from 'Rectangle' but breaks when someone tries to change just the width."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "LSP states that objects of a superclass should be replaceable with objects of its subclasses without affecting correctness. A common violation in Java is `UnsupportedOperationException` in `Collections.unmodifiableList()`, as it's a 'List' that refuses to behave like a standard 'List' (mutability)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Focuses on 'Behavioral Subtyping'. If a subclass strengthens preconditions or weakens postconditions, it violates LSP. For example, if the parent says 'Give me any number' and the child says 'I only accept numbers > 10', the child is 'Finicky' and cannot replace the parent."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Subclasses must be substitutable for their base classes. Violated when a subclass changes the expected behavior of inherited methods."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Renting a Car'. If you ordered a 'Vehicle' (Parent) and they gave you a 'Bicycle' (Subclass), but you needed to 'Drive 50mph' (Parent behavior), you'd be stuck. If the Bicycle can't do what the Parent is expected to do, it's a bad subclass."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Subclasses must be usable in place of base classes without breaking program logic."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "LSP is the reason why 'Inheritance' is so dangerous. It's very easy to accidentally break a 'Promise' the parent made. This is why modern architects prefer 'Interfaces'—an interface is just a list of promises, and you can fulfill them in many different ways without worrying about inheriting 'Baggage'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't promise things you can't deliver!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The `java.util.Stack` class is a famous LSP / Design violation. It inherits from `Vector`, meaning it has 'Random Access' methods like `get(int index)`. But a Stack 'should' only have Push and Pop. Because you can `get(0)` on a Stack, it's not a pure Stack anymore, violating the 'Intent' of the abstraction."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The concept that objects of a superclass shall be replaceable with objects of its subclasses without breaking the application."
+                        }
+                    ]
+                },
+                {
+                    "id": 100,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "If you add a field to a 'Record' (Java 14+), what happens to Serialization?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Records are 'Safe'. They don't use the old 'Secret Back Door' of serialization. Every new field is just added to the official list, and Java handles the transition much better than normal classes."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Records use a unique 'Record-specific' serialization mechanism. Unlike normal classes, they ignore `serialVersionUID` for structure and ALWAYS call the 'Canonical Constructor'. Adding a field simply makes it 'null' or 'default' during deserialization, preventing many 'Version mismatch' crashes."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Defined by JEP 395. Records are 'Data Carriers' with fixed structure. Deserialization happens through the constructor, enforcing all invariants. This eliminates the 'readObject' security vulnerability and makes them significantly more robust for long-term data storage than POJOs."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Records have a more robust and simplified serialization process compared to standard classes, always using the canonical constructor."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Normal class serialization is like 'Assembling a car from parts' in your backyard. Record serialization is like 'The Factory Assembly Line'. You can't just 'Skip' a step—everything must go through the official factory (the Constructor) to ensure the car is safe."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Serialization via canonical constructor only, bypassing standard Java serialization pitfalls."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Because Records are immutable, you don't have to worry about the object state being 'Mangled' during deserialization. If you add a field and it's missing from the data stream, the constructor simply receives 'default' (or null), and the record is built normally. This 'Consistency' is a huge win for distributed systems."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Just use Records for your data. They are better at everything, including 'Saving' and 'Loading'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The 'SerialVersionUID' is actually ignored for Records! The JVM calculates if they are 'Compatible' based purely on their name and type. This means you don't have to manually update that annoying 'Long' number every time you change a record."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The specialized mechanism in Java where Record classes are serialized and deserialized using only their state components and their canonical constructor."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -7,8 +7,9 @@ import {
   CheckCircle2, Compass
 } from 'lucide-react';
 import Layout from '../../components/Layout';
-import { useAuth } from '../../components/Auth/AuthContext';
-import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../context/AuthContext'; // UPDATED
+import { db } from '../../lib/firebase'; // NEW
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore'; // NEW
 
 const ROLES = [
   'Full Stack Developer', 'Frontend Specialist', 'Backend Engineer', 
@@ -20,7 +21,7 @@ const SKILL_LEVELS = ['Beginner', 'Intermediate', 'Advanced'];
 const AVAILABILITY = ['< 5 hours/week', '10-20 hours/week', 'Full-time Immersion'];
 
 export default function ProfileSetup() {
-  const { user, isVerified, loading: authLoading } = useAuth();
+  const { user, loading: authLoading } = useAuth(); // removed isVerified for now
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -33,9 +34,9 @@ export default function ProfileSetup() {
   });
 
   useEffect(() => {
-    if (!authLoading && !user) router.push('/auth/login');
-    if (!authLoading && user && !isVerified) router.push('/auth/signup');
-  }, [user, isVerified, authLoading, router]);
+    if (!authLoading && !user) router.push('/login');
+    // if (!authLoading && user && !isVerified) router.push('/auth/signup'); // simplified flow
+  }, [user, authLoading, router]);
 
   const toggleRole = (role: string) => {
     setFormData(prev => ({
@@ -48,17 +49,18 @@ export default function ProfileSetup() {
 
   const handleComplete = async () => {
     setLoading(true);
+    if (!user) return;
+    
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({
+      await setDoc(doc(db, 'profiles', user.uid), {
           ...formData,
+          id: user.uid,
+          email: user.email,
+          full_name: user.displayName,
           is_verified: true,
           updated_at: new Date().toISOString()
-        })
-        .eq('id', user?.id);
+      }, { merge: true });
 
-      if (error) throw error;
       router.push('/profile');
     } catch (err) {
       console.error(err);
@@ -68,7 +70,12 @@ export default function ProfileSetup() {
     }
   };
 
-  if (authLoading) return null;
+
+  if (authLoading) return (
+    <div className="min-h-screen flex items-center justify-center bg-primary">
+      <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
 
   return (
     <Layout>

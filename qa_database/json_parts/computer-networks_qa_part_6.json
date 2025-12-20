@@ -1,0 +1,592 @@
+{
+    "dataset": "computer-networks_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_6",
+            "questions": [
+                {
+                    "id": 51,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is the 'Count to Infinity' problem in routing?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a bug in old routing systems where routers keep adding 1 to a distance until it hits 'infinity', taking a long time to realize a road is actually closed."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The 'Count to Infinity' problem is a failure in Distance Vector protocols like RIP. When a link goes down, routers may update each other with slightly higher metrics in a loop, incorrectly thinking there's a path, until the metric reaches the protocol's maximum (16 for RIP)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Convergence failure in Bellman-Ford based protocols. Slow reaction to 'bad news' (link failure) leads to a routing loop where metrics increment indefinitely. Mitigated by Split Horizon and Poison Reverse."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Routing anomaly in Distance Vector protocols where nodes continually increase the hop count for unreachable networks."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Two people pointing at each other' when asked for directions. Person A says 'Ask Person B', and Person B says 'Ask Person A'. They just keep going in a circle forever."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A routing loop where routers increment hop counts to an unreachable destination until a limit is reached."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The core issue is that routers 'trust' the distance reported by neighbors without knowing the full path. 'Split Horizon' prevents this by saying 'don't advertise a route back to the router you learned it from'. RIP uses 16 as 'Infinity' specifically so the count ends quickly, even if it fails."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a digital 'Echo' where two routers keep repeating a lie to each other until they eventually realize they're both wrong."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern link-state protocols (OSPF) don't have this problem because they share a complete map of the network, meaning every router can see for itself if a link is truly gone, rather than relying on hearsay."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A routing loop caused by the propagation of stale routing information in distance-vector algorithms."
+                        }
+                    ]
+                },
+                {
+                    "id": 52,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is 'Silly Window Syndrome' (SWS)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "SWS is when a computer sends data in tiny, 1-byte chunks because the receiver only has room for 1 byte, making the whole network extremely slow."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Silly Window Syndrome occurs when TCP hosts exchange many tiny packets instead of fewer large ones. This happens if the receiver advertises small window updates or the sender tries to send data as soon as any space opens, wasting bandwidth on header overhead."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "TCP throughput degradation characterized by a small advertised window. Prevented by 'Nagle’s Algorithm' on the sender side and 'Clark’s Solution' (delayed window updates) on the receiver side."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Networking inefficiently caused by frequent, small data transfers due to dynamic window size limitations."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Refilling a Salt Shaker' one single grain at a time. You spend more energy walking to the kitchen and back (headers) than you do actually moving salt (data)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A TCP state where data is sent in inefficiently small segments due to small window announcements."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "To fix this, the receiver should wait until it has enough buffer space (at least 50% or one full Maximum Segment Size) before telling the sender it's ready. This forces the sender to wait and send one 'Big' packet instead of 1000 'Tiny' ones."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like trying to mail a 1,000-page book by putting each page in its own separate envelope with its own stamp. It's expensive and pointless!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Nagle's algorithm can actually hurt performance for 'interactive' apps like Telnet or Games where you NEED the 1-byte packet sent immediately. In those cases, programmers use the `TCP_NODELAY` flag to turn off the fix."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A stable, low-throughput state of a TCP connection where small segments are excessively used for data transmission."
+                        }
+                    ]
+                },
+                {
+                    "id": 53,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "The 'Bufferbloat' Problem.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Bufferbloat is when your router is 'too helpful' and saves too many packets in memory, causing huge delays while you wait for your turn."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Bufferbloat is high latency caused by excessive buffering in network switches and routers. When buffers are too large, TCP doesn't get 'dropped packet' signals early enough, causing it to keep sending at high speeds and creating massive queues."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Undesirable latency caused by bloated buffers that prevent TCP's congestion control from functioning. Solved by 'Active Queue Management' (AQM) like CoDel or fq_codel."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Degradation of network responsiveness due to large buffers creating significant queueing delays."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Waiting Room' that is too big. If the room holds 100 people, you'll be happy you're 'in', but you'll wait 3 hours to see the doctor. A smaller room forces the doctor to work faster or tell people to 'come back later'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Excessive buffering in networking hardware that leads to increased latency and jitter."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In the early 2000s, memory became cheap, so vendors built routers with massive buffers. This was 'supposed' to stop packet loss, but it actually broke the internet's ability to 'feel' when it was crowded, leading to Pings of 2000ms+ during downloads."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's when your Wi-Fi is fast enough for downloads, but your Zoom calls lag and freeze whenever you're actually using it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern 'Smart Queue Management' (SQM) fixes this by intentionally dropping or marking packets as 'busy' even if the buffer isn't full, which keeps the queue short and the latency low."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "High latency in packet-switched networks caused by excess buffering of packets."
+                        }
+                    ]
+                },
+                {
+                    "id": 54,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is 'Head-of-Line Blocking' (HOL)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "HOL blocking is when the first 'car' in a line stops, and every other car behind it is stuck even if their own path is clear."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "HOL blocking occurs in several layers. In HTTP/1.1, if a browser asks for 5 images, it must wait for the first image to finish before the second starts. In TCP, if one packet is lost, every subsequent packet must wait in the buffer until the lost one is redelivered."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A performance limitation in line-based processing. HTTP/2 solved it at the Application layer using multiplexing, but it remained a problem in TCP. HTTP/3 (QUIC) finally solved it at the Transport layer."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Systematic delay where a queued request at the front prevents subsequent requests from being processed."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Grocery Store Checkout' with only one lane. If the woman at the front has a problem with a coupon, 100 people behind her are stuck, even if they only have one candy bar to buy."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Performance bottleneck where a single delayed or blocked packet stalls an entire queue."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "HOL in switches occurs when multiple input ports try to send to the same output port concurrently. The 'front' packet waits for its turn, and anything behind it intended for a 'free' output port is still blocked."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the digital version of a 'Traffic Jam' caused by a single slow-poke in the fast lane."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "QUIC solves this by using independent streams. If Stream A loses a packet, Stream B keeps moving at full speed, because they aren't tied together in the same 'sequential' TCP pipe."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The phenomenon in which a queue of packets is blocked by the first packet even if succeeding packets have an available path."
+                        }
+                    ]
+                },
+                {
+                    "id": 55,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is a 'Broadcast Storm'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A broadcast storm is when data gets stuck in a loop and keeps multiplying until the whole network is so 'loud' with noise that nothing else can get through."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A broadcast storm is an accumulation of broadcast and multicast traffic on a computer network. This is usually caused by 'Switching Loops' (physical loops in the cables) when Spanning Tree Protocol (STP) fails or is disabled."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Positive feedback loop in a Layer 2 domain. Since Ethernet frames lack a TTL (Time-to-Live) field, they will circulate indefinitely until they saturate the link bandwidth and CPU of all connected nodes."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Network failure characterized by excessive broadcast traffic saturating bandwidth and processing resources due to routing or switching loops."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Room full of 1,000 People' all shouting 'HEY!' as loud as they can at the same time. No one can hear anyone else, and all work stops because the noise is deafening."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The total saturation of a network by repeating broadcast messages, usually due to a loop."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Symptoms include massive packet loss and high CPU usage on routers. The 'only' way to stop a full storm is usually to find the physical cable loop and pull it out, or enable 'Storm Control' which shuts down a port if it sees too many broadcasts."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a digital 'Feedback Screech' where the network is basically screaming and can't do its job anymore."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern switches use 'Microsegmentation' and STP to prevent this, but 'Soft Loops' can still happen in virtual environments (like incorrectly configured VMware switches) and are much harder to track down."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A state in which a message that has been broadcast across a network results in even more responses, which in turn results in even more responses, until the network's bandwidth is completely consumed."
+                        }
+                    ]
+                },
+                {
+                    "id": 56,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is a 'Black Hole Router' in the context of PMTUD?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a broken router that drops packets for being too big, but 'forgets' to tell the sender about it, so the connection just hangs forever."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Path MTU Discovery (PMTUD) relies on ICMP 'Packet Too Big' messages. A 'Black Hole Router' is one that drops these large packets AND suppresses the ICMP response (usually for security). This causes TCP connections to hang when they attempt to send large data blocks."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Connectivity failure where MTU exceeds a link's capacity. If the 'Don't Fragment' (DF) bit is set and ICMP Destination Unreachable/Frag Needed is blocked, the TCP handshake completes but data transfer stalls."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Router that silently discards packets exceeding MTU without returning necessary ICMP control messages."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like an 'Underpass' with no sign. If a tall truck (big packet) tries to go through, it crashes. The truck disappears (dropped), but no one ever calls the warehouse (the sender) to say 'Hey, your truck didn't make it!'"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "An intermediate router that discards oversized packets silently, causing TCP session hangs."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is a nightmare to debug. The website will load the small 'Login' screen fine (small packets), but as soon as you try to download a 'Profile Picture' (big packets), the page just spins and never finishes."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the worst kind of network bug because it's 'Invisible'—half the internet works and the other half just stays dead."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To fix this without fixing the broken router, engineers use 'MSS Clamping', where the firewall 'intercepts' the TCP handshake and lies to both sides, telling them to use smaller packets than they normally would."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A network node that incorrectly silently discards packets that it is unable to forward because of their size and a 'Don't Fragment' flag."
+                        }
+                    ]
+                },
+                {
+                    "id": 57,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is 'TCP TIME-WAIT' and why can it be a pitfall for high-volume servers?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "TIME-WAIT is a 'cool-down period' after a connection closes. If a server is too busy, it can 'run out' of cool-down spots and start refusing new visitors."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "After a connection closes, TCP stays in the TIME-WAIT state for 2*MSL (usually 1-4 mins) to ensure old packets are flushed. For high-throughput servers (like load balancers), the 'Ephemeral Port' pool can be exhausted by these lingering dead connections."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Post-teardown state (FIN-ACK sequence). Intended to prevent 'Delayed Duplicates' from a previous session being accepted into a new one. Can lead to port exhaustion on busy endpoints."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "State ensuring that all segments from a closed connection are discarded from the network before reusing the socket pair."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Cleaning a Pool' after a party. You can't let new people in for 30 minutes while the chemicals settle. If you have 10,000 people trying to party every minute, the chemicals never settle and the line stays stuck outside."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A lingering connection state for safety that can lead to port starvation on busy servers."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "On Linux, developers often use `sysctl net.ipv4.tcp_tw_reuse` which allows the OS to 're-use' a port in TIME-WAIT if it's safe. However, the older `tcp_tw_recycle` was extremely dangerous for NAT-bound users and was eventually removed from the kernel."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a safety rule that says 'Don't reuse this phone line for a minute, just in case someone is still trying to call the old person'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To avoid this, use 'HTTP Persistent Connections' (Keep-Alive). By not closing the connection after every single request, you avoid the TIME-WAIT penalty entirely for repeated users."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The state of a TCP connection where it waits for a period of time after sending a FIN message to ensure the final ACK has been received."
+                        }
+                    ]
+                },
+                {
+                    "id": 58,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "Explain 'TCP Meltdown' (TCP-over-TCP).",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's what happens when you run a 'Tunnel' that uses TCP inside another 'Tunnel' that also uses TCP. The two timers start fighting and the whole thing slows to a crawl."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "TCP-over-TCP (like running a TCP-based VPN) suffers from 'TCP Meltdown'. If the internal TCP loses a packet, it tries to retransmit, but the outer TCP might also be trying to retransmit. This 'nested retransmission' leads to a feedback loop that kills performance."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Retransmission collapse in tunneled environments. The stacked timers lead to exponential increases in 'Wait Time' and spurious retransmissions. This is why high-performance VPNs (OpenVPN/WireGuard) always use UDP for the outer tunnel."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Dramatic latency increase caused by interference between stacked error-correcting transport protocols."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Two Micromanaging Bosses'. One is checking the work, then the second boss checks the first boss's 'checking'. They both start yelling at the worker at different speeds, and the worker just quits."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Performance collapse caused by stacking two error-correcting TCP timers on top of each other."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is a classic 'Pitfall' in cloud networking. If you build a slow network and then try to solve the speed by wrapping everything in TCP-based encryption, you'll actually make it 10x slower because of the 'Meltdown' effect."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's putting 'Brakes inside Brakes'. Eventually, the wheels stop turning even if you're trying to step on the gas."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The 'Meltdown' happens because TCP's retransmission timers are designed to accommodate network delay, but they cannot distinguish between 'Wire Delay' and 'Tunnel Retransmit Delay'."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A phenomenon where a TCP connection nested within another TCP connection experiences catastrophic failure due to mismatched retransmission timers."
+                        }
+                    ]
+                },
+                {
+                    "id": 59,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is 'Route Leaking' in BGP?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Route leaking is when a company accidentally tells the whole internet 'I have a shortcut!' for a path they shouldn't even be touching, causing traffic to get lost or stolen."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A route leak is the propagation of routing information beyond its intended scope. For example, an ISP accidentally advertising its private peer's routes to its upstream provider. This can lead to traffic misdirection, congestion, and vulnerability to eavesdropping."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Violation of AS routing policy. Most often occurs when 'Peer' routes are leaked as 'Transit' routes. This violates the 'Gao-Rexford' stability model which normally ensures the internet remains loop-free and economical."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Accidental or malicious advertisement of BGP routes resulting in unauthorized traffic redirection."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Homeowner' putting up a sign saying 'Shortcut to New York!' in their backyard. Suddenly thousands of cars are driving through their garden, and they don't have enough roads (bandwidth) to handle it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Accidental advertisement of BGP routes causing massive wide-area traffic misdirection."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Route leaks have taken down whole countries. In 2012, Google went offline for millions because an ISP in Asia 'leaked' that Google lived in their small office building. The whole internet tried to send 'Google searches' to that one tiny office, and it obviously crashed."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a digital 'Oops' that makes the internet think the shortest way to London is through a tiny basement in Ohio."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The fix is 'RPKI' (Resource Public Key Infrastructure), which is like a 'Security Badge' for routes. It allows routers to verify that an ISP is actually ALLOWED to talk about a specific group of IPs before believing them."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The propagation of routing advertisement(s) beyond their intended scope, resulting from a misconfiguration or a malicious act."
+                        }
+                    ]
+                },
+                {
+                    "id": 60,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "The 'IPv6 Happy Eyeballs' Mechanism.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a trick browsers use to try BOTH IPv4 and IPv6 at the same time. Whichever one answers first is the one the user sees, making sure the screen doesn't stay blank for long."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Happy Eyeballs (RFC 8305) prevents users from experiencing 'broken' IPv6. Instead of waiting for a slow or failing IPv6 connection to time out, the browser tries both versions in parallel (with a tiny head-start for IPv6) and picks the winner."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Dual-stack connectivity algorithm. Initiates separate A and AAAA DNS lookups. If both return, it tries the V6 connection first; if it doesn't respond in ~250ms, it starts the V4 handshake simultaneously."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Algorithm for choosing between multiple IP versions to minimize user-perceived connection latency."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Ordering Pizza from Two Shops'. You call both. The first one to show up at your house (answer the handshake) is the one you pay. This way, you're never left hungry for long."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Concurrent connection attempts to IPv4 and IPv6 to ensure the fastest possible user experience."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Without Happy Eyeballs, if your ISP gave you 'Semi-broken' IPv6, every website would take 30 seconds to load while the computer 'gave up' on IPv6. This mechanism made the world transition to IPv6 without millions of users complaining about slow internet."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's your browser being 'Smart'—it checks both the old and new ways to load a site and picks the one that's actually working."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "A 'Pitfall' of this is that it can mask network issues. An admin might think their IPv6 is working perfectly, but in reality, all their users are 'failing back' to IPv4 so fast that no one notices the problem."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An algorithm that specifies how a dual-stack endpoint should attempt to establish a connection to a destination hostname."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

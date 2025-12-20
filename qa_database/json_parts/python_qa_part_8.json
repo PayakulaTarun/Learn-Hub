@@ -1,0 +1,593 @@
+{
+    "dataset": "python_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_8",
+            "questions": [
+                {
+                    "id": 71,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'SQL Injection' in Python and how do you prevent it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "SQL Injection is when a hacker puts 'Secret Database Commands' into a login box or search bar. If you just 'add' strings together to make a query, the hacker can delete your whole database. To fix it, use 'Parameter Markers' like `?` or `%s`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "SQL Injection occurs when user input is concatenated directly into SQL queries. This allows malicious actors to execute arbitrary SQL. To prevent it, never use string formatting like `f\"...{user_input}\"`. Instead, use 'Parameterized Queries' where the database driver handles the sanitization and escaping securely."
+                        },
+                        {
+                            "variant_id": 3,
+                            "technical",
+                            "style": "technical",
+                            "answer": "A vulnerability where untrusted data is sent to an interpreter as part of a command. Mitigation involves 'Prepared Statements' via the db-api. The driver sends the SQL template and the user data separately to the DB engine, ensuring data is never parsed as a command."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Security flaw where malicious SQL is inserted into entry fields. Prevention: use parameterized queries or ORMs."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Giving someone a Blank Check'. You write 'Pay to [Name]'. If they write 'John and give him all the money in the vault', you're in trouble. Parameterization is like 'A Restricted Ticket'—it says 'Only John can use this', even if John tries to rewrite the rules."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Safeguarding databases by using parameterized queries to prevent malicious command execution."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Even if you 'Escape' single quotes yourself, you might forget about backslashes or Unicode tricks that hackers use. Every major library like `sqlite3`, `psycopg2`, and ORMs like `SQLAlchemy` have built-in protection. Using a 'Raw Query' is almost always a bad idea in production."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't trust anything the user types! Always use the 'built-in' way to talk to databases."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Advanced protection includes 'Principle of Least Privilege'. Even if a hacker gets a query through, your 'Web User' in the database shouldn't have permission to `DROP TABLE`. Combining good code with restricted database permissions is the 'Defense in Depth' approach."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A code injection technique, used to attack data-driven applications, in which malicious SQL statements are inserted into an entry field for execution."
+                        }
+                    ]
+                },
+                {
+                    "id": 72,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "How do you securely handle 'API Keys' and 'Passwords' in Python code?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "NEVER put keys directly in your code. Use a `.env` file and a library like `python-dotenv`. This way, your secrets stay on your computer and don't get uploaded to GitHub for everyone to see."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Best practices include: 1. Use Environment Variables. 2. Use a `.gitignore` to hide secret files. 3. For passwords, NEVER store them as plain text—always use a 'Hashing' library like `argon2` or `bcrypt` with a 'Salt' to protect against brute-force attacks."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Secrets management involves externalizing configuration. Use `os.environ` or `decouple`. For passwords, use 'Key Derivation Functions' (KDFs). In cloud environments (AWS/GCP), utilize 'Secret Manager' services which rotate keys automatically and provide audit logs of who accessed them."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Security best practices for secrets: use environment variables, never hardcode, and use salted hashes for password storage."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Hardcoding a key is like 'Taping your house keys to the front door'. Everyone who walks by can see it. Using an environment variable is like 'Keeping the key in your pocket'. Only you (the server) have it, and you only take it out when you need to unlock the door."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Isolating sensitive credentials through environment variables and robust cryptographic hashing."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you accidentally upload a key to GitHub, it is COMPROMISED FOREVER. Even if you delete the file, it stays in the 'Git History'. You must 'Revoke' the key immediately and generate a new one. Tools like 'trufflehog' can scan your history to see if you've already leaked anything."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you're typing your password into your `.py` file, stop! There's a better way called an `.env` file."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For highly secure systems, use 'Dynamic Secrets'. Tools like HashiCorp Vault can generate an API key for your Python app that only works for 60 seconds and then self-destructs. This means even if a hacker steals the key, it's already useless by the time they try to use it."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A set of protocols for the protection of sensitive authentication data from unauthorized access, disclosure, and modification."
+                        }
+                    ]
+                },
+                {
+                    "id": 73,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Code Complexity' (Cyclomatic Complexity) and how do you measure it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Complexity is 'How many paths' a piece of code can take. If you have 50 `if/else` statements in one function, nobody can understand it, and it's full of bugs. You measure it with a tool like `radon`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Cyclomatic complexity measures the number of linearly independent paths through a program's source code. A high score (typically above 10 or 15) indicates that a function is too complex, hard to test, and should be broken down into smaller pieces."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Calculated based on the control flow graph: `E - N + 2P` where E is edges, N is nodes, and P is connected components. Tools like `radon` or `mccabe` analyze Python source and assign grades (A to F). Reducing complexity improves 'Maintainability' and 'Test Coverage'."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A software metric used to indicate the complexity of a program. Measured by counting decisions in the source code."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Driving Directions'. A simple function is 'Drive straight for 5 miles'. A complex function is 'Turn left, unless it's Tuesday, then turn right, but if there's a cat in the road, turn around...'. The more 'Turns' (If-statements), the easier it is to get lost!"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Metric measuring the number of logical decision paths in a function to gauge maintainability."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "High complexity is a 'Bug Magnet'. Because it's so hard to follow, a developer might fix a bug in 'Path A' but accidentally break 'Path B'. Best practice is to keep functions small enough that they have a complexity score of 5 or less. This usually means one function does exactly ONE thing."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your function is longer than your screen, it's too complex. Break it up!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Complexity also affects 'Cognitive Load' for developers. Research shows that Humans can only hold about 7 items in their active memory. A function with a complexity of 20 literally exceeds the biological capacity of the programmer to fully understand it all at once."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A software metric used to indicate the complexity of a program, determined by the number of decision points in the code."
+                        }
+                    ]
+                },
+                {
+                    "id": 74,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "Explain 'Safe Pickling' vs 'JSON'.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`JSON` is just text—it's very safe. `Pickle` is 'Executable Data'—it's very dangerous. If you load a Pickle from someone else, they can literally hack your computer. Always use JSON for data from the internet."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "JSON is a language-independent text format that is 'Data-only'. Pickle is a Python-specific binary format that can store 'Objects' and 'Functions'. Because Pickle can trigger object constructors during loading, it should NEVER be used for data received over a network."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "JSON is purely declarative and supports basic types (int, str, list, dict). Pickle uses a stack-based machine to reconstruct Python objects. A malicious pickle can use the `__reduce__` method to execute `os.system('rm -rf /')` upon loading. For untrusted input, `json.loads()` is mandatory."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Serialization security. JSON is safe and interoperable. Pickle is unsafe and Python-exclusive."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "JSON is like 'A Recipe'—it's just a list of ingredients. Pickle is like 'A Prepared Meal delivered by a stranger'. You don't know if they put poison in the meal (the code), but a recipe (JSON) is just information and can't hurt you."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Choosing JSON for secure cross-platform data and Pickle for trusted internal object storage."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Pickle is also 'Version Dependent'. If you save a pickle in Python 3.8 and try to open it in 3.12, it might fail if the objects inside have changed. JSON is 'Future-proof' because text labels like `\"name\": \"John\"` never change their meaning."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you don't know which one to use, use JSON. It's the industry standard for a reason."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If you absolutely NEED to use move Python objects, look at `dill`. It's like pickle but even more powerful (can serialize almost anything). However, it is JUST as dangerous as pickle and should be handled with extreme care behind a firewall."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The comparative security and use cases for Python's native binary serialization versus standardized text-based data interchange."
+                        }
+                    ]
+                },
+                {
+                    "id": 75,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Linting' and why use 'Black' or 'Flake8'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Linting is like 'Auto-Spellcheck' for your code. It finds errors, unused variables, and messy formatting. `Flake8` finds the errors; `Black` is a 'Robot' that automatically fixes the formatting for you so your code looks perfect."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A Linter analyzes source code to flag programming errors, bugs, or stylistic inconsistencies. `Flake8` checks for PEP 8 compliance and logical errors. `Black` is an 'Uncompromising' formatter that simplifies reviews by ensuring that everyone's code looks exactly the same."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Static analysis tools. Linters (flake8, pylint) find issues without running code. Formatters (black, yapf) modify AST (Abstract Syntax Tree) to normalize code layout. Using these in a 'CI/CD Pipeline' prevents 'Style Wars' in team pull requests."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Automatic code quality tools. Flake8 for error/style checking. Black for consistent code formatting."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Flake8 is like 'A Teacher' who circles your mistakes with a red pen. Black is like 'A Professional Editor' who just takes your messy manuscript and re-types it into a beautiful, standardized book for you."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Using automated tools to enforce code quality, security, and stylistic consistency."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Using 'Black' saves a lot of time during 'Code Reviews'. Instead of arguing about whether a comma should be on a new line, you just say 'Black formatted it this way, let's move on'. It allows teams to focus on the ACTUAL logic of the code rather than its appearance."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Install 'Black' in your editor right now. It makes your code look incredibly professional instantly."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "`Pre-commit hooks` automate this. Whenever you try to 'Save' or 'Commit' your code, the hook runs the linter. If there are errors, it blocks you from saving. This ensures that 'bad' code NEVER even enters the project's history."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The use of automated tools to scan source code for potential errors, stylistic issues, and compliance with coding standards."
+                        }
+                    ]
+                },
+                {
+                    "id": 76,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "Explain 'Testing' levels: Unit vs Integration vs E2E.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Unit Test: checks one tiny part (like a lightbulb). Integration Test: checks how parts fit together (like the lamp). E2E (End-to-End): checks the whole thing from the user's view (Does the light turn on when I walk into the room?)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Unit Tests focus on individual functions or classes in isolation. Integration Tests check the interaction between different modules or databases. E2E Tests simulate a real user journey from start to finish, often using tools like Selenium or Playwright."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Unit: isolated via 'Mocks' and 'Stubs'. Integration: involves external dependencies (DB/API). E2E: validates the 'Full Stack'. The 'Testing Pyramid' recommends having naturally many Unit tests, fewer Integration tests, and very few, slow E2E tests."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Unit (Individual components). Integration (Interfaces between components). E2E (Whole system flow)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Building a 'Car'. Unit test: Does this bolt fit? Integration test: Does the wheel spin when I turn the axle? E2E test: If I sit in the seat and push the gas, does the car actually drive down the road?"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A hierarchical testing strategy from isolated functions to full-system user journeys."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Standard Python testing is done with `pytest`. It allows you to write tests as simple functions. A key best practice is 'TDD' (Test Driven Development): you write the test FIRST, watch it fail, then write just enough code to make it pass. This ensures your code is actually testable."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Learn how to write Unit tests first. They are the easiest and most important!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Property-based Testing' (using a library like Hypothesis) goes further. Instead of giving one example `5 + 5 = 10`, it tries 1,000 random numbers to see if it can 'Break' your function. It often find edge cases (like negative numbers or zero) that you never thought of."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The stratification of software testing into distinct phases to ensure the quality and reliability of individual parts and the system as a whole."
+                        }
+                    ]
+                },
+                {
+                    "id": 77,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Dependency Hell' and how do 'Lock Files' solve it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Dependency hell is when App A needs Version 1 of a library, but App B needs Version 2. They can't both live on the same computer! Lock files like `requirements.txt` or `poetry.lock` write down EXACTLY which version everyone agreed to use."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Dependency Hell occurs when library versions conflict, breaking the application. 'Lock Files' record the exact versions (and hashes) of every library AND their sub-dependencies. This ensures 'Deterministic Builds'—the project will work exactly the same on your computer as it does on the server."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Transitive dependency conflicts. A standard `requirements.txt` is often 'Loose' (e.g. `requests>=2.0`). A 'Lock File' (e.g., `poetry.lock`) is 'Strict' (e.g. `requests==2.31.0`). This prevents the 'It works on my machine' bug by pinning the entire dependency tree."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Conflict between library versions. Solved by environment isolation and pinning exact versions in lock files."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Cooking Recipe' that just says 'Add Flour'. If you use Cake Flour and I use Bread Flour, the cake might fail. A 'Lock File' is a recipe that says: 'Use exactly 200g of King Arthur All-Purpose Flour, Batch #502'. There is no room for mistakes!"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Ensuring reproducible environments by pinning exact versions of all project dependencies."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Lock files also protect against 'Supply Chain Attacks'. If a hacker takes over a popular library and uploads a 'new version' with a virus, a lock file will see that the 'Hash' (the digital fingerprint) has changed and will refuse to install it, saving your server from infection."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you are working in a team, always use `pip freeze > requirements.txt` before you push your code!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Tools like `Poetry` or `uv` are the modern standard. They handle 'Dependency Resolution'—a complex math problem where the tool tries to find one set of versions that makes ALL your libraries happy at the same time. Doing this manually is impossible in large projects."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A state of software configuration where mutually incompatible library versions prevent an application from functioning properly, mitigated by precise version pinning."
+                        }
+                    ]
+                },
+                {
+                    "id": 78,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Cross-Site Scripting' (XSS) and how does Jinja2 prevent it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "XSS is when a hacker puts 'Secret Javascript' into a comment or profile. When another user views that page, the hacker's script steals their cookies. Jinja2 (used in Flask) 'Escapes' the text, turning dangerous `<script>` into safe text."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "XSS allows attackers to inject scripts into web pages viewed by other users. Jinja2 provides 'Automatic Escaping'. It treats all data as 'Unsafe text' by default, converting characters like `<` to `&lt;` so the browser displays the tag rather than executing it."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Context-aware output escaping. If a variable contains HTML, Jinja2 prevents it from being rendered as live DOM elements. If you *really* want to render HTML, you must explicitly use the `| safe` filter or `Markup()` class, taking full responsibility for the security of that data."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Vulnerability where scripts are injected into web pages. Jinja2 prevents this via auto-escaping."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Using a Safe for Mail'. If someone sends you a 'Bomb' (the script), the safe (Jinja2) sees it and puts it in a plastic bag. You still see the bomb, but you can't touch it and it can't explode. It's just a 'Picture' of a bomb now."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Preventing malicious script injection by automatically neutralizing HTML tags in web templates."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "XSS is still the #1 web security flaw. A common mistake is using `| safe` on data that comes from a database that *originally* came from a user. You should only use `| safe` for content that YOU generated (like Markdown you've already sanitized)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't ever try to 'un-escape' things unless you are 100% sure you know what you're doing."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern defense also includes 'Content Security Policy' (CSP) headers. Even if a script slips through Jinja2, the CSP header tells the browser: 'Only run scripts from MY own server'. The browser will then block the hacker's script even if it's right there on the page."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A type of security vulnerability typically found in web applications that enables attackers to inject client-side scripts into web pages viewed by other users."
+                        }
+                    ]
+                },
+                {
+                    "id": 79,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "Why is 'Reinventing the Wheel' a security risk?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you try to write your own 'Login System' or 'Encryption', you will almost certainly make a mistake. Standard libraries like `Django Auth` have been tested by thousands of people and fixed for 10 years. Your code hasn't."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Custom security implementations often fail to account for edge cases like 'Timing Attacks' or 'Padding Oracles'. It is much safer to use 'Battle-tested' libraries (like `cryptography` or `Passlib`) that have been audited by professional security researchers."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Reduces the 'Attack Surface'. Standard libraries benefit from 'Open Source Vigilance'. When a security flaw is found in `requests`, the whole world hears about it and fixes it. If a flaw is in your 'Custom HTTP Library', you'll never know until you are hacked."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Security risk derived from un-audited code. Prefer established, well-maintained libraries for critical tasks like auth and crypto."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Building your own Lock'. A professional lock-maker (Standard library) has 100 years of experience. Your homemade lock looks okay, but a professional burglar (Hacker) will find the one weak spring you forgot and open it in 5 seconds."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Avoiding unnecessary risk by utilizing audited, community-vetted libraries for core security features."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This also applies to 'Parsing' data. Don't write a 'Regex' to parse XML; use a proper parser like `defusedxml`. Regex often fails on weirdly nested tags, leading to 'DoS' (Denial of Service) attacks where a small piece of text makes your server CPU go to 100% forever."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "In Python, there is almost always a library for what you want. Use it!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Not Invented Here' (NIH) syndrome is a real cultural problem in tech companies. It leads to fragmented, insecure internal tools. Part of being a 'Senior Developer' is knowing when to say: 'Let's not build this ourselves; let's use the industry standard'."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The hazardous practice of developing custom solutions for complex technical or security problems that already have well-established and vetted standard implementations."
+                        }
+                    ]
+                },
+                {
+                    "id": 80,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Code Review' and how does it improve security?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Code Review is 'A Second Pair of Eyes'. Before your code goes live, another human reads it to find typos, bugs, and security holes you missed. It's the best way to catch mistakes before they become disasters."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Code reviews facilitate 'Knowledge Sharing' and 'Quality Control'. They ensure that no single person is responsible for a critical system flaw. It creates a 'Culture of Accountability' and often identifies 'Business Logic' errors that automated tests would miss."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Peer-based quality assurance. Reviews often catch 'Insecure Defaults' or 'Leaked Secrets' in configuration. It also ensures that code is 'Readable'—if the reviewer can't understand it, it's a security risk because future maintainers won't be able to fix bugs safely."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A systematic examination of computer source code to find and fix mistakes overlooked in initial development."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Co-pilot in a plane'. Even the best pilots make mistakes. Having a second person to check the 'Landing Gear' and 'Fuel Mixture' ensures that if one person fails, the plane doesn't crash."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Collaborative analysis of source code to verify security, logic, and maintainability."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Psychologically, knowing your code will be reviewed makes you a better coder. You write cleaner code and better comments because you know someone is going to judge it. This 'Social Pressure' is one of the most powerful (and free) security tools in existence."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't be afraid to have your code reviewed. It's how you learn the fast way!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The 'Two-Person Rule' (or 'Four-Eyes Principle') used in banking and military is the inspiration for PRs (Pull Requests). In high-security environments, certain parts of the code (like the 'Vault' logic) can ONLY be changed if TWO senior engineers approve the change."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A phase in the software development process where the author of code and their peers evaluate the source code for quality and security."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

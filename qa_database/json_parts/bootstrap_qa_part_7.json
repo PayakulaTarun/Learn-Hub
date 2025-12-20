@@ -1,0 +1,592 @@
+{
+    "dataset": "bootstrap_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_7",
+            "questions": [
+                {
+                    "id": 61,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "How do you optimize Bootstrap's file size for production?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Instead of using the full Bootstrap CSS, only import the specific components and utilities you actually use in your project."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Optimization involves using the Sass source files rather than the compiled CSS. By only `@import`ing the necessary modules and utilizing a tool like PurgeCSS to remove unused classes, you can reduce the file size by over 80%."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Utilize a modular Sass build. Start with `functions`, `variables`, and `maps`, then individually import required components. Finally, use a post-processor like PurgeCSS or UnCSS during the build step."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Modular imports in Sass and removal of unused CSS via PurgeCSS."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Packing a Bag'. Instead of taking the whole closet (full Bootstrap), you only pick the 3 shirts and 2 pants you actually need for your trip."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Import only necessary Sass modules and use PurgeCSS to strip unused classes."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A full Bootstrap build is ~200KB. For a landing page with just a navbar and buttons, that's wasteful. By using modular imports, you ensure that complex components like 'Carousel' or 'Modal' code aren't shipped to the user unless they are actually used."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't just download the 'Big' file. Pick and choose the bits you want so your website loads faster on slow phones."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can also customize the `$utilities` map in Bootstrap 5 to disable specifically costly utilities like 'shadows' or 'gradients' if they don't fit your design language."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The reduction of the framework's payload through modular compilation and dead-code elimination."
+                        }
+                    ]
+                },
+                {
+                    "id": 62,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Tree Shaking' in the context of Bootstrap 5 JavaScript?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a process where your building tool (like Webpack) automatically throws away the parts of the Bootstrap JavaScript that you aren't using."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Bootstrap 5 is built with ES Modules, allowing for tree-shaking. If you only import `Modal` from 'bootstrap', your bundler will exclude the logic for Dropdowns, Carousels, and other components, leading to a smaller JS bundle."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Utilizes static analysis of ES6 `import/export` statements to eliminate unreachable code. This is only possible in version 5+, as version 4 relied on jQuery as a monolith."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Elimination of unused code in JS bundles using ES Module imports."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Imagine a 'Tree' where the branches are different features. 'Tree Shaking' is literally shaking the tree so that only the branches you are holding onto stay, while the unused 'dead weight' falls off."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Import specific modules (e.g., import { Modal } from 'bootstrap') to enable tree-shaking."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Standard 'bundle.js' imports everything. To tree-shake, you should use: `import Modal from 'bootstrap/js/dist/modal';`. This tells the compiler exactly where the code lives, allowing it to ignore everything else in the `dist` folder."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a smart cleanup tool that makes sure you don't carry 'junk' code into your final website."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Note that Popper.js is still a separate dependency. You should also ensure your bundler is configured for production mode to trigger the actual minification and shaking process."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The process of removing unused JavaScript code from the final application bundle through static analysis of module dependencies."
+                        }
+                    ]
+                },
+                {
+                    "id": 63,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "How does using 'CSS Variables' (Custom Properties) improve performance?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "CSS variables allow you to change colors or styles in real-time without the browser having to re-read the entire CSS file."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Bootstrap 5 uses CSS custom properties for many components. This allows for theme switching (like Dark Mode) without generating additional CSS files. You just update the variable value, and the browser repaints immediately."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Reduces CSS size by eliminating the need for repeated hardcoded values. Enables runtime manipulation via `document.documentElement.style.setProperty('--bs-primary', '#000')`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Enables theme customization and runtime updates without extra CSS payload."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Remote Control'. Instead of repainting the whole house blue, you just press a button that tells the lightbulbs (variables) to change from warm to cool."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Use --bs-* variables for efficient, real-time styling updates and theme management."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In Bootstrap 4, changing a color meant re-compiling Sass. In 5, many components use `var(--bs-primary)`. You can override this at the `:root` level or even on a per-component basis in the HTML style attribute, which is much more performant than adding a new class."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It makes it really easy to add a 'Dark Mode' to your site without it being slow."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Be aware that CSS variables have low-end browser support limitations (IE11), though this is no longer a concern for Bootstrap 5 as it has dropped IE support entirely."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The use of CSS custom properties to manage design tokens and enable dynamic styling within the browser."
+                        }
+                    ]
+                },
+                {
+                    "id": 64,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'RFS' (Responsive Font Size) in Bootstrap?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "RFS is a tool that automatically makes your text smaller on phones and larger on desktop so it's always easy to read."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "RFS is an engine built into Bootstrap's Sass that automatically scales font sizes based on the viewport. It simplifies responsive typography by eliminating the need for dozens of manual media queries for text."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Calculates font sizes using a combination of `rem` and fluid `vw` units. It uses a custom Sass mixin `@include font-size(2rem);` instead of hardcoded values."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Automated scaling of typography based on browser window dimensions."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Elastic Text'. As you pull the window wider, the text grows smoothly, and as you push it smaller, the text shrinks to stay perfectly balanced with the other elements."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Include the RFS mixin to automate responsive typography scaling."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "RFS doesn't just work for font-size; it can also be used for padding and margins. It uses a 'Base' and 'Factor' value to determine how much the element should shrink before hitting its minimum size on mobile."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It stops your big headlines from taking up the whole screen on an iPhone while keeping them big on a Mac."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can customize RFS behavior by changing the `$rfs-base-value` or `$rfs-breakpoint` variables in your theme configuration to match your specific layout needs."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A Sass mixin family for creating fluidly scaling CSS properties centered around typography."
+                        }
+                    ]
+                },
+                {
+                    "id": 65,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "The impact of 'Deferred Loading' on Bootstrap JS.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Putting the `defer` keyword on your script tag makes the page content show up faster because the browser doesn't wait for the JS to download."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Using the `defer` attribute on the Bootstrap script tag ensures the HTML is parsed before the JS executes. This improves 'First Contentful Paint' (FCP), a key performance metric."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Scripts with `defer` are fetched in parallel and executed after the DOM is fully constructed. This prevents 'Render-Blocking' where the browser stops drawing the page while waiting for the script."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Improving page load performance by preventing JavaScript from blocking HTML parsing."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Reading the Menu' (HTML) while the waiter (JS) is walking to your table. You're ready to order faster because you didn't just sit there staring at the kitchen door."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Add the 'defer' attribute to the Bootstrap script to prioritize page rendering."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Bootstrap 5 components are initialized via data attributes, which only trigger when the DOM is ready. Using `defer` is perfectly compatible with this 'declarative' style of initialization."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's one simple word you add to your code to make your website feel 'snappier' and more professional."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If you have custom JS that depends on Bootstrap, that script should *also* have the `defer` attribute to maintain the correct execution order."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The practice of non-blocking script execution to optimize the Critical Rendering Path."
+                        }
+                    ]
+                },
+                {
+                    "id": 66,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Intermediate",
+                    "question": "Why is it better to use 'Gzip' or 'Brotli' for Bootstrap files?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "They are compression methods that 'zip' your website files so they are much smaller and travel faster through the internet."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Compressing Bootstrap with Brotli or Gzip can reduce the file size by 70-80%. This significantly decreases bandwidth usage and speeds up page loads, especially for mobile users on 3G/4G networks."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "HTTP compression algorithms. Brotli is generally 15-20% more efficient than Gzip for static text assets like CSS and JS. Configured at the server level (Nginx/Apache)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Server-side compression for reducing asset transfer size."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Freeze-Drying' food. You take out all the air (useless characters) so it's light to ship, and then the browser 'adds water' (decompresses) to make it edible again."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Enable server-side compression (Brotli/Gzip) to minimize Bootstrap file transfer weight."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Modern CDNs support these by default. When a user's browser sends a request, it says 'I support Brotli'. The server then sends the tiny compressed version instead of the raw text version."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "This is a 'behind-the-scenes' trick that makes your website load in 1 second instead of 3 seconds."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can pre-compress your Bootstrap build as a `.br` or `.gz` file during your CI/CD pipeline to save the server the work of compressing it on-the-fly."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The application of lossless data compression to web assets during transit to reduce latency."
+                        }
+                    ]
+                },
+                {
+                    "id": 67,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Architect",
+                    "question": "What is the 'Critical CSS' pattern for Bootstrap?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's taking the small bit of CSS needed to show the 'top of the page' and putting it inside the HTML, so the user sees something instantly while the rest of Bootstrap loads."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Critical CSS involves extracting the styles for 'above-the-fold' content (like the header and hero) and inlining it in the `<head>`. This eliminates the 'Flash of Unstyled Content' and provides an near-instant layout."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Optimization technique where styles required for the first 1000px of the viewport are inlined, and the primary `bootstrap.min.css` is loaded asynchronously using `preload`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Extraction and inlining of above-the-fold styles for faster rendering."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Serving Appetizers'. You give the guest something small to eat immediately (Critical CSS) while the chef works on the giant main course (full Bootstrap file)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Inline the above-the-fold CSS and move the full Bootstrap link to an async loader."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is critical for high 'Lighthouse' scores. Without this, the browser won't start drawing *anything* until the entire large Bootstrap file has finished downloading."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to cheat the clock so your visitors don't see a blank white screen for even half a second."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Tools like 'Critical' or 'Critters' can automate this process in your build pipeline, analyzing your HTML and generating the specific minified CSS needed for the header/hero."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The separation and inline delivery of styling for immediately visible page elements."
+                        }
+                    ]
+                },
+                {
+                    "id": 68,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "How to optimize Bootstrap's Icon usage?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Instead of loading the entire Bootstrap Icons font, just use individual SVG files for the specific icons you need."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Bootstrap Icons come as a font or individual SVGs. Using SVGs is more optimized because you only include the 'shapes' you use, whereas the font file contains hundreds of icons you'll never use."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "SVG sprites or individual SVG components. SVGs are better for performance as they aren't 'render-blocking' like external fonts and have better accessibility support via `<title>` tags."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Inlining specific SVGs instead of loading the full icon font file."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Buying a single Bolt' instead of a 'Bucket of assorted hardware'. If you only need one size, the bucket is just heavy and useless extra weight."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Use individual SVGs or an SVG sprite rather than the Bootstrap Icons webfont."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Icons fonts (like FontAwesome or the Bootstrap Icon font) require a separate HTTP request and can suffer from 'FOIT' (Flash of Invisible Text). SVGs can be included directly in your HTML for zero latency."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Copy and paste the SVG code directly into your page for the few icons you need. It's much faster than loading a giant icon library."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can use a 'Sprite sheet' approach to load multiple SVGs in one file while still being able to refer to them by ID in your icons, combining the best of both worlds."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The utilization of vector graphics over font-based iconography to reduce network payloads."
+                        }
+                    ]
+                },
+                {
+                    "id": 69,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Architect",
+                    "question": "Reducing 'Unused CSS' when using Bootstrap with Frameworks (React/Vue).",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Use a tool like 'PurgeCSS' that scans your React code and deletes any Bootstrap classes from the final CSS if they are never mentioned in your components."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Modern frameworks often use 'CSS-in-JS' or 'Scoped CSS'. To keep Bootstrap efficient here, we use a post-processing build step that cross-references our HTML/JS files against the Bootstrap CSS to strip everything else away."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "PostCSS integrated with PurgeCSS. Must configure 'safelists' for classes that are added dynamically by JavaScript (like `.show` on modals) to prevent them being accidentally purged."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Dead-code elimination of CSS using static analysis of framework templates."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Security Guard' checking a guest list. If a CSS class name isn't on the list (isn't found in your React code), the guard throws it out."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Apply PurgeCSS in the build pipeline to eliminate unused Bootstrap selectors."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is especially powerful for Bootstrap, which has many large utilities (like 50+ background color classes) that are rarely all used. Purging these can reduce a 150KB CSS file down to 20KB or less."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like 'Spring Cleaning' for your code. It throws away the junk you're not using before you show your site to the world."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "When purging, you must be careful with 'Interpolated' classes (like `btn-${color}`). Since the tool can't 'see' the final string, it might purge `btn-primary` if you don't safelist it."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The algorithmic removal of non-matching CSS selectors from the production stylesheet."
+                        }
+                    ]
+                },
+                {
+                    "id": 70,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Intermediate",
+                    "question": "Difference between 'Minified' (.min.css) and standard Bootstrap files.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The minified file is exactly the same code, but all the spaces and enters have been removed to make the file as small as possible for the computer."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Minification removes comments, whitespace, and formatting. You should always use `.min.css` in production to reduce download time, and the standard version in development for easier debugging."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Minified files undergo a process that shortens variable names (where possible) and flattens the file into a single line of text. This reduces the byte-count while remaining functionally identical to the browser's parser."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Compressed version of the stylesheet optimized for performance; lacks human-readable formatting."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Standard CSS is like a 'Storybook' with pictures and gaps. Minified CSS is like a 'Telegram'—just the raw facts, no fluff, aimed at saving paper (bandwidth)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Use .min.css for production to minimize file transfer overhead."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Most minifiers also perform 'Property Shorthand' conversion (e.g., turning 4 separate margin properties into one `margin` line). This can save a few more percentage points of file size."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the 'Squished' version of the code that's perfect for lunching your site."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You should use 'Source Maps' along with minified files so that your browser's dev tools can still point you to the correct line in the 'Pretty' code when an error happens."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The process of stripping all unnecessary characters from code without changing its functionality."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

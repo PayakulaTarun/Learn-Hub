@@ -1,0 +1,592 @@
+{
+    "dataset": "computer-networks_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_9",
+            "questions": [
+                {
+                    "id": 81,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Architect-Level",
+                    "question": "Scenario: A user in Australia says your website (hosted in US) is slow. How do you troubleshoot and fix it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The distance is too big. You fix it by putting a 'Copy' of your website on a server in Australia using a CDN like Cloudflare."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I would first measure the latency (RTT) and packet loss. If the RTT is ~200ms (standard for US-AU), the issue is likely 'Latency'. I would implement a CDN to cache static content at the 'Edge' and use HTTP/3 for faster handshakes over the long haul."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Diagnostic: `mtr` or `traceroute` to find bottlenecks. Optimization: 1. Deploy CloudFront/Akamai. 2. Enable TCP Fast Open. 3. Use TLS 1.3. 4. Check for 'Sub-optimal Peering' where traffic might be routed through Europe instead of the direct Pacific line."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Mitigation of high-latency geographic links through distributed content caching and protocol optimization."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Ordering a burger from New York' while sitting in Sydney. No matter how fast the plane is, it's going to be cold. To fix it, the burger shop should open a 'Franchise' (CDN) in Sydney so the delivery only takes 5 minutes."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Use a CDN to move content closer to the user and minimize the speed-of-light delay."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Actually, the problem isn't the 'Download Speed', it's the 'Handshakes'. Every time TCP/TLS/HTTP talk back and forth, it's a 200ms trip. A basic page load might require 5 trips (1 full second of waiting). A CDN 'terminates' the connection in Sydney, so those 5 trips happen in 10ms instead of 1000ms."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The internet travels at the speed of light, but Australia is very far away! Using a local 'Server Cache' solves this and makes the site feel local."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To truly optimize, use 'Global Accelerator' (AWS) or similar. It puts your traffic onto a 'Private' global fiber backbone instead of the 'Messy' public internet, ensuring the traffic takes the'Most Direct' path across the ocean seafloor."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The application of geographic distribution and caching strategies to minimize network transit time for remote end-users."
+                        }
+                    ]
+                },
+                {
+                    "id": 82,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Architect-Level",
+                    "question": "Scenario: Your company is moving to Hybrid Cloud. How to connect the Office to AWS/Azure securely?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You can use a 'VPN' for a cheap connection through the internet, or a 'Regular Private Line' (Direct Connect) if you need it to be super-fast and reliable."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "For low-cost/backup, I'd use an IPsec VPN over the public internet. For a production-grade, high-bandwidth connection, I'd recommend 'AWS Direct Connect' or 'Azure ExpressRoute'. This provides a dedicated physical fiber link that bypasses the internet entirely, offering predictable latency and better security."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Connectivity options: 1. Site-to-Site VPN (BGP over IPsec). 2. Dedicated Cloud Interconnect (Layer 1/2 dedicated circuit). 3. SD-WAN Overlay. Key architect decision: Bandwidth volume vs Path redundancy vs Security Compliance."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Selection of site-to-cloud interconnection based on bandwidth requirements, latency tolerance, and security policy."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "VPN is like 'Driving on the Public Highway' using a locked suitcase. Direct Connect is like 'Building your own Private Private Subway Tunnel' between your house and your office. No one else can get in, and there is never any traffic."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Use dedicated interconnects for performance and encrypted VPNs for cost-effective connectivity."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Security is key. Even with a Direct Connect, traffic is often NOT encrypted 'By Default'. An architect should still run 'IPsec' or 'MACsec' on top of that private line to ensure that even if someone TAPs the fiber cable in the street, they can't read your company's data."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like connecting your home router to a 'Mega-Router' in the cloud so both networks act like one big happy family."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Transit Gateway (TGW) is the modern way to manage this. Instead of 100 separate VPNs for 100 cloud projects, you connect the office once to the TGW, and it 'routes' the traffic to all your cloud apps automatically."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The implementation of cross-premise networking using either encrypted tunnels or dedicated physical links."
+                        }
+                    ]
+                },
+                {
+                    "id": 83,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Architect-Level",
+                    "question": "Scenario: Design a network that survives a whole 'Data Center Fire'.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You need 'Two of Everything' in two different cities. If one city burns down, the 'Traffic Cop' (DNS) sends everyone to the second city."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I would design a 'Multi-Region Active-Active' architecture. Using GSLB (Global Server Load Balancing) based on Route 53 or Cloudflare, we can monitor the health of 'Region A'. If it fails, DNS records are instantly updated to point to 'Region B'. We must also ensure data is being replicated in real-time between the regions."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Disaster Recovery (DR) architecture. 1. Geographically dispersed ASNs. 2. BGP Anycast for stateful load balancing. 3. Multi-site replication (RTO/RPO targets). 4. Automated 'Failover' testing once per quarter."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "High-availability strategy involving geographic redundancy and automated traffic redirection upon service failure."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Having two identical Spare keys' for your car, but you give one to a neighbor in a different town. Even if a tree falls on your house and your key is lost, your neighbor can still bring you the other key and you can drive."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Geographically disparate redundancy with automated health-check and failover mechanisms."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The hard part isn't the 'Network', it's the 'Database'. If Region A burns down at 2:00:00 PM, does Region B have the data from 1:59:59 PM? Architects use 'Secondary Read Replicas' and 'Cross-Region Snapshots' to minimize the 'Data Loss' period."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like having a 'Double' for an actor—if the main actor gets sick, the double steps in so the movie can keep filming."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Active-Passive' is cheaper but takes 5-10 minutes to turn on. 'Active-Active' is much more expensive because you pay for two networks at once, but the switch happens in SECONDS with zero downtime."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The configuration of network resources to ensure business continuity in the event of a catastrophic regional failure."
+                        }
+                    ]
+                },
+                {
+                    "id": 84,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Architect-Level",
+                    "question": "Scenario: You suspect a 'BGP Hijack' is affecting your traffic. What do you do?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You check a 'Global BGP Map' to see if another company is 'claiming' your IP address. If they are, you call your provider and tell them to block the liar's announcement."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "First, I'd check 'BGP Looking Glasses' (like Cisco's or Hurricane Electric's) to see which AS is originating my IP space. If unauthorized, I'd contact my Upstream ISP immediately to 'Filter' the rogue routes. Long-term, I would implement RPKI (digital signing) to prevent it from happening again."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Incident Response: 1. Audit `bgpstream.com` for anomalies. 2. Verify ROA (Route Origin Authorization) status via RPKI. 3. Advertise more specific prefixes (e.g. /24 instead of /23) to 'win' the BGP shortest-path battle. 4. Communicate with the 'Peering DB' of the offending network."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Identification and remediation of unauthorized BGP prefix advertisements via global monitoring and prefix filtering."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like someone 'Putting up a sign on the highway' saying your house is now a mile to the left. You need to go out and 'Put up a bigger sign' saying 'THE SIGN TO THE LEFT IS LIES, KEEP GOING STRAIGHT!'"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Detect rogue route originations and counter with more specific path advertisements and ISP filtering."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Hijacks often happen due to 'Fat Fingers' (typing errors). Someone in a small ISP might meant to type `10.x.x.x` and accidentally typed YOUR public IP range. However, it can be malicious—if they hijack your IP, they can 'Inspect' all your encrypted traffic for weeks before you even notice."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a 'Digital Kidnapping' of your website's address. You have to call the 'Internet Police' (your ISP) to get it back."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'BGP communities' can be used to tag your routes. You can tell your provider: 'If you see my routes being announced by anyone else without this specific 'tag', drop them immediately'. This is a very strong 'Best Practice' for big firms."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The process of identifying and correcting the unauthorized announcement of an IP prefix in the Border Gateway Protocol."
+                        }
+                    ]
+                },
+                {
+                    "id": 85,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Architect-Level",
+                    "question": "Scenario: Scaling a 'Real-Time Video' App (Zoom/Teams clone). What are the network constraints?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You need low latency and fast UDP. If you use TCP, the video will 'Lag' and 'Freeze' whenever there's a tiny glitch. UDP just keeps the video moving."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Real-time video requires extremely low 'Jitter' and Latency (<150ms). We use WebRTC over UDP. We need 'STUN/TURN' servers to help users behind firewalls talk to each other, and 'MCU' or 'SFU' servers to manage the bandwidth when 50 people join the same call."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "QoS prioritization (EF/CS4 marks). Use of SFU (Selective Forwarding Units) to avoid N^2 bandwidth scaling. Handling 'Packet Clumping' via pacing. Implementing 'FEC' (Forward Error Correction) to rebuild lost video frames without waiting for retransmission."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Optimization for time-sensitive, loss-tolerant payloads using UDP-based protocols and specialized media relay infrastructure."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Throwing a continuous stream of ping-pong balls' at someone. If they drop one, you don't stop and ask 'Did you get it?'—you just keep throwing. If you stop to talk, the game stops (Lag). You just keep the stream moving."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Prioritize low-latency UDP delivery and use media relays to manage sparse multi-user traffic."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The biggest enemy is 'Jitter' (uneven delay). If one packet takes 10ms and the next takes 100ms, the audio sounds like a robot. We use a 'Jitter Buffer' to hold the 10ms packet for a tiny bit so the output is 'Steady', but too much buffering creates 'Mouth-to-Ear' delay."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's all about 'Smoothness'. It's better to lose a tiny bit of video quality than to have the whole screen freeze for a second."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'SRTP' (Secure Real-time Transport Protocol) is used to encrypt the video. Unlike HTTPS, SRTP can't use standard certificates as easily, so we use 'DTLS' to exchange keys between the two people on the call privately."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The engineering requirements and solutions for delivering low-latency, high-bandwidth interactive media across heterogeneous networks."
+                        }
+                    ]
+                },
+                {
+                    "id": 86,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Architect-Level",
+                    "question": "Scenario: Migrating a legacy IPv4 'Corporate Office' to IPv6.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You don't do it all at once! You run both (Dual Stack). You keep the old IPv4 for the old printers and use IPv6 for the new Laptops and the Web."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I would implement a 'Dual Stack' strategy. Our core switches and routers will have both V4 and V6 addresses. For legacy devices that 'CANNOT' do V6, we use 'NAT64/DNS64' which allows a V6-only laptop to talk to a V4-only server through a translator."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Phased migration: 1. Dual-Stack at the edge. 2. Implement SLAAC/DHCPv6 for address management. 3. ISATAP or 6in4 tunneling for V6-over-V4 transit. 4. Gradual 'Sunset' of IPv4 addresses as they become unused."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Transition of network infrastructure from legacy 32-bit addressing to 128-bit using coexistence and translation mechanisms."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Installing a 220V Outlet' in a house that only has 110V. You don't rip out all the old wires! You run the new wire alongside the old one. You use the 220V for the big car charger (The Web) and keep the 110V for the lamps."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Coexist IPv4 and IPv6 simultaneously (Dual Stack) while using translation (NAT64) for incompatible nodes."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The biggest hurdle is 'Internal Apps'. Many home-grown company apps have 'IP addresses' hard-coded into the code (e.g. `connect to 10.0.0.5`). Those apps will BREAK in a V6-only world. This is why V4 exists in offices today and will probably stay for another 20 years."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like learning a 'Second Language'—for a while, everyone in the office has to speak both until the old language is eventually forgotten."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Happy Eyeballs' at the OS level ensures that if our IPv6 is misconfigured and slow, the user's computer will 'silently' fail back to IPv4 in 250ms, so nobody calls the IT helpdesk complaining."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The systematic methodology for transitioning a network from the Internet Protocol version 4 to version 6."
+                        }
+                    ]
+                },
+                {
+                    "id": 87,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Architect-Level",
+                    "question": "Scenario: Intermittent 'Packet Loss' on a 10km Fiber link. How to fix?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Check the 'Light Levels' with a meter. The fiber might be dirty or bent too tightly. If the physical glass is okay, check if the two routers are 'fighting' about the MTU size."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I'd start with Layer 1. I'd use an 'OTDR' to see if there are any tiny cracks or bad splices in the fiber glass. If L1 is clean, I'd check 'Interface Errors'. If I see 'CRC errors', it's likely electronic noise or a bad SFP module. If I see 'Ignored', it's a CPU/Buffer overflow on the router."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Audit: 1. Rx/Tx Power levels (dBm). 2. Fiber bend radius. 3. SFP/Transceiver compatibility. 4. Bit Error Rate (BER). If loss is only during peaks, it's 'Congestion'. If it's constant, it's 'Degradation'."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Diagnosis of transmission failures in long-haul optical links using physical-layer instrumentation and interface statistics."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Dripping Hose'. You have to see if there's a 'Hole' in the hose (fiber crack), 'Dirt' in the nozzle (dirty connector), or if you're just trying to push 'Too Much Water' (congestion) through a hose that is too small."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Check optical power levels and CRC errors to differentiate between physical fiber issues and network congestion."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Sometimes the problem is 'Temperature'. Fiber expands and contracts. A Bad Splice might work fine at noon but fail at 3:00 AM when the ground gets cold. We call these 'Flapping' links and they are the hardest to find because they 'fix themselves' while the technician is driving there."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a 'Flickering Lamp'—usually the plug is just loose or dirty, and you just need to clean it and plug it in tight."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If physical replacement isn't possible, we use 'FEC' (Forward Error Correction). We add 'Extra Data' to every packet so the receiver can 'Calculate' what the missing bits were even if some light didn't make it through the glass."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The systematic investigation and rectification of data unit loss in a long-distance optical communication channel."
+                        }
+                    ]
+                },
+                {
+                    "id": 88,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Architect-Level",
+                    "question": "Scenario: Protect a high-traffic API from 'Credential Stuffing' Bots.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Use a 'Rate Limiter' that blocks anyone who tries to log in 100 times in a minute. Also, look for 'Weird' browsers that don't look like real humans."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I'd use a Web Application Firewall (WAF) with 'Bot Management'. We look for 'Fingerprints' (TLS headers, browser versions) and 'Behavior Patterns'. If 5,000 different usernames are all logging in from the 'Same' IP address, that's almost certainly a bot attack."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Mitigation: 1. Request Pacing/Rate limiting. 2. Threat Intelligence feeds (IP Reputation). 3. Header analysis (JA3 fingerprints). 4. CAPTCHA challenges for suspicious sessions. 5. 'Honeypot' hidden fields that only bots will click."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Defense against automated credential attacks using heuristic analysis and traffic shaping at the application edge."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Standard security is 'Checking one person's ID'. Mitigation is 'Seeing one guy trying to open 1,000 different lockers in 10 seconds'. Even if he has the right key for one, he's a thief, and you throw him out of the gym regardless."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Identify automated login attempts via IP reputation, rate limiting, and behavior scoring."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Bots today are smart. They use 'Residential Proxies', meaning the attacks come from 10,000 different 'Normal Home Wi-Fi' IPs. You can't just block a single IP. You have to look at the 'Speed' of typing or use 'Javascript Challenges' that only a real browser can solve."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like having a 'Digital Doorman' who can tell the difference between a real customer and a robot trying to break the lock."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Use 'Risk-Based Authentication'. If the login is 'Correct' but it's from a 'New Device' in a 'New Country' and the user is 'Typing too fast', we force an Extra MFA check (OTP) just to be safe."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The strategic implementation of security controls to prevent automated attacks targeting user credentials."
+                        }
+                    ]
+                },
+                {
+                    "id": 89,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Architect-Level",
+                    "question": "Scenario: 'Wi-Fi is slow' in a high-rise office building with 50 other companies.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The 'Air' is too crowded! Move everyone to the '5GHz' or '6GHz' channels which are less busy, and turn down the power so your Wi-Fi doesn't 'Shout' at the neighbors."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I'd perform a 'Spectrum Analysis'. In a dense building, the 2.4GHz band is useless. I would disable 2.4GHz, use only 5GHz (and Wi-Fi 6E/6GHz if possible), and use 'Smaller Cells' (more Access Points with lower transmit power) to minimize co-channel interference."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Mitigation: 1. RSSI/SNR Optimization. 2. DFS (Dynamic Frequency Selection) channels. 3. Disable legacy 802.11b rates. 4. Adjust 'Minimum Basic Rate' to 12Mbps or 24Mbps to force fast roaming and reduce overhead."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Optimization of wireless performance in high-density environments through frequency management and cell size reduction."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like '50 people trying to have 50 different conversations in one elevator'. If everyone shouts (High power), no one hears anything. If everyone whispers (Low power) and uses different 'Pitch' voices (Channels), everyone can talk normally."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Manage channel interference by prioritizing high-frequency bands and reducing overlap through power control."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A common mistake is using 'Auto-Channel'. If every router in the building is 'Auto-switching', they will keep chasing each other, causing the Wi-Fi to drop out every 5 minutes. Static, non-overlapping channels (1, 6, 11 for 2.4GHz) are much more stable."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like trying to listen to the Radio when every station is 'Bleeding' into each other. You just have to find a 'Quiet Station' and stay there."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Wi-Fi 6 (802.11ax) introduced 'BSS Coloring'. It puts a 'Digital Tag' on your packets. If your laptop hears a neighbor's packet but it's a 'Different Color', it ignores it and keeps working, reducing wait-time significantly."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The systematic optimization of wireless local area network parameters to mitigate electromagnetic interference and maximize data rates in high-density deployments."
+                        }
+                    ]
+                },
+                {
+                    "id": 90,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Architect-Level",
+                    "question": "Scenario: 'Slack/Zoom' works, but 'Google.com' doesn't. What is the cause?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Your 'DNS' is broken. Slack and Zoom are already 'Running' or use hidden numbers, but your computer can't 'Look Up' the name for Google anymore."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is almost always a 'DNS Resolution' issue. Apps like Slack use long-lived connections or already resolved IPs, so they stay logged in. But a 'New' request like google.com requires a fresh DNS lookup. If the DNS server is down, existing apps work while 'Browsing' fails."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Symptom: Established TCP/UDP sessions remain active, but name resolution (UDP/53) is failing. Actions: `nslookup google.com`. If it fails but `ping 8.8.8.8` works, verify local DNS settings or firewall blocking of Port 53."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Classification of specific service failure as a name-resolution bottleneck versus a total network transport outage."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like being 'Inside a Store' (Slack)—you can still buy things. But if you walk outside and 'The Map' (DNS) disappears, you can't find your way to the 'The Library' (Google) even though the library is still open."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Name resolution (DNS) failure while established protocol sessions remain functionally connected."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Another possibility is an 'MTU/Fragmentation' issue. Slack/Zoom use small, 'Chatty' packets. Loading a full webpage like Google uses 'Big' packets. If a router in the path is broken and can't handle big packets, only the 'Large' websites will fail to load."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like your 'Internet Phonebook' is missing. You can still talk to the people you're already on the phone with, but you can't look up any new numbers."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In IPv6 networks, this can happen if 'IPv4' DNS is working but 'IPv6' is broken. Browsers will wait for the IPv6 to 'Time Out' before trying V4, making it look like the site is 'Slow' or 'Dead' even if the Wi-Fi is fine."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The diagnostic differentiation between a successful transport layer session and a failed application layer naming service."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

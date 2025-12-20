@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import { AIChatMessage, AIContextData } from '../lib/ai/llm';
+import { auth } from '../lib/firebase';
 
 interface AIContextType {
     isOpen: boolean;
@@ -35,34 +36,76 @@ export function AIProvider({ children }: { children: ReactNode }) {
 
     const router = useRouter();
 
+
+// ... (Top of file)
+
     const sendMessage = async (content: string) => {
         const userMsg: AIChatMessage = { role: 'user', content };
         setMessages(prev => [...prev, userMsg]);
         setIsTyping(true);
 
         try {
+            const token = auth.currentUser ? await auth.currentUser.getIdToken() : '';
+            
             const res = await fetch('/api/ai/chat', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify({
                     messages: [...messages, userMsg],
                     context: contextData
                 })
             });
             
-            if (!res.ok) throw new Error('API Failed');
-            
-            const data = await res.json();
-            setMessages(prev => [...prev, data]);
-
-            // Handle Navigation Actions
-            if (data.action === 'navigate' && data.path) {
-                setTimeout(() => {
-                    router.push(data.path);
-                }, 1500); // Small delay so user reads "Navigating..."
+            if (!res.ok) {
+                let errorMessage = res.statusText;
+                try {
+                    const errorData = await res.json();
+                    errorMessage = errorData.error || res.statusText;
+                } catch (e) { /* ignore */ }
+                throw new Error(errorMessage || `Server Error ${res.status}`);
             }
-        } catch (error) {
-            setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I encountered an error connecting to the AI brain.' }]);
+
+            if (!res.body) throw new Error('No body');
+
+            // Initialize empty assistant message
+            setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
+
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            let done = false;
+
+            while (!done) {
+                const { value, done: doneReading } = await reader.read();
+                done = doneReading;
+                const chunkValue = decoder.decode(value);
+                
+                setMessages(prev => {
+                    const newHistory = [...prev];
+                    const last = newHistory[newHistory.length - 1];
+                    if (last.role === 'assistant') {
+                        last.content += chunkValue;
+                    }
+                    return newHistory;
+                });
+            }
+
+        } catch (error: any) {
+            console.error('AI Stream Error:', error);
+            const msg = error.message || 'Unknown Error';
+            // Don't duplicate 'Sorry' message if one was just added
+            setMessages(prev => {
+                 const last = prev[prev.length - 1];
+                 if (last.role === 'assistant' && last.content === '') {
+                     // If we started an empty message, replace it
+                     const newHistory = [...prev];
+                     newHistory[newHistory.length - 1].content = `⚠️ **Connection Error:** ${msg}. \n\n*Using offline knowledge base where available.*`;
+                     return newHistory;
+                 }
+                 return [...prev, { role: 'assistant', content: `⚠️ **Connection Error:** ${msg}` }];
+            });
         } finally {
             setIsTyping(false);
         }

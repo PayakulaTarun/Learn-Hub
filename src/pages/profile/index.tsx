@@ -10,76 +10,49 @@ import {
   Clock, Swords
 } from 'lucide-react';
 import LayoutComponent from '../../components/Layout';
-import { useAuth } from '../../components/Auth/AuthContext';
-import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../context/AuthContext'; // UPDATED
+// import { supabase } from '../../lib/supabase'; // REMOVED
+import { useGamification } from '../../hooks/useGamification'; // NEW
 import Link from 'next/link';
 import { availableSubjects } from '../../lib/navData';
 
 export default function ProfileDashboard() {
-  const { user, signOut, loading: authLoading } = useAuth();
+  const { user, logout, loading: authLoading } = useAuth(); // signOut -> logout
   const router = useRouter();
+  const { stats: xpData } = useGamification(); // Use the hook!
+
   const [profile, setProfile] = useState<any>(null);
-  const [xpData, setXpData] = useState<any>(null);
+  // const [xpData, setXpData] = useState<any>(null); // Replaced by hook
   const [loading, setLoading] = useState(true);
 
-  // Safety: Force loading to false after 3s max to prevent infinite spinner
+  // Safety: Force loading to false after 3s max
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (!authLoading && !user) router.push('/auth/login');
-
-    const fetchUserData = async () => {
-      if (!user) return;
-
-      try {
-        // 1. Load critical identity data first
-        const { data: profileData, error: profileError } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .maybeSingle();
-
-        if (profileError) console.error('Profile load error:', profileError);
-        if (profileData) setProfile(profileData);
-
-        // 2. Load telemetry in background (don't block UI significantly)
-        const loadStats = async () => {
-          const [xpRes, statsRes, eventsRes] = await Promise.all([
-            supabase.from('user_xp').select('*').eq('user_id', user.id).maybeSingle(),
-            supabase.from('user_learning_stats').select('*').eq('user_id', user.id).maybeSingle(),
-            supabase.from('user_activity_events').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5)
-          ]);
-
-          if (xpRes.data) setXpData(xpRes.data);
-          
-          setProfile((prev: any) => ({
-            ...prev,
-            stats: statsRes.data || { total_time_spent_ms: 0, problems_solved_count: 0, tutorials_completed_count: 0 },
-            recentEvents: eventsRes.data || []
-          }));
-        };
-
-        // Trigger stats load but don't wait for it to show the page
-        loadStats();
-
-      } catch (error) {
-        console.error('Critical profile load error:', error);
-      } finally {
-        // Always show the page after the critical profile attempt
-        setLoading(false);
-      }
-    };
+    if (!authLoading && !user) router.push('/login'); // /auth/login -> /login
 
     if (user) {
-      fetchUserData();
-    } else if (!authLoading) {
-      // Should be redirected by logic above, but safety net
-      setLoading(false); 
+        // Construct Profile from User Object + Gamification Stats
+        setProfile({
+            full_name: user.displayName || 'Anonymous Scholar',
+            email: user.email,
+            is_verified: user.emailVerified,
+            // Mock other fields for now until Firestore schema is finalized
+            target_roles: ['Full Stack Developer'], 
+            skill_level: 'Intermediate',
+            stats: { 
+                total_time_spent_ms: 0, 
+                problems_solved_count: xpData.totalProblemsSolved, 
+                tutorials_completed_count: 0 
+            },
+            recentEvents: []
+        });
+        setLoading(false);
     }
-  }, [user, authLoading, router]);
+  }, [user, authLoading, router, xpData]);
 
   if (authLoading || loading) {
     return (
@@ -145,7 +118,7 @@ export default function ProfileDashboard() {
                      <Settings size={22} />
                   </button>
                   <button 
-                    onClick={() => signOut().then(() => router.push('/'))}
+                    onClick={() => logout().then(() => router.push('/'))}
                     className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl text-rose-500 hover:bg-rose-500 hover:text-primary transition-all shadow-glow-rose-sm"
                   >
                      <LogOut size={22} />
@@ -165,7 +138,7 @@ export default function ProfileDashboard() {
                   </div>
                   <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] mb-4">Focus Streak</p>
                   <div className="flex items-end gap-3 mb-2">
-                     <span className="text-5xl font-black text-orange-500">{xpData?.streak_days || 0}</span>
+                     <span className="text-5xl font-black text-orange-500">{xpData?.streak || 0}</span>
                      <span className="text-xl font-bold text-text-muted mb-1">Days</span>
                   </div>
                   <p className="text-xs text-text-secondary leading-relaxed">Maintaining architectural consistency.</p>

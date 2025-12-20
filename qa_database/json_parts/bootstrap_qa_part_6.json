@@ -1,0 +1,594 @@
+{
+    "dataset": "bootstrap_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_6",
+            "questions": [
+                {
+                    "id": 51,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Why does my Bootstrap page have a horizontal scrollbar?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "This usually happens when you use a `.row` outside of a `.container`, or when an image is wider than its box."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Horizontal scrolling is most commonly caused by using a `.row` without a surrounding `.container`. Rows have negative margins that need the container's padding to cancel them out; otherwise, they 'bleed' off the edge of the screen."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Caused by margin-overflow of `.row` (usually -12px or -15px). Without a parent `.container` or `.container-fluid` to provide an equal positive padding, the row expands beyond the viewport's 100vw width."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Result of placing a .row outside a .container, causing negative margin overflow."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like puting 'Outward-facing Hooks' on a box. If you don't put the box inside a 'Buffer Crate' (the container), the hooks will snag on the walls and move the whole crate."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Always wrap .row elements inside a .container to prevent negative margin overflow."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Another common cause is fixed-width elements (like wide tables or absolute-positioned divs) that don't scale down on mobile. Using `overflow-x: hidden` on the body is a 'band-aid' fix; the proper solution is ensuring all children are responsive."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Check if any of your images are sticking out past the edge of the screen—that's usually what creates the scrollbar."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Sometimes, the 'Scrollbar width' itself can cause this on Windows. You can use the utility `.overflow-hidden` on its parent or adjust the container padding if you are using custom gutters."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The undesirable expansion of a webpage's width beyond the viewport's horizontal constraints."
+                        }
+                    ]
+                },
+                {
+                    "id": 52,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What happens if you use 'Dropdowns' without including Popper.js?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The dropdowns simply won't open or will appear at the bottom of the page instead of next to the button."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Bootstrap dropdowns, tooltips, and popovers rely on Popper.js for dynamic positioning. If it's missing, the JavaScript will throw an error and the component will fail to initialize or appear correctly."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The console will log a ReferenceError: 'Popper is not defined'. The Bootstrap JS will abort the dropdown placement calculation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Dropdown and Tooltip components will fail due to a missing dependency."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'GPS' for your menu. Without Popper, the menu knows it needs to open, but it has no maps to tell it *where* to stand so it doesn't bump into a wall."
+                        },
+                        {
+                            "variant_id": 6,
+                            "one_liner": "Dropdowns will fail to position correctly and throw JS errors sans Popper.",
+                            "variant_id": 6,
+                            "style": "one_liner"
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In Bootstrap 5, you can avoid this by using `bootstrap.bundle.min.js`, which includes Popper built-in. If you use `bootstrap.min.js` (no bundle), you MUST manually include Popper before it in your script tags."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Your buttons will click, but nothing will pop up. Always make sure to use the 'bundle' version of Bootstrap to avoid this."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Even if Popper is loaded, dropdowns can still fail if the target trigger lacks the correct `data-bs-toggle='dropdown'` attribute, as the event listener won't attach."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The failure of overlay components due to the absence of the required second-party positioning library."
+                        }
+                    ]
+                },
+                {
+                    "id": 53,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "How do you override Bootstrap's '!important' utility classes?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You generally shouldn't; instead, change your HTML to use a different utility or write a more specific CSS selector with its own `!important`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Bootstrap utilities are marked with `!important` by design. To override them, you must use a selector with higher specificity that also uses `!important`, or better yet, avoid the utility and use a custom component class."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Bootstrap 5 utilities use `!important` to ensure they always 'win' over component styles. Overrides require a selector like `#id .custom-class { property: value !important; }`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Use a higher specificity selector combined with the !important flag."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Screaming Match'. If Bootstrap is screaming 'BLUE!', and you want it to be 'RED!', you have to scream 'RED!' even louder (more specific) and use a megaphone (!important)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Utilities use !important; overrides must increase specificity and use !important too."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A cleaner way is using the Utility API in Sass to set `$enable-important-utilities: false`. This removes the flag globally, but be warned that this might break some default Bootstrap layouts that rely on that priority."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't fight the 'Shortcuts'. If you want a custom look, just write your own CSS rather than trying to change Bootstrap's built-in shortcuts."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Specificity hierarchy: Inline styles > ID > Class > Attribute. If a utility is applied as a class with `!important`, an inline style with `!important` will still win."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The process of superseding CSS properties that have been declared with the important priority flag."
+                        }
+                    ]
+                },
+                {
+                    "id": 54,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Why does 'Modal' background often turn black or flicker?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "This happens when you have more than one backdrop active or if you nested the modal code inside another element that has its own positioning."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Flickering or 'double-dark' backgrounds usually occur if you accidentally place the modal HTML inside a parent with `fixed` or `sticky` positioning. It's best practice to place all modal code at the vary bottom of the `<body>`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The backdrop is appended to the `<body>`. If the modal is inside a `relative` container, the z-index stacking context can cause the backdrop to appear 'on top' of the modal content."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Commonly caused by incorrect modal code placement in the DOM hierarchy."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Theater Curtain' (the backdrop). If you put the curtain *inside* the prop closet (a nested div) instead of in front of the stage, the curtain won't work right and might knock the props over."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Place modal HTML as a direct child of <body> to avoid stacking context issues."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Another pitfall is trying to open a second modal while the first is still closing. You must wait for the `hidden.bs.modal` event before triggering the next one, or use a 'Manager' to handle the queue."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your popup looks weird, move the code for it to the very bottom of your HTML file, right before the last script tags."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can disable the backdrop entirely using `data-bs-backdrop='false'`, which is common for 'non-blocking' notifications or small widget-like modals."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Visual anomalies in modal overlays typically resulting from stacking context interference or improper DOM placement."
+                        }
+                    ]
+                },
+                {
+                    "id": 55,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Dealing with 'Specificity Wars' when migrating from Bootstrap 4 to 5.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Version 5 changed many class names (like 'left' to 'start'), so your old custom CSS might not 'attach' to the new elements correctly."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Migration often breaks custom overrides because Bootstrap 5 shifted to CSS Variables and renamed utility directions (RTL support). You need to update your custom selectors to match the new 's' (start) and 'e' (end) nomenclature."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "E.g., `.ml-3` is now `.ms-3`. If your custom CSS targeted `.ml-3`, it will no longer override the default Bootstrap margin because that class doesn't exist anymore."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Conflict resolution between legacy custom CSS and new Bootstrap 5 class naming conventions."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Key and Lock'. Version 4 used a 'Left' key. Version 5 changed the locks to 'Start'. Your old key still exists, but it doesn't open the door anymore."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Update custom CSS selectors to reflect Bootstrap 5's RTL-friendly naming (start/end)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Bootstrap 5 also increased the specificity of some components to handle the loss of jQuery. Using a 'Linting' tool or a migration script can help identify these 'dead' selectors in your legacy codebase."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you upgraded your website and the spacing looks 'broken', it's probably because you need to change 'left' to 'start' in your code."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can use a 'CSS Bridge' file that maps old classes to new ones during the transition, but this adds extra weight and should be a temporary solution."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The conflict between existing CSS rules and the updated class architecture of a newer framework version."
+                        }
+                    ]
+                },
+                {
+                    "id": 56,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Accumulated Padding' in nested grids?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when your nested columns have huge empty spaces on the sides because you forgot to put them inside a new `.row`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "If you put a `.col` directly inside another `.col` without a `.row` in between, the padding of both columns will add up, creating a 'Double Gutter' effect that breaks the visual alignment."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Columns have 0.75rem padding. If nested improperly, the result is 1.5rem of padding. The `.row` is essential because its negative margin 'cancels' the first layer of parent padding."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Double padding issue caused by omitting a .row wrapper in nested column structures."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Double Wrapping' a gift. One layer of wrapping (parent column) is enough. If you add another layer without removing the first (adding a row), the gift becomes too bulky."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Always wrap nested columns in a .row to prevent padding accumulation."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Alignment errors are difficult to spot until you change the background color of your columns. Once highlighted, you'll see the text in the nested column doesn't start at the same pixel as the text in the columns above it."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your text looks 'indented too far' inside a column, you probably forgot to add a 'row' div inside."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In Bootstrap 5, you can use the 'Gap' utility on a row (`.g-0`) to eliminate this entirely if you want a 'seamless' nested layout."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The additive effect of horizontal padding in hierarchical grid structures lacking proper row-based margin offsets."
+                        }
+                    ]
+                },
+                {
+                    "id": 57,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "The 'Sticky-Top' failure in overflow containers.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`.sticky-top` won't work if any of its parent elements have the CSS property `overflow: hidden` or `overflow: auto`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A common pitfall is using `.sticky-top` inside a div that has `overflow` set. CSS sticky positioning is relative to the nearest scrolling ancestor. If that ancestor isn't the body, the element will stay at the top of that specific div, not the page."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Sticky positioning requires all parents up to the viewport to have `overflow: visible` (the default). A single `overflow: hidden` on a wrapper will 'kill' the sticky effect."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Sticky positioning fails within parent containers having any 'overflow' property other than 'visible'."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Double-sided Tape'. It sticks to the first surface it touches. If you put that surface inside a sealed box, you can't see it sticking to anything else outside the box."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Ensure all parent elements have overflow: visible for .sticky-top to function."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Unlike `.fixed-top`, which removes the element from the document flow, `.sticky-top` remains in its spot until the user scrolls past it. This makes it more 'natural' but also much more sensitive to parent element styles."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your menu isn't 'sticking' when you scroll, check if you have an 'overflow' setting on your main page wrapper."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can use browser developer tools to check the 'Computed' styles of parent elements to find the secret overflow setting that's breaking your sticky nav."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The inability of sticky elements to attach to the viewport due to parent container overflow constraints."
+                        }
+                    ]
+                },
+                {
+                    "id": 58,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Conflict between 'Data Attributes' and 'JavaScript' initialization.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you use both HTML data-attributes AND custom JavaScript to control a modal, it might open and then immediately close itself."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Avoid 'Double Initialization'. If you have a button with `data-bs-toggle='modal'` and you ALSO run `new bootstrap.Modal(el).show()` in your JS, the events will conflict, often resulting in components that appear broken or loop indefinitely."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Bootstrap's event listeners are delegated to the document. Manual initialization creates a second instance that might override the first's event cleanup logic."
+                        },
+                        {
+                            "variant_id": 4,
+                            "exam": "Avoid using both declarative data attributes and imperative JS initialization for the same component instance.",
+                            "variant_id": 4,
+                            "style": "exam"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like two people both trying to 'Open the Door' at the same time. They end up bumping into each other, and the door stays shut or swings wildly."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Pick one: either use data-attributes or initialize via JavaScript, not both."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "For dynamic apps (React/Vue), it's almost always better to remove all `data-bs-toggle` attributes and handle everything purely through the framework's state and Bootstrap's imperative JS API."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't write two sets of instructions for one button; it will just get confused."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If you MUST use both, ensure you are calling `.getOrCreateInstance()` in Bootstrap 5, which safely returns the existing modal if one already exists."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The functional degradation caused by redundant component initialization through disparate framework paradigms."
+                        }
+                    ]
+                },
+                {
+                    "id": 59,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "Why is 'Auto-playing Carousel' often blocked by browsers?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Browsers often prevent things from moving or making sound automatically unless the user has already clicked on the page at least once."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Modern browsers have strict policies against auto-play for accessibility and data-saving reasons. An auto-playing carousel might stop if the user's focus is elsewhere or if they have 'Reduce Motion' enabled in their OS settings."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Bootstrap respects the `prefers-reduced-motion` media query. If set, carousel transitions are disabled or set to 0. Auto-play also pauses on hover by default via the `pause: 'hover'` option."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Browser intervention and accessibility settings (reduced motion) impacting carousel auto-play behavior."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like an 'Automatic Door' that stays closed if it senses someone might be startled by it (reduced motion) or if it thinks nobody is actually using the entrance."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Auto-play can be throttled by browser power-saving or accessibility settings."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "For WCAG compliance, you should always provide a 'Pause' button for auto-playing content. A carousel that can't be stopped is a major accessibility failure for users with ADHD or visual processing disorders."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Some people find moving pictures distracting, so their computers automatically stop your slideshow from moving."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can force a restart using `carouselInstance.cycle()` in your JS after the page has definitely loaded and the user has interacted with the document."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The restriction of automatic component transitions by browser-level resource management or accessibility policies."
+                        }
+                    ]
+                },
+                {
+                    "id": 60,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Container-within-a-Container' pitfall?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when you put a `.container` inside another `.container`, which adds way too much empty space on the sides of your content."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Nesting containers is redundant and usually results in double-padding. Containers should be root-level components that hold rows, not other containers."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Result is `15px * 2` (or 1.5rem * 2) of padding. Since containers have fixed max-widths, the inner container will often be much narrower than expected."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Redundant layout structure leading to excessive horizontal padding."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like putting a 'Small Box' inside a 'Slightly Larger Box'. Both boxes have thick walls, so the space you actually have to put items (content) gets tiny very quickly."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Avoid nesting containers to prevent redundant padding and width constraints."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you need a different background color for a specific section, put the background on a standard `<div>` or `<section>` and place the `.container` *inside* that, rather than the other way around."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Only use one 'container' for each part of your page. Using two just makes your text look squashed."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In complex layouts, you might use `.container-fluid` for a background and a regular `.container` inside for the text, which is a valid exception to the 'no nesting' rule."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The structural error of applying nested width-limiting classes resulting in additive spatial constraints."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

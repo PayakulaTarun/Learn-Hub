@@ -1,0 +1,592 @@
+{
+    "dataset": "react_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_3",
+            "questions": [
+                {
+                    "id": 21,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "How do you use the 'useState' hook?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You use `useState` to create a piece of data that React 'remembers'. It gives you two things: the current value and a function to change that value. For example: `const [count, setCount] = useState(0)`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`useState` is a hook that declares a state variable in a functional component. It returns an array with two elements via destructuring: the current state value and a setter function to update it. This triggers a re-render when called."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The `useState` hook initializes a state atom within the component's fiber. The setter function can accept either a direct value or a functional update `(prev) => next`, which is essential for avoiding closure staleness in asynchronous updates."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Write the syntax for initializing a state variable 'isActive' to 'false' using the useState hook and updating it to 'true'."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Digital Scoreboard' and 'A Remote Control'. The `count` is the number on the board (state), and the `setCount` is the button on the remote that lets you change that number."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A hook to add and manage local state in a function component."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "When `useState` is called, React stores the value in a persistent memory cell linked to the component's position in the tree. The initial value is only used on the first render. Using a functional update (`setCount(prev => prev + 1)`) ensures that you are always working with the most recent state, which is critical if multiple updates happen in a single batch."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the main way to keep track of things in your app, like 'how many items are in the cart' or 'is the user logged in'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If the initial state is expensive to compute, you can pass a 'lazy initializer' function to `useState(() => computeValue())`. This function will only run once during the mounting phase, skipping the heavy computation on subsequent re-renders."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A React hook that preserves a value between re-renders and provides a dispatcher to initiate state transitions."
+                        }
+                    ]
+                },
+                {
+                    "id": 22,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "How do you handle 'Lists and Keys' in JSX?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "To show a list of items, you use the `.map()` function to turn an array of data into an array of HTML tags. You must give each tag a `key` prop so React can keep track of them."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "We render lists by mapping over an array and returning JSX elements. To optimize performance and prevent state bugs, we provide a unique 'key' prop to each top-level element in the map, which helps React identify which items changed."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "List rendering in React is performed by evaluating an expression that returns an array of elements. The `key` prop must be a unique string or number among siblings. Using indices as keys is discouraged for dynamic lists as it degrades performance and breaks component state."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Write a snippet that maps an array of strings called 'colors' to an unordered list of <li> elements, including keys."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Putting Name Tags on Students'. If you have a group of students (the array), mapping them creates the actual person in the classroom. The name tag (the key) ensures you don't give the wrong grade to the wrong student when they swap seats."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Using the .map() method to transform arrays into JSX elements with unique identifying keys."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "React uses keys to minimize re-renders in collections. If you insert an item at the beginning of an array without keys, React re-renders every item. With stable keys, it just inserts one new DOM node. This is especially important for lists that maintain local input state or use animations."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Just use `array.map` to loop through your data and turn it into website parts! Don't forget the ID!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If keys change on every render (e.g., using `Math.random()`), React will unmount and remount the entire list every time, causing massive performance loss and losing all user focus in form fields."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The iterative application of JSX templates to array data structures, requiring persistent identification through the key attribute."
+                        }
+                    ]
+                },
+                {
+                    "id": 23,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is the 'useEffect' hook used for?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You use `useEffect` to do things that happen 'outside' the normal view, like fetching data from a server, setting a timer, or manual changes to the website title."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`useEffect` is a hook for managing 'side-effects'. It runs after every render by default, but you can control when it runs using its 'dependency array'. It also provides a cleanup function to prevent memory leaks."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`useEffect` allows functional components to perform operations like data fetching, subscriptions, or manual DOM mutations. The second argument (dependency array) dictates re-execution: `[]` for mount only, `[val]` for when `val` changes, and no array for every render."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "How do you perform a 'cleanup' (e.g., clearing a timer) inside a useEffect hook?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Post-Performance Task'. After an actor finishes a scene (the render), they might need to go backstage and wash their face or change clothes (the effect). If they start a fire during the scene, they MUST put it out (cleanup) before they leave."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A hook for handling side effects like API calls and subscriptions in function components."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "React runs effects after the DOM has been updated. This ensures that your effects don't block the browser from painting. If your effect returns a function, React will run that function before the component unmounts and before re-running the effect on the next update, making it perfect for unsubscribing from listeners."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use this whenever you need to 'go get info' or 'tell the browser something' that isn't just drawing tags."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To perform effects synchronously *before* the browser paints, use `useLayoutEffect`. Note that `useEffect` inside a parent runs AFTER the `useEffect` calls in all its children components have finished."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A function that allows for synchronization of a component with an external system after the rendering cycle completes."
+                        }
+                    ]
+                },
+                {
+                    "id": 24,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "How do you handle 'Conditional Rendering' in React?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You can use standard JavaScript tools like `if` statements, ternary operators (`? :`), or the `&&` symbol to decide what shows up on the screen."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Conditional rendering works the same way conditions work in JavaScript. We can use `if` statements for logic, the ternary operator for simple toggleable views, or the logical `&&` operator for 'if-true' conditions."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "In JSX, expressions can be embedded. Ternary is used for `if-else` logic: `{ isLoggedIn ? <Logout /> : <Login /> }`. Short-circuit evaluation `&&` is used for `if-then` logic: `{ hasError && <ErrorMsg /> }`. For more complex logic, we usually compute the JSX in a separate variable before the return statement."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "What will be rendered if `count` is 0 in the expression `{ count && <span>Zero</span> }`? Explain why."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Clothes for the Season'. You check the weather (the state). If it's raining (True), you put on a raincoat. If it's sunny (False), you put on sunglasses. You never wear both at the exact same time."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Using JavaScript logic (ternaries, &&) to selectively render components."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "When using `&&`, be careful with falsy values like `0`. If `count` is `0`, React will actually render the number `0` on your screen because `0 && something` evaluates to `0`. It's safer to use Boolean casts like `!!count && ...` or explicit comparisons `count > 0 && ...` to avoid unexpected zeros appearing in your UI."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Just use `if` or `?` exactly like you do in normal coding! It's one of the best things about React."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For large conditional trees, using a 'Switch' statement or a mapping object `{ state: Component }` outside the JSX leads to much cleaner and more readable code than nested ternary hell."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The dynamic determination of the element tree structure based on boolean logic evaluations within the render function."
+                        }
+                    ]
+                },
+                {
+                    "id": 25,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "How do you handle 'Forms' in React?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "In React, we use 'Controlled Components'. Every time you type a letter in a box, a function updates the state, and the box value is set to match that state. This keeps React as the boss of the information."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "We primarily use 'Controlled Components' where form data is handled by a React component's state. Alternative is 'Uncontrolled Components', which use `refs` to pull values from the DOM only when needed (like on submit)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A controlled input has its `value` prop bound to a state variable and an `onChange` handler that updates that state. This enables easy validation, data formatting, and conditional submission logic directly in the component's render flow."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Explain the difference between 'Controlled' and 'Uncontrolled' components in the context of React forms."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Controlled: Like a 'Driver with a GPS'. Every turn is watched and confirmed by the system. Uncontrolled: Like 'Sending a traditional Letter'. You write the whole thing first, drop it in the mail, and only know the result later."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Managing form inputs via state (Controlled) or via references to DOM elements (Uncontrolled)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Controlled components are the 'React way' because they ensure the UI and State are always in sync. However, for huge forms, re-rendering the whole form on every keystroke can be laggy. In those cases, 'Uncontrolled' components or libraries like `React Hook Form` are preferred as they use internal refs to avoid global re-renders until the final submit."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't let the input box hold the data alone—make sure a state variable is 'controlling' it!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Using the `name` attribute on inputs allows for a single `handleChange` function that handles multiple fields via computed property names: `setState({ [e.target.name]: e.target.value })`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The programmatic management of user input values through a synchronized state-to-DOM binding."
+                        }
+                    ]
+                },
+                {
+                    "id": 26,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is the 'Fragment' tag (`<></>`) and why is it used?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A Fragment is an invisible container. React requirements say a component can only return ONE big thing, so if you want to return two paragraphs, you wrap them in a Fragment so they count as one, but without adding a messy `<div>` to your HTML."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Fragments let you group a list of children without adding extra nodes to the DOM. They are useful because React components must return a single root element."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Fragments solve the 'Single Root' constraint in the JSX transpilation. They are represented by `<React.Fragment>` or the shorthand `<>`. Unlike `<div>`, fragments do not create a physical DOM node, preventing 'Div-itis' and preserving semantic HTML structures like table rows."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "What is the shorthand syntax for a React Fragment, and when would you need to use the full `<React.Fragment>` syntax instead?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like an 'Invisible Rubber Band'. You use it to bundle three pens together to carry them in one hand (the return statement), but once you put them on the table, the rubber band vanishes and you just have three loose pens."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A grouping element that doesn't add a new node to the DOM."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The long-form `<React.Fragment>` is necessary when you are mapping over a list and need to provide a `key` to the fragment itself. The shorthand `<>` does not support attributes like `key`. Using fragments consistently leads to cleaner DOM trees and better performance in complex layouts where excess wrapping divs would break CSS Grid or Flexbox logic."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a wrapper that isn't really there! Use it to keep your HTML clean and simple."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Behind the scenes, Fragments tell the reconciliation engine to treat child elements as siblings to the fragment's parent, effectively flattening the component tree during the mounting process."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A specialized React primitive that enables the concatenation of child nodes without a physical parent DOM manifestation."
+                        }
+                    ]
+                },
+                {
+                    "id": 27,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Prop Drilling'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Prop drilling is when you have to pass data through 5 layers of components just to get it down to the one grandchild that actually needs it. It makes your code messy and hard to read after a while."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Prop Drilling is the process of passing props from a high-level component down to a deeply nested child through intermediate components that don't need the data themselves. It's generally considered a design issue in large apps."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Prop Drilling refers to a scenario where state is lifted high up the tree and then threaded through the `props` of every intermediate layer. This couples those intermediate components to the data structure of the target, making refactoring and maintenance difficult."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Define Prop Drilling and list two ways (features or libraries) to avoid it in a React application."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Passing a message down a line of 20 people'. Everyone has to hear and repeat the message, but only the 20th person actually cares what the message says. It's annoying and easy for someone to mis-hear it (a bug)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Passing data through layers of components that don't actually use it."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In small apps, prop drilling is actually 'Explicit' and fine. However, in large apps, it becomes 'Prop Spaghetti'. To solve it, developers use the Context API to broadcast data directly to the deep child, or state management libraries like Redux or Zustand that act as a shared warehouse outside the component tree."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's when you play 'Telephone' with your component data. Try to avoid it by using Context!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Component composition (passing a component as a prop rather than its data) can often solve prop drilling without needing a complex state library, by effectively bringing the consumer component closer to the data source in the code structure."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The transitive passing of properties through a chain of intermediate components to reach a remote descendant consumer."
+                        }
+                    ]
+                },
+                {
+                    "id": 28,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is the 'useContext' hook?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`useContext` is like a 'Radio Receiver'. It lets any component 'tune in' to a shared piece of data (like the User ID or Theme) without having to pass it as a prop from its parent."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`useContext` is a hook that allows components to subscribe to a React Context. This provides a way to share data globally across the component tree without prop drilling."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`useContext` consumes a value from the nearest matching `Context.Provider` above it in the tree. When the provider's value changes, the component using `useContext` will automatically re-render with the latest value."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Explain the three steps required to implement the Context API: Create, Provide, and Consume."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Wireless Charging'. Instead of plugging a cable (props) into every phone in the house, you put a charging pad (Provider) in the living room and every phone (Consumer) gets power just by being near it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A hook for accessing global data shared by a Context Provider."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Context is best for data that is 'Global', like authenticated users, dark/light theme, or preferred language. Using it for high-frequency updates (like mouse positions) can be a performance trap, as every consumer in the tree re-renders every time the value changes, regardless of whether they were optimized with `memo`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The best way to share info with 'everyone' at once without repeating yourself!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To prevent unnecessary re-renders of the Provider's children, you should always memoize the context value object using `useMemo` so that the reference only changes when the actual data changes."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A React hook that enables the retrieval of data from the nearest Context.Provider ancestor, bypassing the prop-passing chain."
+                        }
+                    ]
+                },
+                {
+                    "id": 29,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is the 'useRef' hook?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`useRef` creates a persistent 'Container' that stays the same for the whole life of the component. You can use it to store a reference to a real HTML element (like a button) or to store a value that doesn't trigger a re-render when it changes."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`useRef` returns a mutable ref object whose `.current` property is initialized to the passed argument. The returned object will persist for the full lifetime of the component. It is primarily used to access DOM elements directly or to store mutable values without triggering re-renders."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`useRef` is an escape hatch from the declarative model. It's equivalent to an instance property in a class. Updates to `ref.current` do not trigger the reconciliation process, making it ideal for tracking previous values or integrating with third-party imperatively managed libraries."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "How do you use useRef to focus a text input after a button click?"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Secret Pocket'. You can put something in the pocket and take it out whenever you want, and it doesn't change what you look like (doesn't re-render). It's just a place to 'keep' a specific item handy."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A hook for persistent mutable values and direct DOM access without re-rendering."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "When you attach a ref to a JSX element with `<input ref={myRef} />`, React sets `myRef.current` to the corresponding DOM node after it mounts. This is necessary for things like autofocus, text selection, or using non-React libraries like D3.js or Google Maps that need a specific DOM node to work."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use this only when you need to reach out and 'touch' an HTML element directly, or for saving data that shouldn't redraw the page."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Refs should be used sparingly! Most things in React should be done 'Declaratively' through State. If you find yourself using `useRef` to hide/show elements, you are likely fighting against React instead of working with it."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A React primitive that maintains a stable object reference between renders without participating in the reactive update cycle."
+                        }
+                    ]
+                },
+                {
+                    "id": 30,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "How do you use 'Event Handlers' in React?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You add them directly to your tags using 'CamelCase' names like `onClick` or `onChange`, and then you pass a function. For example: `<button onClick={handleClick}>Click Me</button>`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In React, event handlers are passed as functions rather than strings. We use camelCase naming (e.g., `onClick` instead of `onclick`). These functions receive a 'SyntheticEvent' object which is a cross-browser wrapper."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Event handlers in React are assigned to JSX props. Because they are functions, you must be careful with scope; for instance, in class components, you often needed to `.bind(this)`. In functional components, closures handle this naturally. To pass arguments, use an anonymous function: `onClick={() => handleDelete(id)}`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Identify two differences between assigning event handlers in standard HTML vs React JSX."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Light Switch'. In normal HTML, you might write 'The switch is on the wall'. In React, you say 'Here is the worker (the function) who knows exactly what to do when you flick the switch'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Passing functions to props like onClick to handle user interactions."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "React optimizes performance by using 'Event Delegation'. It doesn't actually place thousands of listeners on your buttons; it just listens at the root and checks where the 'Synthetic Event' originated. Also, you must use `e.preventDefault()` explicitly in React; you cannot simply `return false` from the handler to stop default behavior."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Just give your tags a function to run whenever someone clicks or types on them! Easy!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To prevent 'Prop Drilling' of handlers, one can use the Context API, or utilize the `event.target` property within a single delegating handler to determine which child triggered the action based on its attributes."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Programmatic logic attached to JSX element attributes that facilitate user-driven state transitions through callback execution."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

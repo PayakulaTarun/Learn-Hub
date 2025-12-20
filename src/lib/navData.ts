@@ -31,6 +31,7 @@ export const mobileBottomLinks = [
     { label: 'Subjects', href: '/subjects', icon: LayoutGrid },
     { label: 'Navigator', href: '/navigator', icon: Compass },
     { label: 'Evaluator', href: '/evaluator', icon: Trophy },
+    { label: 'Practice', href: '/practice', icon: Terminal },
     { label: 'Profile', href: '/profile', icon: User },
 ];
 

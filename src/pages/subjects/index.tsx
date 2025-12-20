@@ -117,9 +117,9 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-2 text-accent font-black text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">
-                        Incept Domain
-                        <ArrowRight size={14} />
+                      <div className="flex items-center gap-2 text-accent font-bold text-[10px] uppercase tracking-widest group-hover:gap-3 transition-all">
+                        <span className="group-hover:underline decoration-accent/50 underline-offset-4">Incept Domain</span>
+                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                       </div>
                     </Link>
                   ))}

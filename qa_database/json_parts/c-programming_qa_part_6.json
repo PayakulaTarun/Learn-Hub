@@ -1,0 +1,592 @@
+{
+    "dataset": "C-programming_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_6",
+            "questions": [
+                {
+                    "id": 51,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is 'Undefined Behavior' (UB) in C?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when you write code that doesn't follow the rules of C. The computer doesn't have a plan for what should happen, so anything—from a crash to a wrong answer—can occur."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Undefined Behavior occurs when the C standard imposes no requirements for a specific code construct. It's dangerous because the compiler might produce working code today that breaks completely when you change a single optimization flag tomorrow."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A state where the C standard (ISO/IEC 9899) permits the compiler to assume that a certain condition never happens (e.g., signed integer overflow). If it does happen, the execution state is non-deterministic."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Lack of constraints by the C language specification on the behavior of specific program operations."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Driving off a Cliff'. The rules of the road (the C standard) don't say what to do once you're in mid-air. You might float, you might crash, or you might hit a bird—none of it is 'part of the plan'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Code for which the C specification provides no guaranteed outcome."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Common causes of UB include: dividing by zero, dereferencing a NULL pointer, accessing an array out of bounds, or modifying a variable twice in one expression (sequence point violation). Modern optimizers use UB to delete code paths that they 'know' shouldn't be reachable."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like breaking the laws of a board game. If the rules don't say what to do when someone flips the table, the game is just over and nothing makes sense anymore."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Trivial examples of UB can allow for 'Arbitrary Code Execution' vulnerabilities, as the stack can be corrupted in a way that allows a hacker to redirect the program flow."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Behavior, such as upon use of a non-portable or erroneous program construct or of erroneous data, for which the International Standard imposes no requirements."
+                        }
+                    ]
+                },
+                {
+                    "id": 52,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "The 'Sequence Point' problem: Why is 'i = i++' dangerous?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "In C, you aren't supposed to change the same variable more than once in the same line. The computer might update it in a weird order, leading to a wrong result."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is a violation of sequence points. The side-effect of `i++` and the assignment to `i` occur at the same time. The order of these operations is not defined, leading to Undefined Behavior."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Between two sequence points, an object's stored value shall be modified at most once by the evaluation of an expression. `i = i++` modifies `i` via assignment and post-increment simultaneously, violating this rule."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Violation of sequence point rules regarding multiple modifications of a single object in a single expression."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like two people both trying to 'Change the Time' on a single clock at once. One is moving the hand and one is digital-setting it. You won't know the final time because they are fighting over the same gear."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Undefined behavior caused by modifying the same object more than once between sequence points."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In C11 and later, this is technically 'Unsequenced modification'. The compiler is free to evaluate the increment before the assignment, or after, or even perform the assignment using the 'old' or 'new' value of the incremented address."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Never try to do math and assignment to the same variable at the same time on one line of code. It confuses the computer and leads to bugs."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Tools like `scan-build` or `UBSan` (Undefined Behavior Sanitizer) are designed specifically to catch these subtle sequence point errors during development."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A point in the execution sequence at which all side effects of previous evaluations are guaranteed to be complete."
+                        }
+                    ]
+                },
+                {
+                    "id": 53,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is a 'Buffer Overflow' and why is 'gets()' forbidden?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when you try to put too much water into a cup and it spills over. In code, it means writing past the end of an array, which can overwrite other important data."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Buffer overflow is writing data beyond the boundaries of the allocated memory. `gets()` is dangerous because it has no parameter to check the input size, allowing a user to overflow the stack and hijack the program's return address."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Memory corruption vulnerability. `gets()` reads until a newline without regard for buffer length. An attacker can use this to overwrite the EIP (Instruction Pointer) on the stack, leading to execution of shellcode."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Security vulnerability caused by lack of bounds checking in certain I/O functions like gets()."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like having a 'Waiting List' with only 5 lines. If a 100-person mob comes in and writes their names anyway, they'll end up writing all over the walls and the floor (other memory), destroying the building."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Memory corruption caused by writing past buffer limits; gets() is unsafe as it lacks bounds checking."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "`gets()` was officially REMOVED from the C11 standard. You should always use `fgets()`, which forces you to specify the maximum number of characters to read, ensuring the input stays safely inside the array."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a security hole that lets hackers break into your program by sending way too much text at once. Never use 'gets'!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Stack 'Canaries' and 'NX bits' are modern hardware/compiler defenses against this, but the best defense is simply using safe library functions."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An anomaly where a program, while writing data to a buffer, overruns the buffer's boundary and overwrites adjacent memory locations."
+                        }
+                    ]
+                },
+                {
+                    "id": 54,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is 'Memory Leak' and how do you find it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A memory leak happens when you use `malloc` to get memory but forget to use `free` to give it back. If you do this enough, the computer runs out of RAM and crashes."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Memory leaks occur when dynamically allocated memory is no longer reachable but hasn't been freed. In professional projects, we use tools like Valgrind or AddressSanitizer to track all allocations and verify they are released."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A failure to release heap-allocated memory. The pointer is lost or reassigned before `free()` is called. Over time, the process's Virtual Memory footprint grows until exhaustion."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Accumulation of unreferenced heap memory leading to resource exhaustion."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Renting Tools' from a hardware store and never returning them. Eventually, there are no tools left in the store for anyone else to use."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Unreleased heap memory that is no longer accessible by the program."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Lost pointers are the most common cause. If you do `ptr = malloc(10);` and then `ptr = malloc(20);` without freeing the first block, those 10 bytes are gone forever until the program terminates."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like leaving the 'Faucet Running'. You're using up all the water (RAM) without actually drinking it, and eventually the house floods."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For long-running applications (servers/OS kernels), even a leak of 1 byte per hour can eventually lead to a system-wide crash after months of uptime."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A type of resource leak that occurs when a computer program incorrectly manages memory allocations."
+                        }
+                    ]
+                },
+                {
+                    "id": 55,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "The 'Switch Fall-through' pitfall.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you forget a `break` in a switch case, the computer will automatically start running the code for the next case too, which is usually not what you want."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Fall-through happens when a case is missing the `break` statement. Execution 'falls' into the next case's block. While sometimes used intentionally for state machines, it is a common source of bugs."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The switch mechanism in C transfers control to a label and continues sequentially until a break or the end of the block. Lacking a break leads to unintended execution of subsequent case statements."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Continuation of execution into subsequent switch cases due to missing break statements."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like an 'Escalator'. If you don't 'Step Off' (break) at the 2nd floor, the machine just keeps carrying you up to the 3rd floor automatically."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Missing break; statement in a switch case causing unintended execution of next case."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In modern C (C23), you can use the `[[fallthrough]]` attribute to tell the compiler that you INTENDED for this to happen. This silences compiler warnings and helps other programmers understand your logic."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your menu-based program is doing two things at once instead of one, you probably forgot a 'break' command."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Duff's Device is a famous (and very confusing) example of using fall-through to unroll loops, though it is discouraged in modern readable code."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The uninterrupted transition of program control between case labels in a selection structure."
+                        }
+                    ]
+                },
+                {
+                    "id": 56,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "Problems with 'Floating Point Comparisons'.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Decimal numbers in computers aren't 100% exact. Comparing them with `==` often fails even if they look the same."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Never compare floats with `==`. Because of rounding errors in binary, `0.1 + 0.2` might equal `0.300000000001`. Use an 'Epsilon' (a tiny tolerance) like `if (fabs(a - b) < 0.0001)` instead."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "IEEE 754 precision issues. Finite precision binary floating-point cannot represent many decimal fractions exactly. Exact equality tests frequently fail due to accumulation of small errors during computation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Float precision errors make direct comparison (==) unreliable; epsilon-based comparison is required."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like comparing 'Two Hand-drawn Lines'. If you look with a microscope, they are never exactly the same length. You just have to decide if they are 'Close Enough'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Float comparison should use a small tolerance (epsilon) rather than direct equality."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The `EPSILON` value is usually defined in `float.h` as `FLT_EPSILON`. This represents the smallest possible difference between two floats. For complex engineering, you might need a significantly larger epsilon depending on your math range."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Computers are bad at math with tiny decimals. If you check if 0.1+0.2 == 0.3, the computer might say 'No!' because of a tiny invisible error."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Some compilers can optimize float math in ways that break these comparison checks even further (e.g., `-ffast-math`). Use `long double` if you need extreme precision."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The inaccuracy of relational equality operators when applied to non-integer numerical representations."
+                        }
+                    ]
+                },
+                {
+                    "id": 57,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "The 'Comma Operator' confusion.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You can use a comma to put multiple operations on one line, but it's very confusing to read and usually better avoided."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The comma operator evaluates each expression from left to right and returns the value of the LAST expression. It's often misused in assignments, causing hard-to-find logic bugs."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A binary operator that discards the result of the left operand and yields the value and type of the right operand. It creates a sequence point between the evaluations."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Binary operator returning the right-most operand's value after sequential evaluation."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Doing chores'. I wash the dishes, I sweep the floor, but only the SWEEPING counts as me being 'Done' with the list."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Evaluates multiple expressions and returns the value of the final one."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The most legitimate place for a comma operator is in a `for` loop, like: `for(i=0, j=10; i<j; i++, j--)`. Anywhere else, like `x = (a = 5, b = 10);`, is purely designed to confuse anyone reading your code."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Just because you CAN put everything on one line with commas doesn't mean you SHOULD. It's much better to use separate lines."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Be careful in function calls: `func(a, b)` treats the comma as an argument separator, NOT as the comma operator. To use the operator in a call, you'd need `func((a, b))`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The sequentially evaluated binary operator that discards the result of its first operand."
+                        }
+                    ]
+                },
+                {
+                    "id": 58,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "What is 'Segmentation Fault' (Segfault)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A Segfault is when your program tries to touch memory that doesn't belong to it, so the computer shuts it down to prevent damage."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A Segmentation Fault is a specific kind of error caused by accessing memory that the CPU/OS haven't mapped to the current process. Common causes: NULL pointer dereference, buffer overflow, or stack overflow."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The result of a memory protection mechanism violation. The MMU detects an invalid access (unmapped page or permission violation) and the kernel sends a `SIGSEGV` signal to the process."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Fatal error occurring when a process accesses unpermitted memory segments."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Breaking into a House'. If you try to walk into a house you don't own (memory not assigned to you), the security system (the OS) immediately arrests you (crashes the program)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Runtime error caused by illegal memory access (e.g., NULL dereference)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Debugging segfaults is best done with a debugger like GDB and the `backtrace` command. It will show you exactly which line of code was responsible for the illegal memory access."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you see this error, it means you've told the computer to look at a memory address that doesn't exist or isn't available to you."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In some systems, a 'Segmentation Fault' can also happen if you try to WRITE to memory that is marked as 'Read Only' (like a string literal)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A failure condition raised by hardware with memory protection, notifying an OS that a process has attempted to access a restricted area of memory."
+                        }
+                    ]
+                },
+                {
+                    "id": 59,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "Misusing 'sizeof' on Function Parameters.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you pass an array to a function and use `sizeof` on it, you'll get the size of a tiny pointer, not the whole big array."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "When an array is passed to a function, it 'decays' into a pointer. Therefore, `sizeof(array_param)` returns the size of the pointer (usually 8 bytes on 64-bit), regardless of how big the original array was."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Array-to-pointer decay. The function signature `void func(int arr[])` is syntax sugar for `void func(int *arr)`. Thus, `sizeof(arr)` evaluates to `sizeof(int*)`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Sizeof on an array parameter returns pointer size, not array size, due to pointer decay."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Giving someone a Key' to a warehouse. If they weigh the key, they'll think the warehouse is tiny. They need to go TO the warehouse and check the 'Inventory List' (pass the size as a separate variable)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Arrays in function parameters act as pointers; sizeof() will only return the pointer's size."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The standard way to handle this in C is to always pass the size of the array as a second parameter to the function, e.g., `func(int *arr, int size)`. This is the only reliable way for the function to know its limits."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you need to know how big an array is inside a function, you have to tell the function the size yourself. The function is too 'forgetful' to remember it on its own."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can avoid this decay by passing a pointer TO an array (`void func(int (*arr)[10])`), but this locks the function to only working with arrays of exactly that size."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The loss of array size metadata during parameter passing resulting in pointer-width evaluation by the sizeof operator."
+                        }
+                    ]
+                },
+                {
+                    "id": 60,
+                    "topic": "Edge Cases & Pitfalls",
+                    "difficulty": "Expert",
+                    "question": "Modifying 'String Literals'.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You can't change strings made with quotes (like `\"hello\"`) after they are created. If you try, the program will crash."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "String literals are often stored in the 'Read-Only Data Section' (.rodata) of the executable. Attempting to modify them (`char *s = \"hi\"; s[0] = 'H';`) is Undefined Behavior and usually triggers a Segfault."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Contained in the constant data segment. Pointers to literals should always be declared as `const char *` to let the compiler help catch illegal modifications at compile-time."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Strings defined as literals are read-only; editing them leads to segmentation faults."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Printed Poster'. You can read the poster, but you can't just take a marker and change the letters on it. If you want to change the text, you have to copy it onto a 'Whiteboard' (an actual array) first."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "String literals are read-only; modifying them results in undefined behavior (usually a crash)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you need a modifiable string, use an array: `char s[] = \"hello\";`. This copies the literal into a stack-based buffer which is perfectly safe to edit. The pointer version `char *s` does NOT perform this copy."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Strings in quotes are like 'Stone Carvings'. They are permanent. If you want to change them later, use an array instead."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Identical string literals used in different parts of a program may be 'merged' by the compiler into a single address to save space, making modification even more dangerous."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The attempt to mutate constant character sequences residing in protected memory regions."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

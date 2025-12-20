@@ -1,0 +1,592 @@
+{
+    "dataset": "Algorithms_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_7",
+            "questions": [
+                {
+                    "id": 61,
+                    "topic": "Graph Algorithms",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Dijkstra's Algorithm' used for?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Finding the shortest path from a starting node to all other nodes in a weighted graph."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Dijkstra's algorithm is a greedy algorithm that finds the shortest distance from a single source vertex to all other vertices in a weighted graph with non-negative edge weights. It uses a priority queue to select the next 'closest' unvisited node."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Single-Source Shortest Path (SSSP) algorithm for graphs with relative weights W(u, v) >= 0. Time complexity O((V+E) log V) with a binary heap priority queue."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Greedy SSSP algorithm; requires non-negative weights; O(V log V + E) with Fibonacci heap."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like a GPS finding the fastest route home: it keeps track of the 'cheapest' way to get to every intersection you've found so far."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Greedy single-source shortest path algorithm."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "It maintains a 'distance' array initialized to infinity. It repeatedly relaxes edges by checking if (dist[u] + weight(u,v) < dist[v]). Once a node is extracted from the priority queue, its shortest distance is finalized."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the brain inside Map apps: it calculates the quickest way to get everywhere from where you are now."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Dijkstra is a special case of A* search where the heuristic function h(n) = 0."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An algorithm for finding the shortest paths between nodes in a graph."
+                        }
+                    ]
+                },
+                {
+                    "id": 62,
+                    "topic": "Graph Algorithms",
+                    "difficulty": "Intermediate",
+                    "question": "Why does Dijkstra's algorithm fail with negative edge weights?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because it assumes that once it finds a path to a node, no 'cheaper' path can be found later by adding more edges."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Dijkstra is a greedy algorithm. It marks nodes as 'visited' and assumes their shortest path is found. If a negative weight exists, a longer path could eventually become 'cheaper' than the current shortest path, but Dijkstra has already moved on."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The greedy property fails because the discovery of a negative edge later in the process can invalidate the distance values already finalized in the priority queue."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Negative weights violate the non-decreasing distance assumption of Dijkstra's greedy step."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like a shop that only lets you pay. If a shop suddenly 'gives' you money (negative cost), you should have visited that shop earlier in your trip to save more, but Dijkstra already decided your route."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Greedy choice is invalidated by negative cycles/weights."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Technically, Dijkstra might work if there are no negative *cycles*, but even then, it's not guaranteed. To handle negative weights reliably, Bellman-Ford must be used."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a person who never looks back; if a 'better deal' appears in a path they already skipped, they'll never find it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The correctness proof for Dijkstra relies on the existence of a 'Shortest Path Tree', which is not easily maintainable greedily if weights can decrease the total path sum."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The heuristic failure under non-monotonic path costs."
+                        }
+                    ]
+                },
+                {
+                    "id": 63,
+                    "topic": "Graph Algorithms",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Topological Sort'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Ordering nodes in a directed graph so that for every edge (A -> B), A comes before B."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Topological sort is a linear ordering of vertices in a Directed Acyclic Graph (DAG). If there is an edge from U to V, U must appear before V in the ordering. It's used for scheduling tasks with dependencies."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A linear ordering such that for every directed edge uv, u comes before v. Only possible for DAGs. Can be found using DFS-based ordering or Kahn's Algorithm (In-degree based)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Linear ordering of vertices in a DAG based on edge direction. O(V+E)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like getting dressed: you must put on your socks (U) before your shoes (V)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Linear ordering respecting directional dependencies."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If a graph has a cycle, no topological sort is possible because there's no way to start (circular dependency). Detecting this cycle is usually the first step of the algorithm."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a to-do list where you put the most important 'starting' jobs first and their results later."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The result is not unique (multiple valid orders can exist for the same graph). Kahn's algorithm produces one such order using a queue of nodes with zero in-degree."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A linear ordering of vertices such that for every directed edge uv, vertex u comes before v in the ordering."
+                        }
+                    ]
+                },
+                {
+                    "id": 64,
+                    "topic": "Graph Algorithms",
+                    "difficulty": "Intermediate",
+                    "question": "What is a 'Minimum Spanning Tree' (MST)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A set of edges that connects all nodes with the minimum total weight, with no cycles."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "An MST is a subset of edges of a connected, weighted undirected graph that connects all vertices together without any cycles and with the minimum possible total edge weight."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A spanning tree G' = (V, E') of graph G = (V, E) such that the sum of weights of edges in E' is minimized."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Sub-graph connecting all nodes with minimum total cost and no cycles."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like connecting several houses to a power grid using the least amount of cable possible."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Min-weight cyclic-free subgraph connecting all vertices."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "An MST for a graph with V vertices will always have exactly V-1 edges. If all edge weights are unique, the MST is unique."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The cheapest way to connect all the dots so they are all part of one big group."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "MSTs are used in network design, circuit routing, and as a component in hierarchical clustering algorithms."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A subset of the edges of a connected, edge-weighted undirected graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight."
+                        }
+                    ]
+                },
+                {
+                    "id": 65,
+                    "topic": "Graph Algorithms",
+                    "difficulty": "Intermediate",
+                    "question": "Prim's vs Kruskal's Algorithm: What's the main difference?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Prim's grows a tree from a single node; Kruskal's adds edges individually from smallest to largest across the whole graph."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Prim's algorithm is vertex-based; it starts from a node and greedily adds the nearest neighbor. Kruskal's is edge-based; it sorts all edges by weight and adds the smallest one if it doesn't create a cycle."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Prim: O(E log V) using priority queue; better for dense graphs. Kruskal: O(E log E) or O(E log V) using sorting and Union-Find; better for sparse graphs."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Prim: vertex expansion. Kruskal: edge sorting + Union-Find."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Prim is like a mold growing from a spot. Kruskal is like several islands slowly joining together as you build the shortest bridges first."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Node-growing (Prim) vs Edge-sorting (Kruskal)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Kruskal's relies on the Union-Find data structure to efficiently detect cycles in O(α(V)) time, where α is the Inverse Ackermann function."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Prim builds one big tree. Kruskal builds many tiny trees and merges them into one."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Prim's performance can reach O(E + V log V) with Fibonacci Heaps, making it theoretically faster for very dense graphs."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Comparison between additive vertex discovery and global edge selection for MST construction."
+                        }
+                    ]
+                },
+                {
+                    "id": 66,
+                    "topic": "Data Structures",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Union-Find' (Disjoint Set Union)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A data structure to keep track of partitioned groups and merge them efficiently."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Union-Find is a data structure that tracks a set of elements partitioned into a number of disjoint (non-overlapping) subsets. It provides two main operations: 'Find' (determine which subset an element is in) and 'Union' (join two subsets)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A data structure implementing 'Find' and 'Union' operations. Often optimized with 'Path Compression' and 'Union by Rank/Size' to reach near-constant time O(α(n)) per operation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Data structure for disjoint sets; used in Kruskal's for cycle detection."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like Tracking family trees: 'Find' asks 'Who is the oldest ancestor of this person?', and 'Union' happens when two families inter-marry."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Efficient grouping and set-membership tracking."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Path Compression flattens the tree structure every time 'Find' is called, making future searches almost instant. Union by Rank ensures the smaller tree is always attached to the root of the larger tree."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to quickly check if two things belong to the same 'club' and to merge clubs together."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The amortized complexity O(α(n)) is so close to constant that for all practical values of n (number of atoms in the universe), α(n) < 5."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An algorithm for managing a collection of non-overlapping sets."
+                        }
+                    ]
+                },
+                {
+                    "id": 67,
+                    "topic": "Graph Algorithms",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Bellman-Ford' algorithm?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A shortest-path algorithm that works even if some edges are negative."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Bellman-Ford is a single-source shortest path algorithm that handles negative edge weights. It works by relaxing all edges of the graph exactly V-1 times. It can also detect 'negative weight cycles'."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Dynamic programming-based SSSP algorithm. Complexity O(V*E). It iteratively improves estimation of shortest paths until it reaches the optimal solution after V-1 passes."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Algorithm for SSSP with negative weights. Can detect negative cycles. O(VE)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like checking every possible route over and over again until you're sure you found the absolute cheapest one, even if some roads pay YOU to drive on them."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "SSSP algorithm tolerant of negative edge weights."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If on the V-th iteration, a distance can still be reduced, then the graph contains a negative weight cycle (a loop where you can keep going around and reduce your cost to negative infinity)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a slower but 'smarter' version of Dijkstra that doesn't get fooled by negative numbers."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "It is less efficient than Dijkstra for non-negative graphs but essential for distance-vector routing protocols like RIP."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An algorithm that computes shortest paths from a single source vertex to all of the other vertices in a weighted digraph."
+                        }
+                    ]
+                },
+                {
+                    "id": 68,
+                    "topic": "Graph Algorithms",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Floyd-Warshall' algorithm?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Finds the shortest path between EVERY pair of nodes in the graph."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Floyd-Warshall is an 'All-Pairs Shortest Path' algorithm using dynamic programming. It calculates the shortest path between every possible pair of vertices in a weighted graph. Its complexity is O(V^3)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Triply nested loop algorithm: for each k, i, j, it checks if path(i,j) can be improved by going through k. Uses an adjacency matrix."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "All-Pairs Shortest Path algorithm; O(V^3) time; O(V^2) space."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like making a giant table that tells you the flight distance between every city in the world and every other city, not just from your hometown."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "All-pairs shortest path via dynamic programming."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "It works with negative weights but not negative cycles. It is incredibly simple to implement (just 3 nested 'for' loops) but very expensive for large V."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It fills out a huge grid showing the shortcut between every single dot in the graph."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Can also be used to find the 'Transitive Closure' of a graph (simply checking if a path exists) using boolean logic instead of sums."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An algorithm for finding shortest paths in a weighted graph with positive or negative edge weights."
+                        }
+                    ]
+                },
+                {
+                    "id": 69,
+                    "topic": "Greedy Algorithms",
+                    "difficulty": "Intermediate",
+                    "question": "What is the core idea of a 'Greedy Algorithm'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Always picking the best-looking option at each step, hoping it leads to the best final result."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A greedy algorithm makes the locally optimal choice at each stage with the intent of finding a global optimum. It never reconsiders previous choices. It is fast but doesn't work for all problems."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "An algorithmic paradigm that follows the problem-solving heuristic of making the locally optimal choice at each step. Requires 'Greedy Choice Property' and 'Optimal Substructure'."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Locally optimal choices leading to global solutions in specific problem classes."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like choosing the biggest bill in a pile of money without looking at what's underneath. Sometimes it works, sometimes you miss a better combo."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Local optimization at every step."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Greedy works perfectly for Huffman Coding, Dijkstra's, and Prim's. It fails for things like the 0/1 Knapsack problem where a local best might block a better overall combination."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Take the best thing right now and don't worry about the future."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Greedy algorithms are often contrasted with Dynamic Programming, which explores all subproblems to ensure a global optimum."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An algorithmic strategy that makes the best optimal choice at each small step as it eventually delivers a global optimum."
+                        }
+                    ]
+                },
+                {
+                    "id": 70,
+                    "topic": "Greedy Algorithms",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Fractional Knapsack' and why is it greedy?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Filling a bag with items you can cut into pieces. You greedily pick the items with the highest value-per-pound."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In Fractional Knapsack, you can take portions of items. The greedy strategy is to sort items by 'Value / Weight' ratio and take as much as possible of the highest-value-density item. This leads to the global optimum."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A maximization problem where items i have value v_i and weight w_i. By picking the max v_i/w_i, we fulfill the greedy-choice property."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Optimization problem solved by sorting based on value density (v/w)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like filling a bag with gold dust vs silver dust. You fill the bag with as much gold (highest property) as you can, then fill the rest with silver."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Max value per unit weight selection."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Note that '0/1 Knapsack' (where you can't break items) CANNOT be solved greedily because taking a high-value heavy item might prevent taking two medium-value light items that sum to more."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always grab the 'most bang for your buck' until the bag is full."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The complexity is O(n log n) due to sorting items by their profit density."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A greedy algorithm for the knapsack problem where items can be subdivided."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

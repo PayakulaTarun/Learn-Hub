@@ -1,0 +1,592 @@
+{
+    "dataset": "computer-networks_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_10",
+            "questions": [
+                {
+                    "id": 91,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "The 'Localhost' Trap: Why is talking to `127.0.0.1` 100x faster than talking to your 'own' public IP address on the same machine?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "127.0.0.1 is a 'Short Circuit'. The computer knows you are talking to yourself, so it skips the network card and just moves data through memory. Your real IP has to 'Try' reaching the wire, which is slower."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The loopback interface (`lo0`) is a virtual interface managed entirely in kernel software. When you use `127.0.0.1`, the data never leaves the kernel's network stack. If you use your 'Public IP', the OS may actually attempt to send the packet through the physical NIC and wait for the hardware to 'Loop it back', adding massive latency and CPU overhead."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Process optimization: The `lo` interface bypasses hardware interrupts, DMA, and L1/L2 media arbitration. Traffic on `127.0.0.1` is effectively an 'IPC' (Inter-Process Communication) mechanism disguised as a network socket, whereas a public IP requires a full header-lookup and potential ARP resolution."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Comparison of virtual loopback interface throughput versus physical interface 'hairpinning' latency."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Talking to `localhost` is like 'Writing a note to yourself and leaving it on your own desk' (instant). Talking to your public IP is like 'Mailing a letter to yourself'—it has to go to the post office, get sorted, and come back in the mail the next day."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "`Localhost` bypasses the physical network hardware and drivers entirely."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Modern kernels are smart, but 'Environment' matters. In some Docker/Kubernetes setups, using the 'Container IP' vs 'localhost' can make the difference between 5ms and 0.05ms latency. For high-performance microservices, this 'Small' difference added up over 100 calls becomes the main reason the app feels slow."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the digital version of a 'Shortcut'—the computer just hands the data from its left hand to its right hand without moving an inch."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Some high-frequency trading (HFT) platforms use 'Unix Domain Sockets' instead of `localhost` TCP. This removes even the 'TCP Header' matching part, making it another 50% faster by turning the network call into a direct 'shared memory' write."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The performance variance between the host's virtual loopback device and its physical network interface."
+                        }
+                    ]
+                },
+                {
+                    "id": 92,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "The 'Nagle vs Delayed ACK' Deadlock: How can two 'optimizations' accidentally kill your speed?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Nagle says 'Wait for more data', and Delayed ACK says 'Wait for more packets'. If they both wait at the same time, the network stops for 500ms until a timer forces it to move. This is a common bug!"
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is a classic 'Network Deadlock'. Nagle's Algorithm buffers data until it has a full packet. Delayed ACK (at the receiver) waits for a 2nd packet before sending an 'OK'. If the sender has only 1.5 packets worth of data, it waits (for ACK), and the receiver waits (for 2nd packet). They both 'Stare' at each other for up to 500ms."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Logical race condition. Nagle's is a 'Sender' conservation algorithm; Delayed ACK is a 'Receiver' conservation algorithm. When used together on small-payload synchronous requests (like API calls), it introduces a mandatory 200ms-500ms 'Min-Latency' jitter."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Performance degradation caused by the intersection of sender-side buffering and receiver-side acknowledgment delay."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Two polite people at a door'. Person A says 'I'll wait for you to say Hello'. Person B says 'I'll wait for you to say Hello twice'. They both stand there in silence for a minute before one finally gives up and mumbles 'Hi'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A timing collision between the sender's data bundling and the receiver's acknowledgment timer."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is why almost all modern Web Servers (Nginx, Node.js) and DBs (Redis, MySQL) enable `TCP_NODELAY`. It turns off Nagle's algorithm. It's better to waste a few bytes on small headers than to risk a 500ms delay on every user click."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the digital version of a 'Standoff' where both computers are being too 'Polite' and waiting for the other to speak first."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Actually, Linux has a 3rd option: `TCP_CORK`. It acts like 'Extreme Nagle'. It refuses to send 'Anything' until the app manually says 'Uncork!'. This is perfect for building a custom HTTP response in many pieces and sending it all in one single packet."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The mutual wait-state resulting from the co-occurrence of Nagle’s algorithm and delayed acknowledgments in a TCP connection."
+                        }
+                    ]
+                },
+                {
+                    "id": 93,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is 'Anycast TCP Flapping' and why is it dangerous for Downloads?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Anycast routes can change suddenly. If you're downloading a file and the route flips, your next packet might end up on a 'Different' server that has no idea who you are, making the download crash."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Anycast is 'Stateless'. BGP chooses the closest server. If a network link 'Flaps' (goes up/down) in the middle of a session, your connection might be re-routed to a server in a different city. Since TCP is 'Stateful', the 'New' server won't have your session data and will send a 'Reset' (RST) packet, killing the connection."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Path instability in Anycast deployments. Caused by BGP MRAI (Minimum Route Advertisement Interval) or local OSPF cost changes. Solution: Consistent Hashing at the Load Balancer level or using BGP 'Communities' to stabilize paths."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Disruption of stateful transport-layer sessions due to dynamic routing shifts in an Anycast architecture."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Buying a Coffee' from a chain. You pay at the first shop, but a portal opens and you're suddenly in the 2nd shop. You ask for your coffee, but the 2nd shop says 'I've never seen you before, leave!', even though you already paid."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The sudden loss of TCP session state when routing changes move a user to a different Anycast node."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Content Delivery Networks (CDNs) solve this by using 'Direct Server Return' (DSR) or shared session state. The 2nd server can 'Forward' the packet to the 1st server over a private back-end line so the user never notices they 'Moved'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's what happens when the 'Shortest Path' to a website keeps changing, and your computer gets confused about which server it was talking to."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For this reason, Anycast is 'Best' for UDP (DNS/NTP) or 'Very Short' HTTPS requests. Long-lived 'Websockets' are much safer on standard Unicast IPs because once the path is set, it stays set."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The phenomenon in anycast where subsequent packets from the same transport-layer session are routed to different target nodes."
+                        }
+                    ]
+                },
+                {
+                    "id": 94,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "The 'IPv6 Fragment' Trap: Why do many security teams block all IPv6 fragments?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "IPv6 fragments are a 'Hiding Place' for hackers. They can split a 'bad command' into two fragments that look 'good' by themselves, and the firewall won't realize it's a hack until they are rebuilt."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "IPv6 fragmentation is handled differently than IPv4. Fragments are moved to an 'Extension Header'. Attackers use this to bypass firewalls by 'overlapping' fragments or using 'Tiny' fragments that hide the TCP port info from the first packet. Many Architects block them entirely as standard internet traffic shouldn't need them."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Security policy: Dropping IPv6 Destination Extension Headers (type 44). Mitigates: 1. Overlapping fragment attacks. 2. Buffer saturation attacks. 3. IDS evasion through deep-fragment inspection failure. Legitimate traffic relies on PMTUD rather than fragmentation in V6 anyway."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Deliberate dropping of fragmented IPv6 packets to prevent evasion techniques and 'Atomic Fragment' resource exhaustion."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Sending a bomb in 100 tiny pieces'. Each piece looks like a 'Toy Part' (safe). The security guard lets 100 people through, and they build the bomb inside. If you block 'Boxes of Parts', you block the bomb."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Preventing firewall bypasses and evasion attacks that exploit the complexity of IPv6 header reassembly."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In IPv6, the intermediate routers CANNOT fragment. If you see a fragment, the SENDER made it. Since every modern server supports PMTUD (sending smaller original packets), there is almost zero 'Legitimate' reason to fragment in V6. 99.9% of V6 fragments in the wild are malicious."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's about 'Zero Compromise'—if a packet looks weirdly chopped up, the internet just throws it in the trash to be safe."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This can break 'DNS over IPv6' if a response is very large (e.g. including many keys), as DNS often defaults to fragments. In these cases, the browser has to 'Fall back' to using TCP for the query, which is slower but safe."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The architectural decision to drop fragmented IPv6 datagrams to ameliorate security risks associated with protocol reassembly."
+                        }
+                    ]
+                },
+                {
+                    "id": 95,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is the 'BGP Router Memory' Trap (The 512K Problem)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's what happens when the internet gets 'Too Big' for old routers. In 2014, the world hit a specific number of routes (512,000) that caused thousands of old routers to run out of memory and crash at exactly the same time."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The '512K Problem' refers to a limit in older routers where the 'TCAM' (fast hardware memory) could only hold 512,000 BGP routes. When the global routing table exceeded this in 2014, it caused a massive global outage. Modern architects must ensure their hardware supports 'Full Routes' (now ~900K+) or use 'Default Routes' to save space."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "TCAM (Ternary Content-Addressable Memory) exhaustion. Occurs when the RIB (Control Plane) and FIB (Data Plane) size requirements exceed the fixed-size silicon allocation. Requires 'RE-ALLOCATING' TCAM profiles (e.g. cutting 'Layer 2' space to make room for 'Layer 3' space)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Architectural failure caused by hardware scaling limitations in the face of organic global routing table growth."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Phone Book' that is so big it won't fit on your desk anymore. If you try to force it, the desk breaks (the router crashes). You either need a 'Bigger Desk' or a 'Smaller Phone Book' (only keeping the names you call most often)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Hardware capacity limits reached by the ever-growing size of the global internet routing table."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "To prevent this today, ISPs use 'Aggregation' (summarizing 100 small routes into 1 big one). But many companies 'De-aggregate' their routes to try and solve 'Traffic Engineering' problems, which makes the global table grow even faster. It's a 'Tragedy of the Commons' for bandwidth."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a 'Computer Brain' that gets overwhelmed because there are too many addresses to remember at once."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern 'Cloud' routers solve this by using 'Virtual Routing' where the lookup happens in software-defined memory (RAM) instead of expensive hardware chips (TCAM), allowing for 10 million+ routes with no crash."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The exhaustion of internal memory resources in Layer 3 devices due to the expansion of the public Internet BGP routing table."
+                        }
+                    ]
+                },
+                {
+                    "id": 96,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is 'ICMP Path Hijacking'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a sneak attack where a hacker sends a fake 'Error Message' to your computer, telling it that the 'Best Road' is closed and it should use the 'Hacker's Road' instead."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "ICMP Path Hijacking uses 'ICMP Redirect' (Type 5) messages. An attacker tells a host on their local subnet: 'Hey, don't use the real router, use ME instead!'. If the host believes it, all its traffic flows through the attacker. This is why many admins 'Disable ICMP Redirects' on every server."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Layer 3 Man-in-the-Middle primitive. Exploits the trust-relationship of the IPv4 control protocol. Mitigation: `net.ipv4.conf.all.accept_redirects = 0` and `secure_redirects` settings. In IPv6, this is handled via 'SEND' (Secure Neighbor Discovery) to prevent spoofing."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Exploitation of RFC-standard diagnostic messages to manipulate host routing tables for malicious interception."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Fake Construction Worker' standing in the road. He says 'This bridge is broken, drive through this dark alley instead!'. You listen because he looks official (an ICMP message), but he's actually just a thief waiting in the alley."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Using fake ICMP error messages to trick a computer into sending its data through a rogue server."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This attack requires the hacker to ALREADY be on your local network/subnet. This is why 'Guest Wi-Fi' is dangerous. If a hacker connects to the same Wi-Fi as your office printer, they can potentially 'Redirect' the printer's data to themselves."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way for a clever hacker to give your computer 'Bad Directions' so they can see all your private files."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Similar to this is the 'Source Quench' attack. A hacker tells your computer 'The internet is too busy, stop sending data!'. You'll think your internet is 'Slow' or 'Dead', but actually, you're just being bullied by fake error messages."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A technique where an attacker sends forged ICMP redirect messages to redirect traffic destined for a legitimate gateway to a malicious host."
+                        }
+                    ]
+                },
+                {
+                    "id": 97,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "The 'DNS Amplification' Trap: How can a 10kb request become a 1,000kb attack?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's like 'Ordering a whole pizza' but telling the delivery guy to send it to your neighbor's house. You only spend $1, but the neighbor gets buried in $1000 of pizza they didn't want."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "DNS Amplification is a 'Reflected' DDoS attack. An attacker sends a small DNS query for a 'Very Large' record (like `ANY google.com`) but 'Spoofs' the return IP to be the Victim. The DNS server sends a massive response to the victim. You 'Amplify' your 60-byte request into a 4,000-byte attack."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "UDP-based reflection attack. Exploits the lack of 3-way handshake in UDP and the large response size of EDNS0 records. Prevented by 'BCP 38' (Source Address Validation) which stops routers from allowing 'Spoofed' traffic to leave an ISP."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Reflective DDoS leveraging the size disparity between a request and a response in connectionless protocols."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Calling a Call Center' and saying 'Tell my boss EVERYTHING I need to know about taxes'. You hang up. The Call Center then spends 3 hours 'Shouting' tax laws at your boss. You only did 5 seconds of work, but your boss is totally blocked for hours."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Using DNS servers to 'bounce' massive amounts of data at a victim with only a tiny bit of effort."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "To stop this, we must 'Secure' our DNS resolvers. You should NEVER allow 'Open Recursion'. If your DNS server answers every person in the world, it's a 'Weapon' that can be used by hackers to attack other people."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way for a tiny hacker to 'Trick' big internet computers into doing their dirty work for them."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Memcached' had an even scarier version of this. It could amplify a request by 50,000x! A single hacker with 1Mbps could 'DDoS' an entire corporation with 50Gbps of junk data using this trick."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A popular form of Distributed Denial of Service (DDoS) attack that relies on the use of publicly accessible open DNS servers to flood a target system with DNS response traffic."
+                        }
+                    ]
+                },
+                {
+                    "id": 98,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is 'TCP Fast Retransmit' (The Triple Duplicate ACK rule)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If a computer gets 3 receipts for the 'Same' packet, it knows the very next packet is lost. It doesn't wait for a timer; it just immediately 'Fast Forwards' and sends the missing piece again."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Standard TCP waits for a RTO (Retransmission Timeout) which can be 1 second or more. 'Fast Retransmit' optimizes this. When a receiver gets an out-of-order packet (e.g. 1, 2, 4), it sends a 'Duplicate ACK' for 3. After the sender sees 3 'Dup-ACKs', it assumes #3 is lost and resends it immediately WITHOUT waiting for the slow timer."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Improvement in congestion control recovery. The 'Triple-Duplicate ACK' signal indicates a single segment loss rather than a 'Congestion Collapse'. Initiates 'Fast Recovery' and 'Fast Retransmit', cutting the CWND (Congestion Window) by half rather than resetting it to 1."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Mechanism to reduce latency by retransmitting lost segments before the retransmission timer expires."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Calling your friend over and over'. Instead of waiting 10 minutes to realize they didn't answer, they send you 3 'I'm still waiting' texts in 1 second. You know exactly what they need and you send it now."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Resending missing data instantly after receiving three identical acknowledgments from the receiver."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Why 3 ACKs? Because packets often arrive 'Out of Order'. If you just wait for 1 ACK, you might resend data that was just 1 millisecond behind. Waiting for 3 ACKs gives the 'Late' packet enough time to arrive, ensuring we only resend a packet that is 'Truly' lost."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way for your computer to 'Recover' from a tiny mistake instantly so you don't notice any lag in your movie or game."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In 'High Bandwidth' links, even 3 ACKs might be too slow. Some modern experimental TCP versions use 'Proportional Rate Reduction' (PRR) to be even smarter about how much they slow down when a packet is lost."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An enhancement to TCP which reduces the time a sender waits before retransmitting a lost segment."
+                        }
+                    ]
+                },
+                {
+                    "id": 99,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "How can 'ARP Bombing' kill a high-end Core Switch?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A hacker sends thousands of fake 'Who is this?' messages for different IP addresses. The switch's 'Brain' (CPU) gets so busy trying to answer them all that it stops working entirely."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "ARP Bombing (or ARP Flooding) targets the 'Control Plane'. Most switches process 'Switching' in hardware, but 'ARP' must be handled by the CPU. By flooding the switch with thousands of new ARP requests, you can max out its CPU, causing the switch to drop management sessions and stop routing entirely."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Resource exhaustion attack on the ARP Table and CPU. Forces 'TCN' (Topology Change Notification) packets and fills the memory with half-resolved adjacency records. Preventions: 'Control Plane Policing' (CoPP) and 'ARP Rate Limiting' per port."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Denial of service attack targeting the address resolution logic and processing capacity of networking hardware."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 100 people 'Ringing the Office Doorbell' every single second. The receptionist (the CPU) is so busy answering the door and saying 'Who are you?' that she never has time to answer the phone or do her real job."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Overloading a switch's CPU by forcing it to calculate thousands of hardware address mappings."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "On a 'Shared' segment, this can even make the switch 'Turn into a Hub'. If the MAC address table overflows, the switch 'Gives Up' and starts sending all traffic to EVERY port, effectively allowing a hacker to 'record' every single person's data on that switch."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like 'Asking 1,000 questions a second' to a teacher until their head starts to spin and they can't teach the class anymore."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "DAI (Dynamic ARP Inspection) is the fix. It forces the switch to check 'Is this IP address even allowed to belong to this person?' against a trusted database before it even lets its CPU look at the request."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A cyberattack that sends a flood of Address Resolution Protocol (ARP) packets to a network switch to saturate its ARP tablet and CPU."
+                        }
+                    ]
+                },
+                {
+                    "id": 100,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is 'TCP Fast Open' vs 'TLS Session Resumption' vs '0-RTT'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "They are three different 'Speed Boosts'. One makes the 'Call' faster (TCP), one makes the 'Secret Code' faster (TLS), and together they make the internet feel 'Instant' on your second visit."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "These are the pillars of modern web performance. TCP Fast Open allows data in the SYN (Layer 4). TLS Resumption allows users to reuse an old secret key (Layer 5/6). 0-RTT (TLS 1.3) allows the very first encrypted packet to contain the actual HTTP GET request. On a second visit, a browser can get the website data in exactly ONE round trip."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Combined latency reduction stack. TFO: RFC 7413. TLS 1.2 Session Tickets: RFC 5077. TLS 1.3 0-RTT: RFC 8446. These eliminate the 'Double-Handshake' penalty (3 packets for TCP, 2 for TLS). Together they reduce the total 'Setup' delay from 500ms+ to ~100ms."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A suite of protocol optimizations intended to reduce the initial time-to-first-byte by bypassing redundant handshaking phases."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Buying a second coffee' from a place you know. Instead of 'Hello, I'm John, here is my ID, here is my money, I want a latte' (5 steps). You just walk in, drop the money on the counter and point (1 step). You both already know each other's 'Secret' (the key)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Modern protocol hacks that allow starting an encrypted data session with zero preparatory wait-time."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The 'Trap' is the security risk. If a hacker intercepts a '0-RTT' packet, they can 'Replay' it. If the packet was 'Send $100', the hacker could send it 1,000 times and empty your bank account. Architects MUST only use 0-RTT for 'Read-Only' actions like 'Show me my balance'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the ultimate 'Remember Me' feature for the internet's foundation, making your favorite sites load instantly."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "QUIC (HTTP/3) merges all of these into one single protocol. It doesn't have a 'TCP layer' and a 'TLS layer'—it's just one 'Secure Fast Move' from the very first bit of data, making it the king of modern networking."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The collective mechanisms for achieving zero round-trip time for secure application-layer communication establishment."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,592 @@
+{
+    "dataset": "operating-systems_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_2",
+            "questions": [
+                {
+                    "id": 11,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What are the various states a process can be in during its lifecycle?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A process has 5 main stages: New (being created), Ready (waiting for the computer to start it), Running (actually doing work), Waiting (waiting for something like a mouse click), and Terminated (finished working)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The standard process states are: **New**, where the process is being created; **Ready**, where it waits for a processor; **Running**, when instructions are being executed; **Waiting**, if it's waiting for an event like I/O; and **Terminated**, when it has finished execution."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Process states are managed by the OS Scheduler. Transitions include: `Admitted` (New to Ready), `Scheduler Dispatch` (Ready to Running), `Interrupt` (Running to Ready), `I/O or Event Wait` (Running to Waiting), `I/O or Event Completion` (Waiting to Ready), and `Exit` (Running to Terminated)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Draw or describe the process state transition diagram, specifying the conditions required for a process to move from 'Running' to 'Waiting' and 'Waiting' to 'Ready'."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Waiting for a Table at a Restaurant'. **New**: You decide to go eat. **Ready**: You are on the waiting list inside the door. **Running**: You are at the table eating. **Waiting**: You ordered a drink and are waiting for the waiter to bring it. **Terminated**: You paid the bill and left."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The lifecycle stages of a process: New, Ready, Running, Waiting, and Terminated."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The state of a process is defined in the Process Control Block (PCB). When a process is in the 'Ready' state, it is in RAM, waiting for the Short-Term Scheduler to give it CPU time. The 'Waiting' state is crucial for efficiency—if a process needs data from a slow disk, the CPU moves it to 'Waiting' so it can do other work while the disk is busy. Once the disk is ready, it signals an interrupt, and the OS moves the process back to 'Ready'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Just like people, programs can be 'getting ready', 'busy working', or 'waiting for a delivery'!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In some systems, there are additional states like **Suspended Ready** and **Suspended Waiting**. These occur when main memory (RAM) is full and the OS 'Swaps' a process out to the Hard Drive (Virtual Memory). This allows the system to remain stable even when running more programs than the RAM can physically fit."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The operational condition of a process at a given time, indicating whether it is executing, blocked, or eligible for scheduling."
+                        }
+                    ]
+                },
+                {
+                    "id": 12,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is a 'Process Control Block' (PCB)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A PCB is like a 'Passport' or a 'ID card' for a process. It contains all the important information about that program, like who it is, where it is in its code, and how much memory it is using. When the computer switches to another program, it uses the PCB to remember where it left off."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The Process Control Block (PCB) is a data structure in the OS kernel that stores all information needed to manage a process. Key data include the Process ID (PID), Process State, Program Counter, CPU Registers, and I/O status. It is the repository for any information that varies from process to process."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A PCB typically contains: Process State, Program Counter (address of the next instruction), CPU registers (including accumulators and index registers), CPU-scheduling info, Memory-management info (page tables), Accounting info, and I/O status info (open files, devices assigned)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "List the essential contents of a Process Control Block and explain its role during a context switch."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Think of the PCB as a 'Bookmark' in a book. If you have to stop reading for a minute (a context switch), you put the bookmark in. When you come back, the bookmark tells you exactly which page and line you were on so you don't have to start over from the beginning."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A kernel data structure containing all metadata necessary to manage and resume an individual process."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The PCB is vital for 'Multitasking'. When the CPU switches from Process A to Process B, the OS must save all of Process A's current register values into its PCB. Then, it loads the values from Process B's PCB into the actual CPU registers. This ensures that Process B continues exactly where it was before it was interrupted. This entire process is called a 'Context Switch'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the computer's 'secret diary' for every app that is currently open!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In Linux, the PCB is implemented as the `task_struct` structure in the kernel source code. Large systems can have thousands of these structures in memory simultaneously. Efficiently locating and updating these blocks is critical for OS performance, often using hash tables or search trees indexed by the PID."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A data structure used by computer operating systems to store all the information about a process."
+                        }
+                    ]
+                },
+                {
+                    "id": 13,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is a 'Context Switch' and why can it be expensive?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A context switch is when the computer stops one task and starts another. It's expensive because it's like 'cleaning up after one project before you can start the next'—it takes time and energy to put everything away and get new tools out."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A context switch involves saving the state (context) of a running process and loading the state of the next process from its PCB. It's considered 'expensive' because it's pure overhead—while the OS is switching, the CPU is not doing any 'useful' work for the user. Frequent switching can degrade system performance."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Context switching requires: saving CPU registers, flushing caches (sometimes), updating the PCB, and reloading the MMU (Memory Management Unit) state like Page Tables. The performance impact depends on the hardware architecture and the time taken to flush and reload the TLB (Translation Lookaside Buffer)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Define context switching and discuss the hardware-dependent factors that contribute to the time overhead involved."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Imagine you are a 'Painter'. Every time you switch from painting a fence to painting a miniature model, you have to wash your brushes, change your apron, and get different paints. If you switch every 30 seconds, you spend more time washing brushes than actually painting."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Saving the state of one process so the CPU can run another, which adds overhead."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Next-generation CPUs attempt to minimize context switch costs using 'Register Windows' or multiple hardware thread contexts. However, the 'Cold Cache' problem remains: when you switch to a new process, its data isn't in the CPU's fast L1/L2 cache. The CPU has to wait for data to arrive from slow RAM. This 'Cache Miss' penalty is often more expensive than the actual saving/loading of the PCB."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the computer's version of 'Multitasking'—and just like humans, computers get slower when they try to do too many things at once!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Thread switching is generally cheaper than process switching because threads share the same virtual memory space. This means the OS doesn't have to switch page tables or flush the TLB. High-concurrency servers (like Nginx) rely on this 'Lightweight' switching to handle thousands of requests per second."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The procedure of storing the state of a process so that it can be resumed at a later point and transitioning the CPU to execute a different process."
+                        }
+                    ]
+                },
+                {
+                    "id": 14,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is the 'First-Come, First-Served' (FCFS) Scheduling algorithm?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "FCFS is the simplest way to schedule: whoever asks first gets the CPU first. If a long task starts, everyone else has to wait in line until it's finished. It's exactly like a line at the grocery store."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "FCFS is a non-preemptive scheduling algorithm where the process that requests the CPU first is allocated it first. While easy to implement, it suffers from the 'Convoy Effect,' where short processes wait behind a long, CPU-intensive process, leading to high average waiting times."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "FCFS uses a First-In-First-Out (FIFO) queue. Implementation is simple (tail-insert, head-remove). However, it is not ideal for time-sharing systems because it doesn't allow for preemption. Performance is highly dependent on the arrival order: if the burst times are [100, 1, 1], the average wait will be massive."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Explain the FCFS scheduling algorithm and calculate the average waiting time for three processes with burst times of 24ms, 3ms, and 3ms arriving in that order."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Single-Lane Road'. If a slow tractor (long process) gets on the road first, all the fast sports cars (short processes) behind it have to drive at 10mph. They can't pass (no preemption) and they arrive at their destination much later than they should have."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A simple scheduling method where tasks are executed in the exact order they arrive."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "FCFS is rarely used as the primary scheduler in modern interactive OS because it kills responsiveness. However, it's often used 'inside' other algorithms (like as a secondary tie-breaker). The 'Convoy Effect' it produces leads to low CPU and I/O utilization because the system is often waiting for one 'whale' of a process while many smaller tasks sit idle."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The most basic way to organize a line—first in, first out!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In distributed systems, FCFS can lead to 'Livelocks' if not managed correctly. While simple, it lacks 'fairness' for high-priority tasks. It is fundamentally unsuitable for Real-Time systems because it provides no guarantees on completion time based on task importance."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An operating system scheduling algorithm that automatically executes queued requests and processes by that order of their arrival."
+                        }
+                    ]
+                },
+                {
+                    "id": 15,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Round Robin' (RR) Scheduling?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Round Robin is like 'Sharing a Toy'. Every program gets to play for a tiny amount of time (maybe 10 milliseconds). When time is up, the toy is taken away and given to the next program, even if the first one wasn't finished. Everyone gets a turn eventually."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Round Robin is a preemptive scheduling algorithm designed for time-sharing systems. Each process is assigned a small unit of CPU time called a 'Time Quantum' (usually 10-100ms). If the process doesn't finish within its quantum, it's preempted and moved to the back of the ready queue."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The performance of RR depends heavily on the size of the Time Quantum ($q$). If $q$ is too large, RR behaves like FCFS. If $q$ is too small, the system spends too much time on context switching (overhead). The goal is to set $q$ such that 80% of CPU bursts are shorter than the quantum."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Explain the mechanism of Round Robin scheduling and discuss how the choice of time quantum affects system throughput and response time."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Imagine a 'Very Fast Poker Dealer'. Instead of letting one person play their whole hand at once, the dealer gives one card to the first person, then one to the second, then one to the third. He goes in a circle (Round Robin) until everyone has their full hand."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A scheduling method where each process gets a fixed time slice in a circular order."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Round Robin is considered 'Fair' because it prevents any single process from 'Starving' others. However, it can result in a higher average turnaround time compared to 'Shortest Job First' because every process takes longer to 'finish' (since they are all making slow progress together). It is the standard for multi-user systems where user response time is more important than raw speed."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Everyone gets a small piece of the pie, one after another, until they are full!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern kernels often use a 'Weighted Round Robin' or 'Completely Fair Scheduler' (CFS). In these systems, important tasks get 'Larger' time slices or more frequent turns. This allows the OS to support background music (low priority) and mouse movement (high priority) simultaneously without the mouse feeling 'laggy'."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A CPU scheduling algorithm where each process is assigned a fixed time slot in cyclic order."
+                        }
+                    ]
+                },
+                {
+                    "id": 16,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between Preemptive and Non-Preemptive scheduling?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "In Non-Preemptive, when a program starts working, the computer CANNOT stop it until it's finished. In Preemptive, the computer can 'tap it on the shoulder' and force it to wait if something more important comes along."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Preemptive scheduling allows the OS to interrupt a currently running process to assign the CPU to another task. Non-preemptive scheduling means once a process gets CPU time, it holds it until it either terminates or moves to the 'Waiting' state (e.g., for I/O). Most modern OS use preemptive scheduling for better responsiveness."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Preemptive scheduling requires hardware assistance (like a timer interrupt) to regain control. Non-preemptive scheduling is simpler but dangerous; a single 'Infinite Loop' in a user program can freeze the entire operating system because the kernel never gets the CPU back to stop it."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Compare preemptive and non-preemptive scheduling with respect to OS complexity, overhead, and average wait time."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Non-preemptive is 'A bathroom with a lock'. Once someone goes in, they stay as long as they want; you just have to wait. Preemptive is 'A shared playground slide'. If a teacher (the OS) decides a younger kid (a high-priority task) should go next, they can pull the older kid off the slide mid-way."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Preemptive can interrupt a task; non-preemptive must wait for the task to finish."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Preemptive scheduling is mandatory for 'Time-Sharing' and 'Real-Time' systems. It introduces a race condition known as 'Priority Inversion,' where a high-priority task is blocked by a low-priority task that won't give up its resources. Non-preemptive was common in early Windows (3.1) and MacOS, which is why those systems would totally hang if one app crashed."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "One is 'Polite' and waits (Non-preemptive), the other is 'Bossy' and interrupts (Preemptive)!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Kernel Preemption Level: Even in preemptive systems, the 'Kernel' code itself might be non-preemptive. A 'Fully Preemptive Kernel' (like most modern Linux versions) allows a task to be interrupted even while it's inside a system call, which is essential for achieving sub-millisecond latency guarantees in RTOS environments."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Preemptive scheduling allows task interruption by the OS; non-preemptive scheduling ensures a task completes its burst before yielding control."
+                        }
+                    ]
+                },
+                {
+                    "id": 17,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Inter-Process Communication' (IPC)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "IPC is how two different apps talk to each other. Because apps are kept in 'separate boxes' for safety, they can't see each other's data. They need a special 'telephone line' provided by the computer to send messages back and forth."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Inter-Process Communication (IPC) is a set of mechanisms provided by the OS that allow processes to manage shared data. The two primary models of IPC are **Shared Memory**, where multiple processes access the same physical memory space, and **Message Passing**, where processes exchange packets of information via the kernel."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "IPC mechanisms include: Pipes (unidirectional), Sockets (network/local), Shared Memory (fastest), Message Queues, Semaphores (synchronization), and Signals (interrupt-like). Shared memory requires programmer-managed synchronization (mutexes), while Message passing is typically managed by the kernel and provides built-in synchronization."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "List and define three different types of IPC and compare the efficiency of Shared Memory versus Message Passing."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Shared Memory is 'A giant communal chalkboard'. Both processes can see and write on it. Message Passing is 'Mailing a Letter'. One process puts data in an envelope and tells the Mailman (the OS) to deliver it to the other person's house. Mailing letters is safer because you can't walk over each other's writing, but the chalkboard is faster."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The mechanism that allows separate processes to share data and coordinate their actions."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "By default, processes reside in isolated virtual address spaces. IPC is the 'back door' through these walls. Shared memory is incredibly fast because once the mapping is set up, the kernel is no longer involved in the data transfer. Message passing is slower because it involves a context switch and data copying (once from sender to kernel, once from kernel to receiver), but it's much easier to implement correctly for distributed systems."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's how your web browser and your computer's audio system talk to each other to play music!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In Microkernel architectures (like Minix or Mach), almost every system function is a separate process. Thus, IPC performance is 'The' bottleneck of the entire system. These OS use highly optimized 'Zero-copy' message passing where the physical memory page containing the message is simply re-mapped to the receiver's address space rather than being duplicated."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A set of programming interfaces which allow a process to communicate with another process."
+                        }
+                    ]
+                },
+                {
+                    "id": 18,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is a 'Thread' and how does it differ from a 'Process'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A Thread is a 'Little Process' inside a bigger one. If a Process is an entire factory, a Thread is a single worker on the assembly line. All workers in the same factory share the same tools and supplies, but they can each do different tasks at the same time."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A Thread, or 'Lightweight Process,' is the smallest unit of CPU utilization. While a Process has its own address space, multiple threads within the same process share the code section, data section, and OS resources (like open files). However, each thread has its own Program Counter, Register set, and Stack."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Threads are more efficient for concurrency because they eliminate the need for full context switches and complex IPC. Creating a thread is much faster than creating a process because memory doesn't need to be duplicated (no 'Copy-on-Write'). The downside is that because they share memory, one 'bad' thread can easily crash the entire parent process."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Distinguish between a process and a thread. Explain why multi-threading is often preferred for application server design over multi-processing."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Think of a 'Browser Window'. The entire browser application is the 'Process'. Each 'Tab' you have open is like a 'Thread'. If you close the whole browser (the process), every tab dies. But the tabs can all share the same internet connection and saved passwords (the resources)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A unit of execution within a process that shares memory with other threads in the same process."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Multi-threading allows 'Parallelism' on multi-core CPUs. If you have 4 threads, a 4-core CPU can run them all at the exact same time. Processes provide 'Security' (isolation), while Threads provide 'Speed' (collaboration). Modern applications use a mix: Chrome uses a separate 'Process' for every tab (so one tab crashing doesn't kill the whole browser) and multiple 'Threads' inside each tab for rendering."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Processes are like separate houses; Threads are like rooms inside the same house!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Threads can be 'User-level' (managed by a library without kernel knowledge) or 'Kernel-level' (managed by the OS). User-level threads are faster to switch but if one blocks for I/O, the entire process blocks. Kernel-level threads are slower but more robust, as the OS can schedule another thread from the same process if one gets stuck."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The basic unit to which an operating system allocates processor time."
+                        }
+                    ]
+                },
+                {
+                    "id": 19,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Priority Inversion'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Priority Inversion is like a 'Traffic Jam' caused by a slow car. A very important ambulance (High Priority) is stuck behind a regular car (Medium Priority). The regular car is stuck because the road is blocked by a really slow truck (Low Priority). The ambulance is now 'Waitng' because of the truck, which shouldn't happen!"
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Priority Inversion occurs when a high-priority task is forced to wait for a low-priority task that is holding a shared resource (like a lock). This becomes a disaster if a medium-priority task preempts the low-priority one, effectively letting the medium-priority task run while the high-priority one waits indefinitely."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The scenario: Low-priority $P_L$ holds a mutex. High-priority $P_H$ requests the mutex and blocks. If medium-priority $P_M$ arrives and preempts $P_L$, then $P_H$ is indirectly delayed by $P_M$. This violates the priority system. Solutions include 'Priority Inheritance Protocol' (PIP), where $P_L$ temporarily inherits $P_H$'s priority until it releases the lock."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Define priority inversion and explain how the Priority Inheritance Protocol solves the problem."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A VIP at a club'. The VIP wants to get in, but the only key to the door is being held by a janitor (Low Priority). A regular guest (Medium Priority) keeps talking to the janitor, making him work slower. The VIP is stuck outside because of a regular person. The solution is 'Priority Inheritance': the bouncer tells the janitor 'You're a VIP for the next 5 minutes, finish your job and give me the key!'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A situation where a high-priority task is blocked by a lower-priority task holding a resource."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Priority Inversion famously caused the 'Mars Pathfinder' rover to frequently reboot. A low-priority meteorological task held a mutex that the high-priority data bus task needed. Medium-priority tasks kept interrupting the weather task, preventing it from ever releasing the lock. The system noticed the high-priority task was 'stuck' and triggered a safety reboot. It was fixed by uploading a patch to enable priority inheritance."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's what happens when the computer's 'to-do list' gets mixed up and the most important things get stuck at the bottom!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Other solutions include 'Priority Ceiling Emulation'. In this protocol, every resource is assigned a priority (the highest priority of any task that might use it). When a task grabs that resource, its priority is automatically bumped to that ceiling. This prevents the inversion before it can even start, though it's more complex to design."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A scheduling challenge where a high-priority task is indirectly preempted by a lower-priority task."
+                        }
+                    ]
+                },
+                {
+                    "id": 20,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between Synchronous and Asynchronous I/O?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Synchronous is 'Waiting for the download to finish before you can keep clicking'. Asynchronous is 'Starting the download and being able to browse other pages while it happens in the background'. The computer will tell you when it's done."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In Synchronous I/O, the process is blocked after the I/O request is made and waits until the operation is complete. In Asynchronous I/O, the process continues executing its instructions after the request, and the OS notifies the process via a signal or callback once the I/O is finished."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Synchronous I/O uses blocking system calls. Asynchronous I/O utilizes non-blocking calls or kernel-level threads. From the kernel's perspective, during synchronous I/O, the process state is changed to 'Waiting'. In asynchronous I/O, the process remains 'Ready' or 'Running'. Modern high-performance servers use `epoll` or `io_uring` to manage thousands of asynchronous operations efficiently."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Compare synchronous and asynchronous I/O mechanisms with respect to program complexity and resource utilization."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Synchronous is like 'Ordering at a Drive-Thru'. You drive up, tell them what you want, and sit in your car at the window until they hand you the burger. You can't leave. Asynchronous is like 'Using a Pager at a restaurant'. You order, then you are free to walk around the mall. The pager (the signal) vibrates when your food is ready."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Synchronous blocks the program until I/O is done; asynchronous allows it to continue."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Asynchronous I/O is harder to program because you have to handle 'Callbacks' or 'Promises'. You don't know exactly when the data will arrive, so your code has to be 'event-driven'. However, it is essential for high-concurrency systems. Each thread that's 'waiting' for synchronous I/O takes up memory (the stack). With asynchronous I/O, one single thread can handle 10,000 connections because it's never 'just waiting'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "One makes you wait in line; the other lets you do other chores while it finishes the work!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Operating systems provide 'AIO' (Asynchronous I/O) libraries. For example, Linux has `libaio`. These allow programs to submit multiple I/O requests to the kernel in a single batch, minimizing the number of expensive system calls and allowing the disk controller to optimize the hardware head movements between all pending requests."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The operational modes for I/O where execution either waits for completion (synchronous) or proceeds independently (asynchronous)."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

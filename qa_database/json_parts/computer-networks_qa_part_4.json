@@ -1,0 +1,592 @@
+{
+    "dataset": "computer-networks_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_4",
+            "questions": [
+                {
+                    "id": 31,
+                    "topic": "Practical Usage & Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Traceroute' and how do you interpret its results?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Traceroute shows the path a packet takes to reach a destination, listing every router it passes through along the way."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Traceroute uses the TTL field in IP headers. It sends packets with increasing TTL values (1, 2, 3...) to trigger 'Time Exceeded' errors from each router in the path. High response times at a specific hop indicate a bottleneck or local congestion."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Diagnostic tool mapping IP network paths. Uses ICMP Echo (Windows) or UDP probes (Linux/Unix). Each 'Hop' displays the router's IP/Hostname and three Round-Trip Time (RTT) measurements."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Utility for identifying intermediate gateways and measuring hop-by-hop latency between source and target."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Asking for Directions' from everyone you meet. The first person tells you how to get to the 2nd person, the 2nd tells you how to get to the 3rd, and you write down everyone's name as you go."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Maps the sequential sequence of routers between a source and destination."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you see `* * *` in traceroute, it means that specific router is configured to drop 'expired' packets or ICMP messages for security. It doesn't necessarily mean the network is down—only that the router is being 'quiet' for safety."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like watching a GPS track your car as it drives across the country, showing you every town you pass through."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In multi-path networks (using ECMP), separate probes might take different routes. Modern tools like 'MTR' (My Traceroute) combine traceroute and ping into a continuous live report for better intermittent bug detection."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A computer network diagnostic command for displaying the route and measuring transit delays of packets across an Internet Protocol network."
+                        }
+                    ]
+                },
+                {
+                    "id": 32,
+                    "topic": "Practical Usage & Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Ping' and what does 'TTL Expired' mean in its output?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Ping checks if a computer is reachable. 'TTL Expired' means the packet died before it got to the target, usually because it got stuck in a loop between routers."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Ping uses ICMP Echo Request/Reply. 'TTL Expired in Transit' specifically means the TTL field reached zero while being processed by a router. This is the primary indicator of a 'Routing Loop' on the network."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "ICMP-based reachability utility. An 'Expired' message implies the packet traversed more hops (Layer 3 boundaries) than its initial Time-to-Live value allowed, triggering an ICMP Type 11 response."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Connectivity test resulting in 'TTL Expired' when the hop count limit is reached before the destination."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Ping is like shouting 'Hello?' and waiting for a reply. 'TTL Expired' is like having your voice fade away completely before it reaches the person at the far end of the canyon."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Test reachability; 'TTL Expired' indicates a path length exceeding packet lifespan (often a loop)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A 'Request Timed Out' is different—it means the packet MAY have reached the destination, but the destination chose not to answer or the return path is broken. TTL Expired is a clear signal from an INTERMEDIATE router that it killed the packet."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Ping is the 'Marco Polo' of computers. If it says 'TTL Expired', it means the game went on too long and the packet had to quit."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can use the `-i` flag in ping to manually set the TTL. If you set `ping -i 1 google.com`, you are essentially doing a one-step traceroute to find your own home router."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A utility used to test the reachability of a host and to measure the round-trip time for messages sent from the originating host to a destination computer."
+                        }
+                    ]
+                },
+                {
+                    "id": 33,
+                    "topic": "Practical Usage & Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "How to troubleshoot 'DNS Resolution' issues?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Check if you can ping a raw IP (like 8.8.8.8). If you can ping the number but not the name (google.com), your DNS settings are probably broken."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I would use tools like `nslookup` or `dig` to query specific DNS servers. If `nslookup google.com 8.8.8.8` works but the default query fails, the issue is with the local DNS server or ISP settings."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Diagnostic workflow: 1. `ipconfig /flushdns`, 2. Query Authoritative vs Recursive servers using `dig +trace`, 3. Check `/etc/hosts` for local overrides, 4. Verify UDP/53 connectivity."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Resolution via cache flushing and targeted record querying (A, AAAA, MX) using command-line utilities."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "If your phone can't find 'MOM', try typing her number manually. If the call goes through, you know the phone is working fine and only the 'Address Book' (DNS) is messed up."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Test connectivity with raw IPs vs hostnames to isolate name-resolution failures."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "DNS issues are often caused by 'TTL Caching'. If a website recently changed its IP, your computer might be trying to use the 'OLD' cached IP stored in its memory. `ipconfig /flushdns` (Windows) clears this memory."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Sometimes your computer 'forgets' where a website lives. Restarting the Wi-Fi or changing your DNS to Google (8.8.8.8) often fixes this instantly."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "A 'DNSSec' failure can look like a resolution issue. If the cryptographic signature of the DNS record is invalid, secure browsers will refuse to resolve the domain to prevent hacking."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The process of identifying and rectifying failures in the translation of domain names to IP addresses."
+                        }
+                    ]
+                },
+                {
+                    "id": 34,
+                    "topic": "Practical Usage & Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Port Forwarding' and when do you need it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's like an 'Open Door' policy for your home router. It tells the router to send all traffic arriving on a specific port straight to one specific computer inside your house."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Port forwarding is used to bypass NAT. You need it when you are hosting a service (like a Minecraft server or a VPN) inside your private network and want people from the public internet to be able to reach it."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Static NAT mapping. It creates a rule on the gateway: `Public_IP:Port_X -> Internal_IP:Port_Y`. It allows inbound unsolicited traffic for specific application ports."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Inbound traffic redirection through a NAT gateway to a specific internal host based on the port number."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "If your router is a 'Hotel Front Desk', Port Forwarding is a rule saying: 'If anyone asks for a package for Room 80, send them straight to guest John Doe without checking their ID'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Directing external requests on a specific port to a chosen internal device."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Port forwarding is a security risk if not managed well. If you forward Port 22 (SSH) to your PC, anyone in the world can try to guess your password and hack your computer. Always use non-standard ports or VPNs for better safety."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "You need this if you want to host a game server and have your friends join from their own homes."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Port Triggering' is a version of forwarding that only opens the door 'dynamically' when a specific internal app sends data out first, making it slightly safer than static forwarding."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An application of network address translation (NAT) that redirects a communication request from one address and port number combination to another."
+                        }
+                    ]
+                },
+                {
+                    "id": 35,
+                    "topic": "Practical Usage & Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "Explain 'VPN' (Virtual Private Network) Types.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A VPN creates a secure 'Tunnel' through the internet, making it look like your computer is plugged directly into your office or home network even if you're 1,000 miles away."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "There are two main types: 'Remote Access' (for individual users to connect to a server) and 'Site-to-Site' (connecting two offices together over the internet). Protocols include OpenVPN, WireGuard, and IPsec."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Encapsulated and encrypted network tunnel. Site-to-Site (Gateway-to-Gateway) usually uses IPsec. Remote Access (Host-to-Gateway) often uses SSL/TLS (OpenVPN) or WireGuard (UDP-based)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Private data transmission over a public network using encryption and tunneling protocols."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Driving an Armored Car' through a public highway. Everyone can see the car is there, but nobody can see who is inside or what money (data) is being carried."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Encrypted tunnels for secure data transfer across public network infrastructures."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A 'Full Tunnel' VPN sends ALL your internet traffic through the VPN. A 'Split Tunnel' only sends work-related traffic through the VPN, allowing you to watch Netflix normally while also being connected to your office files."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It hides your location and encrypts your data so hackers at a Starbucks Wi-Fi can't see what you're doing."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "WireGuard is the modern standard, offering significantly faster speeds than OpenVPN because it runs in 'Kernel Space' and uses high-performance 'ChaCha20' cryptography."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A secure tunnel between two or more devices across a public network that uses encryption and other security mechanisms to protect data."
+                        }
+                    ]
+                },
+                {
+                    "id": 36,
+                    "topic": "Practical Usage & Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'SSH' (Secure Shell) and its common uses?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "SSH is a tool that let's you log into another computer's command line securely over the network. It's used by IT pros to manage servers without being there physically."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "SSH provides encrypted terminal access over port 22. It replaced Telnet because Telnet was unencrypted. Common uses include remote administration, file transfer (SFTP), and 'Tunneling' other traffic through an SSH link."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Cryptographic network protocol for operating network services securely. Uses Public-Key Cryptography for authentication. Supports Port Forwarding (L-tunneling/R-tunneling) and X11 forwarding."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Encrypted application-layer protocol for remote login and secure data exchange."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Secret Key-Card' and a 'Phone Line' combined. Only you have the key (SSH Key) to get in, and anything you say into the phone is scrambled so no one can eavesdrop."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Encrypted terminal access and secure command execution on remote servers."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "For maximum security, you should disable 'Password Authentication' in SSH and use 'SSH Keys' instead. These are long cryptographic files that are virtually impossible for a hacker to 'guess', unlike a text password."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the standard tool for 'Remote Control' of computers that don't have screens, like web servers."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "SSH can be used for 'Proxying' entire web browsers by creating a SOCKS5 proxy on your local machine that tunnels all traffic through the remote server to bypass restrictive firewalls."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A cryptographic network protocol for operating network services securely over an unsecured network."
+                        }
+                    ]
+                },
+                {
+                    "id": 37,
+                    "topic": "Practical Usage & Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Wireshark' and why do network engineers use it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Wireshark is a program that lets you 'see' every single packet traveling through your network wire. It's like an X-ray for your internet connection."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Wireshark is a packet analyzer. We use it for troubleshooting 'Packet Loss', security auditing, and protocol analysis. It can 'dissect' hundreds of different protocols to show you exactly what is inside the headers and payload."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Network protocol analyzer. It captures raw frames via `libpcap` or `WinPcap` and provides a GUI for filtering (BPF) and inspecting PDUs at every OSI layer."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Tool for passive network capture and microscopic inspection of protocol unit interactions."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Microscope' for the internet. Instead of just seeing 'The website didn't load', you can see 'Oh look, the server never answered the 3rd step of the handshake'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The world's leading network protocol analyzer for packet-level troubleshooting."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Wireshark cannot typically read HTTPS or encrypted traffic unless you provide it with the 'Private Key' or have the browser log the 'Session Keys'. This is why encryption is so vital for privacy—Wireshark makes eavesdropping easy on unencrypted networks."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the ultimate 'Detective Tool' for when the internet is acting weird and you want to know exactly why."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Engineers use 'Filter Expressions' (e.g., `ip.addr == 1.1.1.1 && tcp.port == 80`) to find a single needle-in-a-haystack packet among millions of captured frames."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A free and open-source packet analyzer used for network troubleshooting, analysis, software and communications protocol development."
+                        }
+                    ]
+                },
+                {
+                    "id": 38,
+                    "topic": "Practical Usage & Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "Explain 'Load Balancing' Basics.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A load balancer is like a 'Traffic Cop'. It stands in front of 5 servers and gives the next visitor to the first server, the next to the second, and so on, so no one server gets tired."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Load balancers distribute incoming traffic across multiple backend servers. This increases availability (redundancy) and scalability. Algorithms include 'Round Robin', 'Least Connections', and 'IP Hashing'."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "L4 (Transport) or L7 (Application) distribution. L4 balancers look only at IPs/Ports. L7 balancers can look at Cookies or URL paths to decide which server should handle a specific user (Session Affinity)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Resource optimization method using a single front-end VIP to distribute load across a pool of backend real servers."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Bank Teller Line'. Instead of 5 lines (one for each teller), there is one line at the front. The manager (Load Balancer) tells the person at the front 'Go to Teller 3, they are free now'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Distributing network traffic across multiple servers to ensure high performance and reliability."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Critical for 'High Availability' (HA). Load balancers perform 'Health Checks'. If Server B crashes, the balancer stops sending it traffic instantly, ensuring users never see a 'Server Error' page."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's how big sites like Google and Amazon stay so fast even when a billion people are using them at once."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Global Server Load Balancing (GSLB) uses DNS to send a user to a data center in London if they are in the UK, or New York if they are in the US, optimizing for latency geographically."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The process of distributing network traffic across multiple servers to ensure that no single server carries too much demand."
+                        }
+                    ]
+                },
+                {
+                    "id": 39,
+                    "topic": "Practical Usage & Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'WPA3' vs 'WPA2' for Wi-Fi security?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "WPA3 is the newest way to lock your Wi-Fi, making it much harder for someone to guess your password or spy on your files."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "WPA3 replaced WPA2 to fix major security holes. It uses 'Simultaneous Authentication of Equals' (SAE) instead of the old '4-way handshake', which prevents hackers from doing 'Offline Dictionary Attacks' to guess your password."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "IEEE 802.11 enhancement. Replaces PSK with SAE (Dragonfly key exchange). Enforces 128-bit (base) or 192-bit (enterprise) encryption and protected management frames (PMF)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Next-gen Wi-Fi authentication standard improving cryptographic strength and providing personalized data encryption."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "WPA2 is like a 'Standard Home Lock'. If a thief has enough time and tools, they can eventually pick it. WPA3 is like a 'Vault Door' that changes its own combination every time you try to turn the handle."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Modern Wi-Fi security standard using SAE to prevent brute-force and eavesdropping attacks."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "One of the best WPA3 features is 'Forward Secrecy'. Even if a hacker records your encrypted traffic today and manages to steal your Wi-Fi password a year later, they STILL can't unlock the old data they recorded."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "WPA3 is the 'Update' for your router that makes it nearly impossible for a neighbor to steal your Wi-Fi or see what you're doing."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "WPA3 'Transition Mode' allows a router to support both old WPA2 devices and new WPA3 devices, but it also leaves some 'downgrade attack' vulnerabilities open as a result."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The third generation of Wi-Fi Protected Access, providing the industry’s most sophisticated security protocols."
+                        }
+                    ]
+                },
+                {
+                    "id": 40,
+                    "topic": "Practical Usage & Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'PoE' (Power over Ethernet)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "PoE is a technology that lets you send both 'Internet Data' and 'Electricity' through the same single Ethernet cable."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "PoE is used to power devices like IP Cameras, VoIP phones, and Wireless Access Points without needing a separate power outlet. It's safe because the switch 'checks' if the device needs power before sending it."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Standards 802.3af (15.4W), 802.3at (PoE+, 30W), and 802.3bt (PoE++, up to 90W). Uses spare pairs or phantom power on data pairs in Cat5/6 cables."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Networking standard (IEEE 802.3af/at/bt) facilitating simultaneous data and power transmission via twisted-pair cabling."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Lamp with a built-in Phone'. Usually, you need one wire for light and one for the wall. PoE puts the electricity in the phone line so the lamp works with just one wire."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Delivering electrical power over standard network cables for device operation."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "PoE is vital for business environments because it allows centrally-managed power backup. If your central 'PoE Switch' is plugged into a UPS battery, then all your security cameras and phones keep working even if the whole building loses power."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the magic that lets a security camera way up on a pole work with just one single wire."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "A 'PoE Injector' can be used to add power to a standard Ethernet cable if your switch doesn't support PoE, acting as a middle-man bridge between the router and the device."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A technology that allows network cables to carry electrical power."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

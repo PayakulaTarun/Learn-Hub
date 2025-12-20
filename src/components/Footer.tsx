@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center space-x-3 mb-6 group">
-              <img src="/logo.png" alt="Student Resource Hub Logo" className="h-12 w-auto transition-transform group-hover:scale-110" />
+              <img src="/logo.png" alt="Logo" className="h-12 w-auto transition-transform group-hover:scale-110" />
               <span className="text-2xl font-black text-text-primary tracking-tighter">Student Resource Hub</span>
             </Link>
             <p className="text-text-muted max-w-md leading-relaxed">
@@ -20,7 +20,7 @@ export default function Footer() {
           
           {/* Quick Learning */}
           <div>
-            <h3 className="font-black mb-6 text-text-primary uppercase tracking-widest text-xs">Curriculum</h3>
+            <h3 className="font-bold mb-6 text-text-primary text-sm">Curriculum</h3>
             <ul className="space-y-3 text-sm font-medium text-text-muted">
               <li><Link href="/subjects/html-introduction" className="hover:text-accent transition-colors flex items-center gap-2">HTML Masterclass</Link></li>
               <li><Link href="/subjects/css-introduction" className="hover:text-accent transition-colors flex items-center gap-2">Modern CSS Design</Link></li>
@@ -30,7 +30,7 @@ export default function Footer() {
           
           {/* Engineering Tools */}
           <div>
-            <h3 className="font-black mb-6 text-text-primary uppercase tracking-widest text-xs">Engineering Tools</h3>
+            <h3 className="font-bold mb-6 text-text-primary text-sm">Engineering Tools</h3>
             <ul className="space-y-3 text-sm font-medium text-text-muted">
               <li><Link href="/navigator" className="hover:text-accent transition-colors flex items-center gap-2">Career Navigator</Link></li>
               <li><Link href="/evaluator" className="hover:text-accent transition-colors flex items-center gap-2">Interview Battlegrounds</Link></li>
@@ -40,12 +40,14 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-ui-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-text-muted font-bold uppercase tracking-widest leading-loose">
-            &copy; {new Date().getFullYear()} Student Resource Hub. Built for High-Performance Learning.
-          </p>
+          <div className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-[10px] text-text-muted font-bold uppercase tracking-widest">
+            <span>&copy; {new Date().getFullYear()} Student Resource Hub.</span>
+            <span className="hidden md:inline">&bull;</span>
+            <span>Built for High-Performance Learning.</span>
+          </div>
           <div className="flex gap-8 text-[10px] font-black uppercase tracking-widest text-text-muted">
             <Link href="/about" className="hover:text-text-primary transition-colors">About Hub</Link>
-            <Link href="/auth/signup" className="hover:text-text-primary transition-colors text-accent">Enroll Now</Link>
+            <Link href="/login" className="hover:text-text-primary transition-colors text-accent">Enroll Now</Link>
           </div>
         </div>
       </div>

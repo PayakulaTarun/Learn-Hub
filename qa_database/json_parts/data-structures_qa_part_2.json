@@ -1,0 +1,592 @@
+{
+    "dataset": "data-structures_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_2",
+            "questions": [
+                {
+                    "id": 11,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How does a 'Dynamic Array' (e.g., ArrayList) handle resizing?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "When the array is full, it creates a new, larger array (usually double the size), copies all the old items into it, and then deletes the old array."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Dynamic arrays use an 'Geometric Expansion' strategy. When the capacity is reached, the array allocates a new block of memory, typically 1.5x or 2x the previous size, and performs a bulk copy. This ensures that the 'Amortized' time complexity of adding an element is O(1)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Internal resizing triggered by `size == capacity`. The complexity of a single 'resize' operation is O(n), but since it happens infrequently (log n times for n insertions), the aggregate cost divided by n results in a constant amortized cost."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A mechanism where a fixed-size array is reallocated with larger capacity (growth factor k) when full, followed by element migration."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Moving to a bigger house'. You live in a 1-bedroom (Array) until you have a baby. Then you buy a 2-bedroom (New Array), move all your furniture (Copy), and sell the old house. You don't move every day, so it's not a big deal in the long run."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Creating a larger array and copying elements when capacity thresholds are met."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The choice of growth factor (e.g., 2 in Java, 1.5 in others) is a trade-off. A factor of 2 is fast but wastes more memory; a factor of 1.1 saves memory but causes too many frequent, expensive recopying operations."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like an 'Expandable Suitcase'. When you can't fit more clothes, it unzip a hidden pocket to double its volume so you can keep packing."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Resizing can cause a 'Latency Spike' in real-time systems. Advanced implementations might use 'Incremental Copying' across several future push operations to avoid a single catastrophic O(n) delay."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A random access, variable-size list data structure that allows elements to be added or removed, implemented by reallocating a larger underlying array as needed."
+                        }
+                    ]
+                },
+                {
+                    "id": 12,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How are Linked Lists stored in physical memory vs logical memory?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Logically, they are a straight line. Physically, the pieces (nodes) can be scattered all over the computer's memory wherever there is space."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Logically, a linked list is a linear sequence. Physically, it is non-contiguous. Each node is allocated on the 'Heap', and the only connection between them is the memory address (pointer) stored in the previous node."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Linked lists represent a 'disjoint' memory allocation. Each node is a distinct object in the free store. This bypasses the need for large contiguous blocks of memory but introduces O(n) access delay because physical 'jumping' between addresses prevents cache pre-fetching."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Logical: Linear ordered collection. Physical: Non-contiguous heap-allocated nodes linked via pointers."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Logically, it's like a 'Chain'. Physically, imagine the chain links are hidden in different rooms of a giant castle. To find the next link, you must read the note attached to the current link that tells you which room to go to next."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Linked lists are logically linear but physically fragmented in memory."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Because nodes are scattered, the CPU's 'L1/L2 Cache' is much less effective. With an array, the hardware knows the next piece of data is next door. With a linked list, the hardware has to 'wait' for a memory fetch from the main RAM for literally every single element."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a digital 'Connect the Dots'. The dots (data) are all over the page, but the lines (pointers) tell you the order you should connect them in."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Compilers might optimize linked lists using 'Pool Allocation' where many nodes are pre-allocated in a contiguous block, giving them physical properties similar to arrays while maintaining the logical flexibility of a list."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A collection of data elements where order is maintained through pointers to non-contiguous memory locations rather than physical adjacency."
+                        }
+                    ]
+                },
+                {
+                    "id": 13,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "Explain the concept of 'Collision' in Hash Tables.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A collision is when two different keys (like 'Apple' and 'Banana') result in the exact same index number from the hash function."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A collision occurs when two distinct keys hash to the same slot in the hash table. Since each slot can usually only hold one item, we must use techniques like 'Chaining' or 'Open Addressing' to store the second item."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Collision happens when `h(k1) == h(k2)` for `k1 != k2`. According to the 'Pigeonhole Principle', if you have more keys than slots, collisions are mathematically guaranteed. Quality of the hash function determines the frequency of such events."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The phenomenon where two different inputs to a hash function produce the same output index."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Two people being assigned the same seat' on a plane. The airline (the Hash Table) must then decide where to put the second person—either make them share (Chaining) or find them the next empty seat (Probing)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Multiple keys mapping to the same index in a hash map."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If collisions are too frequent, the hash table's performance 'Collapses'. Instead of O(1) constant time, searching becomes O(n) as you have to sift through long chains of colliding items. This is often the target of 'Hash Denial of Service' attacks."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Think of it like a filing cabinet with 10 drawers. If you have 11 files, at least one drawer WILL have two files in it. That double-up is a collision."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Advanced hashing like 'Cuckoo Hashing' or 'Perfect Hashing' attempt to eliminate collisions at the cost of more complex insertion logic or requiring a fixed, known set of keys."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An event that occurs when two different keys result in the same output from a hash function, necessitating a strategy to differentiate them within the storage structure."
+                        }
+                    ]
+                },
+                {
+                    "id": 14,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How does 'Chaining' (Closed Addressing) handle collisions?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Each slot in the hash table points to a 'Linked List'. If two items go to the same slot, you just add the second item to the list."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In Chaining, each bucket in the hash table is an independent data structure (usually a linked list or an AVL tree). When a collision occurs, the new entry is appended to the list at that specific index."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Each array element `A[i]` is a pointer to a list head. Insertion is O(1) (at the head). Search time is `O(1 + α)`, where `α` (Alpha) is the Load Factor (n/m). As elements increase, chains get longer, degrading performance linearly."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A collision resolution technique where colliding elements are stored in a linked list attached to the hash bucket."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Putting Hook's on every coat rack'. If one rack is full, you just hang the second coat on a hanger below the first one. One rack can hold many coats this way."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Storing colliding hash elements in a linked list at the mapped index."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Chaining is simple and never 'fails' (the table can hold more items than its size). However, it requires extra memory for the pointers in the nodes. In modern languages like Java 8, long chains are converted into 'Red-Black Trees' to keep worst-case search at O(log n)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Imagine you have 10 cubbies for student lunches. If 2 students share cubby #5, you just put their lunch boxes in a stack in that cubby."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Chaining works best when the load factor is allowed to exceed 1.0. It is generally more robust than open addressing when the hash function is suboptimal, as it strictly contains the damage to a single bucket."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A method of resolving hash collisions by maintaining a linked list of all elements that hash to the same index."
+                        }
+                    ]
+                },
+                {
+                    "id": 15,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How does 'Linear Probing' (Open Addressing) handle collisions?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If the slot you want is full, you just look at the very next slot (index + 1). If that's full too, you keep looking one-by-one until you find an empty spot."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Linear Probing is an open addressing technique. When a collision occurs at index `i`, we check `i+1, i+2, i+3...` until an empty slot is found. All data is stored directly in the hash table array itself, without external pointers."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The probe sequence function is `f(i) = (hash(k) + i) % size`. It provides excellent cache locality but suffers from 'Primary Clustering', where localized blocks of filled slots cause lookup times to increase exponentially as the table fills."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A collision resolution method where the algorithm searches sequentially for the next available slot in the table."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Finding a Parking Spot'. If the spot you wanted is taken, you don't go home—you just drive to the next closest spot, and then the next, until you can park."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Searching for the next empty array slot when a hash collision occurs."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Linear Probing requires that the table size is always greater than the number of items. Once the table is 70% full, the 'Clusters' merge, and performance drops off a cliff. Deleted items must be marked with a special 'Tombstone' to ensure the search sequence isn't broken."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you try to sit in a chair and someone is there, you just try the chair to the right, then the next one, until you sit down."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Secondary clustering can be avoided using 'Quadratic Probing' or 'Double Hashing', which use more complex interval functions to spread colliding items more evenly across the table."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A scheme in computer programming for resolving collisions in hash tables by searching for the next available slot through a linear sequence."
+                        }
+                    ]
+                },
+                {
+                    "id": 16,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How does a Binary Heap maintain its properties during insertion (Heapify-Up)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You add the new item at the very bottom (end of the list), then compare it with its parent. If it's bigger (in a Max-Heap), you swap them. You keep swapping with parents until it's in the right spot."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Insertion uses 'Percolate Up'. The element is added at the first available leaf position. We then recursively compare it with its parent; if the element violates the heap property, it is swapped with the parent. This continues until the root is reached or the property is satisfied."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The new node is placed at index `n`. We apply the condition `Heap[i] > Heap[(i-1)/2]`. Swaps continue upward. Time complexity is O(log n) as the maximum number of swaps equals the height of the tree."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The process of moving a new node up the heap by repeatedly swapping with its parent until the heap property is restored."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A new employee getting promoted'. They start at the bottom. If they are better than their boss, they swap jobs. They keep getting promoted up the 'corporate ladder' until they reach a boss who is actually better than them."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Swapping a new element with its parent repeatedly to restore heap order."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Because heapes are 'Complete' trees, the height is always exactly `log2(n)`. This guarantees that even with a billion items, insertion will take at most ~30 swaps. This 'Logarithmic' efficiency is why heaps are used for real-time priority queues."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Think of bubbles in water. A 'Big' bubble will float up past the 'Small' bubbles until it finds its place at the top."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In array-based heaps, parent/child calculations involve bit-shifts (`i >> 1`) which are extremely fast for the CPU, making the heap one of the most efficient tree structures available."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The algorithm of restoring the heap property by traversing from a child node upward to the root."
+                        }
+                    ]
+                },
+                {
+                    "id": 17,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What happens during a Heap 'Extract-Max' operation (Heapify-Down)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You remove the top item, then move the very last item in the list to the top spot. Since that item is likely small, you 'sink' it down by swapping it with its largest child until the tree is organized again."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Extraction involves replacing the root with the last leaf element to maintain the 'Complete Tree' structure. We then call 'Heapify-Down' (Percolate Down): compare the new root with its children, swap with the larger of the two, and repeat until the leaf is reached or the property holds."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "1. `max_val = Heap[0]`. 2. `Heap[0] = Heap[n-1]`. 3. Loop: Swap `Heap[i]` with `max(Heap[2i+1], Heap[2i+2])`. Time complexity is O(log n). This ensures the root always holds the extreme value for the next call."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Process of removing the root, replacing it with the last element, and sinking it down the tree."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'President Resigning'. Immediately, the person at the very bottom of the company list is put in the President's chair to keep the chair filled. But since they don't know the job, people above them 'Demote' them down the ranks until they are in the right position."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Replacing the root with the last element and shifting it down to restore heap property."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The reason we use the *last* element to replace the root is to keep the tree 'Shape'. If we just deleted the root and didn't move an element there, we'd have a hole in the top of our tree, breaking the array mapping."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Imagine the king leaves the castle. A random peasant is put on the throne just to fill the seat, but then the generals push him down until he's back in the fields where he belongs."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In 'Heapsort', this operation is performed N times. By repeatedly extracting the max and Moving it to the end of the array, we can sort an array in-place without extra memory."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The algorithm for restoring a heap which involves moving a node down from the root by swapping with children until the heap property is satisfied."
+                        }
+                    ]
+                },
+                {
+                    "id": 18,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How does 'Recursion' utilize the Call Stack?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Every time a function calls itself, the computer pushes a new 'frame' (with all that function's variables) onto a stack. When the function finishes, it 'pops' that frame off to go back to the previous one."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Recursion relies on the System Stack. Each recursive call creates a 'Stack Frame' containing the function's local variables, parameters, and return address. This is why too many deep recursive calls lead to a 'Stack Overflow'—the memory assigned to the stack is exhausted."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A LIFO model of execution. Each call allocates a block on the thread's stack. State is preserved in the current frame until the 'base case' is hit, at which point the stack begins 'unwinding', returning control to the caller's instruction pointer."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A mechanism where function calls are managed via a Last-In-First-Out (LIFO) stack to track progress and return values."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Russian Nesting Dolls'. Each doll you open is a new function call. You can't close the big doll until you finish opening and closing all the smaller dolls inside it. The Stack tracks which doll you are currently holding."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Managing nested function calls by pushing and popping frames on the system stack."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Recursion can be inefficient compared to iteration because the stack overhead (allocating frames) is expensive. However, some compilers support 'Tail Call Optimization' (TCO), which reuse the current frame if the recursive call is the last thing the function does, effectively making it as fast as a loop."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like placing a 'Bookmark' in a book. You start reading chapter 1, then you see a note to go read chapter 2 first. You put a bookmark in chapter 1, read 2, and then use the bookmark to find your way back."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Variables declared inside recursive functions are stored in the stack, while objects created with `new` are on the heap. Incorrectly passing large objects 'by value' in recursion can fill up the stack almost instantly."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The use of a stack data structure to store the context of function calls, including return addresses and local data, during the execution of self-referential routines."
+                        }
+                    ]
+                },
+                {
+                    "id": 19,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "What is the internal structure of a 'Circular Queue'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a regular array that 'loops' around. When you reach the end of the array, the next item is added at the very beginning (index 0), using up the gaps left behind by deleted items."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A circular queue avoids the 'Wasted Space' problem of linear queues. It uses a fixed-size array and the modulo operator `%` to wrap pointers. If `rear == size - 1`, the next element is placed at `index 0`, provided it's empty."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Implementation: `rear = (rear + 1) % size` and `front = (front + 1) % size`. The 'Full' condition is `(rear + 1) % size == front`. This allows for efficient reuse of memory buffers without shifting elements."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A queue implementation where the last position is connected back to the first position to form a circle."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Rotation of Tires'. You take one off the front and put it in the back. The number of tires never changes, but they keep cycle through the same 4 spots in a circle."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A queue implemented in an array by wrapping pointers to reuse empty indices."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is commonly used in 'Ring Buffers' for audio or network streams. Data is constantly being written at the rear and read at the front. As long as the 'Read' speed keeps up with the 'Write' speed, the buffer can run forever without running out of 'Space'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Imagine a 10-seat circular bench. People come in and sit in order. If someone at seat 1 leaves, the next person to arrive can take that seat even if the bench reached seat 10 already."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Concurrency in circular queues is tricky. 'Atomic' read and write pointers are required to ensure that multiple threads don't overwrite the same slot or read outdated data without expensive locks."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A linear data structure in which the operations are performed based on FIFO principle and the last position is connected back to the first position to make a circle."
+                        }
+                    ]
+                },
+                {
+                    "id": 20,
+                    "topic": "Internal Mechanics / Execution Model",
+                    "difficulty": "Intermediate",
+                    "question": "How are Multi-dimensional Arrays (e.g., 2D Arrays) indexed internally?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The computer flattens the 2D grid into one long 1D line. All the 2nd row items are placed right after all the 1st row items in memory."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Compilers use 'Row-Major Order' (standard in C/C++/Java). To find `Array[i][j]`, it calculates: `Base + (i * Number_of_Columns + j) * size`. This linearizes the 2D structure into the contiguous physical memory."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Adressing formula for `A[m][n]` is `Base + ((i - L1) * n + (j - L2)) * size`, where `L` are lower bounds. Row-major order is the most common, but some languages like Fortran use Column-major order where elements are stored by column first."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A method of mapping a multi-dimensional array to a one-dimensional memory space using either row-major or column-major mapping."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Reading a Page of Text'. Even though the page has rows and columns, you read it as one long stream of words from the top-left to bottom-right. Memory is the same way."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Flattening higher dimensions into 1D memory using offset calculations."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This has a massive impact on performance. If you iterate through a Row-major array column-by-column (jumping over a whole row for every step), you will trigger 'Cache Misses' constantly. Always iterate so your inner loop moves to the physically next address."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Computer memory is just one long line of shelf space. If you have a 3x3 grid, it just puts items 1, 2, 3 on the first part of the shelf, then items 4, 5, 6 right after them."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For extremely sparse 2D arrays (most values are zero), storing them as a linearized grid wastes space. Instead, we use 'Compressed Sparse Row' (CSR) or 'Dictionary of Keys' formats which only store the non-zero values."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The representation of an array with more than one dimension as a linear sequence in contiguous memory through a mapping function."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

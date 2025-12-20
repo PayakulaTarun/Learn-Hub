@@ -1,0 +1,592 @@
+{
+    "dataset": "JavaScript_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_10",
+            "questions": [
+                {
+                    "id": 91,
+                    "topic": "Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is the difference between `Object.freeze()` and `Object.seal()`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`freeze` stops everything (no changes allowed); `seal` stops adding/deleting properties but allows you to change existing values."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`Object.freeze()` makes an object completely immutable: you cannot add, delete, or change existing properties. `Object.seal()` is slightly less restrictive: you cannot add or delete properties, but you CAN still modify the values of existing properties."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`freeze` sets `writable: false` and `configurable: false` for all properties. `seal` only sets `configurable: false`, meaning property descriptors can't be changed and properties can't be deleted, but they remain writable."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Freeze: Immutable properties and values. Seal: Immutable properties but mutable values."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`freeze` is like a photograph: nothing can ever change. `seal` is like a locked room: you can't bring in new furniture or throw any out, but you can move the furniture that's already inside."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "No changes (`freeze`) vs Value changes only (`seal`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Note that both are 'Shallow'. If the object contains a nested object, the nested object's properties can still be changed unless you recursively freeze it. There is no `Object.deepFreeze` in the native API."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use 'freeze' if you want it to never ever change. Use 'seal' if you want to keep the same 'shape' of the data but update the values."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can check these states using `Object.isFrozen()` and `Object.isSealed()`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Object.freeze() prevents extensions and makes all properties non-configurable and non-writable. Object.seal() prevents extensions and makes all properties non-configurable."
+                        }
+                    ]
+                },
+                {
+                    "id": 92,
+                    "topic": "Interview Traps",
+                    "difficulty": "Advanced",
+                    "question": "What is the output of `0.1 + 0.2 === 0.3` and how do you fix it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's `false`. Fix it by rounding or using a tiny tolerance value like `Number.EPSILON`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The result is `false` due to floating-point precision errors in binary. The logic is roughly `0.30000000000000004 !== 0.3`. To fix it, check if the absolute difference is less than `Number.EPSILON`: `Math.abs(a + b - c) < Number.EPSILON`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "IEEE 754 precision limitation. Binary floating point cannot accurately represent 0.1. Solution: use epsilon comparison or scale to integers before operation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "False; due to precision error. Fix: Math.abs(x - y) < Number.EPSILON."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like trying to write '1/3' in decimals. You write 0.333, and then you add three of them. You get 0.999, not 1.0. There's a tiny bit missing."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "False due to IEEE 754; fix with `Number.EPSILON`."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This happens because 0.1 in base 2 is an infinite repeating fraction (0.00011001100...). When converted back to decimal, it has a slight rounding error at the 17th decimal place."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Computer math isn't perfect with decimals. Always round your numbers before comparing them!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For financial applications where precision is critical, use libraries like `decimal.js` or `BigInt` (though BigInt doesn't support decimals natively)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Floats have limited precision, causing 0.1 + 0.2 to not exactly equal 0.3."
+                        }
+                    ]
+                },
+                {
+                    "id": 93,
+                    "topic": "Edge Cases",
+                    "difficulty": "Advanced",
+                    "question": "What is the difference between `null` and `undefined`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`undefined` means a variable has been declared but not assigned. `null` is an empty value explicitly assigned by a programmer."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`undefined` is the default value of uninitialized variables. `null` is an assignment value used to represent the intentional absence of an object. Key difference: `typeof undefined` is `'undefined'`, but `typeof null` is `'object'` (a legacy bug)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Primitives. `undefined` is the primitive value used when a variable has not been assigned a value. `null` is the primitive value that represents the intentional absence of any object value."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "undefined: lack of assignment. null: explicit lack of value."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`undefined` is an empty spot on the shelf where a box hasn't been put yet. `null` is an empty box placed on the shelf by the owner."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Implicitly empty (`undefined`) vs Explicitly empty (`null`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In loose equality, `null == undefined` is true, but in strict equality, `null === undefined` is false. Use strict equality to avoid confusing the two."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you don't give a variable a value, JS makes it 'undefined'. If YOU want to say it's empty, use 'null'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Function parameters default to `undefined` if not provided. `null` does not trigger default parameter values."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Undefined is a type with one value; Null is an object representing missing value."
+                        }
+                    ]
+                },
+                {
+                    "id": 94,
+                    "topic": "Interview Traps",
+                    "difficulty": "Expert",
+                    "question": "What is a 'Polyfill' and how does it differ from a 'Transpiler'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A polyfill adds missing features to old browsers (like a patch). A transpiler rewrites your modern code into old code (like a translator)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A transpiler (like Babel) converts syntax (e.g., arrow functions to regular functions). A polyfill (like core-js) provides a replacement implementation for missing APIs (e.g., adding `Array.prototype.includes` to an old browser that lacks it)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Source-to-source compilation (`Transpiler`) vs Runtime shim/shim implementation (`Polyfill`). Transpilers target syntax; Polyfills target missing global objects and methods."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Transpiler: Syntax conversion. Polyfill: Addition of missing methods/APIs."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "A Transpiler is like a translator who changes a modern novel into Old English. A Polyfill is like bringing a power adapter so your modern laptop works in an old house."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Syntax rewrite (`Transpiler`) vs feature injection (`Polyfill`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "You can transpiler `const` to `var`, but you can't transpile a `Promise`. You must polyfill the `Promise` object because it's a runtime feature, not just a syntax rule."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you use a new button that old browsers don't have, the Transpiler fixes the spelling, and the Polyfill builds the actual button."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern tools like Vite and Webpack automatically manage both using `@babel/preset-env` and `browserslist` configurations."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Polyfill is code that provides modern functionality on older browsers; Transpilers convert newer source code into older syntax."
+                        }
+                    ]
+                },
+                {
+                    "id": 95,
+                    "topic": "Edge Cases",
+                    "difficulty": "Expert",
+                    "question": "What is the result of `typeof typeof 1`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "\"string\""
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "First, `typeof 1` returns the string `\"number\"`. Then, `typeof \"number\"` returns `\"string\"`. This is a classic interview question to check if you understand nested expressions."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Double operator evaluation. `typeof 1` -> `'number'`. `typeof ('number')` -> `'string'`. The `typeof` operator always returns a string."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "\"string\""
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like asking 'What is the type of a word?' Even if the word is 'Number', it's still just a word (a string)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The result of any `typeof` call is a string."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This also applies regardless of the input. `typeof typeof undefined` or `typeof typeof []` will both always return `'string'` because the first evaluation produces a string literal."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "JavaScript says: 'The type of number 1 is a word. And words are of type: String'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This demonstrates the associativity and return consistency of the operator."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The typeof operator always returns a string representing the type of the operand."
+                        }
+                    ]
+                },
+                {
+                    "id": 96,
+                    "topic": "Interview Traps",
+                    "difficulty": "Advanced",
+                    "question": "What is the difference between `call()`, `apply()`, and `bind()`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`call` and `apply` run the function immediately with a new `this`; `bind` creates a new function copy with a fixed `this` for later use."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "1. `call(this, arg1, arg2)`: Executes immediately, arguments passed individually. 2. `apply(this, [args])`: Executes immediately, arguments passed as an array. 3. `bind(this)`: Returns a new function with `this` bound, does not execute immediately."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Context binding methods. `call` and `apply` are invocation methods. `bind` is a functional transformation method that creates a permanent closure over the provided context."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "call/apply: Immediate execution. bind: Returns bound function."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`call` is like calling a friend directly. `apply` is like sending a suitcase (array) of items to a friend. `bind` is like giving a friend your number so they can call you later."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Immediate individual (`call`), immediate array (`apply`), future bound (`bind`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "`bind()` is extremely useful in React class components (pre-hooks) to ensure methods have access to the instance `this` when passed to event listeners."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use 'call' or 'apply' to use a function right now with a different owner. Use 'bind' to make a permanent copy that always belongs to that owner."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Performance-wise, `call` is usually slightly faster than `apply` because it doesn't have to process the array structure."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Methods on the Function prototype to explicitly set the 'this' value and parameters."
+                        }
+                    ]
+                },
+                {
+                    "id": 97,
+                    "topic": "Edge Cases",
+                    "difficulty": "Expert",
+                    "question": "How does `this` work in different contexts?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It refers to the object that 'owns' or called the function. In arrow functions, it refers to the surroundings."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The value of `this` is determined by HOW a function is called: 1. **Method**: refers to the object. 2. **Standalone**: refers to `window` (global) or `undefined` (strict mode). 3. **Arrow**: inherits from outer lexical scope. 4. **Constructor**: refers to the new instance."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Dynamic binding based on Execution Context. Execution phase sets `ThisBinding` based on the Call Site. Arrow functions lack a `[[ThisMode]]` of 'lexical' and instead resolve via the environment record."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Context-dependent: Object method, Global, Constructor, or Lexical (Arrow)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`this` is like a pronoun 'I'. If Bob says 'I', it means Bob. If Alice says 'I', it means Alice. It depends on who is speaking."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Determined by call site (dynamic) or definition scope (arrow)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The most common bug is passing a method as a callback (e.g., `setTimeout(obj.method, 100)`). The 'owner' is lost, and `this` becomes the global object. Fix with `.bind(obj)` or an arrow function."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a shortcut to say 'the thing I am currently inside'. If you move your code, the meaning of 'this' might change!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In Event Listeners, `this` usually refers to the element that received the event."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A keyword that refers to the object the function belongs to, or the global object in non-strict mode."
+                        }
+                    ]
+                },
+                {
+                    "id": 98,
+                    "topic": "Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is the difference between 'Shallow Copy' and 'Deep Copy'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Shallow only copies the top layer (nested things stay linked). Deep copies every single layer (completely new copy)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A shallow copy (`{...obj}`) only copies properties at the top level. If the object has nested objects, the copy points to the same memory addresses as the original. A deep copy creates a new copy of every nested level, making the two objects completely independent."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Top-level property duplication vs Recursive clone. Shallow uses spread/assign. Deep requires recursion or `structuredClone()`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Shallow: Single level duplication. Deep: Full recursive duplication."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Shallow is like copying a folder but keeping the documents inside shared. Deep is like printing a physical copy of every single paper in that folder."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "References nested objects (`Shallow`) vs Duplicates everything (`Deep`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Avoid `JSON.parse(JSON.stringify(obj))` for deep copies if your object contains Functions, Dates, or Symbols, as these will be lost or corrupted. Use the modern `structuredClone()` instead."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you change a nested list in a shallow copy, the original changes too. In a deep copy, they are totally separate."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Performance of Deep Copy is much lower (O(n) where n is total node count)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Shallow copies share references to nested objects while deep copies do not."
+                        }
+                    ]
+                },
+                {
+                    "id": 99,
+                    "topic": "Edge Cases",
+                    "difficulty": "Expert",
+                    "question": "Why is `0.1 + 0.7 !== 0.8` but `0.1 + 0.2` is also tricky?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because decimals are hard for computers to store in binary perfectly."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is the same floating-point precision issue. In JS, most decimal fractions cannot be represented exactly. `0.1 + 0.7` actually results in `0.7999999999999999`, which is not strictly equal to `0.8`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Cumulative binary precision error. The mantissa overflow requires truncation which yields a value slightly lower or higher than expected decimal representation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Precision errors in IEEE 754 floating point arithmetic."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a scale that only weighs in 1-gram increments. You can't perfectly measure 0.5 grams; it will always be slightly off."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "IEEE 754 binary representation errors for decimals."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Interestingly, some additions like `0.1 + 0.3` do return `0.4` because the errors on both sides happen to cancel each other out in the final rounding bit."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Computers are very good at large numbers, but surprisingly bad at some small decimals. Don't trust them for exact change!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Using BigInt for currency is becoming a standard practice to avoid this."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Floating-point variables have limited precision, leading to rounding errors in arithmetic operations."
+                        }
+                    ]
+                },
+                {
+                    "id": 100,
+                    "topic": "Interview Traps",
+                    "difficulty": "Architect-Level",
+                    "question": "What is the 'Shadow DOM' and how does it relate to Web Components?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a private, encapsulated DOM inside an element that is hidden from the main page's CSS and JS."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Shadow DOM provides encapsulation. It allows a component to have its own internal DOM tree and styles that cannot be accessed or modified by the main document's CSS or JS. This is the 'E' in 'Web Components' (Encapsulation)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "DOM encapsulation mechanism. Creates a 'Shadow Root' attached to an element, scoping styling and DOM queries to that specific subtree."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Encapsulated DOM for component isolation."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a submarine. The submarine has its own internal lighting and systems (CSS/JS) that aren't affected by the ocean outside (the main page), no matter how stormy it gets."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Private, scoped DOM tree for component encapsulation."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is why `<video>` or `<input type='range'>` look exactly the same regardless of your global CSS. They use Shadow DOM to hide their internal sliders and buttons from you."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a mini-website hidden inside a single tag, so your main styles don't accidentally break it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "There are two modes: 'open' (shadow root can be accessed via JS) and 'closed' (completely inaccessible to external scripts)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The Shadow DOM is a web standard that allows you to attach a hidden, separate DOM to an element."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

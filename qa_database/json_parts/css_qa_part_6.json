@@ -1,0 +1,592 @@
+{
+    "dataset": "CSS_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_6",
+            "questions": [
+                {
+                    "id": 51,
+                    "topic": "Margin Collapse",
+                    "difficulty": "Advanced",
+                    "question": "When does 'Margin Collapse' occur?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "When two vertical margins touch, they combine into one instead of adding up."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Margin collapse happens when the vertical margins of two adjacent siblings (or a parent and first/last child) meet. The larger margin wins, and the smaller one is ignored. Horizontal margins never collapse."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It occurs between: 1. Adjacent siblings. 2. Parent and first/last child (if no border/padding separates them). 3. Empty blocks. Effect: `max(margin_a, margin_b)` represents the distance."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "When vertical margins of adjacent block elements merge into a single margin."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like two personal space bubbles. If you stand 1 foot away from someone, and they stand 1 foot away from you, you are just 1 foot apart, not 2 feet."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Vertical margins overlap, taking the larger value."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Use `padding: 1px` or `overflow: hidden` on the parent to prevent the child's margin from collapsing through the parent."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If one box asks for 20px space, and the next asks for 10px, the browser just gives 20px total, not 30px."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Flexbox and Grid items do NOT experience margin collapse. It is strictly a Block formatting context behavior."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "When two vertical margins meet, they collapse into a single margin equal to the largest of the two."
+                        }
+                    ]
+                },
+                {
+                    "id": 52,
+                    "topic": "Inline-Block Quirk",
+                    "difficulty": "Intermediate",
+                    "question": "What causes the 'phantom space' (approx 4px) between `inline-block` elements?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The newline character or whitespace in your HTML code."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Since `inline-block` elements participate in the text flow, the browser renders the whitespace (newlines/tabs) between the closing `</div>` and opening `<div>` tags as a space character. This typically results in a ~4px gap."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It is rendered as a U+0020 space character. The width depends on the font-size of the parent."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Whitespace in the HTML source code between tags."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like words in a sentence. Even if you want the words to touch, the space bar you hit in the code puts a gap there."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "HTML whitespace/newlines between tags."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Fixes: 1. Remove whitespace in HTML. 2. `font-size: 0` on parent. 3. Use Flexbox (best solution). 4. Negative margin."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The return key you pressed in your code counts as a space, just like in a sentence."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This is why Flexbox is preferred for grid-like layouts, as it is agnostic to whitespace in the DOM."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The whitespace (newlines, spaces) in the HTML source code is rendered as a space character."
+                        }
+                    ]
+                },
+                {
+                    "id": 53,
+                    "topic": "CSS Logic",
+                    "difficulty": "Intermediate",
+                    "question": "Why does `calc(100% - 20px)` fail if you omit the spaces around the operator?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The browser thinks the minus sign is part of a negative number."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In CSS syntax, hyphens are used in property names and negative values (e.g., `-20px`). Without spaces, `100%-20px` is parsed as `100%` and a negative length `-20px`, which is invalid math. Spaces force token separation."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The `-` and `+` operators in `calc()` require whitespace. `*` and `/` do not strictly require it, but consistency is recommended."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Spaces are required around + and - operators for valid parsing."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's the difference between `5 - 2` (Math) and `5-2` (A phone number or code)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "It misinterprets the dash as a negative sign."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is the most common syntax error with `calc()`. Preprocessors like SASS sometimes complicate this further, requiring interpolation `#{...}`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The computer gets confused. It needs spaces to know you are doing subtraction."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "It's a tokenizer limitation in the CSS grammar specs."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The + and - operators must be surrounded by whitespace."
+                        }
+                    ]
+                },
+                {
+                    "id": 54,
+                    "topic": "Performance",
+                    "difficulty": "Intermediate",
+                    "question": "Why should you avoid using `@import` in CSS files?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It slows down the page load by creating a chain of dependency requests."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`@import` causes sequential loading. The browser must download and parse the first CSS file *before* it discovers the `@import` rule for the second one. Using `<link>` tags in HTML allows parallel downloads, which is much faster."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It blocks the Critical Rendering Path. It prevents the browser's speculative pre-loader from discovering the resource early."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "It blocks parallel downloads."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like opening a Russian nesting doll. You can't see the second doll until you finish opening the first one. `<link>` is like having all dolls on the table at once."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Sequential loading blocks rendering; use `<link>` instead."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "With HTTP/2, the penalty is reduced but still present due to parsing latency."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It makes the website load slower because it has to read one file to find the next one."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Exceptions exist: SASS `@import` (now `@use`) is compiled at build time, so it has no performance penalty in the browser."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "It blocks parallel downloads."
+                        }
+                    ]
+                },
+                {
+                    "id": 55,
+                    "topic": "Performance",
+                    "difficulty": "Advanced",
+                    "question": "What is the difference between Reflow (Layout) and Repaint?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Reflow calculates positions (expensive). Repaint colors pixels (cheaper)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Reflow (Layout) happens when the geometry of the page changes (width, height, position). The browser must re-calculate the position of every element. Repaint happens when visibility changes (color, background shadow) without changing geometry. Reflow is much more expensive."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Reflow triggers layout algorithms. Repaint triggers rasterization. A Reflow **always** triggers a Repaint. A Repaint implies no Reflow."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Reflow affects layout dimensions. Repaint affects visual style only."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Reflow is rebuilding the house walls. Repaint is just painting the walls."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Reflow = Logic/Math; Repaint = Pixels."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Changing `width`, `font-size`, or `margin` triggers Reflow. Changing `color` or `opacity` triggers Repaint. You want to avoid Reflows during animations."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Reflow is moving things around. Repaint is changing their color. Moving things is harder for the computer."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Reading layout properties (like `offsetHeight`) immediately after writing them triggers a 'Forced Synchronous Layout', which is a performance killer."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Reflow: Calculating positions and geometries. Repaint: Changing colors/visibility."
+                        }
+                    ]
+                },
+                {
+                    "id": 56,
+                    "topic": "Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What does `will-change: transform` do?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It warns the browser that an element is about to move, so it prepares the optimization."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "It provides a hint to the browser's rendering engine that an element will change specific properties. This allows the browser to promote the element to its own Compositor Layer (GPU) ahead of time, preventing stutter."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Creates a new stacking context and promotes the element to a hardware-accelerated layer. Should be used sparingly to avoid VRAM overconsumption."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Hints to the browser to optimize for upcoming changes."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like telling the chef 'I'm about to order the steak', so he gets the grill ready before you even say the word."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Promotes element to GPU layer for performance."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Don't use it on everything. If too many elements are promoted, memory usage spikes."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It tells the computer to get ready to animate this box so it doesn't lag."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Use it in JavaScript right before an animation, and remove it after."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "It provides a hint to the browser that an element is expected to change."
+                        }
+                    ]
+                },
+                {
+                    "id": 57,
+                    "topic": "Browser Compatibility",
+                    "difficulty": "Intermediate",
+                    "question": "What was the original purpose of 'Vendor Prefixes' like `-webkit-`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "To allow experimental features to be used before they were finalized."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Vendor prefixes (`-webkit-`, `-moz-`, `-ms-`) allowed browser makers to implement experimental CSS features without polluting the global namespace or breaking future standards. Once stable, the un-prefixed version is supported."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Experimental implementation of W3C specs. `-webkit` (Chrome/Safari), `-moz` (Firefox), `-o` (Opera), `-ms` (IE). Modern usage is handled mainly by Autoprefixers."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "To support experimental CSS features specific to a browser engine."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Beta' label on software."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Experimental browser-specific support."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "They caused a lot of code bloat. Today, feature flags in browser settings are preferred over prefixes for truly experimental stuff."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Chrome and Firefox use these to test new cool features before they are officially ready."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Some prefixes like `-webkit-background-clip: text` are so popular they are now de-facto standard even in non-Webkit browsers for compatibility."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "They allowed experimental features to be used before they were finalized."
+                        }
+                    ]
+                },
+                {
+                    "id": 58,
+                    "topic": "Fonts",
+                    "difficulty": "Intermediate",
+                    "question": "What is FOUT (Flash of Unstyled Text)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "When the text appears in a generic font for a second before snapping to the custom font."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "FOUT occurs when the browser renders text using a fallback font (like Arial) while the custom web font is still downloading. Once downloaded, the text swaps (glitches) to the new font. Contrast with FOIT (Invisible Text)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A loading state dependent on `font-display`. Default behavior in some browsers was FOIT (hide text until loaded). FOUT shows text immediately but unstyled."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Text is displayed in a fallback font before the web font loads."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like seeing the actor in regular clothes before they put on their costume."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Fallback font shows briefly before Custom font."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Controlled by `font-display: swap` (encourage FOUT) vs `block` (encourage FOIT). FOUT is generally better for UX (content is readable) but jarring."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The text looks ugly for a split second then fixes itself."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Preloading fonts affects this significantly."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A phenomenon where text is displayed in a fallback font before the web font has finished loading."
+                        }
+                    ]
+                },
+                {
+                    "id": 59,
+                    "topic": "Display Logic",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between `opacity: 0` and `visibility: hidden` regarding event listeners?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`opacity: 0` elements can still be clicked. `visibility: hidden` elements cannot."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`opacity: 0` makes the element transparent but it remains interactive (clickable, focusable). `visibility: hidden` makes it both invisible and non-interactive (events don't fire)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`opacity` affects the alpha channel of the paint. `visibility` affects the painting phase entirely. `opacity` preserves the pointer-events; `visibility` removes them."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Opacity 0 is clickable. Visibility Hidden is not."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Opacity 0 is clear glass (you can touch it). Visibility Hidden is a hologram that turned off (you can't touch it)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Opacity keeps interaction; Visibility removes it."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Screen readers usually ignore `visibility: hidden` but read `opacity: 0` content. Use `aria-hidden='true'` to be sure."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "You can click on an opacity:0 button (it's invisible but there). You can't click a visibility:hidden button."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Transitioning: You can animate opacity. You generally cannot animate visibility (unless using steps)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "opacity: 0 elements are focusable and clickable. visibility: hidden removes focusability."
+                        }
+                    ]
+                },
+                {
+                    "id": 60,
+                    "topic": "Sizing",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between `width: 100%` and `width: 100vw`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`%` is relative to the parent. `vw` is relative to the screen width."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`width: 100%` is constrained by the parent container's width. `width: 100vw` ignores the parent and always matches the full Viewport Width. Note: `100vw` often spans *under* the scrollbar, causing horizontal scrollbars."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`percentage`: Layout-relative. `viewport-units`: Window-relative. `100vw` includes the width of the vertical scrollbar in some OS/browsers, often causing overflow issues."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "% relies on parent. vw relies on viewport."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "100% is 'Fill the Room'. 100vw is 'Fill the World'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Parent-relative vs Viewport-relative."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is why `width: 100%` is safer for main containers. `100vw` is useful for 'breaking out' of a constrained container (like a full-width image inside a narrow article)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "100% fills the box it is inside. 100vw fills the entire screen."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern `dvw` (Dynamic Viewport Width) units help solve mobile browser address bar resizing issues."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "% is relative to the parent. vw is relative to the viewport."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

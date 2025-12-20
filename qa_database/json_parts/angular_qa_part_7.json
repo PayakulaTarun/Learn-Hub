@@ -1,0 +1,592 @@
+{
+    "dataset": "angular_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_7",
+            "questions": [
+                {
+                    "id": 61,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'ChangeDetectionStrategy.OnPush'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It is a setting that tells Angular to only check a component for changes if its inputs have actually changed, making the app faster."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The OnPush strategy optimizes performance by telling Angular to skip change detection for a component unless its @Input properties change (by reference), an event occurs within the component, or an observable linked with the async pipe emits a new value."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It changes the change detection mode from `CheckAlways` to `OnPush`. In this mode, Angular's change detector only fires if the component is marked as dirty."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Optimization strategy; skips CD unless Input reference changes or internal event fires."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Regular CD is like a waiter checking your table every 30 seconds to see if you're done. 'OnPush' is like the waiter only coming when you raise your hand (an event) or someone brings a new dish to the table (new Input)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Performance mode that limits change detection to specific triggers."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "OnPush works best with immutable data. Since it only checks object references, if you mutate an object, Angular won't notice. This encourages better architectural patterns and cleaner state management."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "This is how you make your big, complex app stay snappy as it grows."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can manually trigger checks in an OnPush component using `ChangeDetectorRef.markForCheck()`. This is common when data is received from a service via a regular subscription instead of the async pipe."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A performance optimization that restricts the execution of change detection."
+                        }
+                    ]
+                },
+                {
+                    "id": 62,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Intermediate",
+                    "question": "Why use 'trackBy' with *ngFor?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It helps Angular identify which items in a list changed so it only redraws those specific items instead of the whole list."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "By default, *ngFor uses object identity. If you replace the list with a new one from a server, Angular redraws everything. `trackBy` provides a unique ID (like a user ID) so Angular can see that most items stayed the same, improving performance."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A function that returns a unique identifier for each item. It allows the DOM reconciler to reuse existing DOM elements based on the ID rather than the reference."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "ngFor optimization; uses custom IDs to prevent unnecessary DOM re-rendering."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a teacher calling roll. Without trackBy, if one new student joins, the teacher starts from the beginning of the list. With trackBy, they just check the new student's ID and know everyone else is already there."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Optimizing list rendering by identifying items through unique keys."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Using trackBy is crucial for large lists or lists that get updated frequently. Without it, you lose CSS transition states, input focus, and scroll positions every time the list is refreshed."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the 'fast roll' button for lists. If your long lists are laggy, this is usually the fix."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Angular 17's new @for syntax includes trackBy functionality as a mandatory part of its syntax, enforcing this performance best practice by design."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An optimization to improve the performance of directives that generate a list of elements."
+                        }
+                    ]
+                },
+                {
+                    "id": 63,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Intermediate",
+                    "question": "How does 'Tree Shaking' work in Angular?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's an automated process that identifies and removes code that you aren't actually using from your final app bundle."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Tree Shaking is a build-time optimization that 'removes dead code'. The bundler analyzes the dependency graph and excludes any exported code that is not imported or used anywhere in the app, resulting in smaller files."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A form of dead-code elimination. It relies on the static structure of ES6 module syntax (import/export). Angular's 'providedIn: root' syntax is specifically designed to facilitate tree-shaking of services."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Dead code elimination during build; reduces bundle size; enabled by ES6 modules."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like shaking a tree until all the dead, dry leaves fall off. Only the healthy, 'alive' leaves (the code you actually use) stay on the branch to be shipped."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Removing unused code from the production bundle."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Angular's Ivy engine improved tree-shaking significantly by making the generated template code smaller and more modular, allowing the bundler to see more clearly which parts of Angular itself can be safely removed."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It makes your website load faster because it doesn't download parts of Angular that you didn't use."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Libraries must be provided as ESM (ECMAScript Modules) to be fully tree-shakeable. CommonJS libraries are much harder to optimize because their dependencies aren't statically analyzable."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A step in the build process that removes unreachable code."
+                        }
+                    ]
+                },
+                {
+                    "id": 64,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Differential Loading'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The browser gets only the code it needs: modern browsers get modern code, and older browsers get slower, bulkier 'fallback' code."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Differential loading is a strategy where the CLI creates two separate bundles: one using modern ES2015+ syntax for modern browsers, and one using ES5 with polyfills for older browsers. The browser automatically picks the right version."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Generation of dual bundles. Utilizes `<script type=\"module\">` for modern JS and `<script nomodule>` for legacy JS. This reduces the package size for the majority of users on modern browsers."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Serving optimized bundles based on browser capability; managed via tsconfig.json."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a restaurant having two menus. If you look tech-savvy, they give you the QR code menu (modern/fast). If you look like you prefer traditional ways, they give you the old paper menu (legacy/bulkier)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Serving ES2015+ bundles to modern browsers and ES5 to older ones."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Modern JavaScript is much smaller than the equivalent transpiled ES5 code. Differential loading ensures that users on Chrome or Firefox don't have to pay the 'latency tax' of supporting IE11."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a clever way to make your app run as fast as possible for everyone without leaves anyone behind."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Version 15+ of Angular dropped support for IE11 entirely, allowing for even smaller bundles as many legacy polyfills are no longer needed."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A build execution strategy that optimizes browser loading based on browser version."
+                        }
+                    ]
+                },
+                {
+                    "id": 65,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Expert",
+                    "question": "Explain 'PreloadAllModules' strategy.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It loads the main app first, and then immediately starts downloading all the other 'lazy' parts in the background while the user is looking at the first page."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "PreloadAllModules is a built-in preloading strategy for Angular's router. It finds all lazy-loaded modules and downloads them as soon as the initial application has finished loading, so navigation is instant for the user."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A configuration in RouterModule (`preloadingStrategy: PreloadAllModules`). It starts fetching asynchronous chunks immediately after the boot process, improving perceived responsiveness."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Router strategy to load lazy modules in background after startup."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a hotel. You get your room key immediately (app loads), and while you're walking to your room, the staff is already bringing your luggage up to the floor (preloading). The moment you need it, it's there."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Loading lazy-loaded modules in the background after initial startup."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "While great for performance, it can be a waste of data for users on metered connections. In those cases, you can write a 'Custom Preloading Strategy' that only preloads specific high-priority routes."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It gives you the 'instant' feel of a single big app but with the fast starting speed of a small one."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Advanced strategies like 'ngx-quicklink' only preload modules that appear as links in the user's current view, predicting what they might click next."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A preloading strategy that fetches all lazy-loaded routes."
+                        }
+                    ]
+                },
+                {
+                    "id": 66,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is the benefit of the 'on-demand' (Zoneless) approach?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It stops Angular from constantly checking the whole app, which saves a lot of phone battery and makes everything faster."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Zoneless Angular (powered by Signals) eliminates the dependency on Zone.js. This reduces initial bundle size (no need to ship zone.js) and simplifies the change detection model to only update exactly what's necessary."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Removal of the NgZone monkey-patching wrapper. Replaces the global tick() based CD with a subscription or signal-based invalidation that only touches specific DOM nodes."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Angular without Zone.js; relies on Signals for fine-grained reactivity; better performance."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Zoneless is like a modern doorbell that only rings when somebody pushes it. Zone.js was like a guard who walks through every room of the castle every 10 seconds checking if anyone knocked."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Eliminating Zone.js for more performant and predictable UI updates."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Zoneless apps are also easier to debug because the call stack isn't cluttered with internal Zone.js operations. It also improves compatibility with libraries that don't play well with monkey-patching."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to make the most lightning-fast Angular apps possible."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To go zoneless, components must use the new 'signals' architecture or manual `markForCheck()` / `detectChanges()` patterns to inform Angular of state changes."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An application architectural style that operates without the NgZone library."
+                        }
+                    ]
+                },
+                {
+                    "id": 67,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Intermediate",
+                    "question": "How do you identify a 'Large' bundle in Angular?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You use a tool called 'webpack-bundle-analyzer' to see a visual map of every file and library inside your app."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "To analyze bundle size, we use tools like 'source-map-explorer' or 'webpack-bundle-analyzer'. These tools create a treemap showing which modules or third-party libraries (like Moment.js or Lodash) are taking up the most space."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Perform a production build with `--stats-json`, then pass the resulting `json` file to a bundle analyzer tool to visualize the weight distribution of the chunks."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Use bundle analysis tools to identify heavy dependencies and code duplication."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like looking at a 'pie chart' of your luggage. You can see that a giant hairdryer is taking up 40% of the space, so you decide to leave it behind to make your bag lighter."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Using visual tools to map and reduce bundle size."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "One common finding is that developer accidentally imported the entire library instead of just one function. Analysis helps verify that tree-shaking is actually working as intended."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your site takes too long to load, this tool shows you exactly which 'heavy' parts you can remove."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Angular CLI (v12+) also shows a colored warning or error during build if a chunk exceeds a certain size (configured in 'budgets' in angular.json)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The process of diagnosing and auditing the size of an application's JavaScript assets."
+                        }
+                    ]
+                },
+                {
+                    "id": 68,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Angular Budgets'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a setting in your project that warns you or stops the build if your app files get too big."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Budgets are a configuration in `angular.json` that allow you to set thresholds for the size of your assets. You can set 'warning' or 'error' levels for initial bundles, components, or entire apps to prevent performance degradation over time."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A mechanism for defining limits for various parts of the app's build output. Types include individual scripts, styles, the initial bundle, or any other assets."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Build size thresholds defined in angular.json to ensure performance maintenance."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Data Limit' on your phone. You set a warning for 5GB and an automatic shut-off for 10GB to make sure you don't spend too much money (or kill your site's speed)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Threshold settings to monitor and limit application bundle sizes."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Budgets are vital for large teams. They ensure that no single developer can accidentally merge a massive library that would slow down the app for all users without triggering a build failure."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It helps you stay disciplined about how many features you add to one page."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Budgets can be configured separately for 'any' scripts or 'anyComponentStyle', giving you fine-grained control over exactly where the weight is coming from."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A feature of the Angular CLI that prevents applications from growing beyond a determinada size."
+                        }
+                    ]
+                },
+                {
+                    "id": 69,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "RxJS 'SwitchMap' for optimized HTTP calls.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "SwitchMap is great for search bars; it cancels the 'old' network request if a 'new' one is started before the old one finished."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "SwitchMap is a 'flattening' operator that switches to a new observable and cancels the previous one. This is perfect for scenarios like live-search where you only care about the latest input and want to ignore (abort) pending requests from older keystrokes."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Projects each source value to an Observable which is merged in the output Observable, emitting values only from the most recently projected Observable. Accomplishes automatic unsubscription from inner observables."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "RxJS operator for canceling previous async tasks in favor of the latest ones."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a boss who keeps changing their mind. The moment they give a new order, they tell you 'Forget what I said 10 seconds ago, do this instead!'"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Canceling previous streams in favor of the current one."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This prevents 'race conditions' where an older search result arrives AFTER a newer one and overwrites the screen with outdated information."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It keeps your search bar feeling smooth and responsive without overloading the server."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "SwitchMap should be used with caution for 'write' operations (like saving data), as canceling it could leave the database in an inconsistent state. `MergeMap` or `ConcatMap` are safer for those cases."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An RxJS operator that maps to an observable, completing the previous inner observable."
+                        }
+                    ]
+                },
+                {
+                    "id": 70,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Intermediate",
+                    "question": "Why is the 'initial' bundle size critical?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because it's the very first file a user downloads. If it's too big, they'll see a white screen for several seconds and might leave your site."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Initial bundle size directly impacts the 'Time to First Meaningful Paint' (TTFP). Large bundles cause high latency, especially on mobile networks, leading to a poor user experience and lower SEO rankings."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The main.js bundle contains the framework and the core app logic. Until this is parsed and executed, the Angular app cannot bootstrap or become interactive."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Determines application startup speed; bottleneck for user retention and SEO."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like the 'Cover Charge' at a club. If it's $100 (10MB), most people will just walk away. If it's $5 (500KB), everyone walks in easily."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The key metric determining the startup speed of an Angular application."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Optimizing the initial bundle involves relocating seconday features to lazy-loaded modules and ensuring that global services don't pull in heavy third-party libraries."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "A fast-loading site makes a great first impression; a slow one drives users away."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Even with 5G, the 'JavaScript Parse Time' of a large bundle can lock the CPU main thread for hundreds of milliseconds, making the page feel unresponsive."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The size of the assets required to be loaded before any user interaction can occur."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

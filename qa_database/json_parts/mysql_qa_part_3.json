@@ -1,0 +1,592 @@
+{
+    "dataset": "mysql_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_3",
+            "questions": [
+                {
+                    "id": 21,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between `INNER JOIN` and `LEFT JOIN`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`INNER JOIN` is 'Matching only'. If you join Users and Orders, you only get people who have placed an order. `LEFT JOIN` is 'Everything on the left'. You get ALL users, and if they haven't ordered yet, the order columns just show `NULL` (empty)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`INNER JOIN` returns only the rows where there is a match in both tables based on the join condition. `LEFT JOIN` (or LEFT OUTER JOIN) returns all records from the left table, and the matched records from the right table. If there is no match, the right side results in NULL values. Use `LEFT JOIN` when you need to see 'Missing' relationships, like 'Users who haven't made a purchase'."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The logical set difference: `INNER JOIN` is the intersection of two tables. `LEFT JOIN` is the entire left set plus the intersection. In the query plan, `LEFT JOIN` can sometimes be converted to an `INNER JOIN` by the optimizer if the `WHERE` clause filters out the NULL results from the right table."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The distinction between a join that requires a match in both joining tables (INNER) and a join that preserves all records from the primary table regardless of a match (LEFT)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`INNER JOIN` is like 'Couples Only' night at a dance; if you don't have a partner (a match), you can't come in. `LEFT JOIN` is 'Everyone is invited, but you can bring a friend'. Everyone on the Left list gets in, even if they show up alone (NULL partner)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "INNER: Only matched rows. LEFT: All rows from left table + matches from right."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Performance typically favors `INNER JOIN` because the database can start from either table (whichever has an index/smaller size) and stop as soon as it exhausts matches. `LEFT JOIN` forces the database to scan the ENTIRE left table first, which can be much slower if the left table is massive and the join isn't well-indexed."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use `INNER JOIN` for strict matches and `LEFT JOIN` to make sure you don't lose any data from your first table!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In MySQL, there is no `FULL OUTER JOIN` syntax. To achieve it, you must `UNION` a `LEFT JOIN` and a `RIGHT JOIN`. This is an important syntax limitation to remember when migrating from PostgreSQL or SQL Server, which have native Full Outer Join support."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The distinction between an intersection and a left-associative join operation in relational algebra."
+                        }
+                    ]
+                },
+                {
+                    "id": 22,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is the `GROUP BY` clause used for?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`GROUP BY` is 'Combining a list into a summary'. If you have a list of sales, you can group by 'Month' to see the total money made for each month instead of reading 1,000 individual receipts."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`GROUP BY` is used with aggregate functions (like `SUM`, `COUNT`, `AVG`) to group the result-set by one or more columns. For example, `SELECT city, COUNT(*) FROM users GROUP BY city` will show you how many users live in each city. Remember that all columns in your `SELECT` that are not part of an aggregate function must be included in the `GROUP BY` clause."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Syntactically, it groups identical data into 'Buckets'. MySQL's implementation performs a sort or use a hash table to identify groups. Since MySQL 8.0, `GROUP BY` no longer performs an implicit sort; if you need the output to be ordered, you must explicitly use `ORDER BY`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The SQL clause that arranges table rows into groups based on the values in one or more columns, typically for use with summary calculations."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Sorting a bag of Skittles'. Instead of counting every candy randomly, you put all the Red ones in one pile, the Blue ones in another, and then you count the piles. `GROUP BY` is the 'Sort into piles' step."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Aggregating multiple rows into summary results based on shared column values."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A common mistake is forgetting the difference between `WHERE` and `HAVING`. `WHERE` filters individual rows **before** they are grouped. `HAVING` filters the results **after** the grouping is done. For example, use `HAVING COUNT(*) > 5` to only see cities with more than 5 users."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The best way to turn a long list into a short, helpful report!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For performance, ensure the column you are grouping by is Indexed. If indexed, MySQL can perform a 'Streaming Group By', where it reads the index in order and calculates the sum as it goes. Without an index, it must create a 'Temporary Table' in memory (or on disk), which can be extremely slow for large datasets."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A SQL statement clause that groups rows that have the same values into summary rows."
+                        }
+                    ]
+                },
+                {
+                    "id": 23,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What are Subqueries and when to use them?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A subquery is 'A Query within a Query'. It's like asking: 'Find all users whose age is greater than (The Average Age)'. First, the computer finds the average, then it uses that number to find the users."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A subquery is a query nested inside a `SELECT`, `INSERT`, `UPDATE`, or `DELETE` statement. They are useful for complex filtering when the filter criteria depends on data from another table. However, in MySQL, many subqueries can be rewritten as 'JOINS' for better performance, as the optimizer is historically better at optimizing joins."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Can be categorised as scalar (returns 1 value), column (returns a list), or row subqueries. Non-correlated subqueries run once and serve the outer query. Correlated subqueries run once for EVERY row in the outer query, making them O(N^2) and potentially very slow."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A nested SQL query whose results are passed to the parent query for further processing or filtering."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Box within a Box'. To get the treasure, you first have to open the little box inside (the subquery) to find the key, and then you can open the big box (the main query)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A nested SQL query used to filter or derive values for a parent query."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Correlated subqueries (where the inner query depends on the outer query's data) should be avoided if possible. For example, `SELECT * FROM users u WHERE EXISTS (SELECT 1 FROM orders o WHERE o.user_id = u.id)`. In old MySQL versions, this was slow. Since 5.6+, the optimizer often 'Semijoin' optimizes these into much faster join plans automatically."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "A great way to do two steps of work in just one single line of code!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "A common 'Gotcha' is using `IN` with a subquery that might return a `NULL`. In SQL logic, `NOT IN (1, 2, NULL)` will ALWAYS return an empty result set, even if the user ID is 3! This is because comparing anything to NULL is 'Unknown'. Use `NOT EXISTS` instead of `NOT IN` to be safe when dealing with potentially null data."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A SELECT statement that is nested within another SQL statement."
+                        }
+                    ]
+                },
+                {
+                    "id": 24,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is a View in MySQL?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A View is a 'Virtual Table'. It doesn't store data itself; it's just a saved search. You can save a complex join as a 'View' called 'ActiveCustomers', and then you can just type `SELECT * FROM ActiveCustomers` instead of writing the long code every time."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A View is a stored SQL query that behaves like a table. They are excellent for security (hiding sensitive columns like salaries by only including name and age in the view) or for simplifying complex multi-table joins. However, views in MySQL are not 'Pre-calculated'; they run the underlying query every time you use them."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "MySQL uses two algorithms for views: `MERGE` (combines the view syntax with the main query) and `TEMPTABLE` (materializes the view into a temporary table in memory, then queries that). Simple views are updatable if they map directly to one table, but views with aggregates or joins generally are not."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A predefined, named SQL query stored in the database that provides a restricted or simplified perspective of data stored in one or more tables."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "A View is like 'A Filter on a Camera'. The 'Reality' (the data in the tables) doesn't change, but by looking through the filter, you only see the colors or shapes you want to see. It's a specific 'Angle' on the truth."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A virtual table based on the result-set of an SQL statement."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Because MySQL doesn't natively support 'Materialized Views' (views that save the data to disk for speed), using a complex view in a high-traffic app can be a performance killer. If you join 10 tables in a view and call it 100 times, you are performing that 10-table join 100 times. Use them for convenience and security, not for speed."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Like a 'Bookmark' for your favorite search results!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can use the `WITH CHECK OPTION` when creating a view. This prevents someone from inserting a row through the view that doesn't actually 'Fit' the view's criteria. For example, if you have a view of 'New York Users', the check option would block someone from trying to save an 'LA' user into that view."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A virtual relation defined by an expression that is evaluated when the view is referenced."
+                        }
+                    ]
+                },
+                {
+                    "id": 25,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between `CHAR` and `VARCHAR`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`CHAR` is fixed-size building blocks. `VARCHAR` is stretchy like a rubber band. If you tell `CHAR(10)` to store 'Hi', it adds 8 spaces to fill the spot. `VARCHAR(10)` only uses exactly 2 letters of space. `CHAR` is faster but wastes space; `VARCHAR` is tidy but a bit slower."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`CHAR` is a fixed-length character type (up to 255). `VARCHAR` is variable-length (up to 65,535). Use `CHAR` for data that is always the same size, like Country Codes (US, UK) or MD5 hashes. Use `VARCHAR` for things like names and addresses to save disk space."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Storage: `CHAR(N)` always takes `N` bytes. `VARCHAR(N)` takes the length of the string + 1 byte (for lengths < 255) as a prefix. In InnoDB, `CHAR` is often faster because row pointers can be calculated mathematically rather than having to read 'Length' headers on every field access."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The comparison between a fixed-length string data type that pads with spaces and a variable-length string data type that stores only the provided characters plus a length byte."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`CHAR` is 'A reserved parking spot' with your name on it; it's empty even if you aren't there. `VARCHAR` is 'Valet parking'—the car only takes exactly as much space as it needs, but it takes a few seconds longer for the valet to find it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "CHAR: Fixed length (fast). VARCHAR: Variable length (space-efficient)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "A subtle difference is 'Trailing Spaces'. When you retrieve a `CHAR` value, MySQL automatically 'Trims' the padding spaces. When you retrieve a `VARCHAR`, you get Exactly what you saved. This can cause issues with strings that naturally end in spaces, though those are rare in most apps."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "99% of the time, just use `VARCHAR` to keep your database small and clean!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The overhead of `VARCHAR` includes the 'Length Byte'. If your column is `VARCHAR(300)`, it actually uses 2 length bytes. Also, beware of 'In-Memory Temporary Tables'—they often convert `VARCHAR` back into `CHAR` for processing, meaning your 1MB table could suddenly fill 100MB of RAM during a sort!"
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The distinction between character string types that utilize static vs dynamic storage allocation."
+                        }
+                    ]
+                },
+                {
+                    "id": 26,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is a Stored Procedure?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A Stored Procedure is 'A Recipe' saved in the database. Instead of your app sending 50 lines of code every time, it just says 'Run the PizzaRecipe' and the database follows the saved instructions automatically. It's safe and fast."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A Stored Procedure is a set of SQL statements that can be saved and reused. They can take parameters (input/output) and can contain logic like variables and IF/ELSE statements. They are used to improve security (limiting direct table access) and to reduce network traffic by keeping the logic inside the database server."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Stored in the `mysql.proc` table. Unlike functions, procedures are executed with the `CALL` command and do not necessarily return a single value. They participate in the database's pre-compilation phase, which can offer minor execution speed gains over raw strings, especially for complex administrative tasks."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A named group of SQL statements stored on the server side which can be invoked by applications to perform complex database operations."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Macro' in Excel. Instead of clicking the same 5 buttons every morning, you record a macro. Now, you just press one button and the computer does the work for you. The procedure is that 'Saved button'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A collection of pre-compiled SQL statements stored in the database."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "There is a massive debate among architects: 'Logic in Code' vs 'Logic in DB'. Procedures keep data logic close to the data, which is fast. But they are notoriously hard to 'Version Control' in Git and very difficult to debug compared to Java or Python code. Use them for data-heavy background tasks, but keep business logic in your application."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "A way to save your hardest database tasks so you never have to type them again!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Procedures allow for 'Granular Permissions'. You can give a user permission to `EXECUTE` a procedure that manages payments, while explicitly **denying** them permission to `SELECT` or `UPDATE` the Payments table directly. This prevents them from 'accidental' manual edits while still allowing them to do their job through the 'Official' path."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A subroutine available to applications that access a relational database system."
+                        }
+                    ]
+                },
+                {
+                    "id": 27,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between `UNION` and `UNION ALL`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`UNION` is 'Unique Combine'. If Table A and Table B both have a name 'John', `UNION` only shows him once. `UNION ALL` is 'Show Everything'—it would show John twice. `UNION ALL` is much faster because the computer doesn't have to check for duplicates."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Both are used to combine the result sets of two or more `SELECT` statements. `UNION` removes duplicate rows from the final result set, while `UNION ALL` returns all rows, including duplicates. I recommend `UNION ALL` for performance unless you explicitly need to filter out duplicates, as `UNION` requires a hidden 'SORT' or 'DISTINCT' operation."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Operationally, `UNION` is equivalent to `UNION ALL` followed by a `DISTINCT` operation. In terms of execution, `UNION` involves a temporary table with a uniqueness check, which can be memory-intensive. `UNION ALL` is a streaming operation—it just pipes the results one after the other."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The distinction between combining result sets with duplicate removal (UNION) and combining them without any filtering (UNION ALL)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`UNION ALL` is 'Dumping two boxes of legos on the floor'—it's fast and messy. `UNION` is 'Dumping the boxes and then picking out every piece that looks exactly like another piece'. Picking those pieces out (the duplicates) takes time and effort."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "UNION: Removes duplicates (slow). UNION ALL: Keeps duplicates (fast)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "When using `UNION`, both queries must have the same number of columns and compatible data types. If Query 1 has `INT, VARCHAR` and Query 2 has `VARCHAR, INT`, the `UNION` will likely error or cause weird data conversion issues. Always ensure your column types align before using set operators."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always use `UNION ALL` if you know your data is already different; it's much faster!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If you are using `UNION` to join a search result from a 'History' table and a 'Live' table, and you expect the results to be unique anyway, using `UNION` is wasted CPU cycles. Sophisticated query optimizers can sometimes detect this, but in MySQL, it's safer to manually prefer `UNION ALL` for high-throughput pipelines."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "SQL set operations used to concatenate the result of multiple SELECT queries."
+                        }
+                    ]
+                },
+                {
+                    "id": 28,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is a Trigger?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A Trigger is an 'Auto-action'. You can say: 'Wait until someone deletes a user, and then automatically log their name in the Deleted History table'. It's like a motion-sensor light for your database—it only turns on when something happens."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A trigger is a stored program that 'Fires' (executes) automatically when an event like `INSERT`, `UPDATE`, or `DELETE` occurs on a specific table. They are useful for maintaining audit trails, calculating summary data on-the-fly, or enforcing complex validation rules that a simple `CHECK` constraint can't handle."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "MySQL supports `BEFORE` and `AFTER` triggers for each DML operation. Triggers share the same transaction as the main statement. If a trigger fails (e.g., tries to write to a non-existent log table), the whole `INSERT` or `UPDATE` will also fail and roll back, ensuring transactional consistency."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "An event-driven SQL block that provides automatic execution of logic in response to specific data modifications on established tables."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "A trigger is like 'The Auto-Save feature on a video game'. You don't have to remember to save; the game does it every time you pass a checkpoint (the trigger event). It's a safety net that works without you thinking about it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Automatic database logic that responds to data changes (INSERT/UPDATE/DELETE)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Triggers can be dangerous because they are 'Hidden'. If a developer doesn't know a trigger exists, they might be confused why a single `INSERT` is suddenly taking 5 seconds. Every trigger on a table adds a performance penalty to EVERY write. Use them sparingly, and never put heavy logic (like complex joins) inside a trigger."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The database's way of doing its chores automatically!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "MySQL triggers are 'Row-Level'. If you update 1,000,000 rows in one SQL statement, the trigger will fire 1,000,000 times. For massive bulk updates, this is a performance nightmare. In many high-scale systems, developers prefer to handle these 'side effects' in an asychronous queue (like RabbitMQ) rather than in a synchronous DB trigger."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A procedural code that is automatically executed in response to certain events on a particular table or view."
+                        }
+                    ]
+                },
+                {
+                    "id": 29,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What are Aggregate Functions?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Aggregate functions are 'Math shortcuts'. Instead of looking at 100 prices yourself, you use `SUM` to get the total, `AVG` for the middle, or `COUNT` to see how many there are. They shrink many rows of data into one single number."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Aggregate functions perform calculations on multiple values to return a single summarized result. The most common are `COUNT()`, `SUM()`, `AVG()`, `MIN()`, and `MAX()`. They are almost always used with a `GROUP BY` clause to summarize data subsets, like 'Average revenue per customer'."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "They operate on sets of values and ignore `NULLs` (except `COUNT(*)`). `COUNT(column)` only counts non-null entries, whereas `COUNT(*)` counts total rows. MySQL also provides `GROUP_CONCAT()`, which is a powerful non-math aggregate that combines strings from multiple rows into one comma-separated list."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The category of built-in SQL functions used to generate summary statistics by processing a range of values into a single scalar value."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "They are like the 'Grand Total' line at the end of a supermarket receipt. It doesn't tell you how many apples you bought (that's a normal row); it tells you the 'Average price per item' for everything in your cart."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Functions that summarize multiple rows of data into a single output value."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "When using `AVG()`, developers often forget about `NULLs`. If you have 3 students with scores 100, 50, and NULL, `AVG()` will be (100+50)/2 = 75. If you wanted that NULL to count as a Zero, you must use `AVG(IFNULL(score, 0))` which would result in 50. Understanding how aggregates handle missing data is a common interview trap."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The easiest way to calculate your total sales or count your users!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "MySQL 8.0 introduced 'Window Functions' (using `OVER`). These allow you to use aggregates like `SUM()` *without* collapsing the rows into one. You can see each individual sale and the 'Running Total' of all sales next to it on the same line. This is much more powerful for data analysis than standard `GROUP BY` aggregates."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A function where the values of multiple rows are grouped together as input on certain criteria to form a single value of more significant meaning."
+                        }
+                    ]
+                },
+                {
+                    "id": 30,
+                    "topic": "Syntax & Core Features",
+                    "difficulty": "Intermediate",
+                    "question": "What is the `HAVING` clause?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`HAVING` is a filter for groups. `WHERE` hides individual rows, but `HAVING` hides entire categories. For example: 'Group my users by City, but only show me Cities that have more than 100 people'."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The `HAVING` clause was added to SQL because the `WHERE` keyword cannot be used with aggregate functions. `WHERE` filters rows *before* the aggregate calculation; `HAVING` filters the results *after*. If you want to find 'Customers with more than 10 orders', you must use `HAVING COUNT(order_id) > 10`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Syntactically follows the `GROUP BY` clause. While `WHERE` operates on columns from the original table, `HAVING` can operate on columns generated by aggregate functions in the `SELECT` list. Using `HAVING` on a non-aggregated column is less efficient than using `WHERE`, as it prevents the database from using indexes to filter rows early."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The SQL clause used to specify conditional filters on groups or results produced by aggregate functions."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`WHERE` is 'Searching for only Red Skittles' in the bag. `HAVING` is 'Sorting the whole bag into piles by color, and then only keeping the Piles that have more than 10 candies in them'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A conditional filter for aggregated data and result groups."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Always prefer `WHERE` over `HAVING` for simple filters. If you use `HAVING city = 'Paris'`, MySQL has to load all cities, group them, and then throw away everything that isn't Paris. If you use `WHERE city = 'Paris'`, it uses an index to jump straight to Paris, saving 99% of the work."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It helps you filter your summary reports to find the most interesting parts!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In MySQL, you can use Aliases in the `HAVING` clause, which is a departure from strict SQL standards. For example: `SELECT SUM(sales) as total FROM orders GROUP BY user_id HAVING total > 1000`. This makes MySQL queries easier to read than in other databases (like Postgres) where you would have to repeat the whole `SUM(sales)` logic in the having clause."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An optional part of a SELECT statement that summarizes the results of the GROUP BY clause."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

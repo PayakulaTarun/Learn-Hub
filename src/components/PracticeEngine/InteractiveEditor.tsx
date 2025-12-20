@@ -3,9 +3,10 @@ import dynamic from 'next/dynamic';
 import { Play, RotateCcw, Zap, CheckCircle2, XCircle, Info, ChevronDown } from 'lucide-react';
 import { executeCode, ExecutionResult } from '../../lib/codeRunner';
 import { useAnalytics } from '../../hooks/useAnalytics';
-import { useAuth } from '../Auth/AuthContext';
-import { useAuthGate } from '../Auth/AuthGateContext';
+import { useAuth } from '../../context/AuthContext'; // UPDATED
+// import { useAuthGate } from '../Auth/AuthGateContext';
 import { useAI } from '../../context/AIContext';
+import { useRouter } from 'next/router';
 
 const Editor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
@@ -32,6 +33,7 @@ export default function InteractiveEditor({
 }: InteractiveEditorProps) {
   const [code, setCode] = useState(initialCode);
   const { updateContext, toggleChat, sendMessage } = useAI();
+  const router = useRouter();
 
   // Sync code with AI Brain
   useEffect(() => {
@@ -48,7 +50,7 @@ export default function InteractiveEditor({
   const [showHints, setShowHints] = useState(false);
   const { trackEvent } = useAnalytics();
   const { user } = useAuth();
-  const { openGate } = useAuthGate();
+  // const { openGate } = useAuthGate();
 
   const resetCode = () => {
     setCode(initialCode);
@@ -58,7 +60,8 @@ export default function InteractiveEditor({
 
   const handleRun = async () => {
     if (!user) {
-      openGate('run code');
+      if(confirm('Login to execute code?')) router.push('/login');
+      // openGate('run code');
       return;
     }
 
@@ -81,7 +84,8 @@ export default function InteractiveEditor({
 
   const handleSubmit = (codeToSubmit: string) => {
       if (!user) {
-          openGate('submit solution');
+          if(confirm('Login to submit solution?')) router.push('/login');
+          // openGate('submit solution');
           return;
       }
       if (onSubmit) onSubmit(codeToSubmit);

@@ -1,0 +1,593 @@
+{
+    "dataset": "bootstrap_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_8",
+            "questions": [
+                {
+                    "id": 71,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'XSS' (Cross-Site Scripting) in the context of Bootstrap components?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a security risk where a hacker tries to inject malicious code into things like tooltips or search boxes."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "XSS occurs when untrusted data is displayed on a page. In Bootstrap, this often happens if you dynamically set the HTML content of a tooltip or popover with data from a user without properly 'cleaning' it first."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Bootstrap includes a built-in 'Sanitizer' for components like Tooltips and Popovers that use the `html: true` option. It strips dangerous attributes like `onmouseover` or `<script>` tags by default."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Security vulnerability where malicious scripts are injected into web pages; mitigated in Bootstrap by a built-in sanitizer."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like someone 'Graffiti-ing' a billboard. If you don't check the content before it's printed, they might sneak in a secret message that everyone sees."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Prevent XSS by sanitizing user-provided HTML used in dynamic Bootstrap components."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The Bootstrap sanitizer uses a 'whitelist' approach. Only allowed tags (like `<a>`, `<b>`, `<img>`) and attributes are rendered. If you need to allow custom tags (like `<my-tag>`), you must update the `Default` allow-list in the Bootstrap JS configuration."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Never trust what people type into a form. Always check it before showing it back to them in a popup."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For maximum security, you can provide your own sanitization function to Bootstrap components, allowing you to use professional libraries like DOMPurify for more robust protection."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A security vulnerability that allows an attacker to inject and execute malicious scripts in the context of another user's browser."
+                        }
+                    ]
+                },
+                {
+                    "id": 72,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "How to handle 'Content Security Policy' (CSP) with Bootstrap?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "CSP is like a 'Security Guard' for your site. You need to tell it that it's okay for Bootstrap to use things like inline styles if you're using certain components."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "When using a strict CSP, Bootstrap might trigger 'unsafe-inline' errors because some JS components add styles directly to elements. You should use a 'Nonce' (a one-time secret code) to allow Bootstrap's styles while keeping the rest of the site secure."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Bootstrap 5 supports CSP nonces. You can pass a `nonce` attribute to the library, and it will apply it to any dynamically generated `<style>` tags it creates."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Use of nonces or hash-based CSP headers to permit Bootstrap-specific inline styles."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Badge System' at a high-security building. Every piece of code needs a badge (nonce) to be allowed in. If Bootstrap has the right badge, the guard (CSP) lets it work."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Configure your CSP to allow Bootstrap's required sources and use nonces for inline styles."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Without a CSP, hackers can inject scripts from other domains. A good CSP for Bootstrap would include `script-src 'self'` and `style-src 'self' 'nonce-random123'`. This ensures only YOUR files and authorized inline styles are executed."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to tell the browser 'Only trust code I wrote myself, plus this specific Bootstrap file'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Note that Bootstrap's SVG icons might require `img-src 'self' data:` if you are using them as data-URIs, which is common in some optimization patterns."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A security layer that helps detect and mitigate certain types of attacks, including XSS and data injection."
+                        }
+                    ]
+                },
+                {
+                    "id": 73,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "The danger of using older versions of Bootstrap (e.g., v3 or v4).",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Older versions often have known security holes that hackers can easily exploit because the Bootstrap team is no longer fixing bugs in those versions."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Using legacy versions exposes you to 'CVEs' (Common Vulnerabilities and Exposures). For example, older Bootstrap versions have known XSS bugs in their tooltip components that were only fixed in later releases."
+                        },
+                        {
+                            "variant_id": 3,
+                            "technical": "Legacy versions rely on jQuery, which itself has numerous security advisories. Bootstrap 3/4 no longer receive security patches, making them 'End of Life' (EOL) from a security perspective.",
+                            "variant_id": 3,
+                            "style": "technical"
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Security risks associated with unpatched components and end-of-life framework versions."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like using an 'Old Lock' from the 1920s on your current front door. Thieves already know exactly how to pick it. Upgrading to Bootstrap 5 is like installing a 2024 digital smart lock."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Legacy Bootstrap versions lack critical security patches and often have known vulnerabilities."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you are stuck on an old version for business reasons, you should use a 'Virtual Patching' tool or a WAF (Web Application Firewall) to catch common Bootstrap-specific attacks. However, upgrading remains the only 100% cure."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always keep your software updated to the newest version to stay safe from hackers."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can use `npm audit` or `snyk` to automatically scan your project for these 'outdated' and 'at-risk' Bootstrap dependencies."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The inherent risk of operating software that is no longer maintained with security updates and bug fixes."
+                        }
+                    ]
+                },
+                {
+                    "id": 74,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Subresource Integrity' (SRI) for Bootstrap CDN links?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a fingerprint code that makes sure the Bootstrap file hasn't been tampered with or hacked by a middleman."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "SRI uses an `integrity` attribute (a cryptographic hash) on the `<link>` or `<script>` tag. If the file on the CDN is changed—either by a glitch or an attacker—the browser will refuse to load it."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Syntax: `integrity='sha384-xyz...' cross-origin='anonymous'`. The browser hashes the fetched file and compares it to the attribute value before execution."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Security feature using cryptographic hashes to verify that files from a CDN have not been modified."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like an 'Evidence Seal' on a police bag. If the seal is broken or looks different, you know someone messed with the evidence and you shouldn't trust it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Use integrity hashes on CDN links to ensure the file's authenticity and safety."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Always pair SRI with the `cross-origin` attribute. Without `cross-origin`, the browser may block the request entirely due to CORS policies on the CDN, even if the file is perfectly safe."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't just copy the URL; copy the whole code bit from the Bootstrap website. It contains a 'password' that keeps you safe."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If you host your own files but use a 'push' model to a local CDN, you should regenerate SRI hashes for every new build to maintain security."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A security mechanism that allows browsers to verify that resources they fetch are delivered without unexpected manipulation."
+                        }
+                    ]
+                },
+                {
+                    "id": 75,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "Best practices for 'Accessible' (A11y) Bootstrap sites.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It means making your site easy to use for everyone, including people who are blind or cannot use a mouse."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Accessibility requires using semantic HTML and 'ARIA' attributes. For example, a Bootstrap modal needs `role='dialog'` and `aria-labelledby` so screen readers can explain what just popped up on the screen."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Focus on 'Keyboard Navigation' (Tab order), 'Color Contrast' (WCAG 2.1 AA), and 'Descriptive Labels'. Ensure all interactive elements have an `aria-label` or related text."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Implementing ARIA roles and ensuring high color contrast for screen reader compatibility."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like putting 'Braille' on an elevator button. It doesn't change how the elevator works for most people, but it makes the elevator usable for someone who can't see the numbers."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Use semantic HTML, ARIA roles, and high-contrast colors for a truly accessible experience."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Bootstrap 5 includes many A11y improvements by default. For example, 'Visually Hidden' content (using `.visually-hidden`) is still read by screen readers but hidden from the screen, which is great for providing extra context without cluttering the UI."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Assume your user might be using a screen-reading computer, and write your code to help that computer understand your site."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Manually test your Bootstrap site using only your keyboard's 'Tab' and 'Enter' keys. if you can't reach every button or close every modal, your site is not accessible."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The inclusive practice of ensuring there are no barriers that prevent interaction with or access to websites."
+                        }
+                    ]
+                },
+                {
+                    "id": 76,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Architect",
+                    "question": "Why avoid 'Inline Styles' with Bootstrap?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Inline styles are messy and hard to change later. It's better to use Bootstrap's utility classes like `p-3` instead."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Inline styles defeat the purpose of a design system. They are also a major security risk because they often require disabling strict CSP rules that keep your site safe from script injection (XSS)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Inline styles have the highest CSS specificity, making them extremely difficult to override with media queries. This leads to broken layouts on mobile devices where you might want to remove a specific margin or width."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Violation of the separation of concerns and negative impact on CSP security compliance."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Writing on a Wall' with a permanent marker instead of using a 'Sticky Note'. If you want to move the message to another wall, you have to repaint the whole surface."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Favor utility classes over inline styles for better maintenance and CSP compatibility."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you find yourself using `style='color: red'`, you should ask *why* Bootstrap's `.text-danger` isn't enough. Usually, it means your design system is drifting too far from the framework's core logic."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Sticky to 'Utility Classes' like 'mb-3' instead of writing CSS directly inside your HTML tags."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Exception: Dynamic values (like a progress bar's width or a background image URL) are often necessary as inline styles, as they cannot be pre-defined in CSS."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The application of CSS properties directly to individual HTML elements using the style attribute."
+                        }
+                    ]
+                },
+                {
+                    "id": 77,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "The danger of using 'target=\"_blank\"' on links.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Opening links in a new tab without a specific security tag can allow the new site to 'take over' or control your original tab."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "When using `target='_blank'`, you MUST include `rel='noopener noreferrer'`. Without it, the new page can access your site's `window.opener` object, potentially putting your users at risk of phishing."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Security vulnerability known as 'Reverse Tabnabbing'. The newly opened page can redirect the original tab to a malicious URL while the user is distracted."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Exposure to tabnabbing attacks; mitigated by using rel='noopener' attributes."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like letting a 'Stranger' walk through your house to get to the backyard. If you don't 'Lock the door' behind them (using noopener), they might sneak back inside and steal your jewelry."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Always add rel='noopener noreferrer' to any link with target='_blank'."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Modern versions of Chrome and Firefox now imply `noopener` by default for `_blank` links, but you should still write it explicitly for older browser support and as a matter of secure coding habit."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Adding these special words keeps the other website from messing with yours when it opens in a new tab."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Using `noreferrer` additionally hides your site's URL from the destination's logs, which can be useful for privacy-focused applications."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The security risk where a newly opened tab can manipulate the original referring window's location."
+                        }
+                    ]
+                },
+                {
+                    "id": 78,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Architect",
+                    "question": "Integrating Bootstrap with 'Input Sanitization' libraries.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Use a library like 'DOMPurify' to clean any text before putting it into a Bootstrap component."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Bootstrap's internal sanitizer is good, but for complex apps, you should use 'DOMPurify'. You can hook it into Bootstrap's tooltip configuration so that all labels and descriptions are cleaned automatically."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Example: `bootstrap.Tooltip.Default.allowList.span = ['style'];`. This allows specific attributes while the library handles the heavy lifting of XSS detection."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Extending the framework's native sanitization logic with third-party security libraries."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Filtering Water'. Bootstrap has a small mesh (internal sanitizer), but adding DOMPurify is like adding a professional industrial UV filter—nothing bad gets through."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Augment Bootstrap components with libraries like DOMPurify for bulletproof XSS protection."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "You can disable Bootstrap's native sanitizer entirely by setting `sanitize: false` if you are already handling the sanitization yourself at the API level or with a global filter, reducing redundant work."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your website lets users post comments, make sure you 'Wash' those comments so they can't break your site."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If you use SSR (Server Side Rendering) like Next.js, ensure you sanitize on the server *and* the client for 'Defense in Depth'."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The architectural practice of using specialized software to remove malicious scripts from data before it is rendered by UI components."
+                        }
+                    ]
+                },
+                {
+                    "id": 79,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "Protecting against 'Clickjacking' with Bootstrap Modals.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Clickjacking is when someone tricks you into clicking a button on your site by putting an invisible layer over it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "To prevent clickjacking, your site shouldn't be allowed to be put inside an `<iframe>` on another person's site. Use the `X-Frame-Options: DENY` header to stop this."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Attackers can load your site in a transparent iframe and position a 'Delete' button exactly where the user thinks they are clicking 'Like' on a fake game."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Using HTTP headers (CSP frame-ancestors or X-Frame-Options) to prevent unauthorized framing."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Fake ATM Keypad'. You think you're pressing your PIN on the bank machine, but there's a thin invisible layer on top that records your buttons for a thief."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Disable iframe embedding via headers to prevent clickjacking attacks on interactive UI."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Bootstrap buttons are especially vulnerable because they have very predictable sizes and colors. An attacker can easily guess where a `.btn-danger` modal button will appear based on common screen sizes."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't let other people 'borrow' your website by putting it inside theirs. It's a common trick to steal info."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Frame busting scripts are an old way to fight this, but they are easily bypassed. Modern server headers are the only reliable protection."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A malicious technique of tricking a user into clicking on something different from what the user perceives."
+                        }
+                    ]
+                },
+                {
+                    "id": 80,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "The 'Least Privilege' principle for including Bootstrap JS.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Only include the JavaScript files you actually need. If your site doesn't have carousels, don't include the carousel code."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "To minimize your attack surface, load individual Bootstrap JS components (e.g., `modal.js` only) instead of the full `bootstrap.bundle.js`. Less code means fewer potential points for hackers to exploit."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Component-based loading. By only granting the browser the minimum code required to run the page, you reduce 'JS bloat' and potential side-effects from unused event listeners."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Minimizing attack surface area by only loading necessary JavaScript modules."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Giving a Key' to a contractor. You only give them the key to the Kitchen if they are fixing the sink. You don't give them the Master Key to the whole house (full JS bundle)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Import only the specific Bootstrap JS modules used by your features."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Every thousand lines of code increases the chance of a bug existing. By stripping your project down to just the essentials, you make it more secure and significantly faster for the end user."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you don't use 'Sliders' or 'Popups', don't include the code for them in your website."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This is much easier in Bootstrap 5 because of the shift away from jQuery, which allows for clean, tree-shakeable ES6 modules."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The security principle of providing only the minimum resources required for an entity to perform its authorized function."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

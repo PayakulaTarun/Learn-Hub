@@ -1,12 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Flame, Star } from 'lucide-react';
-import { useGamification } from '../hooks/useGamification';
 import { mainNavLinks } from '../lib/navData';
+import { useAuth } from '../context/AuthContext';
 
 export default function Header() {
-  const { stats } = useGamification();
+  const { user, logout } = useAuth();
   const router = useRouter();
 
   return (
@@ -19,57 +18,37 @@ export default function Header() {
               <span className="text-2xl font-black text-text-primary tracking-tighter">Student Resource Hub</span>
             </Link>
 
-            {/* Gamification Stats */}
-            <div className="hidden sm:flex items-center gap-4 pl-8 border-l border-ui-border">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-orange-500/10 rounded-xl border border-orange-500/20" title="Daily Streak">
-                <Flame className={`w-4 h-4 ${stats.streak > 0 ? 'text-orange-500 fill-orange-500' : 'text-text-muted'}`} />
-                <span className="text-xs font-black text-orange-500">{stats.streak}</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-yellow-500/10 rounded-xl border border-yellow-500/20" title="Level">
-                <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                <span className="text-xs font-black text-yellow-500">Lvl {stats.level}</span>
-              </div>
-            </div>
+
           </div>
 
           <nav className="hidden md:flex items-center space-x-6">
             {mainNavLinks.map((link) => {
-              const isActive = router.pathname === link.href || (link.href !== '/' && router.pathname.startsWith(link.href));
+              if ((link as any).isAuthHidden && user) return null; // Hide Login/Signup if logged in
               
-              if (link.isButton) {
-                return (
-                  <Link 
-                    key={link.href}
-                    href={link.href}
-                    className="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-black text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/30 hover:scale-105"
-                  >
-                    {link.label}
-                  </Link>
-                );
-              }
+              const isActive = router.pathname === link.href || (link.href !== '/' && router.pathname.startsWith(link.href));
 
               return (
                 <Link 
                   key={link.href}
                   href={link.href}
                   className={`text-xs font-black uppercase tracking-widest transition-all hover:text-rose-400 ${
-                    isActive ? 'text-rose-400' : link.isHighlight ? 'text-rose-400/80 underline decoration-rose-500/50 underline-offset-8' : 'text-text-muted'
+                    isActive ? 'text-rose-400' : 'text-text-muted'
                   }`}
                 >
                   {link.label}
                 </Link>
               );
             })}
-          </nav>
 
-          {/* User Profile placeholder or Login */}
-          <div className="flex md:hidden items-center gap-4">
-             {/* Small mobile stats */}
-             <div className="flex items-center gap-1 px-2 py-1 bg-rose-500/10 rounded-lg">
-                <Star className="w-3 h-3 text-rose-500 fill-rose-500" />
-                <span className="text-[10px] font-black text-rose-500">{stats.level}</span>
-             </div>
-          </div>
+            {user ? null : (
+                <Link 
+                    href="/login"
+                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-rose-500 to-orange-500 text-white font-black text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-lg shadow-rose-500/20"
+                >
+                    Login
+                </Link>
+            )}
+          </nav>
         </div>
       </div>
     </header>

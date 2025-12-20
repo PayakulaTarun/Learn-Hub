@@ -1,0 +1,592 @@
+{
+    "dataset": "mysql_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_7",
+            "questions": [
+                {
+                    "id": 61,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "How do you read a MySQL `EXPLAIN` plan?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`EXPLAIN` is the 'Receipt' for your query. The most important columns are `type` and `row`. If `type` is 'ALL', the database had to search every single row (Slow!). If `type` is 'const' or 'ref', it used an index (Fast!). You want the `rows` number to be as small as possible."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I look for the 'Type' column first. A value of `ALL` indicates a full table scan, while `index` indicates a full index scan—both are red flags. I prefer to see `const`, `eq_ref`, or `ref`. I also check the `key` column to ensure my intended index is actually being used, and the `Extra` column for warnings like 'Using filesort' or 'Using temporary'."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The `rows` column shows an estimate of the records to examine. `filtered` shows the percentage of rows that will be filtered by other conditions. A low `filtered` percentage with a high `rows` count means the index is inefficient. Use `EXPLAIN ANALYZE` (MySQL 8.0) to see the *actual* execution time and row counts instead of just estimates."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The diagnostic statement used to analyze the execution strategy of a SQL query, focusing on the join type, index usage, and estimated workload."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Reviewing a Chef's step-by-step recipe'. Instead of just tasting the food (getting the query result), you see precisely how they sliced the onions, what pan they used, and how long they boiled the water. If the recipe says 'Wait 4 hours', you can fix it before the food is even made."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The tool used to view how MySQL intends to execute a query and its index usage."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The `table` column is vital for complex joins; it shows the order in which tables are joined. MySQL uses 'Nested Loop Joins'. If the first table in the list has a million rows and the second has 10, the query will be slow. If the optimizer is smart, it will swap them—making the smaller table the 'Outer' loop to minimize checks."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The first thing you should do if your website feels slow!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "JSON format output (`EXPLAIN FORMAT=JSON`) provides hidden metrics like 'query_cost'. This is the raw number the optimizer uses to pick the plan. If Plan A has cost 1000 and Plan B has cost 1200, Plan A wins. Monitoring this 'Cost' helps you understand exactly why the optimizer might be ignoring a certain index even if it seems logical to you."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A command that provides information about how MySQL executes statements."
+                        }
+                    ]
+                },
+                {
+                    "id": 62,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is a 'Covering Index' and why is it so fast?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A Covering Index is when the 'Cheat Sheet' (the Index) has all the answers itself. If you search for a user's name, and the name is saved *inside* the index, the database can answer you immediately without even opening the main table file. It's like finding a person's phone number right in the index of a book."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A covering index is an index that includes all the columns requested in the `SELECT` statement and the `WHERE` clause. When an index 'covers' a query, MySQL can return the result using only the index B-tree, completely skipping the expensive step of fetching the full row from the data file. In `EXPLAIN`, you'll see 'Using index' in the `Extra` column."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Efficiency: Reduces Disk I/O. Since indexes are generally much smaller than tables and more likely to reside in the Buffer Pool, a 'Covering' scan avoids random-access page reads from the data file. Even a full index scan (`type: index` in explain) can be faster than a range scan that requires a 'Look-up' in the clustered index/data file."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A non-clustered index that provides all the data required for a query's processing, eliminating the need for a secondary lookup or table access."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Imagine you want to know 'Who wrote Harry Potter?'. You look in the library catalog (the Index). The catalog card for 'Harry Potter' already says 'Author: J.K. Rowling'. You have the answer! You don't have to walk all the way to Aisle 4 and physically open the book to find the author's name."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "An index that contains all columns needed by a query, preventing table access."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In InnoDB, every secondary index automatically 'covers' the Primary Key. So if your query is `SELECT id FROM users WHERE email = '...'`, and you have an index on `email`, it is a covering index by default even though `id` isn't explicitly in the index definition. The database engine 'Sneaks' the PK in for free."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The ultimate speed trick for your most popular database queries!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "One 'Trap': If you `SELECT *`, it is almost impossible to have a covering index unless your table only has one or two columns. This is why 'Select Star' is a major performance anti-pattern. By explicitly selecting only the 2 or 3 columns you actually need, you give the optimizer the chance to use a covering index and bypass the disk entirely."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An index that stores all the data required by a query, so that no table access is required."
+                        }
+                    ]
+                },
+                {
+                    "id": 63,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "The 'ESR' Rule: What is it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The ESR Rule is the recipe for a perfect index: **Equality** first (e.g., `status = 'active'`), then **Sort** (e.g., `ORDER BY date`), and finally **Range** (e.g., `price < 100`). If you put the Range first, the Sort part of the index becomes broken and useless."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "ESR stands for **Equality, Sort, Range**. It's the optimal order for columns in a composite index. 1. Equality: Columns used with `=` in WHERE. 2. Sort: Columns used in `ORDER BY`. 3. Range: Columns used with `>`, `<`, or `BETWEEN`. Following this allows a single index to filter, sort, and refine in one continuous walk down the B-tree."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A range condition (e.g., `id > 10`) stops the 'Prefix' compatibility of a B-tree. If a range is in the middle of a composite index, any columns to the right of it cannot be used for direct lookup or sorting. By placing Range columns last, you ensure the index is 'SARGable' for the maximum number of query components."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The design principle for composite indexes that prioritizes equality filters, followed by ordering requirements, and finally range filters to ensure maximum query efficiency."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Finding a specific house'. 1. Equality: Go to Springfield (Search). 2. Sort: Walk down the street in order of house numbers (Order). 3. Range: Stop at every house with 'More than 2 windows' (Range). If you tried to find 'More than 2 windows' first, you'd be looking at every house in the country!"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The optimal ordering of columns in a composite index: Equality, then Sort, then Range."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Why puts Sort before Range? If you filter by `price < 100` (Range), the items found are scattered throughout the index blocks. The database then has to perform a 'FileSort' to get the dates in order. If you put `date` (Sort) *before* the price range, the database finds the date range and the items are already physically sorted, allowing for a lightning-fast 'Index Scan'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "A simple 3-letter rule to help you design perfect database indexes every time!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The exception: If the 'Equality' column has very low cardinality (like `is_active`), but the 'Range' column is highly selective, sometimes a 'Range-first' index is actually faster. However, 95% of the time, the ESR rule produces the most robust and versatile index for production workloads."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "General rule for defining composite indexes in B-Tree based database systems."
+                        }
+                    ]
+                },
+                {
+                    "id": 64,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Query Optimizer's Join Order'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you join 3 tables, the Optimizer decides which to open first. It usually picks the 'Smallest' table first (e.g., Countries) and uses its IDs to find matches in the larger table (e.g., Users). Opening the smaller table first reduces the total amount of 'Loops' the computer has to do."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "MySQL uses a **Nested-Loop Join** algorithm. The Optimizer calculates the cost of joining tables in different orders. It generally attempts to make the table that will return the FEWEST number of rows the 'Driving Table' (the outer loop). This minimizes the number of times it has to 'Probe' the second table's index."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Cost-Based Optimizer (CBO). For N tables, there are N! possible join orders. For large joins (>10 tables), MySQL uses a 'Greedy' approach because calculating every possibility would take longer than the query itself. You can override the optimizer using `STRAIGHT_JOIN`, forcing the order in which they appear in the query."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The sequence in which multiple tables in a JOIN operation are processed by the query executor, determined by cardinality estimates to minimize the total number of intermediate row examinations."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Finding matches in two bags of colored balls'. Bag A has 2 balls; Bag B has 1,000,000 balls. You take the 2 balls from Bag A and look for them in Bag B. It's much easier than taking 1,000,000 balls from Bag B and checking if they exist in the 2-ball Bag A."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The sequence in which table joins are executed to minimize data processing overhead."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If your indexes are missing on the 'Join' columns, the secondary table must be full-scanned for Every Single Row in the first table. If Table A has 1000 rows and B has 1000, and there's no index, the database performs 1,000,000 checks! This 'Cartesian product' behavior is the most common reason for 'Sudden DB Crashes' after a new feature launch."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The database tries to find the smartest, shortest path to connect your data together!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "MySQL 8.0 introduced **Hash Joins**. For joins where indexes are not available, MySQL now builds a hash table of the smaller table in memory and searches it. This is VASTLY faster than the old 'Block Nested Loop' approach and brings MySQL join performance closer to enterprise engines like SQL Server or Oracle."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The plan selected by the optimizer for combining multiple relations in a query."
+                        }
+                    ]
+                },
+                {
+                    "id": 65,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Slow Query Log'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The Slow Query Log is a 'List of bad queries'. You tell MySQL: 'If any search takes more than 1 second, write it down here'. Now, you can look at the list at the end of the day and fix the exact problems that are making your website feel sluggish."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The slow query log captures all SQL statements that take longer than a defined `long_query_time` (e.g., 200ms or 1s). I use it to identify 'low-hanging fruit' for optimization. To analyze it at scale, I use tools like `mysqldumpslow` or **Percona Toolkit's `pt-query-digest`** to group similar queries and see which ones are causing the most total load."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Controlled by `slow_query_log=1` and `long_query_time`. You can also enable `log_queries_not_using_indexes` to catch full table scans even if they are 'fast' right now because the table is small. In production, log to a FILE rather than the `mysql.slow_log` table for better performance."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The MySQL diagnostic log that records SQL statements exceeding a specified execution time threshold, used for performance profiling and bottleneck identification."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Performance Review' for a restaurant staff. You don't watch every waiter every second. You just have a notebook where you write down 'This table took 2 hours to get their soup'. At the end of the week, you talk to that one waiter to see what went wrong."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A log of queries that exceed a defined execution time threshold."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Optimization priority: Always focus on the query that has the highest 'TOTAL' time (Count * Average Time). A 5-second query that runs once a day is less important than a 50ms query that runs 1,000,000 times an hour. `pt-query-digest` will help you find that high-volume query that is quietly burning your CPU."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Like a teacher's report card for your database's speed!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In modern cloud environments, slow query logs are often piped to 'Datadog' or 'CloudWatch'. This allows you to set 'Alarms'. If the '99th percentile query time' jumps from 100ms to 2s, you get a notification on your phone immediately, allowing you to catch a bad code deploy before it crashes the site completely."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A log feature of MySQL that tracks execution statistics of slow-running statements."
+                        }
+                    ]
+                },
+                {
+                    "id": 66,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "Indexing a 'Primary Key' vs 'Secondary Index'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "In InnoDB, the Primary Key is 'The Boss'. It stores the actual data right inside the index. A Secondary Index is like a 'Helper'. It first finds the ID of the person, then it has to go 'Look up' the ID in the Boss index to get the actual details. Two steps vs one step."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The Primary Key is a **Clustered Index**, meaning the leaf nodes contain the actual row data. A Secondary Index leaf node contains ONLY the secondary column value and the associated Primary Key. This means a secondary index search often involves an extra step called a **Bookmark Lookup** (or Clustered Index Seek) to retrieve the full row."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Primary Key = physical data organization. Secondary Index = logical pointer to the PK. Because of this, large Primary Keys (like long strings) make all your secondary indexes much bigger and slower because they have to store that large PK value inside every single secondary index entry."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The structural distinction between the clustered index that physically orders data and secondary indexes that contain pointers to primary key values."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "PK is 'Sorting your mail by House Address'. The mail IS the data and it's physically in the right mailbox. Secondary Index is 'Sorting mail by Name'. You find the Name 'Bob', and the name tag says 'Bob lives at House 42'. You still have to walk to House 42 to deliver the letter."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "PK stores real data; secondary indices store pointers to the PK."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The 'Two-Step' search in secondary indexes is why 'Covering Indexes' are so important. If you only select a column that is already in the secondary index, MySQL skips the second step of going back to the Clustered Index, making the search 50-70% faster."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Looking up things by their ID is always the fastest way to use a database!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If you have a 'Hot' table with millions of inserts, a random UUID Primary Key will cause 'Index Page Splits'. Because the items are added in random order, InnoDB has to constantly move data blocks on the disk to keep the PK sorted. An auto-incrementing integer PK avoids this because new data is always added to the 'End' of the file."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The comparison of data access paths between clustered and non-clustered index types."
+                        }
+                    ]
+                },
+                {
+                    "id": 67,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Index Selectivity'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Selectivity is 'How much the index helps'. An index for 'Fingerprints' is high-selectivity because it picks out 1 person from a billion. An index for 'Clothes Color: Blue' is low-selectivity because half the crowd might be wearing blue. You only want to index the unique stuff."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Selectivity is the ratio of unique values to the total number of records. A selectivity of 1.0 (Unique) is perfect. If you search for something with 10% selectivity, MySQL will use the index. But if selectivity is low (e.g. 50%), the optimizer will often skip the index and perform a Full Table Scan because it's faster than jumping around the index tree for half the table."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Formula: `COUNT(DISTINCT column) / COUNT(*)`. The higher the number, the more 'selective' the index is. If selectivity is below a certain threshold (usually ~20-30%), the Query Optimizer predicts that the overhead of B-tree traversals and disk I/O 'Seek' calls is greater than the cost of a simple sequential broad-read of the whole file."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The statistical value representing the uniqueness of a column's data, used to determine the probability of a specific index improving query performance."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Asking a crowd: Who has my lost dog?'. High Selectivity: 'Who has the dog with tag #12345?' (1 person). Low Selectivity: 'Who has a brown dog?' (500 people). You'd rather ask the first question; it's much faster to find your answer."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The percentage of unique values in a column, defining index efficiency."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "For columns with very low selectivity (like `is_active` where everyone is active), indexing is a 'Waste of Space'. However, if you have a 'Composite' index like `(is_active, last_login_date)`, the low-selectivity column acts as a 'Category' and the high-selectivity column does the actual work. This is the only time you should index low-selectivity data."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't bother indexing things that are the same for almost every user!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Data Distribution matters! If your data is 'Skewed' (e.g. 99% of people live in 'USA'), an index on `Country` is low-selectivity for 'USA' but HIGH-selectivity for 'Japan'. Modern optimizers use 'Histograms' to understand this and will use the index for 'Japan' but perform a full scan for 'USA' automatically."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A measure of how much an index narrows down the search space for a query."
+                        }
+                    ]
+                },
+                {
+                    "id": 68,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Prepared Statements' performance benefit?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Prepared Statements are 'Pre-baked queries'. You send the 'Template' (e.g., `SELECT * FROM users WHERE id = ?`) to MySQL once. Later, you only send the ID '123'. Because MySQL already 'parsed' the template, it doesn't have to rethink the query logic every single time, saving CPU."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Prepared statements offer two benefits: **Security** (SQL Injection prevention) and **Performance**. For performance, they reduce 'Parsing' overhead. If you run the same query structure 1,000 times with different values, MySQL only 'Compiles' it once. It also reduces network bandwidth because you only send the data, not the full SQL text."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Lifecycle: `PREPARE` -> `EXECUTE` -> `DEALLOCATE`. The server caches the 'Execution Plan'. Many drivers (like Java/PHP) also use a 'Binary Protocol' for prepared statements, which is more efficient than the standard 'Text Protocol' because data like integers are sent as 4-byte bytes rather than strings like '123456'."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The feature that pre-compiles a SQL query structure on the database server to minimize repeated parsing and planning costs for high-frequency operations."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Printed Form'. Instead of hand-writing the whole legal sentence 100 times, you print a form and just fill in the blank lines. The 'Form' is the Prepared Statement; the 'Ink' you save is the Database CPU time."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Pre-compiling SQL templates to reduce parsing time and prevent SQL injection."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "One 'Pitfall': If you only run a query once, a prepared statement is actually SLOWER because you've made two trips to the server (Prepare + Execute) instead of one. Only use them for high-volume queries or where user-provided input makes 'SQL Injection' a risk."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The professional way to send data to your database safely and quickly!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Server-side vs Client-side preparation. Some ORMs say they are 'preparing' but they are actually just locally 'String-replacing' and sending a normal query. To get the real performance gain, you must ensure your driver is configured to use 'Server-Side Prepared Statements' (e.g. `useServerPrepStmts=true` in Java)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A feature used to execute the same or similar database statements repeatedly with high efficiency."
+                        }
+                    ]
+                },
+                {
+                    "id": 69,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is `innodb_flush_log_at_trx_commit`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "This is the 'Speed vs. Safety' knob. At `1` (Safe), every change is immediately saved to the hard drive (Slow). At `2` (Fast), it's saved in the computer's memory first. At `2`, your database is 10x faster, but if the power goes out, you might lose the last 1 second of data."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This setting controls how the Redo Log is written to disk. **1** is the most ACID-compliant: every transaction is flushed to disk (safest). **2** writes to the OS cache but not the physical disk on every commit; it's much faster but risks losing 'recently committed' data during a power failure. Use `1` for banking and `2` for non-critical analytics."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Options: **1**: Write and Flush to disk every commit (IO heavy). **0**: Write and Flush once per second (Lowest IO, highest risk). **2**: Write on every commit, Flush once per second. Option '2' can survive a MySQL service crash (as the data is in the OS cache), but not a full server power failure."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The InnoDB configuration parameter that defines the write and sync frequency of the redo log to disk, balancing transactional durability against disk I/O performance."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Saving a Word Doc'. Option 1 is 'Pressing the Save Button' after every single word you type. Option 2 is 'Auto-save once a minute'. Option 2 lets you type much faster, but if your cat pulls the power cord, you lose the last minute of your work."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The setting that balances transaction safety and disk write speed."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In high-traffic systems (like social media 'Likes' or game logs), setting this to `2` can reduce disk IOPS by 90%, preventing your hard drives from burning out. The risk of losing a few seconds of 'Likes' is often acceptable compared to the cost of 50 expensive Enterprise SSDs."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Only change this if you are an expert and know the risks!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Combine this with `sync_binlog`. For 'Infinite' safety, both should be 1. This is 'Double-Syncing'. For modern SSDs, the performance gap between 1 and 2 is smaller than it used to be on old spinning disks, so most architects stick to '1' unless they have a very specific performance bottleneck and a tiered backup strategy."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A system variable that determines when the transaction log is flushed to disk."
+                        }
+                    ]
+                },
+                {
+                    "id": 70,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is `OPTIMIZE TABLE` and when is it needed?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`OPTIMIZE TABLE` is 'Database Defragging'. When you delete 1 million rows, your database file doesn't actually get smaller—it just has 1 million 'holes' in it. This command re-builds the file from scratch, shrinking it and making it clean and fast again."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`OPTIMIZE TABLE` should be used after massive deletions or updates to a table. It reorganizes the physical storage of data and index pages to reduce fragmentation and reclaim unused space. In InnoDB, it internally performs an `ALTER TABLE ... FORCE` to rebuild the clustered index, which can take a long time and lock the table."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Used to mitigate 'Index Bloat'. When random deletes occur, B+ Tree pages become sparse (low fill factor). This wastes Buffer Pool RAM because half-empty pages are being cached. `OPTIMIZE` repacks the data into the most efficient page structure. Note: For InnoDB, this is an 'Online' operation in many cases but still consumes significant CPU and IO."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The MySQL maintenance command that defragments data and index storage to reclaim disk space and improve query efficiency after significant data changes."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Cleaning up a messy desk'. You take everything off, throw away the trash (the deleted rows), and put the useful stuff back in neat, tight piles. Now you have more 'Free Space' on the desk and you can find things faster."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Rebuilding a table to reclaim space and defragment indexes."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "You shouldn't run this every day! Rebuilding a 1TB table can take 10 hours and impact performance. Only run it if your 'Data Fragmentation' (visible in `information_schema.tables` as `data_free`) is more than 30% of the total table size. For most apps, once or twice a year is enough."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Like a 'Deep Clean' for your database files!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Beware: In a Replication setup, `OPTIMIZE TABLE` is written to the Binlog. That means your Slave servers will also start rebuilding the table at the same time. If you have a cluster, you should 'Throttle' this by running it manually on one node at a time during a maintenance window to avoid a cluster-wide performance dip."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A SQL statement that reorganizes the physical storage of table data and index data."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

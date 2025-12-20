@@ -1,0 +1,592 @@
+{
+    "dataset": "data-science_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_9",
+            "questions": [
+                {
+                    "id": 81,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Advanced",
+                    "question": "Scenario: You are building a 'Fraud Detection' system for a bank. The classes are 99.9% legit and 0.1% fraud. What is your strategy?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If I use standard settings, the model will just guess 'Legit' every time and be 99.9% right. My strategy is to use 'SMOTE' to create fake fraud examples, and focus on 'Recall' (not missing any fraud) rather than overall accuracy."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is an extreme class imbalance problem. I would use 'Cost-Sensitive Learning' (penalizing a missed fraud 1000x more than a false alarm) and evaluate using the 'Precision-Recall AUC' instead of ROC. I'd also look for 'Anomalous behavior' rather than just a two-class split."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Implementation: 1. Data Level: SMOTE or ADASYN oversampling. 2. Algorithm Level: XGBoost with `scale_pos_weight` set to 1000. 3. Evaluation: Focus on the 'Confusion Matrix', specifically maximizing 'Sensitivity' (Recall) while maintaining an acceptable 'False Positive Rate'."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Apply undersampling of the majority class or oversampling of the minority class. Use metrics such as F1-score or Kappa coefficient to measure effectiveness on imbalanced datasets."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Finding a Needle in a Haystack'. If you just say 'There is no needle', you are right 9,999 times out of 10,000—but the bank loses everything on that 1 time. You need a 'Magnet' (a model tuned for rare cases) that pulls out anything that even 'looks' like metal."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Applying resampling and cost-sensitive loss to prioritize the detection of rare fraud events."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In real-world fraud, 'Data Drift' is high because criminals move fast. I would implement an 'Adaptive Model' that retrains every 24 hours and includes 'Time-based features' (e.g. 'Number of transactions in the last 10 minutes') which are high-signal for fraud."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Accuracy is a lie for fraud! Even a model that 'Guesses at random' can look impressive if you use the wrong metric."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For extremely high volumes, I'd use an 'Autoencoder' to learn the 'Latent Space' of normal transactions. Any transaction with a high 'Reconstruction Error' is flagged for manual review, allowing the system to catch 'Zero-day fraud' that hasn't been seen before."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A classification task characterized by a severe disparity in class frequency, requiring specialized sampling or algorithmic techniques."
+                        }
+                    ]
+                },
+                {
+                    "id": 82,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Advanced",
+                    "question": "Scenario: Your 'House Price Predictor' works perfectly on old houses but is 50% off for 'Newly Built' houses. Why?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "This is probably because your training data didn't have enough 'New Houses' in it. The model learned that 'Old = Normal', so it gets confused by modern materials or high prices of new builds."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is a classic 'Dataset Shift' or 'Sample Bias' problem. The model's training distribution (mostly old houses) does not match the production distribution (new houses). I would check for 'Feature Interaction' between 'Age' and 'Price'—the rules that apply to 100-year-old houses may not be linear for 1-year-old ones."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Extrapolation error. Non-linear models like Decision Trees cannot predict values outside the range of their training data. If 'New Houses' have higher prices than any 'Old House' in the training set, the tree will 'cap' the prediction at the maximum historical value it saw."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A failure of the model to generalize to a sub-population due to poor representation in the training set or the presence of non-linearities not captured by the current model complexity."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Training an AI to recognize Dogs' but only showing it 'Husky' photos. When it sees an 'Italian Greyhound', it knows it's an animal, but it fails to realize it's still a 'Dog' because the shape is so different."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Model failure caused by a lack of representative data for a specific feature subgroup."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This might also be 'Concept Drift'. Over the last 2 years, people might have started paying a massive 'Premium' for energy-efficient new homes that wasn't true in 2010. Any model trained on 2010 data will fail to understand this new market psychology."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The fix is easy: find more data for New Houses and retrain! You can't expect a model to 'Guess correctly' on something it has never seen."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "To fix this without more data, I might try 'Transfer Learning'. I'd take a model trained on a similar but larger city and 'Fine-tune' it on our small sample of new houses to capture the modern pricing trends."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A condition where a model performs poorly on a subset of the population due to covariate shift or lack of sufficient training examples."
+                        }
+                    ]
+                },
+                {
+                    "id": 83,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Advanced",
+                    "question": "Scenario: You need to deploy an 'NLP Model' that can't ever use more than 100MB of RAM. Which model do you pick?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "I would avoid giant AI like GPT. Instead, I'd use a simple 'Logistic Regression' with 'TF-IDF' word counting. It's tiny, extremely fast, and uses almost no memory."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Under strict memory constraints, I'd choose a 'Lightweight' model. Specifically, 'MobileBERT' or 'TinyBERT' which are distilled versions of LLMs. If even those are too big, a 'Linear SVM' using 'Hashing Vectorizer' (to avoid keeping a dictionary in RAM) would be the safest bet."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Architecture selection: 1. Feature Extraction: Row-hashing (HashingVectorizer) to bound feature space. 2. Algorithm: DistilBERT with 8-bit Quantization (using ONNX or TFLite). This can bring a BERT model from 500MB down to ~60MB while maintaining high accuracy."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Select compressed neural network architectures or traditional machine learning algorithms with limited feature sets to minimize the footprint."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Building a Shelving Unit in a tiny closet'. You can't use a massive 'Walk-in Closet' system (LLM). You need 'Modular, fold-out shelves' (Quantized TinyBERT) or just a 'simple set of hooks' (Logistic Regression)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Deploying quantized distilled models or linear classifiers to meet strict memory limits."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The 'Hashing Vectorizer' is the secret weapon here. Traditional TF-IDF stores a mapping of every word (e.g. 'Apple' -> Column 1). With 1,000,000 words, that map is huge. Hashing just uses a math formula to decide the column, meaning you don't need a single byte of 'Dictionary memory'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Not every problem needs a billion-parameter model! Often, a simple 'Regex' or 'Word list' can do 90% of the job for 0.001% of the memory."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "I'd look into 'FastText' with product quantization. It uses 'Character n-grams', allowing it to understand words it has never seen (out-of-vocabulary) while maintaining a highly compressed vector representation."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The optimization of model architecture and parameters to fit within hardware-constrained environments."
+                        }
+                    ]
+                },
+                {
+                    "id": 84,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Advanced",
+                    "question": "Scenario: You have 'Missing Values' in 40% of your data. When is it better to 'Drop' them versus 'Impute' (fill) them?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If the missing data is totally random, I'd fill it with the average. If the data is missing for a 'reason' (e.g. only rich people hide their salary), I'd create a new column just to mark those rows as 'Missing' and then fill them."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "If missingness is >40% and that column isn't highly predictive, dropping the column might be better to avoid injecting too much 'synthetic noise'. However, if the missingness is 'Informative' (MNAR), dropping rows is a disaster as it creates a biased model. I'd use 'Multiple Imputation' to preserve the statistical variances."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Testing for 'MAR' vs 'MNAR'. If a column is missing at random, simple mean/median imputation is fine. If not, I'd use 'IterativeImputer' or 'KNNImputer'. If a whole Row is missing 80% of its values, I would drop that row as it has no signal left to learn from."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Evaluate the mechanism of missingness. Impute when data is missing at random and the sample size is small. Drop when the proportion of missing data is extremely high and the variable is non-essential."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Restoring an old Painting'. If one tiny spot is missing, you paint over it (Impute). If half the face is missing, anything you paint is just 'Your Guess'—it's better to just admit that part of the canvas is gone (Drop) or mark it as 'Destroyed' (Indicator variable)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Filling data when possible, but dropping when missingness is too high or non-random."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Never 'Impute' the Target variable (the Y)! If your price data is missing for a house, filling it with the 'average' house price will just teach the model that 'Missing houses are average', which is almost never true and ruins your error metrics."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "When in doubt, use an 'Informed' model like XGBoost that can handle 'Null' values automatically. It simply learns which way to send 'Null' points at every split, which is much better than simple averaging."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For categorical strings, I'd treat 'Missing' as its own separate category. This often captures hidden patterns (e.g., people who don't fill in 'Address Line 2' might live in simple houses) that 'Imputing' with the most frequent value would erase."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The decision process for handling null values based on the distribution and mechanism of missing data."
+                        }
+                    ]
+                },
+                {
+                    "id": 85,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Advanced",
+                    "question": "Scenario: Your model has 98% accuracy on 'Training' but only 60% on 'Production'. What is the most likely culprit?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "This is 'Overfitting'. Your model just memorized the specific details of the training data (like names or IDs) instead of learning the general patterns. It's like a student who memorizes the answers to a practice test but doesn't understand the math."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The most likely cause is 'Data Leakage'—a feature was present in training that contained hints about the target but isn't available in real-time. Another possibility is 'Covariate Shift', where the distribution of users in production is totally different from that in the historical training set."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "High Variance / Generalization Gap. I'd check the 'Feature Importance'. If a variable like 'Transaction_ID' or 'Timestamp' has 99% importance, the model has learned a 'Lookup table' rather than a classifier. I'd apply 'Regularization' and 'Cross-Validation' to detect this earlier."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Failure to generalize due to overfitting or overfitting on the specific noise and biases of the training sample."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Training a dog in your backyard' and he's perfect. Then you take him to a 'Busy Park' (Production) and he ignores every command. The backyard was too stable; he never learned to handle the noise of the real world."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Poor generalization caused by overfitting or data leakage during training."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is why you should ALWAYS have a 'Hold-out' dataset that you never even look at until the very end. If you keep using your 'Test Set' to tune hyperparameters, you are 'Leaking' information from the test set into your model, making it look better than it really is."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If a score looks 'Too good to be true' in training, it usually is. No real-world model is 99% accurate on day one."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "I'd use 'Adversarial Validation'. This involves training a *second* model to try and distinguish between 'Training data' and 'Production data'. If that model is highly accurate, it means your two datasets are significantly different, explaining the performance drop."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A significant discrepancy in model performance between a training set and an unseen testing or production set."
+                        }
+                    ]
+                },
+                {
+                    "id": 86,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Advanced",
+                    "question": "Scenario: You are designing a 'Search Engine'. How do you rank 'New' versus 'Popular' results?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "This is the 'Freshness' problem. I would use a formula that gives points for 'Likes' but takes away points based on how 'Old' the post is. This way, a new post with 10 likes can beat an old post with 1,000 likes."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I'd implement 'Time-Decay' functions (like an exponential decay). A common approach is 'Hacker News' or 'Reddit' ranking logic: `Score = (Votes - 1) / (Age + 2)^1.8`. This ensures that content naturally 'rotates' out of the top spot as it gets older, favoring new quality content."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Multi-objective optimization using 'Learning to Rank' (LTR). I'd train a model (like RankNet or LightGBM-Rank) with 'Time' as a dominant feature. I'd use 'Discounted Cumulative Gain' (nDCG) as my evaluation metric to ensure high-quality, fresh content appears in the top 3 positions."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The application of relevancy-ranking algorithms that balance popularity (static rank) with timeliness (dynamic rank) through weighted linear combinations or non-linear models."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'News vs. History'. You want to know there was a 'Volcano' 5 minutes ago (Freshness) more than you want to know about a volcano from 1,000 years ago (Popularity), even if the old one was much bigger."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Balancing relevance and recency using logarithmic or exponential time-decay scores."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "We also need to avoid the 'Matthew Effect' (The Rich get Richer). If we only show 'Popular' things, they stay popular forever because they get all the clicks. We must 'Inject' random new content periodically (Exploration) to see if it's better than the current popular stuff."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "No algorithm is perfect. That's why Search Engines are constantly changing—they are trying to find the perfect mix of 'Trust' (popular) and 'News' (new)."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "For highly dynamic sites, I'd use 'Diversity-aware' ranking. This ensures that the first 5 results aren't all by the same person or about the same topic, giving new and niche content a 'Fair shot' to reach the user."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An optimization problem in information retrieval to order documents based on both their historical engagement and their current novelty."
+                        }
+                    ]
+                },
+                {
+                    "id": 87,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Advanced",
+                    "question": "Scenario: Your CEO wants an AI to 'Predict exactly when a machine will break' with 100% certainty. How do you respond?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "I'd explain that AI doesn't give 'Certainty', it gives 'Probability'. I would say: 'I can't tell you the exact minute, but I can tell you which 5 machines have a 90% risk of breaking this week'."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is a 'Predictive Maintenance' (PdM) problem. I would manage expectations by explaining that real-world noise and 'Unforeseen events' (Black Swans) make 100% certainty impossible. I'd frame the value as 'Reducing Downtime' and 'Maintenance Cost' rather than perfect prophecy."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Survival Analysis / RUL (Remaining Useful Life). I would propose modeling the probability distribution of failure using a 'Weibull distribution'. We provide 'Reliability Intervals'. My KPI would be the reduction in 'MTTR' (Mean Time to Repair) rather than absolute accuracy."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Manage stakeholder expectations by communicating that machine learning outputs are probabilistic, and suggest using confidence intervals or probability scores to prioritize preventive maintenance."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Predicting if someone will catch a cold'. Even if they have a weak immune system (Bad data), they might get lucky and never meet a sick person. We can predict who is 'At Risk', but we can't see every germ (hidden variable)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Reframing absolute predictions into actionable risk probabilities and confidence levels."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The CEO's request for 100% is dangerous. If you say 'Yes' and the machine breaks anyway, you lose trust. If you say 'No', you sound like a failure. The correct path is to show a 'Heatmap' of risk—showing that the AI is a 'Decision Support Tool' for human mechanics, not a replacement for them."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "AI is a calculator for 'Likelihood'. It helps you gamble with better odds, but it doesn't know the future."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "I'd implement 'Explainable PdM'. If the AI says a machine is at risk, it should also say 'Because the vibration in Gear 3 is 20% higher than last month'. This makes the prediction believable and gives the mechanics a place to start looking."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Managing unrealistic expectations by explaining the probabilistic nature of machine learning algorithms."
+                        }
+                    ]
+                },
+                {
+                    "id": 88,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Advanced",
+                    "question": "Scenario: You are given 100,000 User Reviews and told to 'Summarize the Top 3 Complaints' by tomorrow morning. What do you do?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "I would use 'Topic Modeling' (LDA) to group the reviews into 10 categories. Then I'd look at the biggest categories and read 5 examples from each to understand the complaints. This avoids reading all 100,000 by yourself!"
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I'd use a fast 'Zero-shot' or 'Few-shot' classifier (like a distilled LLM) to categorize reviews into buckets. Alternatively, I'd use 'Latent Dirichlet Allocation' (LDA) to find the most frequent clusters of words. I'd then extract the top 'Negative' sentiment reviews from the largest clusters to find the specific complaints."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Workflow: 1. Preprocessing (Lemmatization, Stop-word removal). 2. Embeddings (Sentence-BERT) to cluster similar reviews in 3D space using HDBSCAN. 3. Summarization: Pick the 2 reviews at the center of the 3 largest clusters as the 'Representative Complaints'."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Utilize natural language processing techniques such as sentiment analysis and clustering (e.g., K-means or LDA) to identify predominant themes in large textual datasets under time constraints."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Counting grains of sand'. You don't count every grain; you 'Sieve' them into piles (Clustering) by size and color. You then just look at the 3 biggest piles to see what kind of sand you have."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Leveraging unsupervised clustering and topic modeling for rapid text summarization."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "To be truly effective, I'd cross-reference 'Sentiment' with 'Topic'. A huge topic like 'The App' might be 90% positive. A small topic like 'The Login button' might be 100% negative. The Login button is a 'Top Complaint' even if it's not the 'Most Frequent Word'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Computers are better than humans at spotting 'Themes' in a crowd. Use that power to save yourself 40 hours of reading!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "I'd use 'BERTopic'. It uses transformers to create dense clusters that understand 'Meaning' and 'Synonyms', so 'Slow app' and 'Lagging software' are correctly grouped together into a single complaint category."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The application of unsupervised learning to extract high-level themes from unstructured text data."
+                        }
+                    ]
+                },
+                {
+                    "id": 89,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Advanced",
+                    "question": "Scenario: Your model is 10% faster on 'NVIDIA' GPUs but you need it to run on 'AMD' or 'CPU'. What do you do?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "I would use 'ONNX Runtime'. It's a special format that lets you save your model once and then run it on any hardware (NVIDIA, AMD, or CPU) with the best possible speed."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I would move the model to an 'Interoperability' framework. Instead of using CUDA-specific code, I'd use 'TFLite', 'ONNX', or 'OpenVINO' (for Intel CPUs). This de-couples the model logic from the hardware drivers, ensuring portability without a massive rewrite."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Hardware-agnostic deployment. I'd export the weights to 'ONNX' format and use the 'DirectML' or 'ROCm' execution providers for AMD support. For CPUs, I would apply 'Graph Optimizations' (like Layer Fusion) that the specialized runtimes provide."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Export the model to a cross-platform format such as ONNX or use libraries like Apache TVM that allow for multi-target backend compilation."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Translating a book into English'. The original book might have been 'Written by hand for one person' (CUDA), but if you translate it into a 'Global language' (ONNX), anyone in the world can read it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Leveraging cross-platform inference runtimes to bridge the gap between hardware venders."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is a major issue in MLOps called 'Hardware Lock-in'. By using ONNX, you can also benefit from 'Constant Folding'—the runtime pre-calculates parts of the model that never change, making it sometimes even faster than the original raw code."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't hard-code your AI for just one brand of computer. It will come back to haunt you when you want to use a different cloud provider."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "I'd use 'Triton Inference Server'. It can host the same model and dynamically decide whether to run it on a GPU or a CPU based on current server load, ensuring the best user experience at all times."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The abstraction of model execution environments to achieve cross-hardware compatibility."
+                        }
+                    ]
+                },
+                {
+                    "id": 90,
+                    "topic": "Real-World Scenarios",
+                    "difficulty": "Advanced",
+                    "question": "Scenario: You are given a dataset with 5,000 columns. How do you find the 'Top 10' most important ones?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "I would use a 'Random Forest' model and look at its 'Feature Importance' score. It's the fastest way to see which columns the model actually used the most to make its decisions."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "I'd use a multi-step approach. 1. Remove 'Zero Variance' columns (those with only one value). 2. Use 'L1 Regularization' (Lasso) to force coefficients of unimportant features to zero. 3. Look at 'Gini Importances' of an ensemble model to find the final survivors."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Recursive Feature Elimination (RFE). I would iteratively train a model and delete the weakest feature until hanya 10 remain. Alternatively, 'XGBoost Feature Importance' with 'Gain' metric provides a very reliable ranking of which features reduce the entropy most."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Utilize feature selection techniques such as filter methods (Correlation), wrapper methods (RFE), or embedded methods (Lasso/Random Forest) to identify the subset of features that contribute most to the model's predictive accuracy."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Auditioning for a band'. You have 5,000 people enter the room. 1. You cut everyone who can't play an instrument (Zero variance). 2. You have them all play at once and see who stands out (Lasso). 3. You Pick the 10 people who sound the best together (Feature selection)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Applying feature selection pipelines to distill a high-dimensional dataset down to its core signal."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Always check for 'Leakage' here. If one column is perfectly predictive, it might be the 'Answer in disguise' (like including 'Surgery_Result' to predict 'Cancer'). These 'Mirror features' should be deleted immediately even if the model loves them."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Trying to use 5,000 columns will make your computer cry and your model fail. Feature selection is the first thing you should do!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "I'd use 'Boruta-SHAP'. It creates 'shadow features' (randomly shuffled versions of the real features) and only keeps a feature if it performs better than its random shadow, ensuring we only keep 'Real' signals and not coincidences."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The process of identifying the subgroup of variables that provide the highest predictive power in a high-dimensional dataset."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,592 @@
+{
+    "dataset": "JavaScript_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_6",
+            "questions": [
+                {
+                    "id": 51,
+                    "topic": "Edge Cases",
+                    "difficulty": "Advanced",
+                    "question": "Why does `NaN === NaN` return `false` in JavaScript?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because `NaN` (Not-a-Number) is mathematically undefined, so it's not equal to anything, including itself."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In the IEEE 754 floating-point standard, `NaN` is defined as not being equal to any value, including another `NaN`. To check if a value is `NaN`, you should use `Number.isNaN(value)` or `Object.is(value, NaN)`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Strict equality comparison for `NaN` always returns false per the ECMA-262 specification. `NaN` represents a variety of non-representable values; there is no guarantee two 'Not-a-Numbers' resulted from the same invalid operation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "NaN is not equal to itself per IEEE 754 standards."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like asking if 'Gibberish' is equal to 'Nonsense'. They are both invalid, but they aren't the SAME invalid thing."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "NaN is unique in that it is not equal to itself."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is the only value in JavaScript that doesn't satisfy the reflexive property `x === x`. This quirk is why `[NaN].indexOf(NaN)` returns -1 (it uses `===`), but `[NaN].includes(NaN)` returns true."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's just a weird rule in computer math. If you want to check for it, use the special `isNaN()` function."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern engines optimizes this, but the logic remains: any comparison with NaN yields false unless using specific methods like `Object.is`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A NaN value is considered distinct from all other values, including other NaN values."
+                        }
+                    ]
+                },
+                {
+                    "id": 52,
+                    "topic": "Edge Cases",
+                    "difficulty": "Expert",
+                    "question": "Why is `[] == ![]` true in JavaScript?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because of complex type coercion rules where both sides eventually turn into the number 0."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is a classic coercion pitfall. 1. `![]` is `false` (because `[]` is truthy). 2. The expression becomes `[] == false`. 3. To compare an object and a boolean, both are coerced to numbers. `false` becomes `0`, and `[]` (empty array) becomes `0`. Since `0 == 0`, the result is `true`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Abstract Equality Comparison. `![]` performs Boolean conversion -> `false`. Comparison of `Object == Boolean` triggers `toNumber` coercion on both. `Number([])` is `0`; `Number(false)` is `0`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Both sides are coerced to the number 0."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like two different paths leading to the same destination (zero). One path is 'Nothing' and the other is 'Not Something'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Coercion to 0 on both sides."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This highlights why loose equality `==` is dangerous. Many values that appear different (object vs boolean) can be coerced into the same numeric representation."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't try to use double equals `==` with empty boxes and true/false. It makes the computer do some very weird math and give a confusing answer."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This behavior is specified in Section 7.2.14 of the ECMAScript spec."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Implicit type conversion rules convert both operands to number 0 during abstract equality comparison."
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "topic": "Syntax",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Automatic Semicolon Insertion' (ASI) and when can it cause a bug?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's the feature where JS adds semicolons for you, but it can break code if you put a newline in the wrong place."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "ASI is a parser feature that adds semicolons where they are missing to make code valid. A common bug occurs with the `return` statement: if you put the returned value on a new line, ASI inserts a semicolon after `return`, resulting in `undefined` being returned instead of your value."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Grammar rule where a semicolon is inserted if a LineTerminator follows a restricted production (like `return`, `throw`, `break`, `continue`)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Parser inserts semicolons; fails on return statements with newlines."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like an auto-correct that sometimes adds a period in the middle of a sentence because you took a breath (pressed Enter)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Automatic completion of statements; risky with `return`."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "To avoid this, always keep the starting curly brace or the value on the same line as the keyword, or use parentheses to wrap long return values."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "JavaScript tries to fix your missing semicolons, but if you hit Enter after typing 'return', it will think you finished the line and return nothing."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Another pitfall: lines starting with `[` or `(` can be mistakenly parsed as part of the previous line without an explicit semicolon."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "ASI is the process of applying a semicolon to a statement where it is expected but missing."
+                        }
+                    ]
+                },
+                {
+                    "id": 54,
+                    "topic": "Data Types",
+                    "difficulty": "Intermediate",
+                    "question": "What is the output of `typeof NaN`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "\"number\""
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`typeof NaN` returns `\"number\"`. This is counter-intuitive since it stands for 'Not-a-Number', but in computer science terms, it is a numeric value that represents an undefined or unrepresentable result of a math operation."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Returns 'number'. Per specs, NaN is a numeric data type (specifically a Double-Precision 64-bit binary format IEEE 754 value)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "\"number\""
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'None of the above' option on a math test. It's still an answer on a math test, just not a specific digit."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "It is technically of type number."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Because `typeof NaN === 'number'`, you cannot use `typeof` to validate if a value is a valid numeric digit. You must use `Number.isNaN()`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Even though it means 'Not a Number', JavaScript still thinks of it as a number type."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This follows the floating point specification where NaN is a reserved bit pattern within the numeric range."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The typeof operator returns 'number' for a NaN value."
+                        }
+                    ]
+                },
+                {
+                    "id": 55,
+                    "topic": "Objects",
+                    "difficulty": "Advanced",
+                    "question": "What happens when you use an object as a property key in another object (`obj[otherObj]`)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The object is turned into the string \"[object Object]\", so all objects used as keys will overwrite each other."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In regular objects, keys MUST be strings or symbols. If you pass an object as a key, JS calls `.toString()` on it, which returns `\"[object Object]\"`. This means if you use two different objects as keys, they will both map to the same string and overwrite each other. Use a `Map` if you need objects as keys."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Property keys are coerced to strings via the `ToPropertyKey` abstract operation. Most objects serialize to `\"[object Object]\"`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The object is stringified to \"[object Object]\" and used as the key."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like trying to label folders with photos. Instead of a photo, the computer just writes 'A Picture' on the label. Every folder then has the exact same name: 'A Picture'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Stringifies to `\"[object Object]\"`, causing collisions."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is a primary motivation for the ES6 `Map` data structure, which allows true object references to be used as keys without stringification."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "You can't really use a whole object as a name. JavaScript just calls it '[object Object]' and forgets which one it was."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Symbols are the only non-string primitive allowed as a key in standard objects."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "JavaScript objects automatically convert keys to strings, resulting in all objects becoming the string '[object Object]'."
+                        }
+                    ]
+                },
+                {
+                    "id": 56,
+                    "topic": "Functions",
+                    "difficulty": "Intermediate",
+                    "question": "What is the `arguments` object and does it exist in arrow functions?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a list of all things passed to a function. Arrow functions don't have it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The `arguments` object is an array-like object available within regular functions that contains all arguments passed to it. Arrow functions do NOT have their own `arguments` object; they inherit it from the nearest regular function scope."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A local variable available within all non-arrow functions. It is array-like but lacks array methods (`forEach`, `map`). In ES6, Rest parameters (`...args`) are preferred."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Array-like object of parameters; absent in arrow functions."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a logbook of everyone who entered a room. Regular rooms have logbooks; closets (arrow functions) don't—you have to check the logbook of the room they are in."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Array-like params list; not in arrow functions."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Using `arguments` can hinder performance optimizations in some engines. Rest parameters are cleaner, true arrays, and work in arrow functions."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a list of whatever you sent to the function. If you use a `=>` function, it's not there."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In non-strict mode, modifying `arguments[0]` can actually change the named parameter variable itself (syncing)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The arguments object is a local object that contains the indices and values of the parameters passed to a function."
+                        }
+                    ]
+                },
+                {
+                    "id": 57,
+                    "topic": "Arrays",
+                    "difficulty": "Advanced",
+                    "question": "What is the difference between `new Array(3)` and `[3]`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`new Array(3)` creates an empty list with space for 3 things. `[3]` creates a list with the number 3 inside it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "If passed a single number, the `Array` constructor creates an 'Empty' array with that **length**. `new Array(3)` creates `[empty × 3]`. However, the literal `[3]` creates an array with one element (the number 3). This is a confusing inconsistency."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Constructor overloading. Single numeric argument sets `length` property but doesn't initialize indices (Sparse Array). Literal initialization always sets elements."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "new Array(3) creates length 3; [3] creates one element containing 3."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "One buys 3 empty egg cartons. The other buys one carton with one egg labeled '3' inside."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Empty slots (length check) vs Single element array."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Sparse arrays (from `new Array(n)`) behave differently with methods like `.map()` (which ignores empty slots). `Array.from({length: 3})` is a better way to create initialized empty arrays."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The first one is a box that *can* hold 3 things. The second one is a box already holding the number 3."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "`Array.of(3)` was added to solve this, consistently creating `[3]` regardless of input type."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The Array constructor with one numeric argument creates an array with that length. The array literal creates an array with the provided values."
+                        }
+                    ]
+                },
+                {
+                    "id": 58,
+                    "topic": "Scope",
+                    "difficulty": "Intermediate",
+                    "question": "What is an 'Accidental Global' and how to prevent it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when you forget to type `let` or `const`, and the variable becomes available everywhere. Prevent it with `'use strict'`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In non-strict mode, if you assign a value to a variable that hasn't been declared with `var`, `let`, or `const`, JS creates it on the Global object. You prevent this by using `'use strict'` at the top of your file/function."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Implicit global variable creation during RHS lookup failure. The engine defaults to the global environment record. Strict mode turns this into a `ReferenceError`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Undeclared variable becomes global; use strict mode to prevent."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like leaving your trash in the park instead of in your house. Now it's everyone's problem (Global scope)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Missing decl becoming global; solved by strict mode."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Accidental globals can lead to naming collisions and memory leaks since they are never garbage collected until the page closes."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Always use `let` or `const`. If you forget, your data might leak into other parts of your website and break things."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In browsers, this means attaching the variable to the `window` object."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An accidental global occurs when a variable is assigned a value without being declared, making it global."
+                        }
+                    ]
+                },
+                {
+                    "id": 59,
+                    "topic": "Coercion",
+                    "difficulty": "Expert",
+                    "question": "Why does `if ([])` fire, but `[] == true` is false?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because `if` checks for 'truthiness' (all objects are truthy), but `==` uses complex math rules that make the array 0 and the boolean 1."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is the difference between Truthiness and Coercion. 1. `if` converts the operand to a Boolean. All objects (even `[]`) are **Truthy**. 2. `==` (loose equality) coerces both to the same type. `true` becomes `1`, and `[]` becomes `0`. Since `0 !== 1`, it is false."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Boolean conversion in control structures vs Number coercion in abstract equality. `ToBoolean([])` is true. `AbstractEquality([], true)` -> `0 == 1`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Objects are truthy in if; but == coerces to numbers 0 and 1."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "In court, 'Is the suspect present?' is True. But 'Is the suspect a policeman?' is False. Presence (truthy) is not equality."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Presence (truthy) != Numeric Equality (coerced)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is why comparing values directly to booleans (`if (x == true)`) is almost always a mistake in JS. Instead, use the 'truthy' check directly `if (x)`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "The `if` statement just cares if the thing exists. Two equals `==` cares if they are the exact same value."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This is defined in Section 7.2.14 of the spec."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Conditional statements use truthy/falsy logic while the == operator performs complex type coercion."
+                        }
+                    ]
+                },
+                {
+                    "id": 60,
+                    "topic": "Numbers",
+                    "difficulty": "Intermediate",
+                    "question": "What is the result of `1 / 0` and `-1 / 0` in JavaScript?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`Infinity` and `-Infinity`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In JS, division by zero does not throw an error. It returns `Infinity` (for positive numbers) or `-Infinity` (for negative numbers). `0 / 0` returns `NaN`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "IEEE 754 floating point behavior. Division of non-zero finite values by zero yields signed Infinity."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Infinity and -Infinity."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a scale. If you push as hard as possible, the needle just goes to the maximum edge (Infinity)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Signed Infinity (`Infinity` / `-Infinity`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This makes JS math more robust than C or Python (which crash on divide-by-zero), but it can lead to logic errors if you don't check for infinite values."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "JavaScript doesn't crash if you divide by zero. It just says 'Infinity'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can check for these using `isFinite()`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Division by zero in JavaScript results in infinity according to the floating-point standard."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

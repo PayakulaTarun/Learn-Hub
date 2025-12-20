@@ -1,0 +1,592 @@
+{
+    "dataset": "CSS_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_9",
+            "questions": [
+                {
+                    "id": 81,
+                    "topic": "Responsive Design",
+                    "difficulty": "Intermediate",
+                    "question": "For responsive images, why is `max-width: 100%` preferred over `width: 100%`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`width: 100%` stretches small images to be blurry. `max-width: 100%` shrinks big images but lets small images stay small."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`width: 100%` forces the image to always match the container width, potentially upscaling it beyond its intrinsic resolution (pixelation). `max-width: 100%` ensures the image shrinks if the container is too small, but never grows larger than its original file size."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`max-width` respects the intrinsic dimensions. If the container > intrinsic width, the image renders at natural size. `width: 100%` ignores intrinsic size mostly."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "max-width prevents small images from being stretched."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Width 100% is 'Expand gas to fill the room'. Max-width 100% is 'Fit in the room, but don't grow taller than you are'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Prevents upscaling artifacts."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "You usually combine this with `height: auto` to preserve the aspect ratio during resizing."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It keeps the picture clear. The other way makes small pictures look blurry because it stretches them."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern solution: `object-fit: cover` allows `width: 100%` to work safely without distorting aspect ratios (though it clips content)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Image scales down to fit the parent container but never gets bigger than original."
+                        }
+                    ]
+                },
+                {
+                    "id": 82,
+                    "topic": "Layout Patterns",
+                    "difficulty": "Advanced",
+                    "question": "How do you maintain a 16:9 aspect ratio box using only CSS?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Use `aspect-ratio: 16 / 9;`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The modern way is `aspect-ratio: 16 / 9`. The legacy 'Padding Hack' involved setting `height: 0` and `padding-bottom: 56.25%` (9/16 = 0.5625) because percentage padding is calculated based on the parent's width."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Standard: `aspect-ratio` property. Legacy: `padding-top` or `padding-bottom` percentage hack. This works because standard block model vertical padding percentages refer to the logical width of the containing block."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "aspect-ratio: 16/9;"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like a TV screen. You tell it 'For every 16 inches wide, be 9 inches tall'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "`aspect-ratio` property or padding-bottom hack."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The padding hack is still prevalent in older codebases (iframe video embeds) but is functionally obsolete in modern browsers."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "There is a new command `aspect-ratio`. Before that, we used a weird math trick with padding."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "If `aspect-ratio` is set, the browser calculates the cross-axis dimension automatically."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Use aspect-ratio: 16 / 9;"
+                        }
+                    ]
+                },
+                {
+                    "id": 83,
+                    "topic": "Responsive Design",
+                    "difficulty": "Intermediate",
+                    "question": "What happens if you omit `<meta name='viewport'>` on a mobile site?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The phone pretends it's a desktop computer and zooms way out, making text tiny."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Mobile browsers default to a virtual viewport width (usually 980px). They render the page at that resolution and shrink it to fit the phone screen, resulting in unreadable text and tiny links. The meta tag forces the width to match the actual device width (`width=device-width`)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The browser uses its fallback layout viewport (980px-1024px). It does NOT trigger media queries meant for mobile (e.g., `max-width: 480px`) because the virtual width is 980px."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The browser zooms out and renders as a desktop site."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like looking at a billboard from a mile away. You have to use binoculars (zoom) to read anything."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Tiny text; mobile media queries won't trigger."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This tag essentially tells the browser 'I have designed this page to fit small screens, please trust me and don't fake the resolution'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Everything looks tiny and you have to pinch-zoom to read."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "`user-scalable=no` is often used here too, but creates accessibility issues by preventing zoom."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Mobile browsers will render the page as if it were a desktop (zoomed out tiny text)."
+                        }
+                    ]
+                },
+                {
+                    "id": 84,
+                    "topic": "Styling",
+                    "difficulty": "Advanced",
+                    "question": "How do you style a scrollbar in Webkit browsers (Chrome/Safari)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Use `::-webkit-scrollbar` pseudo-elements."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "You must use the vendor-prefixed pseudo-elements: `::-webkit-scrollbar` (width), `::-webkit-scrollbar-thumb` (the handle), and `::-webkit-scrollbar-track` (the background). Standard CSS Scrollbar styling (`scrollbar-color`, `scrollbar-width`) is cleaner but has less control."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It requires roughly 3 pseudo-elements to look decent. It is non-standard but widely used. Firefox uses standard properties (`scrollbar-color`) instead."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Using ::-webkit-scrollbar pseudo-elements."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's grabbing the specific parts of the scrollbar widget to paint them."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "`::-webkit-scrollbar` family."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you define `width` on the scrollbar but fail to define the `thumb` or `track`, the scrollbar might disappear entirely."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Chrome has special commands starting with webkit-scrollbar to change color and size."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Hiding scrollbars completely: `::-webkit-scrollbar { display: none; }`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Use ::-webkit-scrollbar pseudo-elements."
+                        }
+                    ]
+                },
+                {
+                    "id": 85,
+                    "topic": "Styling",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Line Clamping' (Truncating text not at a width, but after N lines)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Cutting off text after 3 lines and adding '...'."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "It typically uses a combination of legacy flex properties: `display: -webkit-box;`, `-webkit-line-clamp: 3;`, and `-webkit-box-orient: vertical;`. `overflow: hidden` is also required. There is no standard single property for this yet."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Relies on the non-standard `-webkit-line-clamp` property. Despite the prefix, it is supported in all modern browsers (including Firefox) for compatibility."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Using -webkit-line-clamp property."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like telling the writer 'Stop writing after the 3rd line and put dots'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "`-webkit-line-clamp`."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Before this, JS loops calculating height were the only way to do multi-line truncation."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It cuts the text off after a set number of lines, like exactly 3 lines."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This is purely visual. The text exists in the DOM."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Use -webkit-line-clamp to truncate text to a specific number of lines."
+                        }
+                    ]
+                },
+                {
+                    "id": 86,
+                    "topic": "Layout Patterns",
+                    "difficulty": "Intermediate",
+                    "question": "How do you implement a 'Sticky Footer' (footer stays at bottom if content is short) with Flexbox?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Set body to flex column, min-height 100vh, and give footer `margin-top: auto`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "1. `min-height: 100vh` on the container (usually body). 2. `display: flex; flex-direction: column`. 3. `margin-top: auto` on the footer (or `flex-grow: 1` on the main content). This pushes the footer to the bottom."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`margin: auto` on the cross-axis of a flex container consumes all available free space. In a column flex container, `margin-top: auto` pushes the element to the bottom edge."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Body min-height: 100vh; display: flex; flex-direction: column; footer { margin-top: auto; }"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Margin auto is a spring. It pushes against the content above to shove the footer down."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Flex column + `margin-top: auto` on footer."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Much cleaner than the old method involving negative margins and padding hacks."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Make the page fill the screen verticaly. Tell the footer to shove itself as far down as possible."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Alternatively `main { flex: 1; }` works just as well."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "body { display: flex; flex-direction: column; min-height: 100vh; } footer { margin-top: auto; }"
+                        }
+                    ]
+                },
+                {
+                    "id": 87,
+                    "topic": "Media Queries",
+                    "difficulty": "Intermediate",
+                    "question": "How do you hide the navigation bar only when the user prints the page?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`@media print { nav { display: none; } }`"
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Use a print media query: `@media print`. Inside it, set `display: none` on interaction-only elements like navs, buttons, and ads to save ink and paper."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Targeting the `print` media type. Browsers apply these styles when Ctrl+P is pressed or `window.print()` is called."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "@media print { ... }"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It provides a specific set of instructions just for the printer."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "`@media print`."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "You should also usually set `body { color: black; background: white; }` to ensure contrast."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Tell the printer to ignore the menu buttons."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can also use it to expand links: `a::after { content: ' (' attr(href) ')'; }` so URLs are readable on paper."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Using @media print to hide navigation and ads when the user prints the page."
+                        }
+                    ]
+                },
+                {
+                    "id": 88,
+                    "topic": "Media Queries",
+                    "difficulty": "Intermediate",
+                    "question": "Which media feature detects if the user has requested a Dark Mode theme?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`prefers-color-scheme: dark`"
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`@media (prefers-color-scheme: dark)`. It reads the OS-level system setting (macOS/Windows/Android dark mode)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Values: `light`, `dark` (and future `no-preference`). Allows implementing CSS-only theming without JS toggles."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "prefers-color-scheme"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It asks the operating system 'Are the lights off?'. If yes, it changes the website colors."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "`prefers-color-scheme`."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Best combined with CSS custom properties (variables) for easy switching."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It checks if your phone is in Dark Mode."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "There is also `prefers-reduced-motion` for accessibility."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "@media (prefers-color-scheme: dark) { ... }"
+                        }
+                    ]
+                },
+                {
+                    "id": 89,
+                    "topic": "Tables",
+                    "difficulty": "Intermediate",
+                    "question": "What does `border-collapse: collapse` do?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It turns double borders (cell + table) into single sharp borders."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "By default, tables have 'separate' borders (gaps between cell walls). `collapse` merges adjacent borders into a single line, creating the standard grid look expected in modern data tables."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It changes the border model of the table. In collapse mode, `border-spacing` is ignored. Conflict resolution determines which border style wins if cells differ."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Merges adjacent table borders into a single border."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Instead of two fences between neighbors, they share one fence."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Removes gaps between cell borders."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "It is usually the first line of CSS written for any `<table>` reset."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It makes the grid lines thin and connected instead of double lines."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "`border-radius` on table cells does NOT work if `border-collapse` is `collapse`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Collapse table borders into a single border."
+                        }
+                    ]
+                },
+                {
+                    "id": 90,
+                    "topic": "Forms",
+                    "difficulty": "Advanced",
+                    "question": "How do you create a custom-styled checkbox?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Hide the real checkbox, style a fake one (using `::before`), and link them with a label."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The standard pattern is: 1. Hide the native input (`opacity: 0` or `appearance: none`). 2. Use the associated `<label>` and its `::before` pseudo-element to draw a box. 3. Use the `:checked + label` selector to change the fake box's style."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Relies on the `input:checked` pseudo-class and sibling combinator `+`. DO NOT use `display: none` on the input or keyboard focus checks might fail."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Hide generic input, style label or pseudo-element based on :checked state."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "The real checkbox is the invisible puppet master. The style you see is the puppet."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Hide input; style `label::before`; toggle via `:checked`."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Maintain accessibility by keeping the underlying input focusable (opacity: 0, positioned absolutely off-screen) rather than removing it."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "You make the real checkbox invisible, and draw a pretty square that changes color when the invisible one is clicked."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "`appearance: none` allows styling the element itself in modern browsers without the label hack, but support varies."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Developers hide the default checkbox and use ::before on a label to draw a custom box."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

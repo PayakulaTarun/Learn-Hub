@@ -1,0 +1,592 @@
+{
+    "dataset": "JavaScript_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_3",
+            "questions": [
+                {
+                    "id": 21,
+                    "topic": "Functions",
+                    "difficulty": "Intermediate",
+                    "question": "Why do Arrow Functions not have their own `this`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "They borrow `this` from the code around them."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Arrow functions were designed to simplify lexical scoping. They do not get their own `this` context; they inherit the `this` from the parent scope (lexical scope) at the time of definition, making them perfect forcallbacks where you want to access the parent's properties."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "They lack the `[[Construct]]` method and `prototype` property. Their `this` binding is resolved lexically via the scope chain."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "They inherit `this` from the enclosing lexical scope."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Regular functions are like people with their own phone. Arrow functions are like children who have to ask their parents to use the phone."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Lexical binding from parent scope."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This solves the classic `var self = this;` hack required in ES5 when using callbacks inside methods."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "They don't have a 'self'. They think 'self' is whatever the thing outside them is."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Because they don't have `this`, `call()`, `apply()`, and `bind()` cannot change their context."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Arrow functions do not bind their own this, arguments, super, or new.target."
+                        }
+                    ]
+                },
+                {
+                    "id": 22,
+                    "topic": "Functions",
+                    "difficulty": "Intermediate",
+                    "question": "What is 'Implicit Return' in an Arrow Function?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "If you leave out the curly braces, it automatically returns the result."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "When an arrow function body is written without curly braces `{}` (a concise body), the expression following the arrow is automatically returned. E.g., `x => x * 2` returns the doubled value."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Omitting the Statement Block implies a return statement for the ExpressionBody."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Automatic return of expression when braces are omitted."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like paying exact change. You don't need a receipt (return statement), the transaction happens instantly."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "No braces = Auto return."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Be careful when returning object literals: `x => { foo: 1 }` fails (parsed as block). You must wrap it: `x => ({ foo: 1 })`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If it's on one line, you don't need to type the word 'return'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "It mimics lambda calculus syntax found in languages like Haskell or Python."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "If the function body is a single expression rather than a block, that expression is returned."
+                        }
+                    ]
+                },
+                {
+                    "id": 23,
+                    "topic": "Arrays",
+                    "difficulty": "Intermediate",
+                    "question": "What is the key difference between `map()` and `forEach()`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`map` gives you a new list. `forEach` just does something for each item."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`map()` creates and returns a NEW array by applying a function to every element. `forEach()` executes a function for every element but returns `undefined` (used for side effects)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`map`: Functional, Immutable (returns new ref), Chainable. `forEach`: Imperative, Mutable/Side-effect based, Non-chainable."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Map returns a new array; forEach returns undefined."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`map` is a factory that takes raw material and outputs products. `forEach` is a janitor that goes room by room cleaning (modifying state)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "`map` returns new array; `forEach` returns void."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Since `map` allocates memory for a new array, using it just to iterate (without using the result) is a performance anti-pattern."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use map if you want to change data and keep it. Use forEach if you just want to loop."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "`map` is chainable (`arr.map().filter()`). `forEach` is terminal."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "map creates a new array populated with the results of calling a provided function. forEach executes a provided function once for each array element."
+                        }
+                    ]
+                },
+                {
+                    "id": 24,
+                    "topic": "Arrays",
+                    "difficulty": "Advanced",
+                    "question": "How does `reduce()` work?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It boils a list of things down to one single thing (like a total)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`reduce()` executes a reducer function on each element of the array, resulting in a single output value (accumulator). It takes two arguments: the callback `(acc, cur) => ...` and an optional `initialValue`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Fold operation. Iterates statefully, passing the return value of the previous iteration (accumulator) to the next."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Accumulates array elements into a single value."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a snowball rolling down a hill. It starts small (initial value) and picks up more snow (elements) as it rolls, becoming one big ball."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Transforms array into a single value via accumulator."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If `initialValue` is omitted, the first element is used as the accumulator, and the loop starts at index 1. This crashes on empty arrays."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It loops through the list and keeps a running total."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "It is the most powerful array method; you can reimplement `map` and `filter` using `reduce`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Executes a reducer function on each element of the array, resulting in a single output value."
+                        }
+                    ]
+                },
+                {
+                    "id": 25,
+                    "topic": "Objects",
+                    "difficulty": "Beginner",
+                    "question": "When must you use Bracket Notation `obj['key']` instead of Dot Notation `obj.key`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "When the key name is stored in a variable."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "1. When the property name is dynamic (stored in a variable). 2. When the property name contains special characters (spaces, hyphens) or starts with a number."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "When the identifier is not valid (e.g., contains syntax violators) or needs runtime evaluation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "For dynamic keys or invalid identifier names."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Dot notation is direct dialing. Bracket notation is looking up a number in the phone book (variable) first."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Dynamic variables or special characters."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "`obj.prop` looks for the literal string 'prop'. `obj[prop]` evaluates the variable `prop` first."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If the key has a space in it, or is inside another variable, use brackets."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Symbol properties also require bracket notation (computed property names)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Bracket notation is required when the property name is an expression or not a valid identifier."
+                        }
+                    ]
+                },
+                {
+                    "id": 26,
+                    "topic": "Strings",
+                    "difficulty": "Intermediate",
+                    "question": "What is the primary benefit of Template Literals (Template Strings)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You can put variables inside text easily."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "They allow embedded expressions (`${var}`), multi-line strings without `\n`, and string interpolation, making code much more readable than traditional string concatenation."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Syntactic sugar for String Interpolation and raw string access. Delimited by backticks (`` ` ``)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Interpolation and multi-line support."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Old strings were like gluing magazine cutouts (`+`). New strings are like writing on a fill-in-the-blank form."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Easy variable interpolation and multi-line text."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Also supports 'Tagged Templates' (`tag`str``), which allows custom parsing of the string components (used by libraries like Styled Components)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "You can press Enter to go to a new line inside the text, and use variables."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Tagged templates allow DSLs (Domain Specific Languages) to be embedded in JS."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "String literals allowing embedded expressions and multi-line strings."
+                        }
+                    ]
+                },
+                {
+                    "id": 27,
+                    "topic": "Math",
+                    "difficulty": "Advanced",
+                    "question": "Why does `0.1 + 0.2 === 0.3` return `false` in JavaScript?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because computers suck at math with decimals."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "JavaScript uses IEEE 754 Double Precision Floating Point numbers. Some decimals (like 0.1) cannot be represented exactly in binary. The result is roughly `0.30000000000000004`, which is not strictly equal to `0.3`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Floating Point Arithmetic Error due to binary mantissa limitation. 0.1 is an infinite repeating fraction in base-2."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Floating point precision errors (IEEE 754)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like trying to write '1/3' as a decimal. You write 0.3333... and eventually stop. If you add it up, you are missing a tiny bit."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "IEEE 754 binary floating point precision error."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Solution: Use `Number.EPSILON` for comparison or multiply to integers (`(1+2)/10`) before adding."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Computers store numbers as 0s and 1s. Some fractions don't fit perfectly, so there is a tiny error."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This is not unique to JS; Python, Java and C++ behave the same."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Floating-point variables have limited precision, leading to rounding errors in arithmetic operations."
+                        }
+                    ]
+                },
+                {
+                    "id": 28,
+                    "topic": "Strings",
+                    "difficulty": "Intermediate",
+                    "question": "Why does `str[0] = 'X'` not change the string?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Strings cannot be changed once created."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Strings in JavaScript are **Immutable**. Primitive values cannot be modified in place. Array-like access (`str[0]`) is read-only. You must create a new string to 'change' it."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Primitives are immutable. No method/assignment can mutate the primitive value held at the memory address."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Strings are immutable primitives."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "A string is like a carving in stone. You can't change a letter; you have to carve a whole new stone."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Strings are immutable."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In strict mode, this assignment might throw an error. In loose mode, it just fails silently."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "You can't change part of a text. You have to replace the whole text."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Contrast with C++ where strings can be mutable char arrays."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Primitive strings are immutable; read-only property access returns values but cannot be assigned."
+                        }
+                    ]
+                },
+                {
+                    "id": 29,
+                    "topic": "Arrays",
+                    "difficulty": "Intermediate",
+                    "question": "What is the result of `['a', 'b', 'c'].splice(1, 1)`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It removes 'b'."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "It modifies the array in-place, removing 1 element starting at index 1. The array becomes `['a', 'c']`. The method returns an array containing the removed element: `['b']`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Mutating method. `splice(start, execution_count, ...items)`. Returns deleted items."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Removes 'b' and returns ['b']."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like cutting a scene out of a film reel."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Mutates array to remove index 1."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Common confusion: `slice` (immutable, returns copy) vs `splice` (mutable, returns removed)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It cuts out the item at position 1."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can also use it to insert items: `splice(1, 0, 'new')`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Changes the contents of an array by removing or replacing existing elements and/or adding new elements in place."
+                        }
+                    ]
+                },
+                {
+                    "id": 30,
+                    "topic": "Objects",
+                    "difficulty": "Intermediate",
+                    "question": "How do you copy an object without `Object.assign` in modern JS?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Use the three dots: `{...obj}`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Use the Object Spread operator `...`. Syntax: `const newObj = { ...oldObj }`. Note: This creates a **shallow copy**. Nested objects are still referenced."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Spread syntax (`...`) enumerable property copying. Shallow clone."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Using Spread operator: {...obj}."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Like dumping the contents of one bag into a new bag."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Spread operator `{ ...obj }`."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "For deep copy, you need `JSON.parse(JSON.stringify(obj))` (hacky) or `structuredClone(obj)` (modern)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use the three dots to spread the old object into a new curly brace."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Spread only copies own, enumerable properties. Prototype chain is lost."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Spread syntax expands an iterable or object into individual elements/properties."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

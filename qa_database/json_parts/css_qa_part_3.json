@@ -1,0 +1,592 @@
+{
+    "dataset": "CSS_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_3",
+            "questions": [
+                {
+                    "id": 21,
+                    "topic": "Layout Legacy",
+                    "difficulty": "Intermediate",
+                    "question": "What is the primary behavior of a floated element (`float: left`)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It moves to the left, and text wraps around its right side."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The element is removed from the normal flow and pushed to the far left of its container. Inline content (like text) flows around it. However, it effectively loses its vertical footprint in the parent context, often causing parent collapse."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It shifts the box to the left or right of the current line box. Content flows down the un-floated side. It requires the 'Clearfix' hack to restore parent height calculation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "The element aligns to the left, allowing text to wrap around it."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a rock in a stream. The rock sits on one side, and the water (text) flows around it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Pushes element to side; text wraps around."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Originally designed only for wrapping text around images (newspaper style), floats were abused for grid layouts for years before Flexbox. A major quirk is that a floated element does not contribute to the height of its parent, necessitating `overflow: hidden` or `clear: both` on the parent."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It makes the image stick to the left, and the text fills in the space next to it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Floats are still useful for 'Shape Outside' effects (`shape-outside`) which allow text to wrap around non-rectangular shapes, something Flexbox cannot do."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The float property specifies that an element should be placed along the left or right side of its container, allowing text and inline elements to wrap around it."
+                        }
+                    ]
+                },
+                {
+                    "id": 22,
+                    "topic": "Layout Legacy",
+                    "difficulty": "Intermediate",
+                    "question": "What is the purpose of the `clear` property?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It stops elements from sitting next to a floated element; it forces them to a new line below."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The `clear` property specifies that an element cannot have floating elements on the specified side (left, right, or both). It is essential for the 'Clearfix' hack to restore document flow after floats."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Values: `left`, `right`, `both`, `none`. `clear: both` pushes the element down until it clears the bottom margin edge of any preceding floated elements."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "It specifies which sides of an element other floating elements are not allowed."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "If Float is 'Parking beside the curb', Clear is seeing the 'No Parking' sign and moving to the next street (line) instead."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Forces element below floated items."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In the pre-Flexbox era, `class='clearfix'` (using `::after { content: ''; clear: both; display: table; }`) was added to almost every container to prevent the layout from collapsing into a single line."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It tells the element 'Do not sit nicely next to the floating image. Go underneath it instead'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The new `display: flow-root` property essentially replaces the need for `clear` hacks by establishing a new Block Formatting Context (BFC) that naturally contains floats."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The clear property specifies what elements can float beside the cleared element and on which side."
+                        }
+                    ]
+                },
+                {
+                    "id": 23,
+                    "topic": "Positioning",
+                    "difficulty": "Advanced",
+                    "question": "Why does `position: absolute` sometimes position itself relative to the entire page and sometimes relative to a parent?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It looks for the nearest parent that has a position (relative, fixed, etc). If it finds none, it uses the Body/HTML."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "An absolutely positioned element is positioned relative to its nearest *positioned* ancestor (an ancestor with any position value other than `static`). If no such ancestor exists, it falls back to the Initial Containing Block (usually the viewport/root)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It traverses the DOM tree upwards. The first parent with `position != static` becomes the reference frame. This is why we commonly set `position: relative` on a parent `div` to trap the absolute child inside it."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "It positions relative to the nearest positioned ancestor."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a teenager looking for an Authority Figure. If the Parent is 'Strict' (Positioned), they listen to the parent. If the Parent is 'Chill' (Static), they ignore them and listen to the Government (Body)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Relative to nearest non-static parent."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This behavior allows for component encapsulation. By setting `position: relative` on a Card component, any `absolute` badge inside it (`top: 0; right: 0`) will stick to the Card's corner, not the Window's corner."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It looks up the family tree. The first parent that isn't 'static' becomes its anchor. If everyone is static, it anchors to the browser window."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Another catch: Transforms (`transform: translate...`) also create a new containing block for fixed/absolute descendants, which can catch developers off guard."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Absolute: Positioned relative to the nearest positioned ancestor."
+                        }
+                    ]
+                },
+                {
+                    "id": 24,
+                    "topic": "Positioning",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between `position: fixed` and `position: sticky`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`fixed` is always locked to the screen. `sticky` scrolls normally until a certain point, then locks."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`fixed` removes the element from the flow and positions it relative to the Viewport (it stays put when scrolling). `sticky` acts like `relative` until a scroll offset is met (e.g., `top: 10px`), at which point it acts like `fixed` within its parent container."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "`fixed`: Viewport-relative, standard layer promotion. `sticky`: Toggles between relative and fixed based on scroll position and parent container boundaries. `sticky` stops sticking when its parent is scrolled out of view."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Fixed is relative to viewport. Sticky allows toggling between relative and fixed states based on scroll position."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Fixed is a sticker on your monitor (doesn't move). Sticky is a fridge magnet—it moves with the door, but stops if it hits a bumper."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Fixed stays on screen; Sticky scrolls then stays."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "`sticky` is heavily dependent on the parent's height. If the parent doesn't have room to scroll, the sticky element won't appear to move. `fixed` has simpler behavior but ignores parent boundaries entirely."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Fixed is glued to the screen glass. Sticky moves with the page but catches itself on the ceiling before it scrolls away."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "`position: sticky` requires a threshold value (like `top: 0`) to work. Without it, it behaves just like `relative`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Fixed: Positioned relative to the viewport. Sticky: Toggles between specific and fixed depending on scroll position."
+                        }
+                    ]
+                },
+                {
+                    "id": 25,
+                    "topic": "Pseudo-classes",
+                    "difficulty": "Beginner",
+                    "question": "What does a CSS Pseudo-class define?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A special state of an element (like when a mouse hovers over it)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A pseudo-class is a keyword added to a selector that specifies a special state of the selected element(s). Examples include `:hover`, `:active`, `:visited`, and `:focus`. It allows styling based on user interaction or DOM history."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It selects elements based on state information that is not contained in the document tree. Syntax: `selector:pseudo-class { ... }`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A special state of an element."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "A class is what you are (Human). A pseudo-class is what you are doing (Human:sleeping, Human:eating)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Styles a special state (hover, focus, etc)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Pseudo-classes increase the power of CSS significantly by allowing conditional logic without JavaScript. Modern ones include logical states like `:checked`, `:valid`, `:empty`, and `:not()`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It lets you change the style when something happens, like clicking or pointing at a button."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Structural pseudo-classes (`:nth-child`) select based on tree position rather than user interaction, but they are still technically 'states' relative to siblings."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A pseudo-class is used to define a special state of an element."
+                        }
+                    ]
+                },
+                {
+                    "id": 26,
+                    "topic": "Pseudo-classes",
+                    "difficulty": "Intermediate",
+                    "question": "In the selector `tr:nth-child(even)`, what does `even` represent?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It selects every 2nd row (2, 4, 6...) creating a striped effect."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The argument `even` is a keyword equivalent to `2n`. It selects elements where the index matches even integers (2, 4, 6, etc.), commonly used for 'Zebra Striping' tables."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It matches elements that have `an+b` siblings before it, where `an+b` evaluates to an even number. 1-based indexing is used."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "It selects even-numbered children (2, 4, 6...)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's asking for 'Every other one', starting from the second."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Selects rows 2, 4, 6, 8..."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Contrast with `:nth-of-type(even)`, which counts only elements of the same tag. `nth-child` counts ALL siblings at that level, then checks if it matches the `tr` tag. This distinction is a famous debugging pitfall."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It picks the even numbers. Row 2, Row 4. Useful for making tables readable."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can also use functional notation: `:nth-child(2n+1)` for odd."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Selects every element that is the nth child of its parent, matching the keyword."
+                        }
+                    ]
+                },
+                {
+                    "id": 27,
+                    "topic": "Pseudo-elements",
+                    "difficulty": "Intermediate",
+                    "question": "Why must you include the `content` property when using `::before` or `::after`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because without it, the pseudo-element essentially doesn't exist and won't render anything."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The `content` property is mandatory for `::before` and `::after`. It defines the generated content. Even if you only want to render a graphical box (color/border), you must set `content: '';` (empty string) to initialize the element in the Render Tree."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The default value of `content` is `normal` (which computes to `none` for pseudo-elements). Setting it to a string, image, or counter creates the anonymous box needed for rendering."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Without the content property, the pseudo-element is not generated."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like creating a file. You have to give it a name (Content), even if the file is empty, or the system ignores it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "It initializes the element; use `content: ''` if purely visual."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This property gives CSS access to the DOM text. You can insert text (`content: 'Hello'`), attribute values (`attr(href)`), or quotes (`open-quote`)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the switch that turns the fake element on. Even if you want a blank box, you have to say `content: ''`."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Common mistake: Adding `width/height` to a pseudo-element but forgetting `content`, leading to hours of debugging."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "::before and ::after DO NOT Work without the content property, even if it's an empty string."
+                        }
+                    ]
+                },
+                {
+                    "id": 28,
+                    "topic": "Pseudo-elements",
+                    "difficulty": "Intermediate",
+                    "question": "What is the syntax difference between `::before` and `:before`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`::` is the modern syntax for Pseudo-elements; `:` is the old syntax (CSS2) or for Pseudo-classes."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "CSS3 introduced the double colon `::` to explicitly distinguish Pseudo-elements (creating new things) from Pseudo-classes (states of existing things). Browsers support single colon `:` for `before/after` for legacy reasons (IE8), but double is standard."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Double colon (`::`) denotes a Pseudo-element (shadow DOM-ish). Single colon (`:`) denotes a Pseudo-class (state). Legacy support maps `:before` to `::before`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Double colon (::) is modern syntax for pseudo-elements. Single colon (:) is for pseudo-classes."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "`:` is for adjectives (Happy, Sad). `::` is for nouns (Arm, Leg)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "`::` is new/correct for elements; `:` is for compatibility."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "You should use `::` for everything except when you must support IE8, in which case you use `:`. For modern dev (IE11+), strictly use `::`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use two colons for fake elements. One colon is for hover states. But browsers understand both."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Note: `:first-child`, `:hover` ALWAYS use one colon. `::first-line`, `::backdrop` ALWAYS use two."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Double colon :: is the modern syntax for pseudo-elements (vs single : for pseudo-classes)."
+                        }
+                    ]
+                },
+                {
+                    "id": 29,
+                    "topic": "Responsive Design",
+                    "difficulty": "Beginner",
+                    "question": "What is the correct syntax for a media query that targets screens smaller than 600px?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "`@media (max-width: 600px) { ... }`"
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "We use the `@media` rule with the `max-width` feature: `@media only screen and (max-width: 600px)`. This applies the styles only when the viewport width is 600px or less."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Type: `@media`. Feature: `(max-width: 600px)`. Operator: `and` (implicitly). Complete: `@media screen and (max-width: 600px)`."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "`@media (max-width: 600px) { ... }`"
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It is an IF statement. IF screen size <= 600, THEN run this code."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Use `(max-width: 600px)`."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is a 'Desktop First' approach (overriding default desktop styles for mobile). In 'Mobile First', you would use `min-width` to target larger screens."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "At media max-width 600. It means 'Do this for phones'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can logical operators now too: `@media (width <= 600px)` is the modern Range Syntax (Level 4), though less supported than `max-width`."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "@media only screen and (max-width: 600px) { ... }"
+                        }
+                    ]
+                },
+                {
+                    "id": 30,
+                    "topic": "Responsive Design",
+                    "difficulty": "Intermediate",
+                    "question": "What is the core difference between 'Mobile-First' and 'Desktop-First' media query strategies?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Mobile-First uses `min-width` (style small then add for big). Desktop-First uses `max-width` (style big then fix for small)."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Mobile-First writes the default CSS for the smallest screens (simplest, lowest bandwidth) and uses `min-width` queries to layer on complexity for Tablets/Desktops. Desktop-First writes for huge screens and uses `max-width` to override/hide things for mobile."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Difference is the base state. Mobile-First = Base is Phone, Query is `min-width`. Desktop-First = Base is Monitor, Query is `max-width`. Mobile-First is preferred for performance (prevents loading large assets on mobile)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Mobile-first uses min-width. Desktop-first uses max-width."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Mobile First is building a shack and adding rooms as you get richer. Desktop First is building a Mansion and boarding up rooms when you lose money."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Mobile First = Start small, add `min-width`."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Mobile-First forces you to focus on valid content priority. It usually results in cleaner code because you ADD layout rules rather than SUBTRACTING/Overriding them."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "One starts with the phone view and expands. The other starts with the computer view and shrinks."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "They should not be mixed randomly. Consistency is key to avoiding 'Breakpoint Hell' where ranges overlap."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Writing styles for mobile devices first (default), then using min-width media queries to add styles for larger screens."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

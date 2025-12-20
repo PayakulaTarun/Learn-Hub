@@ -1,0 +1,592 @@
+{
+    "dataset": "java_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_7",
+            "questions": [
+                {
+                    "id": 61,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is the 'Flyweight' pattern and how does it save memory in Java?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The Flyweight pattern is 'Sharing'. If you have 1,000 blue circles, you don't save the color 'Blue' 1,000 times. You save it once and make all circles look at that one blue bucket."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The Flyweight pattern is a structural design pattern used to minimize memory usage by sharing as much data as possible with similar objects. It's particularly effective when you have a high number of objects that share large portions of 'Intrinsic' state (constant data)."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "It reduces memory footprint by externalizing 'Extrinsic' state (context-dependent data) and caching immutable 'Intrinsic' state in a Factory. This is how JVM optimizes `String` and small `Integer` objects (using a Pool/Cache)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A design pattern used to reduce the number of objects created and decrease memory footprint."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'School Bus'. Each child (Object) needs to get to school. Instead of 50 kids driving 50 cars, they all 'Share' one bus (the Flyweight state). They still have unique names (Extrinsic data), but the travel method (Intrinsic) is shared."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Sharing immutable state across multiple objects to save memory."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Use this only when memory is your primary bottleneck. Because you have to 'Calculate' or pass in the Extrinsic state every time you call a method, you are trading 'Memory' for 'CPU cycles'. In a game with 1 million trees, sharing the 'Texture' and 'Model' is mandatory; keeping 1 million unique copies would crash any PC."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the ultimate recycling program for your code's memory."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Java's `Integer.valueOf(i)` is the perfect example. For values between -128 and 127, it returns a cached object rather than a new one. This is why `Integer a = 10; Integer b = 10; a == b` is true, but `1000 == 1000` is false. The overhead of the Flyweight is the 'Map lookup' in the Factory."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A structural design pattern that lets you fit more objects into the available amount of RAM by sharing common parts of state between multiple objects instead of keeping all of the data in each object."
+                        }
+                    ]
+                },
+                {
+                    "id": 62,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Escape Analysis' and how does it optimize memory allocation?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Escape analysis is the computer realizing: 'Hey, this object never leaves this room!' So instead of putting it in the big Warehouse (Heap), it puts it on the Workdesk (Stack) for faster cleanup."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Escape Analysis is a JIT compiler optimization. It determines if an object's scope is limited to the local method. If the object doesn't 'escape' (isn't returned or passed to another thread), the compiler can allocate it on the 'Stack' instead of the 'Heap', avoiding GC overhead."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A static analysis technique. If an object satisfies 'No-Escape' or 'Arg-Escape', the JVM can perform: 1. Stack Allocation, 2. Scalar Replacement (breaking object into primitives), and 3. Lock Elision (removing unnecessary synchronization)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A compiler optimization that determines if an object's scope can be restricted to the method that created it."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Buying a tool' inside a job site. If you know you'll throw the tool away before you leave (No-Escape), you don't bother 'Registering' it with the main office (the Heap). You just use it and toss it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "JIT optimization that promotes heap objects to the stack if they shouldn't persist."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Scalar Replacement is the most powerful part. If you have a `Point(x, y)` object that doesn't escape, the JVM might not even create the `Point` object at all! It just treats `x` and `y` as two local variables in the CPU registers. This is orders of magnitude faster than Heap allocation."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a secret 'Speed Boost' that Java gives you automatically when you write clean, small methods."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can check if escape analysis is working using `-XX:+PrintEscapeAnalysis`. Note that 'Inlining' is a prerequisite for escape analysis; if the method is too large to be inlined, the JIT might not be able to prove the object doesn't escape."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A method of determining the dynamic scope of pointers, used in the Java HotSpot VM to optimize the storage and synchronization of objects."
+                        }
+                    ]
+                },
+                {
+                    "id": 63,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "Explain 'False Sharing' and how to mitigate it using '@Contended'.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "False sharing is when two CPU cores fight over the same piece of 'Cache' because two different variables are sitting too close to each other. It's like two people trying to write on the same piece of paper at once."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "False Sharing occurs when unrelated variables reside on the same 'Cache Line' (usually 64 bytes). When one core updates its variable, it 'invalidates' the cache for the other core, causing a massive performance hit. Mitigation involves 'Padding' the variables using `@jdk.internal.vm.annotation.Contended`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Performance degradation in multi-threaded systems where CPUs invalidate each other's L1 cache due to locality of distinct variables on a single cache line. Mitigation: use `@Contended` to add padding and ensure variables are allocated on separate cache lines."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A condition where threads on different processors modify variables on the same cache line. Solved via padding or the @Contended annotation."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Neighbors sharing a wall'. If one neighbor hammers a nail (updates variable), the other neighbor's picture falls off (cache invalidation). Adding 'Padding' is like building a much thicker wall so they don't bother each other."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Hardware-level cache contention between cores caused by variable proximity."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Before Java 8, we had to manually add 'Dummy' long variables (e.g., `long p1, p2, p3, p4, p5, p6, p7`) to push variables apart. `@Contended` is much cleaner but is usually restricted to JDK internal classes unless you use the `-XX:-RestrictContended` flag."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's an invisible speed killer on high-end servers with many CPU cores."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This is a major concern in high-performance libraries like 'LMAX Disruptor'. By ensuring each 'tail' and 'head' pointer in a ring buffer sits on its own cache line, they achieve millions of operations per second with near-zero latency."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A scenario where two or more threads on different processors modify different variables which happen to be on the same cache line, causing unnecessary cache coherence traffic."
+                        }
+                    ]
+                },
+                {
+                    "id": 64,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Lock Coarsening' vs 'Lock Biasing'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Lock coarsening is 'Grouping'. Instead of locking and unlocking the door 10 times in 10 seconds, you just lock it once for the whole 10 seconds. Biasing is 'Remembering' the last person who had the key so they don't have to ask for it again."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Lock Coarsening: The JVM merges adjacent synchronized blocks on the same object into one to reduce overhead. Lock Biasing: An optimization where the JVM 'biases' a lock towards the first thread that uses it, allowing that thread to re-enter without hitting the heavy OS-level mutex."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Coarsening: merging serialized regions. Biasing: utilizing the 'Mark Word' in the object header to record thread-id, bypassing CAS operations for uncontended locks. Note: Biased locking has been deprecated/removed in recent JDKs (15+) because it complicated the code and didn't help modern cloud workloads much."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Two JVM optimizations for synchronization. Coarsening (Merging locks); Biasing (Optimizing for single-thread access)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Coarsening is like 'Opening the gate' for a line of 10 cars instead of opening and closing it for every single car. Biasing is like 'The Security Guard' recognizing your face—he doesn't ask for your ID every time you walk in; he just waves you through."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "JVM strategies to reduce synchronization overhead by merging or specializing locks."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Lock coarsening is particularly effective in loops. If you call `StringBuffer.append()` (which is synchronized) 1,000 times in a loop, the JIT compiler will move the lock 'Outside' the loop so you only pay the price of 'Lock acquisition' once instead of 1,000 times."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "These are tricks Java uses to make 'Safe' code run almost as fast as 'Unsafe' code."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern Java now favors 'Adaptive Spinning'. Instead of sleeping immediately (expensive context switch), a thread will 'Spin' (wait in a tiny loop) for a few hundred nanoseconds to see if the lock opens up. This is much faster on high-speed hardware."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Internal JVM mechanisms designed to decrease the latency of synchronization by modifying the scope or implementation of object monitors."
+                        }
+                    ]
+                },
+                {
+                    "id": 65,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "How do 'Primitive Specialized Streams' (IntStream, LongStream) improve performance?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "They skip the 'Wrapping'. Instead of turning every number into a heavy 'Object' (like Integer), they work with the raw, light 'Primitive' numbers directly."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "They avoid 'Autoboxing' and 'Unboxing' overhead. A standard `Stream<Integer>` creates a wrapper object for every number, leading to high heap usage and GC pressure. `IntStream` works directly on `int` primitives, which is much faster and uses less memory."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Eliminates object allocation for intermediate stages. `Stream<Integer>` incurs O(n) memory overhead for wrappers. `IntStream` leverages localized caches and SIMD-like hardware optimizations for primitive arrays much more effectively than object arrays."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Interfaces that allow for streaming operations directly on primitive types, avoiding the performance penalties of autoboxing."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Standard stream is like 'Shipping 1,000 individually boxed eggs'. IntStream is like 'Shipping 1,000 eggs in a single crate'. It's much faster to move the crate than to handle 1,000 little boxes."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Specialized stream versions that avoid boxing overhead for primitive types."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In addition to memory efficiency, specialized streams provide methods that standard streams don't, like `.sum()`, `.average()`, and `.summaryStatistics()`. These methods are highly optimized and avoid the messy `.reduce(0, (a, b) -> a + b)` boilerplate."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you are working with numbers, always look for the stream that starts with the number's name, like 'IntStream'."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Parallelizing `IntStream` is often where you see the biggest wins. Because the data is stored as a contiguous primitive array, the 'Splitter' can perfectly divide the work between CPU cores, whereas a `Stream<Integer>` has to follow pointers to objects scattered across the heap."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Specialized interfaces in the java.util.stream package that define aggregate operations for primitive int, long, and double values."
+                        }
+                    ]
+                },
+                {
+                    "id": 66,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'JIT Inlining' and why is it the most important optimization?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Inlining is 'Copy-Pasting'. If you call a tiny function 1,000 times, the JIT will just paste that function's code directly into your main code so it doesn't have to 'jump' back and forth anymore."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Method Inlining is when the JIT replaces a method call with the actual body of the called method. It's the most critical optimization because it removes 'Method Call Overhead' and enables further optimizations like constant folding and dead code elimination that were blocked by the call boundary."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Merging the callee's intermediate representation into the caller. This eliminates the cost of stack frame management, argument passing, and dynamic dispatch (v-table lookup) for small/frequent methods."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A compiler optimization where a function call is replaced by its body, reducing overhead and enabling further optimizations."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'A Chef having pre-chopped onions'. Instead of putting on a coat and walking to the pantry (Method Call) every time he needs an onion, he just has a pile of them right on his cutting board (Inlining)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Replacing method calls with their bodies to eliminate call overhead and enable further JIT optimizations."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "There is a 'Budget' for inlining. If a method is too large (checked via `-XX:MaxInlineSize`), the JIT will Refuse to inline it. This is why keeping your methods small and focused is not just good for humans, but literally makes your code faster for the machine."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the reason why using simple 'getters' and 'setters' costs almost ZERO performance in Java."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Monomorphic Design' helps inlining. If the JIT sees that an interface only has one active implementation at runtime, it can 'Speculatively' inline that implementation. If a second class is loaded later, the JIT 'De-optimizes' and reverts to the slower dynamic call."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A compiler optimization that replaces a function call site with the body of the called function."
+                        }
+                    ]
+                },
+                {
+                    "id": 67,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "Explain 'Zero-Copy' and how 'MappedByteBuffer' uses it.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Zero-copy is avoiding the 'Middle Man'. Instead of copying data from the Disk to the Kernel, then to Java RAM, then back to the Kernel, you just tell the computer: 'Look at this spot on the disk directly'."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Zero-Copy is a technique for transferring data between resources without the CPU performing the copy between memory buffers. In Java, `FileChannel.map()` creates a `MappedByteBuffer` that maps a file directly into memory, bypassing the need for a 'read' buffer in the application heap."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Utilizes the OS's 'Virtual Memory' subsystem to map file pages into the process address space. It eliminates redundant data copies between kernel space and user space. Methods like `FileChannel.transferTo()` can move data from a file directly to a socket without the CPU touching the data."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A method to improve file transfer performance by skipping manual memory copies by the CPU. Supported by MappedByteBuffer and transferTo()."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Using a Mirror' to see a book. Instead of xeroxing every page (Copying to RAM) and handing it to a friend, you just tilt the mirror so they can look at the book sitting on the table (Zero-copy)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Bypassing intermediate memory buffers for direct data transfer between disk and network."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Zero-copy is the reason why tools like 'Apache Kafka' and 'Netty' are so fast. They can saturate 10GBit networks because the CPU isn't wasting time 'Moving bytes' from point A to point B; it's just 'Switching Pointers'."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a way to let the 'Fastest' parts of the hardware talk to each other directly, ignoring the 'Slow' programmer code."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "A danger with `MappedByteBuffer` is 'Memory-Mapped File corruption'. If a different process changes the file while you are looking at it, your byte buffer contents can change instantly, leading to inconsistent app state or unexpected crashes."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A computer operation in which the CPU does not perform the task of copying data from one memory area to another."
+                        }
+                    ]
+                },
+                {
+                    "id": 68,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'Object Pooling' and when is it an Anti-Pattern?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Object pooling is 'Reusing' objects. Instead of deleting an object and making a new one, you put it in a 'Waiting Room' (the Pool). It's an anti-pattern when the Garbage Collector is actually faster than your room."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Object Pooling is pre-allocating a set of objects and reusing them. It's mandatory for expensive resources like 'Database Connections' or 'Thread Pools'. It's an anti-pattern for lightweight objects like simple Pojos, because managing the pool can be slower than Java's extremely fast modern GC."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Mitigates high allocation/deallocation overhead. It becomes an anti-pattern due to: 1. Increased code complexity, 2. Risk of 'Stale State' (forgotten resets), and 3. Synchronization bottlenecks as threads fight to 'borrow' from the pool."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A software design pattern for resource management. Often used for database connections. It is an anti-pattern for simple objects."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like 'Bowling Shoes'. You don't buy new shoes every time (New Object) and throw them away (GC). You borrow them from a 'Pool'. But if you use pooling for 'Napkins' (small objects), the time you spend checking out a napkin is much longer than just grabbing a new one!"
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Reusing objects to avoid allocation costs, but counter-productive for small, non-expensive objects."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The 'Weak Generational Hypothesis' states that most objects die young. Java's 'Eden Space' allocation is basically just moving a pointer—it's incredibly fast. Trying to build a pool for small objects often results in 'Long-lived' objects that clutter the 'Old Generation', making Full GCs more frequent and slower."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Only pool things that are 'Expensive' or 'Slow' to create, like connection to a server."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Disruptor patterns' use a specialized pool called a 'Ring Buffer'. Instead of borrowing and returning, data is simply overwritten in the same memory slot repeatedly. This prevents object creation entirely, resulting in predictable latencies crucial for trading systems."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A creational design pattern that uses a set of initialized objects kept ready to use, rather than allocated and destroyed on demand."
+                        }
+                    ]
+                },
+                {
+                    "id": 69,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "What is 'StringJoiner' and why is it better than `String.format()`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "StringJoiner is built for one job: gluing things together with commas or brackets. It's much faster than `String.format()` because it doesn't have to 'read' a complicated template every time."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`StringJoiner` (Java 8) is optimized for joining sequences with delimiters, prefixes, and suffixes. `String.format()` is very flexible but extremely slow because it must parse a complex 'Regex-like' format string on every single call."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Uses an internal `StringBuilder` but abstracts the logic of adding delimiters only 'between' elements. For bulk operations, `String.join()` or `Collectors.joining()` (which use `StringJoiner` internally) are the highest performance options for string merging."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A utility class for joining strings with delimiters. More efficient than format() for simple concatenation tasks."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "StringJoiner is a 'Staple Gun'—it does one thing fast. `String.format()` is a 'Multi-tool'—it can do 50 things, but it's heavier and takes longer to set up for a simple staple."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "High-performance utility for building delimited strings without the parsing overhead of format()."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "In performance-critical logging, never use `String.format()` inside the logging call. If the log level is disabled, you still pay for the expensive string formatting before the logger even sees it. `StringJoiner` or direct `+` are better, but 'Parameterized Logging' (`{}`) is the gold standard."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you just want a comma-separated list, use `String.join(\",\", list)`. It's the easiest and fastest way."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Java 8 Streams `.collect(Collectors.joining(\", \", \"[\", \"]\"))` is the most elegant way to use this. It handles empty streams, nulls (with caution), and large data sets with the same high-performance underlying buffer logic."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A class used to construct a sequence of characters separated by a delimiter and optionally starting with a supplied prefix and ending with a supplied suffix."
+                        }
+                    ]
+                },
+                {
+                    "id": 70,
+                    "topic": "Performance & Optimization",
+                    "difficulty": "Advanced",
+                    "question": "Explain 'G1 Garbage Collector' and its 'Pause Time Goal'.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "G1 is a 'Smart Room Cleaner'. Instead of cleaning the whole house at once, it breaks the house into small squares and cleans the 'Dirtiest' squares first to save time."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "G1 (Garbage First) is a server-style collector for large heaps. It divides the heap into regions and prioritizes regions with the most reclaimable data. Its key feature is the `-XX:MaxGCPauseMillis` flag, which lets you tell Java: 'Please don't freeze my app for more than 200ms'."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Incremental, parallel, and concurrent collector. It avoids the 'Full GC' bottleneck of older collectors by using a 'Snapshot-at-the-Beginning' (SATB) algorithm. It targets a high probability of meeting a specified pause time goal."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "A garbage collector designed for multi-processor machines with large memory. It prioritizes regions with the most garbage."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "G1 is like 'An organized Cleaning Crew'. Instead of closing the whole restaurant for 5 hours (Full GC), they clean one table at a time during the shift (Incremental regions) so customers barely notice them."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Region-based collector that prioritizes high-reclamation areas to meet soft real-time pause targets."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The 'Pause Time Goal' is a 'Soft' goal. Java will try its best, but if you set it to '1ms' and you are creating 10GB of data per second, the JVM will fail and eventually do a 'Full GC' anyway. It's a trade-off between throughput and latency."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's the default collector since Java 9 because it's the best 'All-rounder' for modern computers."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "'Humongous Objects' are a G1 pitfall. Any object larger than 50% of a region is treated specially. These objects bypass normal life cycles and can trigger 'Region Fragmentation', forcing the G1 to work much harder and potentially causing long pauses."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A garbage collector that divides the memory into regions and performs garbage collection in those regions concurrently."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

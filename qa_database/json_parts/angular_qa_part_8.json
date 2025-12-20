@@ -1,0 +1,592 @@
+{
+    "dataset": "angular_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_8",
+            "questions": [
+                {
+                    "id": 71,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "How does Angular prevent XSS (Cross-Site Scripting)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "By default, Angular treats all data as untrusted and automatically 'cleans' (sanitizes) it before putting it into the HTML."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Angular has built-in protection against XSS. It automatically sanitizes all values used in property binding, interpolation, and attribute binding. If you try to bind a `<script>` tag, Angular will neutralize it so it doesn't execute."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Angular implements an output escaping strategy. Values from the component are processed through a sanitizer which recognizes safe vs unsafe HTML, styles, and URLs relative to the context."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Automatic data sanitization; treating data as untrusted by default."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a high-security prison where every letter sent to an inmate is read and anything dangerous (like a hidden file or poison) is removed before the prisoner gets it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Built-in automatic sanitization of all data-bound values."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Angular categorizes security contexts into HTML, Style, URL, and ResourceURL. If you use `[src]` or `[innerHTML]`, it applies the specific sanitizer for that context to strip out malicious JS or CSS."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "You don't have to worry about simple hacker tricks because Angular is like an automatic shield for your website."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "The compiler also ensures that templates are statically analyzed, preventing any dynamic execution of strings as code unless developers explicitly bypass the security using DomSanitizer."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A defensive mechanism where data is rendered as text rather than executable script."
+                        }
+                    ]
+                },
+                {
+                    "id": 72,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "When should you use 'DomSanitizer'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "You use it only when you absolutely trust a piece of HTML (like an embedded video) and want to tell Angular 'This is safe, don't clean it'."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "DomSanitizer is used to bypass Angular's default security when you need to bind a value you know is safe but Angular thinks is untrusted. You use methods like `bypassSecurityTrustHtml` or `bypassSecurityTrustResourceUrl`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A service to manually mark a value as safe in a specific context. This is necessary for dynamic iframes, external styles, or trusted HTML snippets from a CMS."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Bypassing security for trusted external content; use with extreme caution."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Security Badge'. If a guest comes without a badge, the guards stop them. If you give them a 'VIP Badge' (DomSanitizer), the guards let them in without questioning."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A service used to bypass security for known-safe dynamic content."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Bypassing security is a major risk. You should only use it on data you control 100%. If you use it on user-generated content, you are creating a massive security hole in your app."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Think of it as a 'Warning' sign. Only use it if you are a pro and know exactly what you are doing."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Instead of using DomSanitizer in the component, it is cleaner to create a custom Pipe that handles the sanitization, keeping the component logic focused on the model."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An Angular service to sanitize and trust potentially dangerous values."
+                        }
+                    ]
+                },
+                {
+                    "id": 73,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "What is 'CSRF' protection in Angular's HttpClient?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a way for your app to prove to the server that the request is actually coming from YOUR website and not a hacker's site."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Angular has built-in support for CSRF protection. HttpClient automatically reads a token from a cookie (usually 'XSRF-TOKEN') and adds it as a header ('X-XSRF-TOKEN') to every outgoing request. The server then validates this token."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Implementation of the Synchronizer Token Pattern. The HttpClientXsrfModule handles the automatic extraction and insertion of anti-forgery tokens."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Cookie-to-Header token mechanism for cross-site request forgery protection."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a secret handshake. The server gives the app a secret code (cookie), and every time the app asks for something, it must show the code in its hand (the header) to prove identity."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Built-in protection against cross-site request forgery using tokens."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "For this to work, the server must set the cookie. Because a hacker's domain cannot read cookies from your domain (due to Same-Origin Policy), only your legitimate Angular app can find the token and put it in the header."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It prevents bad websites from trying to spend your money or delete your data while you are logged into your real account."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "You can customize the cookie and header names using `HttpClientXsrfModule.withOptions()` if your backend uses different naming conventions (like CSRF-TOKEN)."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A security measure to prevent unauthorized commands from being transmitted from a user that the web application trusts."
+                        }
+                    ]
+                },
+                {
+                    "id": 74,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "The 'Single Responsibility Principle' in Components.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It means each component should do only one thing. If yours is doing 50 different things, it's time to split it up."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A component should be responsible for only one piece of the UI or one functional unit. If a component is also handling HTTP, complex sorting, and data management, it becomes unmaintainable and hard to test. Data logic should go to services."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "One of the SOLID principles. Applies to components by ensuring they are focused solely on view orchestration. Business logic belongs in services, and styling belongs in CSS."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Design principle stating an object should have only one reason to change."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a kitchen. You have a specialist for bread, a specialist for meat, and a specialist for dessert. If one person tries to do everything, they get stressed and the food (your code) suffers."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Ensuring each component has one well-defined purpose."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Smaller components are easier to reuse, easier to unit test, and significantly easier for new developers to understand. Aim for components that fit on one screen of code (around 100-200 lines)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't make a 'Giant' component; make lots of little 'smart' components instead."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Following SRP leading to a 'Container-Presenter' pattern, where the container handles the data/logic and the presenter just shows whatever inputs it is given."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An architectural guideline where each class is dedicated to a single functionality."
+                        }
+                    ]
+                },
+                {
+                    "id": 75,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "Why use 'Strict Mode' in Angular projects?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Strict mode enforces more rules while you write code, which helps catch bugs early before they reach your users."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Strict mode enables additional compile-time checks for TypeScript and Angular templates. It catches issues like potential null values, missing properties in types, and illegal template expressions, leading to much more stable production code."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Enables flags like `strictTemplates` and `strictNullChecks`. It forces developers to handle edge cases explicitly and ensures better type safety across the entire application boundary."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Configuration for enhanced type-checking and bug prevention."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like having a very strict proofreader for your book. They might annoy you by pointing out every tiny grammar mistake, but the final published book will be much higher quality."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Enhanced compile-time checks for bug reduction and code quality."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Since Angular v10, strict mode is the recommended default. It makes your code more predictable and allows the CLI to perform better optimizations during the build process."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a 'Pro' mode that makes you a better developer by teaching you not to take lazy shortcuts."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Strict mode is essential for large scale projects where the cost of a 'null pointer' bug in production can be catastrophic for the business."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A project configuration that enables more rigorous type checking and development constraints."
+                        }
+                    ]
+                },
+                {
+                    "id": 76,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "What are 'Smart' vs 'Dumb' (Presentational) Components?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Smart components fetch data and handle logic. Dumb components just take data via @Input and show it on the screen."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "This is a architectural pattern. Smart (Container) components interact with services and state. Dumb (Presentational) components are highly reusable because they only depend on @Input for data and @Output for events, with no knowledge of the rest of the app."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Smart: State-aware, side-effect triggers, often non-reusable. Dumb: Pure, predictable, view-oriented, easily testable via inputs."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Architectural split between data-handling (Smart) and UI-rendering (Dumb) components."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Dumb component is like a TV screen (it doesn't care what show it plays, just how it looks). Smart component is like the DVD player (it knows exactly what data to play and how to get it)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Separation of concerns between data fetching and UI rendering."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "By making most of your UI out of 'Dumb' components, you can easily change your data source or state library (moving from Services to NgRx, for example) without needing to change your UI code."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It helps you organize your code so you don't repeat yourself all over the place."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This pattern is the cornerstone of building design systems. All design system components should be 'Dumb' components to allow them to be used in any application context."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Categorization of components based on their awareness of application state."
+                        }
+                    ]
+                },
+                {
+                    "id": 77,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Advanced",
+                    "question": "Security risk of storing tokens in 'LocalStorage'.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "LocalStorage can be read by any script on your page, so if a hacker gets a small script onto your site, they can steal your user's login token immediately."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "LocalStorage is vulnerable to XSS attacks. Because it's accessible via JavaScript, a malicious script can easily read and exfiltrate your JWT tokens. Secure HTTP-only cookies are generally safer for sensitive tokens as they are inaccessible to JavaScript."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Persistence without security context. Unlike cookies with HttpOnly and Secure flags, LocalStorage has no native mechanism to prevent programmatic access from the same origin."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Token theft via XSS; LocalStorage lacks HttpOnly protection."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "LocalStorage is like leaving your house key under the doormat. Anyone who finds the mat can get the key. An HttpOnly cookie is like keeping the key in a safe that can only be opened by the landlord (the server)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Inherent vulnerability to credential theft through cross-site scripting."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you MUST use LocalStorage, you need a very strong Content Security Policy (CSP) to ensure that no third-party scripts can ever run on your page. But even then, cookies are the industry standard for auth."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Never put a 'master key' where JavaScript can grab it easily."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Using short-lived access tokens in memory and long-lived refresh tokens in HttpOnly cookies is a common compromise for modern SPA security architectures."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A security limitation of the Web Storage API in the context of sensitive data."
+                        }
+                    ]
+                },
+                {
+                    "id": 78,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "What consists of a 'Feature Module'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a module that holds everything for one specific part of your app, like a 'Settings' section or 'Billing' section."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A Feature Module is an NgModule used to organize your application by functionality rather than by file type. It groups relate components, pipes, and services into a cohesive block that can also be lazy-loaded."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Logical partitioning of the application. It helps in managing the complexity of the root module and facilitates 'on-demand' loading for improved performance."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Nesting of components into functional units to avoid bloated primary modules."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Think of a car factory. Instead of having one giant room for everything, you have a module for 'Engine Building', a module for 'Painting', and a module for 'Interior'. Each can work independently."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Encapsulating a specific user-facing feature into a separate module."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Feature modules usually import 'CommonModule' instead of 'BrowserModule', as BrowserModule should only be imported once in the root module (AppModule)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It helps keep your project from becoming a 'messy spaghetti' of files as it grows."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "With Standalone Components, the 'Feature Module' pattern is still valid but implemented as a 'Feature Folder' or a barrel file that groups related standalone components and their routing."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An Angular module focused on a specific feature set."
+                        }
+                    ]
+                },
+                {
+                    "id": 79,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "Best practice: Avoiding 'Logic in Templates'.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Keep your HTML simple. Don't do math or complex 'if' statements inside your HTML tags; do them in the TypeScript file instead."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Logic belongs in the component class, not the template. Templates should be declarative. Putting logic in HTML makes it impossible to unit test, hard to debug, and usually results in worse performance."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Template pollution. Expressions in templates should be simple property accessors or basic conditionals. Complex Boolean logic or data transformations should be handled by getters or methods in the class."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Keep templates declarative; relocate business/UI logic to the backing class."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a TV script. The script (template) should say 'Actor cries', NOT 'Actor's tear duct glands secrete saline solution due to emotional stimulus'. Keep the 'instructions' simple."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Moving logic from HTML to TypeScript classes for better testability."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If you find yourself writing `*ngIf=\"(status === 'active' || user.isAdmin) && !isLoading\"`, you should instead create a getter like `get canShowContent()` in your class and bind to that."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Your HTML is for what to show; your TypeScript is for how to decide it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This is especially true with signals; computed signals allow you to create derived states that are automatically optimized, which you can't do with manual logic in the template."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The separation of concerns between presentation and application logic."
+                        }
+                    ]
+                },
+                {
+                    "id": 80,
+                    "topic": "Security & Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "How to handle 'Sensitive Data' during development?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Never put API keys or secrets in your Angular code, because anyone who visits your website can see them in their browser."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Angular is a client-side framework. Any value in your code—including environment files—is public. Sensitive logic or keys should stay on the backend, and your Angular app should interact with them through secure APIs."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Client-side exposure risk. Secrets should be injected into the server-side environment or handled via an API Gateway/BFF (Backend for Frontend) pattern."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Prohibition of secrets in client-side source code; utilize backend proxies."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Writing an API key in Angular code is like writing your house safe code on your front door. Everyone walking by can see it and use it if they want to."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Keeping all sensitive keys and logic on the server side."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Even if you use an environment file like `environment.prod.ts`, the webpack build will just copy those strings into the `main.js` file. A simple 'Ctrl+F' by a user will reveal your secret."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If it's a secret, it doesn't belong in the browser. Period."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Use CI/CD variable substitution to inject specific non-secret URLs or IDs into the app build, but keep the actual 'secrets' behind a proxy server."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The practice of excluding private credentials from the client-side binary."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

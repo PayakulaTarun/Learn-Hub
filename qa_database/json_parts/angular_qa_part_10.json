@@ -1,0 +1,591 @@
+{
+    "dataset": "angular_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_10",
+            "questions": [
+                {
+                    "id": 91,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Advanced",
+                    "question": "Interview Trap: Why shouldn't you fetch data in the 'constructor'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "The constructor is just for basic setup. If you fetch data there, the component's 'Inputs' (like user IDs) might not be ready yet, causing your code to fail."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The constructor is a TypeScript feature, not an Angular feature. At the time it runs, Angular has not yet initialized the component's data-bound inputs or the template. Fetching data in `ngOnInit` ensures that all inputs are available and the component is ready."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Constructor is for DI resolution only. ngOnInit is the first lifecycle hook where @Input bindings are guaranteed to be resolved, making it the correct locus for initialization logic."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "@Input properties are undefined in constructor; use ngOnInit for initialization."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "The constructor is like a baby being born. They have a name and parents (DI), but they haven't been 'given' anything like clothes or toys yet. ngOnInit is like the first morning at home when they are given their stuff and can start playing."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Constructor lacks access to @Input properties; use lifecycle hooks instead."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Using the constructor for side effects like HTTP makes the component harder to test. You want the constructor to be fast and 'pure' so that you can easily instantiate the component in a test runner without triggering network calls."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Think of it as 'Setup' vs 'Startup'. Setup (constructor) is for getting tools; Startup (ngOnInit) is for doing work."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "In Server-Side Rendering (SSR), some logic in constructors might execute multiple times or in unexpected ways. Sticking to lifecycle hooks provides a more predictable execution model across different platforms."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The architectural distinction between class instantiation and Angular component initialization."
+                        }
+                    ]
+                },
+                {
+                    "id": 92,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Advanced",
+                    "question": "Interview Trap: Can a service be provided in both @Component and @NgModule?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Yes, but if you do, the component and all its children will get their own 'private' copy of the service, while the rest of the app shares a separate copy."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Yes. If provided in @NgModule, it's a singleton for that module. If also provided in @Component, it creates a new instance for that specific component and its children (shadowing). This is often used for state that shouldn't leak out to the whole app."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Hierarchical injection shadowing. Providing at the component level creates an 'Element Injector' instance which takes precedence over the 'Module Injector' instance."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Shadowing occurs; component-level providers create local service instances."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a company having a huge coffee machine in the lobby (NgModule). If a specific department buys their own small coffee machine (Component), the department workers will use the small one, and everyone else keeps using the big one in the lobby."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Local service shadowing via component-level provider registration."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is a powerful pattern for 'reusable widgets' that need their own internal state but might be used multiple times on the same page. Each widget gets its own service instance to keep its data separate."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's how you make a 'mini-app' inside your bigger app that doesn't mess with anyone else's data."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Remember that if a component providing a service is destroyed, its local service instance is also destroyed and garbage-collected, which isn't true for module-level singletons."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The mechanism by which element-level injectors override module-level injectors."
+                        }
+                    ]
+                },
+                {
+                    "id": 93,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Expert",
+                    "question": "What is 'Non-Destructive Hydration' in Angular 17+?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a faster way for a website to start where the browser 'reuses' the HTML sent from the server instead of throwing it away and rebuilding it."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Before, Angular SSR would delete the server-rendered DOM and recreate it from scratch on the client. Non-destructive hydration allows Angular to traverse the existing DOM and attach event listeners/state to it, preventing 'flicker' and improving performance."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "The process of rehydrating the client-side application by associating existing DOM nodes with Angular components without re-executing DOM insertion logic. Avoids layout shifts and reduces CPU usage."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Angular 17 feature; reuses server-rendered DOM; eliminates client-side re-rendering flicker."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a night shift and day shift. The night shift (server) builds a stage. The day shift (client) comes in and instead of tearing down the stage to build a new one, they just put on their costumes and start the play immediately."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A performance feature that reuses server-rendered HTML rather than replacing it."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is a major part of the 'Zoneless' and 'Signals' movement. It ensures that the 'Cumulative Layout Shift' (CLS) metric is significantly improved, which is a key part of Google's Core Web Vitals."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It makes your website feel much more like a smooth 'App' and less like a clunky old website."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Developers must be careful when using direct DOM manipulations (like via jQuery) as these can break the hydration contract, where Angular expects the server-rendered HTML to match the client's initial state exactly."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The mechanism for enabling client-side interactivity on top of server-rendered content."
+                        }
+                    ]
+                },
+                {
+                    "id": 94,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect",
+                    "question": "Interview Trap: Comparing 'ng-template', 'ng-container', and 'ng-content'.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Container is a ghost tag that doesn't show in HTML. Template is a snippet that sits waiting to be used. Content is a slot for outside HTML to fall into."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "ng-container is a grouping element that doesn't add a DOM node. ng-template is a template snippet that isn't rendered unless explicitly invoked (like via *ngIf). ng-content is a placeholder for content projection from a parent."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "ng-container: Logical wrapper for structural directives. ng-template: Defines a template fragment for ViewContainerRef. ng-content: Re-entry point for transclusion."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Container (logical grouping); Template (template definition); Content (content projection)."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Container is an invisible bag to hold things. Template is a blueprint for a house not yet built. Content is a mail slot where someone else can drop a letter into your house."
+                        },
+                        {
+                            "variant_id": 6,
+                            "one_liner": "Grouping (container), Definition (template), and Projection (content) tools."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "One common trap is trying to put a directive on `ng-content` (it won't work). Another is forgetting that `ng-template` is 'dead code' until you tell Angular where to 'stamp' it using `ngTemplateOutlet`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "They all start with 'ng-' but do totally different jobs to help you organize your HTML."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "ng-container is particularly useful when you have multiple structural directives but don't want to create unnecessary `<div>` layers that mess up your CSS Flexbox or Grid layouts."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Three distinct structural and projection elements in the Angular template syntax."
+                        }
+                    ]
+                },
+                {
+                    "id": 95,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Expert",
+                    "question": "What is the 'ViewContainerRef' use case?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a tool that gives you a 'hook' to add or remove components and templates dynamically in your code."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "ViewContainerRef represents a container where one or more views can be attached to a component. It is the primary tool for dynamic component loading and for implementing advanced structural directives like *ngFor or *ngIf."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A container associated with a DOM element that manages internal views. Supports `createComponent` for dynamic components and `createEmbeddedView` for templates."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Service for dynamic component/view management; provides createComponent() method."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like an 'insertion point' in a document. You can place your cursor there and start typing (adding components) or delete text (removing components) as much as you like."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A reference to a container for dynamic component and template management."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "You can get a ViewContainerRef by using `@ViewChild('id', {read: ViewContainerRef})`. This is how modern modal and tooltip libraries are built—they find a container at the bottom of the body and 'spawn' the UI there."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you want to build the next 'Dynamic Widget' system, you'll need to master this."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Using ViewContainerRef for structural directives allows you to control exactly when and where an `ng-template` is rendered, facilitating patterns like 'Delayed Rendering' or 'Conditional Slotting'."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An Angular reference that allows for the programmatically creating and managing views."
+                        }
+                    ]
+                },
+                {
+                    "id": 96,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Advanced",
+                    "question": "The 'In-memory' data service for testing.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a tool that 'fakes' a real database while you're developing, so you don't need a real backend finished to start building your frontend."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "The Angular In-Memory Web API interceptors the HttpClient requests and redirects them to an in-memory database that you define. This is perfect for rapid prototyping and unit testing without needing a live API."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "An HTTP interceptor-based library that implements a REST-like mock backend. It allows for CRUD operations against a local JavaScript object to simulate a production environment."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Library for mocking REST APIs in Angular; used for dev/test."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a 'Training Simulator' for a pilot. You're in a cockpit that looks real (the Angular app), but you aren't actually in the air (no real server); you're just flying in a computer program."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A library for faking back-end API responses locally for testing."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Because it intercepts 'HttpClient' at a low level, your services don't even know they are talking to a fake server. This makes switching to a real API as simple as removing one line from your AppModule."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It helps you build your whole app first, even if your backend friends aren't done with their work yet."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "While useful for dev, it should NEVER be included in a production bundle as it would drastically increase size and expose your mock data publicly."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An implementation of a mock server using HttpClient interceptors."
+                        }
+                    ]
+                },
+                {
+                    "id": 97,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect",
+                    "question": "What is 'ControlValueAccessor' (CVA)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a way to make your own custom UI components (like a fancy color picker) work with Angular's built-in forms and [ngModel]."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "ControlValueAccessor is the bridge between Angular's Form API and a native element in the DOM. By implementing this interface, a custom component can participate in both Template-driven and Reactive forms as if it were a standard `<input>`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "An interface that acts as an adapter. It provides methods like `writeValue`, `registerOnChange`, and `registerOnTouched` to synchronize the component state with the form control."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Interface for integrating custom components with Angular Forms."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like an 'Universal Power Adapter'. It doesn't matter what the plug looks like inside your component; as long as you have the adapter (CVA), you can plug it into any Angular Form 'outlet'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Interface to make custom components work as Angular form controls."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Mastering CVA is essential for building high-quality UI libraries. It allows your library users to use standard features like `validators` and `formControlName` on your custom components."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "This is how you turn a 'fancy slider' into something a form can actually understand and save."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Common pitfalls include failing to handle the 'disabled' state or forgetting to call the 'onTouched' callback, which can make things like form validation behave inconsistently."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An interface that defines how to synchronize a custom form control with a form."
+                        }
+                    ]
+                },
+                {
+                    "id": 98,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Advanced",
+                    "question": "The 'APP_INITIALIZER' token.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a special multi-token that lets you run some code (like loading a config file) BEFORE the application actually starts up."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "APP_INITIALIZER is a DI token that allows you to provide a function that runs when an application is booting up. Angular waits for the resulting Promise or Observable to finish before it renders the root component."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "A multi-provider token for application initialization. Useful for loading remote configuration, pre-calculating state, or initializing third-party SDKs synchronously with the app boot."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Injection token for pre-bootstrap initialization logic."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like the pre-flight checklist for a pilot. You don't take off (start the app) until every single item on the checklist is verified and complete."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "A function called during application startup."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "If your app needs to know its 'Production URL' from a server before it can even show the login page, APP_INITIALIZER is the only place to do it reliably."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Use this if you need to fetch some 'settings' before anything else happens."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Since it's a multi-provider, you can have multiple initializers running in parallel, but keep in mind that slow initializers will increase the app's 'white screen' time for users."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "A DI token used to register one or more initialization functions."
+                        }
+                    ]
+                },
+                {
+                    "id": 99,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Expert",
+                    "question": "What is 'Zone pollution'?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's when you have code running that keeps 'waking up' Angular for no reason, making the browser laggy."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Zone pollution happens when external libraries or asynchronous tasks (like `setInterval`) trigger Angular's change detection far more often than necessary. This is especially problematic with high-frequency events like scrolling or mouse moves."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Unnecessary execution of NgZone.onMicrotaskEmpty cycle caused by un-intercepted async tasks. Results in excessive DOM checking and UI performance degradation."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Performance degradation due to redundant change detection cycles."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a leaky faucet in a house. Even if no one is using the sink, the pump keeps turning on and off because it thinks there's a demand for water. It wasteful and wears out the pump (the CPU)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Redundant change detection cycles triggered by background async tasks."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The fix is to use `ngZone.runOutsideAngular(() => { ... })` for those tasks. This 'hides' the task from Zone.js so it doesn't trigger a global re-render every time it fires."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If your website feels jittery when you move the mouse, you might have zone pollution."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Modern profiling tools in Chrome like the 'Angular DevTools' have a specific Tab that shows exactly which tasks are 'polluting' your zone in real-time."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The inadvertent triggering of change detection by non-essential asynchronous events."
+                        }
+                    ]
+                },
+                {
+                    "id": 100,
+                    "topic": "Advanced Edge Cases & Interview Traps",
+                    "difficulty": "Architect",
+                    "question": "The future of Angular: Standalone, Signals, and SSR convergence.",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Angular is becoming much simpler, faster, and easier to learn by removing old complexities like NgModules and replacing them with Signals and Standalone components."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Angular is evolving toward a 'Zoneless' and 'Module-less' architecture. By combining Standalone components for simplicity, Signals for fine-grained reactivity, and Hydration for SEO/Performance, Angular is closing the gap with modern frameworks while maintaining its powerful enterprise features."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Convergence on a reactive-first, component-based paradigm. This transition reduces bundle overhead by eliminating Zone.js and NgModules, while leveraging Ivy's locality for superior SSR and hydration."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Modern Angular evolution: Standalone components + Signals + Optimized SSR."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a classic luxury car being updated with an electric engine and self-driving features. It's still the same reliable brand you trust, but it's now much faster, quieter, and futuristic."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "The evolution of Angular toward a leaner, more modular, and reactive architecture."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This convergence allows Angular to be 'Scale-Down' friendly (easier for beginners) while remaining 'Scale-Up' dominant (the best for massive enterprise projects). It represents a total reimagining of how Angular works at its core."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you're learning Angular today, you're learning the most advanced version of web development available."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Architecture-level shifts include moving from 'Classes with Hooks' to 'Signal-based State' and 'Functional Router Guards', which further reduces the amount of code developers need to write and maintain."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The strategic roadmap of the Angular framework focusing on developer experience and runtime performance."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

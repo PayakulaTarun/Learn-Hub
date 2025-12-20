@@ -11,8 +11,8 @@ import { roadmaps } from '../../lib/roadmaps';
 import { generatePlan, StudyPlan } from '../../lib/planner';
 import Link from 'next/link';
 
-import { useAuth } from '../../components/Auth/AuthContext';
-import { useAuthGate } from '../../components/Auth/AuthGateContext';
+import { useAuth } from '../../context/AuthContext'; // UPDATED
+import { useRouter } from 'next/router';
 
 export default function PlannerPage() {
   const [step, setStep] = useState(1);
@@ -22,11 +22,11 @@ export default function PlannerPage() {
   const [plan, setPlan] = useState<StudyPlan | null>(null);
   
   const { user } = useAuth();
-  const { openGate } = useAuthGate();
+  const router = useRouter();
 
   const handleGenerate = () => {
     if (!user) {
-        openGate('create a study plan');
+        if(confirm('Login to save your study plan?')) router.push('/login');
         return;
     }
 

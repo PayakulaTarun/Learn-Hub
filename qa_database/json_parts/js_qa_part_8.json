@@ -1,0 +1,592 @@
+{
+    "dataset": "JavaScript_QA_DB",
+    "version": "1.0",
+    "generated_for": "LLM_training_and_retrieval",
+    "parts": [
+        {
+            "part_id": "Part_8",
+            "questions": [
+                {
+                    "id": 71,
+                    "topic": "Security",
+                    "difficulty": "Intermediate",
+                    "question": "What is Cross-Site Scripting (XSS) and how is it prevented?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "XSS is when an attacker puts their own code into your website. You prevent it by cleaning all user inputs and using `textContent` instead of `innerHTML`."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "XSS occurs when malicious scripts are injected into trusted websites. To prevent it: 1. Always sanitize and escape user input. 2. Use safer DOM properties like `textContent` or `innerText`. 3. Implement a strict Content Security Policy (CSP). 4. Use modern frameworks (like React) that escape characters by default."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Vulnerability involving the injection of arbitrary client-side scripts into web pages. Mitigation involves Output Encoding (escaping), Input Validation, and the use of the `HttpOnly` cookie flag to prevent session token theft."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Malicious script injection into web pages. Prevention: Sanitization, CSP, and escaping input."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like someone writing a fake order on a restaurant's chalkboard. When the chef comes in, he follows the fake order and gives the food to the thief."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Malicious script injection via unsanitized user inputs."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "XSS can be 'Stored' (saved on the server, like a comment), 'Reflected' (echoed back in a URL), or 'DOM-based' (happening strictly in the client-side code logic). Each requires different layers of defense-in-depth."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's when hackers trick your website into running their code. Don't let users put HTML or Javascript into your text boxes without checking it first."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Trusted Types API is a modern browser feature designed specifically to prevent XSS by requiring all data passed to 'sink' functions (like innerHTML) to be validated."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "XSS is a security vulnerability where an attacker exploits a web application to send malicious scripts to a different end user."
+                        }
+                    ]
+                },
+                {
+                    "id": 72,
+                    "topic": "Security",
+                    "difficulty": "Advanced",
+                    "question": "Why is the `eval()` function considered a major security risk?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because it runs any text you give it as JavaScript code, which means a hacker could send a string that deletes everything."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`eval()` executes a string as code. If that string contains any user-controlled data, it allows for 'Remote Code Execution' (RCE). Furthermore, it is significantly slower because the JS engine cannot optimize the code, as it doesn't know what will be executed until runtime."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Dynamic code execution. Compromises execution context isolation and inhibits JIT compiler optimizations. It effectively provides an open door for arbitrary script execution."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Enables arbitrary code execution and prevents compiler optimizations."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a police officer who will blindly do whatever a random piece of paper tells him to do, even if it says 'Let the prisoner go'."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Executes strings as code, leading to code injection vulnerabilities."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "The saying 'eval() is evil' exists for a reason: it's rarely necessary. JSON parsing should use `JSON.parse()`, and accessing object properties dynamically should use bracket notation `obj[key]` instead of `eval('obj.' + key)`."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a function that turns words into actions. If someone gives you the 'wrong' words, your code will do things you didn't plan for."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Even indirect `eval` calls (e.g., `(0, eval)(str)`) skip local scope but are still highly vulnerable to cross-site injection."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "eval() evaluates a string as JavaScript code; it's a security risk because it opens a door for malicious scripts to be executed."
+                        }
+                    ]
+                },
+                {
+                    "id": 73,
+                    "topic": "Security",
+                    "difficulty": "Intermediate",
+                    "question": "What is the difference between Input Validation and Input Sanitization?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Validation is saying 'No' to bad input; Sanitization is cleaning the input to make it safe."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Validation checks if the data matches the expected format (e.g., 'Is this a valid email?'). Sanitization modifies the data to remove harmful content (e.g., stripping `<script>` tags). Both should be used together for robust security."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Schema adherence (Validation) vs Output encoding/cleansing (Sanitization). Validation is a filter; Sanitization is a transformer."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Validation: Checking for format. Sanitization: Cleaning/filtering harmful content."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Validation is the bouncer at the club who checks IDs at the door. Sanitization is making everyone leave their weapons at the coat-check before they enter."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Format checking (`Validation`) vs Payload cleaning (`Sanitization`)."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Sanitization is harder because of 'obfuscation' where hackers hide scripts using weird encoding. Validation is usually your first and most effective line of defense."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Validation: Is this an email? Sanitization: Remove any scary hackers' code from this text."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Libraries like 'DOMPurify' are industry-standard for sanitizing HTML in JavaScript to prevent XSS."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Validation ensures data is correct and useful; sanitization cleans data to avoid computer-security problems."
+                        }
+                    ]
+                },
+                {
+                    "id": 74,
+                    "topic": "Communication",
+                    "difficulty": "Advanced",
+                    "question": "How do you securely use `window.postMessage` to communicate between domains?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Always verify who is sending the message by checking `event.origin` and specify exactly who you are sending it to."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Security for `postMessage` relies on two things: 1. **Receiver**: Must check `event.origin` to ensure the sender is trusted. 2. **Sender**: Should specify the `targetOrigin` as a specific URL instead of using `*`. Failing to do so can lead to information leakage or malicious command execution."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Inter-origin communication. Security requires explicit origin whitelisting on the receiver side (`if(e.origin !== "...")`). The wildcard `*` for targetOrigin is a security anti-pattern."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Validate event.origin on receive; specify targetOrigin on send."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like receiving a package from a stranger. You should check the return address (Origin) before you open it and follow the instructions inside."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Verify origin on receipt; specify target on dispatch."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "XSS vulnerabilities in a child iframe can escalate to the parent frame if `postMessage` handlers are not strictly guarded by origin checks."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Check where the message came from before you believe it. If a stranger tells you to do something, don't do it!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Also ensure you are listening for messages on the correct `window` object to prevent 'Message Spanning' attacks."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Secure use of postMessage requires validating the sender's origin and specifying a target origin."
+                        }
+                    ]
+                },
+                {
+                    "id": 75,
+                    "topic": "Security",
+                    "difficulty": "Advanced",
+                    "question": "What is an `HttpOnly` cookie and why should you use it?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "It's a cookie that JavaScript cannot read. This prevents hackers from stealings your login info if they get code onto your page."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "An `HttpOnly` cookie cannot be accessed through the `document.cookie` API. This is one of the best defenses against session theft: even if an attacker successfully executes an XSS attack, they cannot steal the user's session cookie to impersonate them."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Browser-level restriction flag. Prevents client-side scripts from accessing secret tokens. Sent only during HTTP(S) headers."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Prevents JS access to cookies to mitigate XSS impact."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a locked safe at a hotel. Only the hotel manager (the server) has the key; the guests (the website scripts) can see it's there but can't open it."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Cookie flag that blocks JS access, preventing token theft via XSS."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Best practices for session cookies: use `HttpOnly`, `Secure` (HTTPS only), and `SameSite=Strict/Lax` (to prevent CSRF)."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a 'Keep Out' sign for your browser's code. Only the server is allowed to look at that specific piece of data."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Note that this does NOT prevent the browser from sending the cookie automatically on requests; it only stops JS from reading it."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "An HttpOnly cookie is a cookie that cannot be accessed by client-side APIs, such as JavaScript."
+                        }
+                    ]
+                },
+                {
+                    "id": 76,
+                    "topic": "Security",
+                    "difficulty": "Architect-Level",
+                    "question": "What is a Content Security Policy (CSP)?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "A security rule that tells the browser which sources are allowed to run code on the website."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "CSP is an HTTP header that allows site owners to restrict the resources (scripts, images, styles) that a browser can load. It helps mitigate XSS and data injection attacks by explicitly whitelisting trusted domains and blocking inline scripts or `eval()`."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Declarative security layer. Defines a whitelist of trusted sources for various resource types. Implemented via `Content-Security-Policy` header or `<meta>` tag."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Whitelist for controlling allowed resource sources to prevent XSS/injection."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a list of authorized people for an event. If your name (script source) isn't on the list, you don't get through the door."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Browser-enforced whitelist for script and resource sources."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Setting `script-src 'self'` prevents any script from a different domain from running. `unsafe-inline` should be avoided for maximum security."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's a master list of all the places your website is allowed to get its files from. If a hacker tries to load a file from their own site, the browser stops it."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "A 'Report-Only' mode allows you to test policies and see violations in the console without actually breaking the site for users."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "CSP is a security layer that helps detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection."
+                        }
+                    ]
+                },
+                {
+                    "id": 77,
+                    "topic": "Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "What is the 'Principle of Least Privilege' in JavaScript?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Only give a piece of code exactly what it needs to do its job, and nothing more."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "In JS, this means minimizing the scope of variables and functions. Avoid the global scope, use `const` by default, and provide components with only the data/permissions they need to function. This reduces the 'attack surface' and prevents accidental bugs."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Systemic minimization of access rights. Scoping variables to the narrowest possible block/function level. Using closures to encapsulated private state."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Granting only necessary permissions and narrow scope for code units."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "You don't give the pizza delivery guy the keys to your house (Global access). You just open the door and take the pizza (Specific access)."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Minimal permissions/scope required for operation."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "This is why using `let`/`const` (block scope) is superior to `var`. It prevents variables from 'leaking' and potentially being misused in other parts of the script."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Don't share all your variables with everyone. If a function only needs a name, don't give it the whole User object."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "This also applies to 3rd party libraries; only import the specific modules you need."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "The principle of least privilege states that every module must be able to access only the information and resources that are necessary for its legitimate purpose."
+                        }
+                    ]
+                },
+                {
+                    "id": 78,
+                    "topic": "Security",
+                    "difficulty": "Advanced",
+                    "question": "Why is it unsafe to store sensitive data like JWTs in `localStorage`?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "Because any JavaScript on the page can read it. If a hacker gets a script on your site, they can just take your login token."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "`localStorage` is accessible by ANY script running on the same domain. If your site has a single XSS vulnerability, an attacker can stole the sensitive data instantly using `localStorage.getItem()`. Using `HttpOnly` cookies is much safer for sensitive session tokens."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Persistent, un-sandboxed data store. Lack of 'HttpOnly' protection makes any data stored there vulnerable to exfiltration via XSS."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Vulnerability to XSS-based theft, as scripts have full read/write access."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "Storing a secret in `localStorage` is like writing your password on a post-it note and sticking it to the front of your computer monitor."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Vulnerability to XSS theft; no 'HttpOnly' protection available."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Unlike cookies, `localStorage` also doesn't have an expiration date managed by the browser, meaning the token sits there forever unless manually cleared."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "If you put your secrets here, and a hacker puts even one tiny bad script on your page, they get your secrets."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Some teams use a 'Private Window' or in-memory state for tokens, then refresh them from a secure HttpOnly cookie."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Local storage is not secure for sensitive information because it is accessible to any script running in the browser."
+                        }
+                    ]
+                },
+                {
+                    "id": 79,
+                    "topic": "Best Practices",
+                    "difficulty": "Intermediate",
+                    "question": "What is the primary goal of 'Unit Testing' in JavaScript?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "To test each small piece (unit) of your code separately to make sure it works exactly as expected."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "Unit testing verifies the behavior of the smallest testable parts of an application (like a single function) in isolation. It prevents regressions (bugs reappearing), documents how the code is expected to work, and makes refactoring much safer."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Automated verification of logic units. Uses mocks and stubs to isolate the code from external dependencies (databases, networks)."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Verifying individual logic units in isolation to ensure correctness."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like testing every lightbulb in a string separately before you hang the whole string on the house."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Isolating and testing individual functions for correctness."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Tools like Jest or Vitest are popular. High test coverage gives developers the confidence to rewrite internal logic without fearing they will break the whole app."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "It's like a robot that checks your math every time you change your code, so you don't accidentally break something you finished weeks ago."
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "TDD (Test-Driven Development) is a philosophy where you write the test BEFORE the code, forcing you to think about the requirements first."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Unit testing is a software testing method by which individual units of source code are tested to determine whether they are fit for use."
+                        }
+                    ]
+                },
+                {
+                    "id": 80,
+                    "topic": "Security",
+                    "difficulty": "Architect-Level",
+                    "question": "What is a 'Supply Chain Attack' in the context of NPM packages?",
+                    "answer_variants": [
+                        {
+                            "variant_id": 1,
+                            "style": "simple",
+                            "answer": "When an attacker hacks a popular library you use, injecting bad code that then runs on your website."
+                        },
+                        {
+                            "variant_id": 2,
+                            "style": "interview",
+                            "answer": "A supply chain attack happens when a dependency (or a dependency of a dependency) is compromised. An attacker might gain access to a small, popular NPM package and add malicious code (like a credential stealer) that gets automatically pulled into your production builds."
+                        },
+                        {
+                            "variant_id": 3,
+                            "style": "technical",
+                            "answer": "Compromising the upstream source of a dependency. Leveraging transitive dependencies to inject malicious payloads into downstream applications."
+                        },
+                        {
+                            "variant_id": 4,
+                            "style": "exam",
+                            "answer": "Infecting a dependency to compromise all users of that package."
+                        },
+                        {
+                            "variant_id": 5,
+                            "style": "analogy",
+                            "answer": "It's like a poisoned ingredient in a supermarket. Everyone who buys that sauce and cooks with it ends up getting sick, even if their own cooking (code) was perfect."
+                        },
+                        {
+                            "variant_id": 6,
+                            "style": "one_liner",
+                            "answer": "Malicious code injected into 3rd party libraries."
+                        },
+                        {
+                            "variant_id": 7,
+                            "style": "deep_explanation",
+                            "answer": "Mitigation: Use lockfiles (`package-lock.json`), run `npm audit` regularly, and be wary of packages with low maintenance or suspicious owners."
+                        },
+                        {
+                            "variant_id": 8,
+                            "style": "beginner_friendly",
+                            "answer": "Hackers sometimes sneak their code into helpful tools you download from the internet. Always check your tools before using them!"
+                        },
+                        {
+                            "variant_id": 9,
+                            "style": "advanced",
+                            "answer": "Security tools like Snyk help automate the detection of known vulnerabilities in your supply chain."
+                        },
+                        {
+                            "variant_id": 10,
+                            "style": "strict_definition",
+                            "answer": "Supply chain security is a process of protecting the components of a software development and delivery pipeline."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

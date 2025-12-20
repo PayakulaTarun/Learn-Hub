@@ -1,7 +1,6 @@
 import type { AppProps } from 'next/app';
 import '../styles/globals.css';
-import { AuthProvider } from '../components/Auth/AuthContext';
-import { AuthGateProvider } from '../components/Auth/AuthGateContext';
+import { AuthProvider } from '../context/AuthContext';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { AIProvider } from '../context/AIContext';
 import ChatWidget from '../components/AI/ChatWidget';
@@ -23,12 +22,10 @@ import ChatWidget from '../components/AI/ChatWidget';
     return (
       <ErrorBoundary>
         <AuthProvider>
-          <AuthGateProvider>
-             <AIProvider>
-                <Component {...pageProps} />
-                <ChatWidget />
-             </AIProvider>
-          </AuthGateProvider>
+           <AIProvider>
+              <Component {...pageProps} />
+              <ChatWidget />
+           </AIProvider>
         </AuthProvider>
       </ErrorBoundary>
     );

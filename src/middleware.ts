@@ -2,35 +2,39 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const MAX_REQUESTS = 100; // 100 requests per minute per IP
+const MAX_REQUESTS = 100; // General API Limit
+const MAX_AI_REQUESTS = 10; // Stricter AI Limit
 
-// Simple in-memory store (Note: For multi-instance deploy, use Redis/Upstash)
-const ipMap = new Map<string, { count: number; expires: number }>();
+const ipMap = new Map<string, { count: number; aiCount: number; expires: number }>();
 
 export function middleware(request: NextRequest) {
-    // Only protect API routes
     if (!request.nextUrl.pathname.startsWith('/api')) {
         return NextResponse.next();
     }
 
     const ip = request.ip || 'anonymous';
     const now = Date.now();
+    const isAiRoute = request.nextUrl.pathname.startsWith('/api/ai');
 
-    // Clean up
     if (ipMap.has(ip) && ipMap.get(ip)!.expires < now) {
         ipMap.delete(ip);
     }
 
-    const record = ipMap.get(ip) || { count: 0, expires: now + RATE_LIMIT_WINDOW };
+    const record = ipMap.get(ip) || { count: 0, aiCount: 0, expires: now + RATE_LIMIT_WINDOW };
 
+    // Check General Limit
     if (record.count >= MAX_REQUESTS) {
-        return new NextResponse(
-            JSON.stringify({ error: 'Too many requests' }),
-            { status: 429, headers: { 'content-type': 'application/json' } }
-        );
+        return new NextResponse(JSON.stringify({ error: 'Too many requests' }), { status: 429 });
+    }
+
+    // Check AI Limit
+    if (isAiRoute && record.aiCount >= MAX_AI_REQUESTS) {
+        return new NextResponse(JSON.stringify({ error: 'AI Rate limit exceeded. Try again later.' }), { status: 429 });
     }
 
     record.count++;
+    if (isAiRoute) record.aiCount++;
+
     ipMap.set(ip, record);
 
     return NextResponse.next();
