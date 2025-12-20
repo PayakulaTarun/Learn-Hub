@@ -3,6 +3,8 @@ import '../styles/globals.css';
 import { AuthProvider } from '../components/Auth/AuthContext';
 import { AuthGateProvider } from '../components/Auth/AuthGateContext';
 import ErrorBoundary from '../components/ErrorBoundary';
+import { AIProvider } from '../context/AIContext';
+import ChatWidget from '../components/AI/ChatWidget';
 
   // Version Integrity Check
   import { useEffect } from 'react';
@@ -22,7 +24,10 @@ import ErrorBoundary from '../components/ErrorBoundary';
       <ErrorBoundary>
         <AuthProvider>
           <AuthGateProvider>
-            <Component {...pageProps} />
+             <AIProvider>
+                <Component {...pageProps} />
+                <ChatWidget />
+             </AIProvider>
           </AuthGateProvider>
         </AuthProvider>
       </ErrorBoundary>

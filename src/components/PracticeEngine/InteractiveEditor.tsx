@@ -5,6 +5,7 @@ import { executeCode, ExecutionResult } from '../../lib/codeRunner';
 import { useAnalytics } from '../../hooks/useAnalytics';
 import { useAuth } from '../Auth/AuthContext';
 import { useAuthGate } from '../Auth/AuthGateContext';
+import { useAI } from '../../context/AIContext';
 
 const Editor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
@@ -30,6 +31,17 @@ export default function InteractiveEditor({
   submitLabel = "Submit for Review"
 }: InteractiveEditorProps) {
   const [code, setCode] = useState(initialCode);
+  const { updateContext, toggleChat, sendMessage } = useAI();
+
+  // Sync code with AI Brain
+  useEffect(() => {
+    updateContext({
+        currentCode: code,
+        language: language,
+        problemTitle: title
+    });
+  }, [code, language, title]);
+
   const [result, setResult] = useState<ExecutionResult | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
@@ -107,6 +119,15 @@ export default function InteractiveEditor({
           >
             <RotateCcw className="w-4 h-4" />
           </button>
+          
+          <button 
+            onClick={() => { toggleChat(); sendMessage("Explain the current code logic."); }}
+            className="p-2 text-text-muted hover:text-rose-400 transition-colors border border-transparent hover:border-rose-500/20 rounded-lg"
+            title="Explain with AI"
+          >
+            <Zap className="w-4 h-4" />
+          </button>
+
           <button 
             onClick={handleRun}
             disabled={isRunning}
