@@ -41,9 +41,9 @@ export const roadmaps: CareerRoadmap[] = [
                 domain: 'frontend',
                 topics: [
                     { id: 'html-mastery', title: 'HTML5 & Semantic SEO', difficulty: 'Beginner', slug: 'html-semantic-elements', estimatedHours: 6 },
-                    { id: 'css-essentials', title: 'CSS Positioning & Flexbox', difficulty: 'Beginner', slug: 'css-intro', estimatedHours: 8 },
+                    { id: 'css-essentials', title: 'CSS Positioning & Flexbox', difficulty: 'Beginner', slug: 'css-flexbox', estimatedHours: 8 },
                     { id: 'css-grid', title: 'Advanced CSS Grid Layouts', difficulty: 'Beginner', slug: 'css-grid', estimatedHours: 10 },
-                    { id: 'responsive-ui', title: 'Mobile-First & Fluid Design', difficulty: 'Beginner', slug: 'responsive-design', estimatedHours: 12 },
+                    { id: 'responsive-ui', title: 'Mobile-First & Fluid Design', difficulty: 'Beginner', slug: 'css-responsive-design', estimatedHours: 12 },
                 ]
             },
             {
@@ -51,7 +51,7 @@ export const roadmaps: CareerRoadmap[] = [
                 description: 'Mastering the language that drives the client side.',
                 domain: 'frontend',
                 topics: [
-                    { id: 'js-essentials', title: 'JavaScript Execution Context', difficulty: 'Beginner', slug: 'js-introduction', estimatedHours: 15 },
+                    { id: 'js-essentials', title: 'JavaScript Execution Context', difficulty: 'Beginner', slug: 'js-execution-context', estimatedHours: 15 },
                     { id: 'js-async', title: 'Asynchronous JS & APIs', difficulty: 'Intermediate', slug: 'js-async-await', estimatedHours: 20 },
                     { id: 'js-dom', title: 'DOM Manipulation & Events', difficulty: 'Beginner', slug: 'js-dom-manipulation', estimatedHours: 10 },
                 ]
@@ -63,8 +63,8 @@ export const roadmaps: CareerRoadmap[] = [
                 topics: [
                     { id: 'react-intro', title: 'React Fundamentals & JSX', difficulty: 'Beginner', slug: 'react-introduction', estimatedHours: 20 },
                     { id: 'react-hooks', title: 'Hooks & Functional Components', difficulty: 'Intermediate', slug: 'react-hooks-intro', estimatedHours: 25 },
-                    { id: 'state-mgmt', title: 'Redux & Context API', difficulty: 'Intermediate', slug: 'react-state-management', estimatedHours: 30 },
-                    { id: 'react-perf', title: 'React Performance Tuning', difficulty: 'Advanced', slug: 'react-performance', estimatedHours: 20 },
+                    { id: 'state-mgmt', title: 'Redux & Context API', difficulty: 'Intermediate', slug: 'react-context-deep-dive', estimatedHours: 30 },
+                    { id: 'react-perf', title: 'React Performance Tuning', difficulty: 'Advanced', slug: 'react-advanced-performance', estimatedHours: 20 },
                 ]
             }
         ]
@@ -83,8 +83,8 @@ export const roadmaps: CareerRoadmap[] = [
                 domain: 'backend',
                 topics: [
                     { id: 'py-start', title: 'Python for Backend Logic', difficulty: 'Beginner', slug: 'python-introduction', estimatedHours: 12 },
-                    { id: 'node-core', title: 'Node.js Internals & NPM', difficulty: 'Beginner', slug: 'node-js-basics', estimatedHours: 15 },
-                    { id: 'http-protocols', title: 'HTTP, REST & JSON', difficulty: 'Beginner', slug: 'http-fundamentals', estimatedHours: 10 },
+                    { id: 'node-core', title: 'Node.js Internals & NPM', difficulty: 'Beginner', slug: 'js-introduction', estimatedHours: 15 },
+                    { id: 'http-protocols', title: 'HTTP, REST & JSON', difficulty: 'Beginner', slug: 'http-https', estimatedHours: 10 },
                 ]
             },
             {
@@ -93,8 +93,8 @@ export const roadmaps: CareerRoadmap[] = [
                 domain: 'backend',
                 topics: [
                     { id: 'sql-master', title: 'SQL & Relational Algebra', difficulty: 'Intermediate', slug: 'sql-intro', estimatedHours: 20 },
-                    { id: 'nosql-pro', title: 'MongoDB & Document Stores', difficulty: 'Intermediate', slug: 'mongodb-intro', estimatedHours: 15 },
-                    { id: 'orm-concepts', title: 'ORM & Query Performance', difficulty: 'Intermediate', slug: 'database-optimization', estimatedHours: 20 },
+                    { id: 'nosql-pro', title: 'MongoDB & Document Stores', difficulty: 'Intermediate', slug: 'mongodb-introduction', estimatedHours: 15 },
+                    { id: 'orm-concepts', title: 'ORM & Query Performance', difficulty: 'Intermediate', slug: 'mysql-query-optimization', estimatedHours: 20 },
                 ]
             },
             {
@@ -102,9 +102,9 @@ export const roadmaps: CareerRoadmap[] = [
                 description: 'Architecting for reliability and high availability.',
                 domain: 'backend',
                 topics: [
-                    { id: 'auth-sec', title: 'JWT, OAuth & Security', difficulty: 'Intermediate', slug: 'authentication-patterns', estimatedHours: 25 },
-                    { id: 'caching-redis', title: 'Distributed Caching (Redis)', difficulty: 'Advanced', slug: 'caching-mastery', estimatedHours: 20 },
-                    { id: 'system-dist', title: 'Distributed Systems & Messages', difficulty: 'Advanced', slug: 'distributed-systems-intro', estimatedHours: 35 },
+                    { id: 'auth-sec', title: 'JWT, OAuth & Security', difficulty: 'Intermediate', slug: 'authentication-basics', estimatedHours: 25 },
+                    { id: 'caching-redis', title: 'Distributed Caching (Redis)', difficulty: 'Advanced', slug: 'cache-memory', estimatedHours: 20 },
+                    { id: 'system-dist', title: 'Distributed Systems & Messages', difficulty: 'Advanced', slug: 'cn-intro', estimatedHours: 35 },
                 ]
             }
         ]
@@ -122,8 +122,8 @@ export const roadmaps: CareerRoadmap[] = [
                 description: 'Leveraging web skills for mobile.',
                 domain: 'mobile',
                 topics: [
-                    { id: 'rn-basics', title: 'React Native CLI & Core Components', difficulty: 'Beginner', slug: 'react-native-intro', estimatedHours: 25 },
-                    { id: 'mobile-nav', title: 'React Navigation & User Flow', difficulty: 'Beginner', slug: 'mobile-navigation', estimatedHours: 15 },
+                    { id: 'rn-basics', title: 'React Native CLI & Core Components', difficulty: 'Beginner', slug: 'react-introduction', estimatedHours: 25 },
+                    { id: 'mobile-nav', title: 'React Navigation & User Flow', difficulty: 'Beginner', slug: 'react-introduction', estimatedHours: 15 },
                 ]
             },
             {
@@ -131,8 +131,8 @@ export const roadmaps: CareerRoadmap[] = [
                 description: 'Accessing camera, GPS, and sensors.',
                 domain: 'mobile',
                 topics: [
-                    { id: 'device-api', title: 'Native Modules & Bridge', difficulty: 'Intermediate', slug: 'device-apis', estimatedHours: 30 },
-                    { id: 'push-notif', title: 'Push Notifications & Cloud Mess.', difficulty: 'Intermediate', slug: 'fcm-integration', estimatedHours: 20 },
+                    { id: 'device-api', title: 'Native Modules & Bridge', difficulty: 'Intermediate', slug: 'js-web-apis', estimatedHours: 30 },
+                    { id: 'push-notif', title: 'Push Notifications & Cloud Mess.', difficulty: 'Intermediate', slug: 'html-audio-video', estimatedHours: 20 },
                 ]
             }
         ]
@@ -150,7 +150,7 @@ export const roadmaps: CareerRoadmap[] = [
                 description: 'Micro-frontends and optimizations.',
                 domain: 'frontend',
                 topics: [
-                    { id: 'perf-opt', title: 'Web Vitals & Performance Masterclass', difficulty: 'Advanced', slug: 'web-performance-tuning', estimatedHours: 20 },
+                    { id: 'perf-opt', title: 'Web Vitals & Performance Masterclass', difficulty: 'Advanced', slug: 'performance-optimization', estimatedHours: 20 },
                 ]
             }
         ]
@@ -168,7 +168,7 @@ export const roadmaps: CareerRoadmap[] = [
                 description: 'Foundations of game physics.',
                 domain: 'gaming',
                 topics: [
-                    { id: 'vector-math', title: 'Calculus & Vectors for Games', difficulty: 'Intermediate', slug: 'game-math-basics', estimatedHours: 35 },
+                    { id: 'vector-math', title: 'Calculus & Vectors for Games', difficulty: 'Intermediate', slug: 'algorithms-intro', estimatedHours: 35 },
                 ]
             }
         ]
@@ -186,7 +186,7 @@ export const roadmaps: CareerRoadmap[] = [
                 description: 'Understanding decentralization.',
                 domain: 'blockchain',
                 topics: [
-                    { id: 'eth-basics', title: 'Ethereum & Smart Contract Fundamentals', difficulty: 'Intermediate', slug: 'blockchain-intro', estimatedHours: 25 },
+                    { id: 'eth-basics', title: 'Ethereum & Smart Contract Fundamentals', difficulty: 'Intermediate', slug: 'network-security-basics', estimatedHours: 25 },
                 ]
             }
         ]
@@ -204,7 +204,7 @@ export const roadmaps: CareerRoadmap[] = [
                 description: 'Mastering visualization tools.',
                 domain: 'data',
                 topics: [
-                    { id: 'tableau-pro', title: 'Advanced Tableau Visualization', difficulty: 'Intermediate', slug: 'tableau-mastery', estimatedHours: 15 },
+                    { id: 'tableau-pro', title: 'Advanced Tableau Visualization', difficulty: 'Intermediate', slug: 'data-visualization-basics', estimatedHours: 15 },
                 ]
             }
         ]
@@ -222,7 +222,7 @@ export const roadmaps: CareerRoadmap[] = [
                 description: 'Modern infrastructure patterns.',
                 domain: 'cloud',
                 topics: [
-                    { id: 'aws-solutions', title: 'AWS Solutions Architecture', difficulty: 'Advanced', slug: 'aws-cloud-designs', estimatedHours: 40 },
+                    { id: 'aws-solutions', title: 'AWS Solutions Architecture', difficulty: 'Advanced', slug: 'cloud-networking', estimatedHours: 40 },
                 ]
             }
         ]
