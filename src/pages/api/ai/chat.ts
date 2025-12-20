@@ -17,10 +17,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await new Promise(resolve => setTimeout(resolve, 800));
 
     try {
-        const responseContent = generateMockResponse(messages, context || {});
+        const rawResponse = generateMockResponse(messages, context || {});
+        let finalContent = rawResponse;
+        let action = null;
+        let path = null;
+
+        // Check if response is a JSON Action
+        if (rawResponse.trim().startsWith('{')) {
+            try {
+                const parsed = JSON.parse(rawResponse);
+                if (parsed.action) {
+                    finalContent = parsed.text;
+                    action = parsed.action;
+                    path = parsed.path;
+                }
+            } catch (e) {
+                // Not valid JSON, ignore
+            }
+        }
+
         return res.status(200).json({
             role: 'assistant',
-            content: responseContent
+            content: finalContent,
+            action,
+            path
         });
     } catch (error) {
         console.error('AI API Error:', error);

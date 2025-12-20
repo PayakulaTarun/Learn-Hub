@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useRouter } from 'next/router';
 import { AIChatMessage, AIContextData } from '../lib/ai/llm';
 
 interface AIContextType {
@@ -32,6 +33,8 @@ export function AIProvider({ children }: { children: ReactNode }) {
         setMessages([{ role: 'assistant', content: 'Chat history cleared. How can I help?' }]);
     };
 
+    const router = useRouter();
+
     const sendMessage = async (content: string) => {
         const userMsg: AIChatMessage = { role: 'user', content };
         setMessages(prev => [...prev, userMsg]);
@@ -51,6 +54,13 @@ export function AIProvider({ children }: { children: ReactNode }) {
             
             const data = await res.json();
             setMessages(prev => [...prev, data]);
+
+            // Handle Navigation Actions
+            if (data.action === 'navigate' && data.path) {
+                setTimeout(() => {
+                    router.push(data.path);
+                }, 1500); // Small delay so user reads "Navigating..."
+            }
         } catch (error) {
             setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I encountered an error connecting to the AI brain.' }]);
         } finally {

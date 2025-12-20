@@ -29,6 +29,18 @@ export const generateMockResponse = (messages: AIChatMessage[], context: AIConte
         const topResult = results[0];
         const secondary = results.slice(1, 3);
 
+        // INTENT DETECTION: "Open X", "Go to X"
+        const isNavigationIntent = /open|go to|show me|navigate/i.test(lastUserMsg);
+
+        // If strong match + specific intent, Trigger Action
+        if (isNavigationIntent && topResult.url) {
+            return JSON.stringify({
+                text: `Navigating to **${topResult.title}**...`,
+                action: 'navigate',
+                path: topResult.url
+            });
+        }
+
         let response = `Here is what I found about **${topResult.title}** from your notes:\n\n> ${topResult.description}...\n\n`;
 
         if (topResult.url) {
