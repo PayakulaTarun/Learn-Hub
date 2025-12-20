@@ -35,15 +35,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsVerified(newUser?.email_confirmed_at ? true : false);
       setLoading(false);
 
-      if (_event === 'SIGNED_IN' && newUser) {
-        // Track login activity
-        await supabase.from('user_activity_events').insert({
-          user_id: newUser.id,
-          event_type: 'login',
-          entity_type: 'session',
-          entity_id: session?.access_token.substring(0, 8),
-          metadata: { last_sign_in: newUser.last_sign_in_at }
-        });
+      if (_event === 'SIGNED_IN' && newUser && session) {
+        // Track login activity via secure API
+        fetch('/api/auth/events', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.access_token}`
+            },
+            body: JSON.stringify({
+                event_type: 'login',
+                entity_type: 'session',
+                entity_id: session.access_token.substring(0, 8),
+                metadata: { last_sign_in: newUser.last_sign_in_at }
+            })
+        }).catch(err => console.error('Failed to log login event:', err));
       }
     });
 
