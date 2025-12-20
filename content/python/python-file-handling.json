@@ -1,0 +1,219 @@
+{
+  "title": "Python File Handling - Complete Guide",
+  "slug": "python-file-handling",
+  "subject": "Python",
+  "category": "python",
+  "level": "Intermediate",
+  "estimated_read_time": "17 minutes",
+  "prerequisites": [
+    "Python strings and methods",
+    "Python lists and loops",
+    "Understanding of file system concepts",
+    "Exception handling basics (helpful but not required)"
+  ],
+  "learning_objectives": [
+    "Understand file operations and modes in Python",
+    "Read data from files using various methods",
+    "Write and append data to files",
+    "Use with statement for proper resource management",
+    "Work with different file formats (text, CSV, JSON)",
+    "Handle file-related errors gracefully",
+    "Apply file handling to real-world scenarios"
+  ],
+  "theory": "## What is File Handling?\n\n**File handling** is the process of reading from and writing to files on disk. Essential for data persistence.\n\n### Real-Life Analogy\n\nThink of files like **notebooks**:\n- **Open** notebook to use it\n- **Read** existing content\n- **Write** new content\n- **Append** to existing notes\n- **Close** when done\n\nPython file handling works the same way.\n\n### Why File Handling?\n\n1. **Data Persistence**: Save data between program runs\n2. **Large Datasets**: Process data too big for memory\n3. **Logs**: Record program activity\n4. **Configuration**: Store settings\n5. **Data Exchange**: Share data with other programs\n\n---\n\n## File Modes\n\n### Common File Modes\n\n| Mode | Name | Purpose | Creates if Missing | Overwrites |\n|------|------|---------|-------------------|------------|\n| **'r'** | Read | Read only | ❌ Error | N/A |\n| **'w'** | Write | Write only | ✅ Yes | ✅ Yes |\n| **'a'** | Append | Append only | ✅ Yes | ❌ No |\n| **'r+'** | Read/Write | Read and write | ❌ Error | ❌ No |\n| **'w+'** | Write/Read | Write and read | ✅ Yes | ✅ Yes |\n| **'a+'** | Append/Read | Append and read | ✅ Yes | ❌ No |\n\n### Binary Mode\n\nAdd 'b' for binary files:\n- **'rb'**: Read binary\n- **'wb'**: Write binary\n- **'ab'**: Append binary\n\n```python\n# Text mode (default)\nfile = open('data.txt', 'r')\n\n# Binary mode\nfile = open('image.png', 'rb')\n```\n\n### Mode Selection Guide\n\n**Want to:**\n- **Read existing file**: Use `'r'`\n- **Create new file / overwrite**: Use `'w'`\n- **Add to existing file**: Use `'a'`\n- **Read AND write**: Use `'r+'` or `'w+'`\n- **Work with images/PDFs**: Add `'b'` (binary)\n\n---\n\n## Opening and Closing Files\n\n### Basic Syntax\n\n```python\n# Open file\nfile = open('filename.txt', 'mode')\n\n# Use file\n# ...\n\n# IMPORTANT: Close file\nfile.close()\n```\n\n### Why Close Files?\n\n- **Release resources**: Free up system memory\n- **Save changes**: Ensure data is written\n- **Avoid corruption**: Prevent data loss\n- **File locks**: Allow other programs to access\n\n### Problem: Forgetting to Close\n\n```python\n# ❌ Bad: What if error occurs?\nfile = open('data.txt', 'r')\ndata = file.read()\nprocess(data)  # If this errors, file never closes!\nfile.close()\n```\n\n---\n\n## The 'with' Statement\n\n**Best practice**: Always use `with` statement!\n\n### Syntax\n\n```python\nwith open('filename.txt', 'mode') as file:\n    # Use file here\n    data = file.read()\n# File automatically closed here!\n```\n\n### Benefits\n\n1. ✅ **Automatic closing**: Even if error occurs\n2. ✅ **Cleaner code**: No manual close()\n3. ✅ **Exception safe**: Closes in finally block\n4. ✅ **Best practice**: Recommended by PEP 8\n\n### Comparison\n\n```python\n# ❌ Manual close (error-prone)\nfile = open('data.txt', 'r')\ntry:\n    data = file.read()\nfinally:\n    file.close()\n\n# ✅ with statement (automatic, safe)\nwith open('data.txt', 'r') as file:\n    data = file.read()\n```\n\n---\n\n## Reading Files\n\n### Method 1: read() - Entire File\n\n```python\n# Read entire file as single string\nwith open('data.txt', 'r') as file:\n    content = file.read()\n    print(content)\n```\n\n**Use when**: Small files, need entire content.\n\n### Method 2: readline() - One Line at a Time\n\n```python\n# Read one line\nwith open('data.txt', 'r') as file:\n    line1 = file.readline()  # First line\n    line2 = file.readline()  # Second line\n    print(line1)\n    print(line2)\n```\n\n**Use when**: Processing line by line, large files.\n\n### Method 3: readlines() - List of Lines\n\n```python\n# Read all lines into list\nwith open('data.txt', 'r') as file:\n    lines = file.readlines()  # ['line1\n', 'line2\n', ...]\n    for line in lines:\n        print(line.strip())  # Remove \n\n```\n\n**Use when**: Need all lines, file not too large.\n\n### Method 4: Iteration (Best for Large Files)\n\n```python\n# Iterate line by line (memory efficient)\nwith open('data.txt', 'r') as file:\n    for line in file:\n        print(line.strip())\n```\n\n**Use when**: Large files, process line by line.\n\n### Reading Comparison\n\n| Method | Returns | Memory | Use Case |\n|--------|---------|--------|----------|\n| `read()` | String | High | Small files |\n| `readline()` | String (one line) | Low | Manual control |\n| `readlines()` | List of strings | High | All lines needed |\n| **Iteration** | String (per line) | **Low** | **Large files** |\n\n---\n\n## Writing Files\n\n### Mode 'w' - Write (Overwrites)\n\n```python\n# Creates new file or overwrites existing\nwith open('output.txt', 'w') as file:\n    file.write(\"Hello, World!\n\")\n    file.write(\"This is line 2\n\")\n```\n\n**Warning**: Mode 'w' **deletes existing content**!\n\n### write() Method\n\n```python\nwith open('data.txt', 'w') as file:\n    file.write(\"Line 1\n\")  # Must add \n manually\n    file.write(\"Line 2\n\")\n    # Returns number of characters written\n```\n\n### writelines() Method\n\n```python\nlines = [\"First line\n\", \"Second line\n\", \"Third line\n\"]\n\nwith open('data.txt', 'w') as file:\n    file.writelines(lines)  # Write list of strings\n```\n\n**Note**: `writelines()` doesn't add newlines automatically!\n\n### Writing Different Data Types\n\n```python\n# Only strings can be written\nwith open('data.txt', 'w') as file:\n    # ❌ file.write(123)  # TypeError!\n    \n    # ✅ Convert to string\n    file.write(str(123) + \"\n\")\n    file.write(f\"Age: {25}\n\")\n```\n\n---\n\n## Appending to Files\n\n### Mode 'a' - Append\n\n```python\n# Add to end of file without deleting\nwith open('log.txt', 'a') as file:\n    file.write(\"New log entry\n\")\n    file.write(\"Another entry\n\")\n```\n\n**Key difference**: Mode 'a' **preserves existing content**, adds to end.\n\n### Append vs Write\n\n```python\n# Mode 'w' - OVERWRITES\nwith open('data.txt', 'w') as file:\n    file.write(\"First\n\")\n# File now contains: \"First\n\"\n\nwith open('data.txt', 'w') as file:\n    file.write(\"Second\n\")\n# File now contains: \"Second\n\" (First is gone!)\n\n# Mode 'a' - APPENDS\nwith open('data.txt', 'a') as file:\n    file.write(\"Third\n\")\n# File now contains: \"Second\nThird\n\"\n```\n\n---\n\n## File Paths\n\n### Absolute vs Relative Paths\n\n```python\n# Absolute path (full path from root)\nfile = open('C:/Users/Alice/Documents/data.txt', 'r')  # Windows\nfile = open('/home/alice/documents/data.txt', 'r')    # Linux/Mac\n\n# Relative path (from current directory)\nfile = open('data.txt', 'r')           # Same directory\nfile = open('files/data.txt', 'r')     # Subdirectory\nfile = open('../data.txt', 'r')        # Parent directory\n```\n\n### Using pathlib (Recommended)\n\n```python\nfrom pathlib import Path\n\n# Create path object\nfile_path = Path('data') / 'files' / 'info.txt'\n\n# Read\nwith open(file_path, 'r') as file:\n    content = file.read()\n\n# Or use Path methods\ncontent = file_path.read_text()  # Read text file\nfile_path.write_text(\"Hello\")    # Write text file\n```\n\n---\n\n## Working with CSV Files\n\n### Reading CSV\n\n```python\nimport csv\n\n# Method 1: csv.reader()\nwith open('data.csv', 'r') as file:\n    csv_reader = csv.reader(file)\n    for row in csv_reader:\n        print(row)  # Each row is a list\n\n# Method 2: DictReader (with headers)\nwith open('data.csv', 'r') as file:\n    csv_reader = csv.DictReader(file)\n    for row in csv_reader:\n        print(row)  # Each row is a dictionary\n        print(row['name'], row['age'])\n```\n\n### Writing CSV\n\n```python\nimport csv\n\n# Method 1: csv.writer()\ndata = [\n    ['Name', 'Age', 'City'],\n    ['Alice', 25, 'NYC'],\n    ['Bob', 30, 'LA']\n]\n\nwith open('output.csv', 'w', newline='') as file:\n    csv_writer = csv.writer(file)\n    csv_writer.writerows(data)\n\n# Method 2: DictWriter\ndata = [\n    {'name': 'Alice', 'age': 25, 'city': 'NYC'},\n    {'name': 'Bob', 'age': 30, 'city': 'LA'}\n]\n\nwith open('output.csv', 'w', newline='') as file:\n    fieldnames = ['name', 'age', 'city']\n    writer = csv.DictWriter(file, fieldnames=fieldnames)\n    writer.writeheader()\n    writer.writerows(data)\n```\n\n---\n\n## Working with JSON Files\n\n### Reading JSON\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)  # Returns Python dict/list\n    print(data['name'])\n    print(data['age'])\n```\n\n### Writing JSON\n\n```python\nimport json\n\ndata = {\n    'name': 'Alice',\n    'age': 25,\n    'skills': ['Python', 'JavaScript', 'SQL']\n}\n\n# Write JSON file\nwith open('output.json', 'w') as file:\n    json.dump(data, file, indent=4)  # indent for pretty printing\n```\n\n### JSON String Conversion\n\n```python\nimport json\n\ndata = {'name': 'Alice', 'age': 25}\n\n# Python → JSON string\njson_string = json.dumps(data, indent=2)\nprint(json_string)\n\n# JSON string → Python\ndata_back = json.loads(json_string)\nprint(data_back['name'])\n```\n\n---\n\n## File Operations\n\n### Check if File Exists\n\n```python\nimport os\nfrom pathlib import Path\n\n# Method 1: os module\nif os.path.exists('data.txt'):\n    print(\"File exists\")\n\n# Method 2: pathlib (recommended)\nfile_path = Path('data.txt')\nif file_path.exists():\n    print(\"File exists\")\n```\n\n### Get File Information\n\n```python\nimport os\nfrom pathlib import Path\n\nfile_path = Path('data.txt')\n\n# Size in bytes\nsize = file_path.stat().st_size\nprint(f\"Size: {size} bytes\")\n\n# Check if file or directory\nprint(f\"Is file: {file_path.is_file()}\")\nprint(f\"Is directory: {file_path.is_dir()}\")\n```\n\n### Rename/Delete Files\n\n```python\nimport os\nfrom pathlib import Path\n\n# Rename\nos.rename('old.txt', 'new.txt')\n# Or\nPath('old.txt').rename('new.txt')\n\n# Delete\nos.remove('file.txt')\n# Or\nPath('file.txt').unlink()\n```\n\n---\n\n## Error Handling\n\n### Common File Errors\n\n```python\ntry:\n    with open('data.txt', 'r') as file:\n        content = file.read()\nexcept FileNotFoundError:\n    print(\"File doesn't exist!\")\nexcept PermissionError:\n    print(\"No permission to read file\")\nexcept Exception as e:\n    print(f\"Error: {e}\")\n```\n\n### Safe File Operations\n\n```python\nfrom pathlib import Path\n\nfile_path = Path('data.txt')\n\n# Check before opening\nif file_path.exists():\n    with open(file_path, 'r') as file:\n        content = file.read()\nelse:\n    print(\"File not found\")\n```\n\n---\n\n## Binary Files\n\n### Reading Binary\n\n```python\n# Read image file\nwith open('image.png', 'rb') as file:\n    binary_data = file.read()\n    print(f\"File size: {len(binary_data)} bytes\")\n```\n\n### Writing Binary\n\n```python\n# Copy binary file\nwith open('source.png', 'rb') as source:\n    with open('copy.png', 'wb') as dest:\n        dest.write(source.read())\n```\n\n### Copy File Function\n\n```python\ndef copy_file(source, destination):\n    with open(source, 'rb') as src:\n        with open(destination, 'wb') as dst:\n            dst.write(src.read())\n\ncopy_file('image.png', 'backup.png')\n```",
+  "syntax": "# Open file\nfile = open('filename.txt', 'mode')\n\n# With statement (recommended)\nwith open('filename.txt', 'mode') as file:\n    # Use file\n    pass\n\n# File modes\n'r'   # Read (default)\n'w'   # Write (overwrites)\n'a'   # Append\n'r+'  # Read and write\n'rb'  # Read binary\n'wb'  # Write binary\n\n# Reading\nfile.read()           # All content\nfile.readline()       # One line\nfile.readlines()      # List of lines\nfor line in file:     # Iterate (best)\n\n# Writing\nfile.write(string)    # Write string\nfile.writelines(list) # Write list\n\n# Close (not needed with 'with')\nfile.close()\n\n# CSV\nimport csv\ncsv.reader(file)\ncsv.writer(file)\n\n# JSON\nimport json\njson.load(file)       # File → Python\njson.dump(data, file) # Python → File",
+  "examples": [
+    {
+      "code": "# Example 1: Reading Entire File\n# Create sample file first\nwith open('sample.txt', 'w') as file:\n    file.write(\"Line 1: Hello\n\")\n    file.write(\"Line 2: World\n\")\n    file.write(\"Line 3: Python\n\")\n\n# Read entire file\nwith open('sample.txt', 'r') as file:\n    content = file.read()\n    print(\"File content:\")\n    print(content)\n    print(f\"Total characters: {len(content)}\")",
+      "output": "File content:\nLine 1: Hello\nLine 2: World\nLine 3: Python\n\nTotal characters: 45",
+      "explanation": "with statement automatically opens and closes file. read() returns entire file as single string. File created in write mode first, then read in read mode."
+    },
+    {
+      "code": "# Example 2: Reading Line by Line (Memory Efficient)\n# Best for large files\nwith open('sample.txt', 'w') as file:\n    for i in range(5):\n        file.write(f\"Line {i+1}\n\")\n\n# Read line by line\nprint(\"Reading line by line:\")\nwith open('sample.txt', 'r') as file:\n    for line_num, line in enumerate(file, 1):\n        print(f\"{line_num}: {line.strip()}\")",
+      "output": "Reading line by line:\n1: Line 1\n2: Line 2\n3: Line 3\n4: Line 4\n5: Line 5",
+      "explanation": "Iterating over file object reads line by line - memory efficient for large files. enumerate() adds line numbers. strip() removes newline characters. File automatically closed after with block."
+    },
+    {
+      "code": "# Example 3: Writing to File\ndata = [\"Python\", \"JavaScript\", \"Java\", \"C++\", \"Ruby\"]\n\n# Write list to file\nwith open('languages.txt', 'w') as file:\n    for lang in data:\n        file.write(lang + \"\n\")\n\nprint(\"Written to file\")\n\n# Read back to verify\nwith open('languages.txt', 'r') as file:\n    print(\"\nFile contents:\")\n    print(file.read())",
+      "output": "Written to file\n\nFile contents:\nPython\nJavaScript\nJava\nC++\nRuby",
+      "explanation": "Mode 'w' creates new file or overwrites existing. Must add \n manually for new lines. write() writes string to file. Second with block reads back to verify content."
+    },
+    {
+      "code": "# Example 4: Append Mode\n# Create initial file\nwith open('log.txt', 'w') as file:\n    file.write(\"2024-01-01: Application started\n\")\n\nprint(\"Initial log created\")\n\n# Append new entries\nwith open('log.txt', 'a') as file:\n    file.write(\"2024-01-02: User logged in\n\")\n    file.write(\"2024-01-03: Data processed\n\")\n\nprint(\"\nLog entries appended\")\n\n# Read complete log\nwith open('log.txt', 'r') as file:\n    print(\"\nComplete log:\")\n    print(file.read())",
+      "output": "Initial log created\n\nLog entries appended\n\nComplete log:\n2024-01-01: Application started\n2024-01-02: User logged in\n2024-01-03: Data processed",
+      "explanation": "Mode 'a' appends to end without deleting existing content. Perfect for logs. Mode 'w' would overwrite. Multiple appends preserve all content in order."
+    },
+    {
+      "code": "# Example 5: Working with JSON\nimport json\n\n# Data to save\nstudent = {\n    'name': 'Alice',\n    'age': 20,\n    'grades': {'math': 90, 'science': 85},\n    'subjects': ['Math', 'Science', 'English']\n}\n\n# Write JSON\nwith open('student.json', 'w') as file:\n    json.dump(student, file, indent=4)\n\nprint(\"JSON written\")\n\n# Read JSON\nwith open('student.json', 'r') as file:\n    loaded = json.load(file)\n    print(f\"\nName: {loaded['name']}\")\n    print(f\"Age: {loaded['age']}\")\n    print(f\"Grades: {loaded['grades']}\")",
+      "output": "JSON written\n\nName: Alice\nAge: 20\nGrades: {'math': 90, 'science': 85}",
+      "explanation": "json.dump() converts Python dict to JSON and writes to file. indent=4 makes JSON readable. json.load() reads JSON file and converts to Python dict. Perfect for configuration files."
+    },
+    {
+      "code": "# Example 6: CSV File Handling\nimport csv\n\n# Write CSV\ndata = [\n    ['Name', 'Age', 'City'],\n    ['Alice', 25, 'NYC'],\n    ['Bob', 30, 'LA'],\n    ['Charlie', 35, 'Chicago']\n]\n\nwith open('people.csv', 'w', newline='') as file:\n    writer = csv.writer(file)\n    writer.writerows(data)\n\nprint(\"CSV written\")\n\n# Read CSV\nprint(\"\nReading CSV:\")\nwith open('people.csv', 'r') as file:\n    reader = csv.reader(file)\n    for row in reader:\n        print(', '.join(row))",
+      "output": "CSV written\n\nReading CSV:\nName, Age, City\nAlice, 25, NYC\nBob, 30, LA\nCharlie, 35, Chicago",
+      "explanation": "csv.writer() writes list of lists to CSV. newline='' prevents blank lines. csv.reader() reads CSV rows as lists. Each row is a list of values. Great for spreadsheet data."
+    },
+    {
+      "code": "# Example 7: Error Handling\nfrom pathlib import Path\n\nfiles = ['exists.txt', 'missing.txt']\n\n# Create one file\nPath('exists.txt').write_text(\"This file exists\")\n\n# Try to read both\nfor filename in files:\n    try:\n        with open(filename, 'r') as file:\n            content = file.read()\n            print(f\"{filename}: {content}\")\n    except FileNotFoundError:\n        print(f\"{filename}: File not found!\")\n    except Exception as e:\n        print(f\"{filename}: Error - {e}\")",
+      "output": "exists.txt: This file exists\nmissing.txt: File not found!",
+      "explanation": "try-except catches FileNotFoundError when file doesn't exist. Prevents program crash. Good practice for file operations. Can handle different error types separately."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Forgetting to close file (not using 'with')",
+      "correction": "Always use 'with' statement for automatic file closing",
+      "example": "❌ file = open('data.txt', 'r')\n   data = file.read()\n   # Forgot file.close()!\n\n✅ with open('data.txt', 'r') as file:\n       data = file.read()\n   # Automatically closed"
+    },
+    {
+      "mistake": "Using mode 'w' when you want to append",
+      "correction": "Use 'a' for append, 'w' overwrites entire file",
+      "example": "❌ with open('log.txt', 'w') as file:\n       file.write(\"New entry\n\")  # Deletes old entries!\n\n✅ with open('log.txt', 'a') as file:\n       file.write(\"New entry\n\")  # Preserves old entries"
+    },
+    {
+      "mistake": "Not handling FileNotFoundError",
+      "correction": "Use try-except or check file existence first",
+      "example": "❌ with open('data.txt', 'r') as file:\n       # Crashes if file doesn't exist!\n\n✅ try:\n       with open('data.txt', 'r') as file:\n           content = file.read()\n   except FileNotFoundError:\n       print(\"File not found\")"
+    },
+    {
+      "mistake": "Forgetting newline='', when writing CSV",
+      "correction": "Use newline='' to prevent blank lines in CSV on Windows",
+      "example": "❌ with open('data.csv', 'w') as file:\n       writer = csv.writer(file)  # Blank lines on Windows!\n\n✅ with open('data.csv', 'w', newline='') as file:\n       writer = csv.writer(file)  # No blank lines"
+    },
+    {
+      "mistake": "Not specifying encoding for non-ASCII characters",
+      "correction": "Use encoding='utf-8' for special characters",
+      "example": "text = \"Hello 你好 مرحبا\"\n\n❌ with open('data.txt', 'w') as file:\n       file.write(text)  # May fail!\n\n✅ with open('data.txt', 'w', encoding='utf-8') as file:\n       file.write(text)  # Works with all characters"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the difference between 'w' and 'a' file modes?",
+      "difficulty": "Easy",
+      "answer": "'w' (write) creates new file or OVERWRITES existing file completely. 'a' (append) creates new file or ADDS to end of existing file without deleting. Use 'w' for fresh start, 'a' for logs/additions."
+    },
+    {
+      "question": "Why should you use 'with' statement when working with files?",
+      "difficulty": "Easy",
+      "answer": "'with' automatically closes file even if exception occurs. Ensures resource cleanup. Without 'with', must manually call close() and handle errors. 'with' is safer, cleaner, and recommended best practice."
+    },
+    {
+      "question": "What's the difference between read(), readline(), and readlines()?",
+      "difficulty": "Medium",
+      "answer": "read() returns entire file as single string. readline() returns one line as string. readlines() returns list of all lines. For large files, iterate over file object instead (memory efficient)."
+    },
+    {
+      "question": "What happens if you open a file in 'w' mode that doesn't exist?",
+      "difficulty": "Easy",
+      "answer": "Python creates the file. If file exists, 'w' mode DELETES all content and starts fresh. Be careful! Use 'a' if you want to preserve existing content."
+    },
+    {
+      "question": "How do you read a file line by line efficiently?",
+      "difficulty": "Medium",
+      "answer": "Iterate over file object: for line in file. This reads one line at a time (memory efficient). Don't use readlines() for large files (loads entire file into memory)."
+    },
+    {
+      "question": "What is the purpose of 'rb' and 'wb' modes?",
+      "difficulty": "Medium",
+      "answer": "'rb' (read binary) and 'wb' (write binary) for non-text files like images, PDFs, executables. Binary mode doesn't decode bytes to strings. Use for copying files, working with images, etc."
+    },
+    {
+      "question": "How do you check if a file exists before opening?",
+      "difficulty": "Easy",
+      "answer": "Use pathlib: Path('file.txt').exists(). Or os.path.exists('file.txt'). Or use try-except with FileNotFoundError when opening. pathlib is modern, recommended approach."
+    },
+    {
+      "question": "What's the best way to copy a file in Python?",
+      "difficulty": "Medium",
+      "answer": "Use shutil.copy(): shutil.copy('source.txt', 'dest.txt'). For manual: read binary and write binary. shutil module provides high-level file operations (copy, move, delete)."
+    },
+    {
+      "question": "How do you work with JSON files in Python?",
+      "difficulty": "Medium",
+      "answer": "Use json module. Read: data = json.load(file). Write: json.dump(data, file). For strings: json.loads() and json.dumps(). indent parameter for pretty printing."
+    },
+    {
+      "question": "What is the difference between 'r+' and 'w+' modes?",
+      "difficulty": "Hard",
+      "answer": "'r+' opens existing file for read/write, errors if missing, doesn't truncate. 'w+' creates file or overwrites existing, truncates content. Both allow read and write, but 'w+' is destructive."
+    }
+  ],
+  "practice_problems": [
+    {
+      "difficulty": "Beginner",
+      "problem": "Write a program to create a file and write your name 5 times, each on a new line.",
+      "hint": "Use loop with write()",
+      "solution": "name = \"Alice\"\n\nwith open('names.txt', 'w') as file:\n    for i in range(5):\n        file.write(name + \"\n\")\n\nprint(\"File created\")\n\n# Verify\nwith open('names.txt', 'r') as file:\n    print(file.read())"
+    },
+    {
+      "difficulty": "Beginner",
+      "problem": "Read a file and count how many lines it has.",
+      "hint": "Use readlines() or iterate and count",
+      "solution": "# Create sample file\nwith open('sample.txt', 'w') as file:\n    file.write(\"Line 1\nLine 2\nLine 3\nLine 4\n\")\n\n# Count lines\nwith open('sample.txt', 'r') as file:\n    lines = file.readlines()\n    print(f\"Number of lines: {len(lines)}\")\n\n# Or iterate\nwith open('sample.txt', 'r') as file:\n    count = sum(1 for line in file)\n    print(f\"Line count: {count}\")"
+    },
+    {
+      "difficulty": "Intermediate",
+      "problem": "Copy contents from one file to another.",
+      "hint": "Read from source, write to destination",
+      "solution": "# Create source file\nwith open('source.txt', 'w') as file:\n    file.write(\"This is the source file.\n\")\n    file.write(\"It has multiple lines.\n\")\n\n# Copy to destination\nwith open('source.txt', 'r') as source:\n    with open('destination.txt', 'w') as dest:\n        dest.write(source.read())\n\nprint(\"File copied\")\n\n# Verify\nwith open('destination.txt', 'r') as file:\n    print(file.read())"
+    },
+    {
+      "difficulty": "Intermediate",
+      "problem": "Write a program to save a list of students to JSON and read it back.",
+      "hint": "Use json.dump() and json.load()",
+      "solution": "import json\n\nstudents = [\n    {'name': 'Alice', 'age': 20, 'grade': 'A'},\n    {'name': 'Bob', 'age': 22, 'grade': 'B'},\n    {'name': 'Charlie', 'age': 21, 'grade': 'A'}\n]\n\n# Write to JSON\nwith open('students.json', 'w') as file:\n    json.dump(students, file, indent=4)\n\n# Read from JSON\nwith open('students.json', 'r') as file:\n    loaded = json.load(file)\n    for student in loaded:\n        print(f\"{student['name']}: Grade {student['grade']}\")"
+    },
+    {
+      "difficulty": "Advanced",
+      "problem": "Create a simple logging function that appends timestamped messages to a log file.",
+      "hint": "Use datetime for timestamp, mode 'a' for append",
+      "solution": "from datetime import datetime\n\ndef log_message(message, filename='app.log'):\n    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')\n    log_entry = f\"[{timestamp}] {message}\n\"\n    \n    with open(filename, 'a') as file:\n        file.write(log_entry)\n    \n    print(f\"Logged: {message}\")\n\n# Usage\nlog_message(\"Application started\")\nlog_message(\"User logged in\")\nlog_message(\"Data processed successfully\")\n\n# View log\nprint(\"\nLog contents:\")\nwith open('app.log', 'r') as file:\n    print(file.read())"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "Configuration File Manager",
+      "description": "Save and load application settings using JSON",
+      "code": "import json\nfrom pathlib import Path\n\nclass ConfigManager:\n    def __init__(self, config_file='config.json'):\n        self.config_file = config_file\n        self.config = self.load()\n    \n    def load(self):\n        \"\"\"Load configuration from file\"\"\"\n        if Path(self.config_file).exists():\n            with open(self.config_file, 'r') as file:\n                return json.load(file)\n        return self.default_config()\n    \n    def save(self):\n        \"\"\"Save configuration to file\"\"\"\n        with open(self.config_file, 'w') as file:\n            json.dump(self.config, file, indent=4)\n    \n    def get(self, key, default=None):\n        return self.config.get(key, default)\n    \n    def set(self, key, value):\n        self.config[key] = value\n        self.save()\n    \n    def default_config(self):\n        return {\n            'theme': 'dark',\n            'language': 'en',\n            'notifications': True\n        }\n\n# Usage\nconfig = ConfigManager()\nprint(f\"Theme: {config.get('theme')}\")\nconfig.set('theme', 'light')\nprint(f\"Updated theme: {config.get('theme')}\")"
+    },
+    {
+      "scenario": "CSV Data Processor",
+      "description": "Read, process, and write CSV data",
+      "code": "import csv\n\ndef process_sales_data(input_file, output_file):\n    \"\"\"Calculate total sales per product\"\"\"\n    sales = {}\n    \n    # Read CSV\n    with open(input_file, 'r') as file:\n        reader = csv.DictReader(file)\n        for row in reader:\n            product = row['product']\n            amount = float(row['amount'])\n            sales[product] = sales.get(product, 0) + amount\n    \n    # Write results\n    with open(output_file, 'w', newline='') as file:\n        writer = csv.writer(file)\n        writer.writerow(['Product', 'Total Sales'])\n        for product, total in sorted(sales.items()):\n            writer.writerow([product, f\"${total:.2f}\"])\n    \n    print(f\"Processed {len(sales)} products\")\n\n# Create sample data\nwith open('sales.csv', 'w', newline='') as file:\n    writer = csv.writer(file)\n    writer.writerow(['product', 'amount'])\n    writer.writerow(['Laptop', 999.99])\n    writer.writerow(['Mouse', 25.99])\n    writer.writerow(['Laptop', 999.99])\n    writer.writerow(['Keyboard', 75.00])\n\nprocess_sales_data('sales.csv', 'totals.csv')\n\n# Show results\nwith open('totals.csv', 'r') as file:\n    print(file.read())"
+    },
+    {
+      "scenario": "Log File Analyzer",
+      "description": "Analyze log files for errors and statistics",
+      "code": "from datetime import datetime\nfrom collections import Counter\n\ndef analyze_log(log_file):\n    \"\"\"Analyze log file for errors and statistics\"\"\"\n    total_lines = 0\n    error_count = 0\n    warning_count = 0\n    errors = []\n    \n    with open(log_file, 'r') as file:\n        for line in file:\n            total_lines += 1\n            \n            if 'ERROR' in line:\n                error_count += 1\n                errors.append(line.strip())\n            elif 'WARNING' in line:\n                warning_count += 1\n    \n    return {\n        'total_lines': total_lines,\n        'errors': error_count,\n        'warnings': warning_count,\n        'error_messages': errors\n    }\n\n# Create sample log\nwith open('app.log', 'w') as file:\n    file.write(\"[2024-01-01 10:00:00] INFO: Application started\n\")\n    file.write(\"[2024-01-01 10:05:00] WARNING: High memory usage\n\")\n    file.write(\"[2024-01-01 10:10:00] ERROR: Database connection failed\n\")\n    file.write(\"[2024-01-01 10:15:00] INFO: Retrying connection\n\")\n    file.write(\"[2024-01-01 10:20:00] ERROR: File not found\n\")\n\n# Analyze\nstats = analyze_log('app.log')\nprint(f\"Total lines: {stats['total_lines']}\")\nprint(f\"Errors: {stats['errors']}\")\nprint(f\"Warnings: {stats['warnings']}\")\nprint(\"\nError messages:\")\nfor error in stats['error_messages']:\n    print(f\"  - {error}\")"
+    },
+    {
+      "scenario": "File Backup System",
+      "description": "Create backups of important files with timestamps",
+      "code": "import shutil\nfrom datetime import datetime\nfrom pathlib import Path\n\ndef backup_file(source_file):\n    \"\"\"Create timestamped backup of file\"\"\"\n    source = Path(source_file)\n    \n    if not source.exists():\n        print(f\"Source file {source_file} not found\")\n        return\n    \n    # Create backup filename with timestamp\n    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')\n    backup_name = f\"{source.stem}_backup_{timestamp}{source.suffix}\"\n    backup_path = source.parent / 'backups' / backup_name\n    \n    # Create backups directory if needed\n    backup_path.parent.mkdir(exist_ok=True)\n    \n    # Copy file\n    shutil.copy2(source, backup_path)\n    print(f\"Backup created: {backup_path}\")\n    \n    return backup_path\n\n# Create sample file\noriginal = Path('important_data.txt')\noriginal.write_text(\"This is important data that needs backup.\")\n\n# Create backups\nbackup1 = backup_file('important_data.txt')\n\n# Modify original\noriginal.write_text(\"This is updated data.\")\n\n# Create another backup\nbackup2 = backup_file('important_data.txt')"
+    }
+  ],
+  "exam_notes": [
+    "File handling: reading from and writing to files on disk",
+    "Common modes: 'r' (read), 'w' (write/overwrite), 'a' (append)",
+    "Binary mode: add 'b' ('rb', 'wb', 'ab') for non-text files",
+    "Always use 'with' statement for automatic file closing",
+    "'with' ensures file closes even if exception occurs",
+    "Mode 'w' creates file or OVERWRITES existing content",
+    "Mode 'a' creates file or APPENDS to existing content",
+    "read(): returns entire file as string",
+    "readline(): returns one line as string",
+    "readlines(): returns list of all lines",
+    "Iterate over file object for memory-efficient line reading",
+    "write(): writes string to file (doesn't add \n)",
+    "writelines(): writes list of strings (no automatic \n)",
+    "json.dump(data, file): Python → JSON file",
+    "json.load(file): JSON file → Python",
+    "csv.reader(file): read CSV rows as lists",
+    "csv.writer(file): write lists as CSV rows",
+    "Path.exists(): check if file exists",
+    "FileNotFoundError: raised when reading non-existent file",
+    "Use encoding='utf-8' for special characters"
+  ],
+  "summary": "File handling enables programs to read, write, and persist data - essential for real-world applications.\n\n**File Modes:**\n\n| Mode | Action | Creates | Overwrites |\n|------|--------|---------|------------|\n| `'r'` | Read | ❌ | N/A |\n| `'w'` | Write | ✅ | ✅ |\n| `'a'` | Append | ✅ | ❌ |\n| `'rb'` | Read binary | ❌ | N/A |\n\n**The 'with' Statement:**\n```python\n# ✅ Best practice\nwith open('file.txt', 'r') as file:\n    content = file.read()\n# Auto-closes even if error\n\n# ❌ Avoid (manual close)\nfile = open('file.txt', 'r')\ncontent = file.read()\nfile.close()  # Might not run if error\n```\n\n**Reading Methods:**\n\n```python\n# Entire file\ncontent = file.read()\n\n# One line\nline = file.readline()\n\n# All lines as list\nlines = file.readlines()\n\n# Best: iterate (memory efficient)\nfor line in file:\n    print(line.strip())\n```\n\n**Writing:**\n\n```python\n# Write (overwrites)\nwith open('file.txt', 'w') as file:\n    file.write(\"Hello\n\")\n\n# Append (preserves)\nwith open('file.txt', 'a') as file:\n    file.write(\"World\n\")\n```\n\n**JSON Files:**\n\n```python\nimport json\n\n# Write\nwith open('data.json', 'w') as file:\n    json.dump(data, file, indent=4)\n\n# Read\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n```\n\n**CSV Files:**\n\n```python\nimport csv\n\n# Write\nwith open('data.csv', 'w', newline='') as file:\n    writer = csv.writer(file)\n    writer.writerows(rows)\n\n# Read\nwith open('data.csv', 'r') as file:\n    reader = csv.reader(file)\n    for row in reader:\n        print(row)\n```\n\n**Error Handling:**\n\n```python\ntry:\n    with open('file.txt', 'r') as file:\n        content = file.read()\nexcept FileNotFoundError:\n    print(\"File not found\")\n```\n\n**Path Operations:**\n\n```python\nfrom pathlib import Path\n\n# Check existence\nif Path('file.txt').exists():\n    # Read file\n\n# Read/write text\ncontent = Path('file.txt').read_text()\nPath('file.txt').write_text(content)\n```\n\n**Best Practices:**\n- ✅ Always use `with` statement\n- ✅ Use 'a' for logs, 'w' for fresh data\n- ✅ Handle FileNotFoundError\n- ✅ Use encoding='utf-8' for special chars\n- ✅ Use pathlib for modern code\n- ✅ Iterate for large files, not readlines()\n\n**Common Patterns:**\n\n```python\n# Copy file\nwith open('src.txt', 'r') as src:\n    with open('dst.txt', 'w') as dst:\n        dst.write(src.read())\n\n# Append to log\nwith open('log.txt', 'a') as file:\n    file.write(f\"{timestamp}: {message}\n\")\n\n# Process large file\nwith open('big.txt', 'r') as file:\n    for line in file:\n        process(line)\n```\n\nMaster file handling for data persistence!",
+  "order": 8
+}

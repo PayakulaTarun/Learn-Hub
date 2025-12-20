@@ -36,6 +36,7 @@ export default function SubjectsPage({ tutorials }: SubjectsPageProps) {
         if (key === 'js') key = 'javascript';
         if (key === 'reactjs') key = 'react';
         if (key === 'node') key = 'backend';
+        if (key === 'next.js' || key === 'nextjs') key = 'next-js';
     }
 
     if (!acc[key]) {

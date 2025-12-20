@@ -1,0 +1,219 @@
+{
+  "title": "Python Lists - Complete Guide",
+  "slug": "python-lists",
+  "subject": "Python",
+  "category": "python",
+  "level": "Beginner",
+  "estimated_read_time": "17 minutes",
+  "prerequisites": [
+    "Python variables and data types",
+    "Python loops (for loop)",
+    "Understanding of indexing (0-based)",
+    "Basic Python functions"
+  ],
+  "learning_objectives": [
+    "Understand what lists are and when to use them",
+    "Create and initialize lists in different ways",
+    "Access and modify list elements using indexing",
+    "Use slicing to work with list subsets",
+    "Master essential list methods (append, insert, remove, etc.)",
+    "Understand that lists are mutable",
+    "Write list comprehensions for concise code"
+  ],
+  "theory": "## What is a List?\n\nA **list** is an ordered, mutable collection that can store multiple items of different types.\n\n### Real-Life Analogy\n\nThink of a **shopping list**:\n- Contains multiple items\n- Items are in order (but can be rearranged)\n- Can add new items\n- Can remove items\n- Can change items\n- Each item has a position\n\n### Why Use Lists?\n\n**Without list** (repetitive):\n```python\nstudent1 = \"Alice\"\nstudent2 = \"Bob\"\nstudent3 = \"Charlie\"\nstudent4 = \"Diana\"\n# What if 100 students?\n```\n\n**With list** (efficient):\n```python\nstudents = [\"Alice\", \"Bob\", \"Charlie\", \"Diana\"]\n# Easy to manage any number\n```\n\n### Key Characteristics\n\n1. **Ordered**: Items maintain their position\n2. **Mutable**: Can be changed after creation\n3. **Dynamic**: Can grow or shrink\n4. **Heterogeneous**: Can contain different types\n5. **Indexed**: Access items by position (0-based)\n6. **Allow duplicates**: Same value can appear multiple times\n\n---\n\n## Creating Lists\n\n### Method 1: Square Brackets []\n\n```python\n# Empty list\nempty = []\n\n# List with values\nnumbers = [1, 2, 3, 4, 5]\nfruits = [\"apple\", \"banana\", \"orange\"]\n\n# Mixed types\nmixed = [1, \"hello\", 3.14, True, None]\n\n# Nested lists\nmatrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\n```\n\n### Method 2: list() Constructor\n\n```python\n# From string\nletters = list(\"Python\")  # ['P', 'y', 't', 'h', 'o', 'n']\n\n# From range\nnumbers = list(range(5))  # [0, 1, 2, 3, 4]\n\n# From tuple\ntuple_data = (1, 2, 3)\nlist_data = list(tuple_data)  # [1, 2, 3]\n```\n\n### Method 3: List Comprehension (Preview)\n\n```python\n# Squares of 0-4\nsquares = [x**2 for x in range(5)]  # [0, 1, 4, 9, 16]\n\n# Even numbers\nevens = [x for x in range(10) if x % 2 == 0]  # [0, 2, 4, 6, 8]\n```\n\n---\n\n## Accessing List Elements\n\n### Indexing\n\nPython uses **0-based indexing**:\n\n```\nList:    ['a', 'b', 'c', 'd', 'e']\nIndex:     0    1    2    3    4\nNegative: -5   -4   -3   -2   -1\n```\n\n**Positive indexing** (left to right):\n```python\nfruits = [\"apple\", \"banana\", \"cherry\", \"date\"]\n\nprint(fruits[0])   # apple  (first)\nprint(fruits[1])   # banana (second)\nprint(fruits[3])   # date   (fourth)\nprint(fruits[4])   # IndexError! (doesn't exist)\n```\n\n**Negative indexing** (right to left):\n```python\nfruits = [\"apple\", \"banana\", \"cherry\", \"date\"]\n\nprint(fruits[-1])  # date   (last)\nprint(fruits[-2])  # cherry (second from end)\nprint(fruits[-4])  # apple  (fourth from end = first)\n```\n\n### Accessing Nested Lists\n\n```python\nmatrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\n\nprint(matrix[0])     # [1, 2, 3] (first row)\nprint(matrix[1][2])  # 6 (row 1, column 2)\nprint(matrix[2][0])  # 7 (row 2, column 0)\n```\n\n---\n\n## Modifying Lists (Mutability)\n\n**Lists are MUTABLE** - can be changed after creation.\n\n### Changing Elements\n\n```python\nfruits = [\"apple\", \"banana\", \"cherry\"]\nprint(fruits)  # ['apple', 'banana', 'cherry']\n\nfruits[1] = \"blueberry\"  # Change second item\nprint(fruits)  # ['apple', 'blueberry', 'cherry']\n\nfruits[-1] = \"date\"  # Change last item\nprint(fruits)  # ['apple', 'blueberry', 'date']\n```\n\n### Mutability Example\n\n**Important**: Assignment creates reference, not copy!\n\n```python\nlist1 = [1, 2, 3]\nlist2 = list1  # Both point to SAME list!\n\nlist2.append(4)\nprint(list1)  # [1, 2, 3, 4] - Changed!\nprint(list2)  # [1, 2, 3, 4]\n\n# To create copy:\nlist3 = list1.copy()  # or list1[:]\nlist3.append(5)\nprint(list1)  # [1, 2, 3, 4] - Unchanged\nprint(list3)  # [1, 2, 3, 4, 5]\n```\n\n---\n\n## List Slicing\n\n**Syntax**: `list[start:stop:step]`\n\n- **start**: Starting index (inclusive, default 0)\n- **stop**: Ending index (exclusive)\n- **step**: Increment (default 1)\n\n### Basic Slicing\n\n```python\nnumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n\nprint(numbers[2:5])    # [2, 3, 4] (index 2 to 4)\nprint(numbers[:5])     # [0, 1, 2, 3, 4] (start to 4)\nprint(numbers[5:])     # [5, 6, 7, 8, 9] (5 to end)\nprint(numbers[:])      # [0, ... 9] (entire list, creates copy)\n```\n\n### Slicing with Step\n\n```python\nnumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n\nprint(numbers[::2])    # [0, 2, 4, 6, 8] (every 2nd)\nprint(numbers[1::2])   # [1, 3, 5, 7, 9] (odd indices)\nprint(numbers[::3])    # [0, 3, 6, 9] (every 3rd)\n```\n\n### Reverse with Slicing\n\n```python\nnumbers = [1, 2, 3, 4, 5]\n\nprint(numbers[::-1])   # [5, 4, 3, 2, 1] (reversed)\nprint(numbers[::-2])   # [5, 3, 1] (reversed, every 2nd)\n```\n\n### Modifying with Slicing\n\n```python\nnumbers = [0, 1, 2, 3, 4, 5]\n\nnumbers[2:4] = [20, 30]  # Replace slice\nprint(numbers)  # [0, 1, 20, 30, 4, 5]\n\nnumbers[1:3] = []  # Delete slice\nprint(numbers)  # [0, 30, 4, 5]\n```\n\n---\n\n## Essential List Methods\n\n### Adding Elements\n\n**append(x)**: Add item to end\n```python\nfruits = [\"apple\", \"banana\"]\nfruits.append(\"cherry\")\nprint(fruits)  # ['apple', 'banana', 'cherry']\n```\n\n**insert(i, x)**: Insert at index i\n```python\nfruits = [\"apple\", \"cherry\"]\nfruits.insert(1, \"banana\")  # Insert at index 1\nprint(fruits)  # ['apple', 'banana', 'cherry']\n```\n\n**extend(iterable)**: Add all items from iterable\n```python\nfruits = [\"apple\", \"banana\"]\nmore_fruits = [\"cherry\", \"date\"]\nfruits.extend(more_fruits)\nprint(fruits)  # ['apple', 'banana', 'cherry', 'date']\n\n# vs append (adds as single item):\nfruits2 = [\"apple\"]\nfruits2.append([\"banana\", \"cherry\"])  # Adds list as one item\nprint(fruits2)  # ['apple', ['banana', 'cherry']]\n```\n\n### Removing Elements\n\n**remove(x)**: Remove first occurrence of x\n```python\nnumbers = [1, 2, 3, 2, 4]\nnumbers.remove(2)  # Removes first 2\nprint(numbers)  # [1, 3, 2, 4]\n```\n\n**pop([i])**: Remove and return item at index i (default last)\n```python\nfruits = [\"apple\", \"banana\", \"cherry\"]\n\nlast = fruits.pop()  # Remove last\nprint(last)    # cherry\nprint(fruits)  # ['apple', 'banana']\n\nfirst = fruits.pop(0)  # Remove first\nprint(first)   # apple\nprint(fruits)  # ['banana']\n```\n\n**clear()**: Remove all items\n```python\nnumbers = [1, 2, 3, 4, 5]\nnumbers.clear()\nprint(numbers)  # []\n```\n\n### Searching and Counting\n\n**index(x)**: Find index of first x\n```python\nfruits = [\"apple\", \"banana\", \"cherry\", \"banana\"]\nindex = fruits.index(\"banana\")  # First occurrence\nprint(index)  # 1\n```\n\n**count(x)**: Count occurrences of x\n```python\nnumbers = [1, 2, 3, 2, 4, 2, 5]\ncount = numbers.count(2)\nprint(count)  # 3\n```\n\n**in operator**: Check if item exists\n```python\nfruits = [\"apple\", \"banana\", \"cherry\"]\n\nprint(\"apple\" in fruits)      # True\nprint(\"grape\" in fruits)      # False\nprint(\"grape\" not in fruits)  # True\n```\n\n### Sorting and Reversing\n\n**sort()**: Sort list in place\n```python\nnumbers = [3, 1, 4, 1, 5, 9, 2]\nnumbers.sort()  # Ascending\nprint(numbers)  # [1, 1, 2, 3, 4, 5, 9]\n\nnumbers.sort(reverse=True)  # Descending\nprint(numbers)  # [9, 5, 4, 3, 2, 1, 1]\n```\n\n**sorted()**: Return new sorted list (doesn't modify original)\n```python\noriginal = [3, 1, 4, 1, 5]\nsorted_list = sorted(original)\nprint(original)     # [3, 1, 4, 1, 5] (unchanged)\nprint(sorted_list)  # [1, 1, 3, 4, 5]\n```\n\n**reverse()**: Reverse list in place\n```python\nnumbers = [1, 2, 3, 4, 5]\nnumbers.reverse()\nprint(numbers)  # [5, 4, 3, 2, 1]\n```\n\n### Other Useful Methods\n\n**copy()**: Create shallow copy\n```python\noriginal = [1, 2, 3]\ncopy = original.copy()\ncopy.append(4)\nprint(original)  # [1, 2, 3]\nprint(copy)      # [1, 2, 3, 4]\n```\n\n**len()**: Get list length\n```python\nfruits = [\"apple\", \"banana\", \"cherry\"]\nprint(len(fruits))  # 3\n```\n\n**min(), max(), sum()**: For numeric lists\n```python\nnumbers = [3, 1, 4, 1, 5, 9]\nprint(min(numbers))  # 1\nprint(max(numbers))  # 9\nprint(sum(numbers))  # 23\n```\n\n---\n\n## List Comprehension\n\n**Concise way to create lists** based on existing sequences.\n\n### Basic Syntax\n```python\n[expression for item in iterable]\n```\n\n### Examples\n\n**Squares:**\n```python\n# Traditional\nsquares = []\nfor x in range(5):\n    squares.append(x ** 2)\nprint(squares)  # [0, 1, 4, 9, 16]\n\n# List comprehension\nsquares = [x**2 for x in range(5)]\nprint(squares)  # [0, 1, 4, 9, 16]\n```\n\n**With Condition:**\n```python\n[expression for item in iterable if condition]\n```\n\n**Even numbers:**\n```python\nevens = [x for x in range(10) if x % 2 == 0]\nprint(evens)  # [0, 2, 4, 6, 8]\n```\n\n**Uppercase:**\n```python\nfruits = [\"apple\", \"banana\", \"cherry\"]\nupper = [fruit.upper() for fruit in fruits]\nprint(upper)  # ['APPLE', 'BANANA', 'CHERRY']\n```\n\n**With Transformation:**\n```python\nnumbers = [1, 2, 3, 4, 5]\ndoubled = [x * 2 for x in numbers]\nprint(doubled)  # [2, 4, 6, 8, 10]\n```\n\n---\n\n## Common List Patterns\n\n### Iterating Over List\n\n```python\n# By item\nfor fruit in fruits:\n    print(fruit)\n\n# By index\nfor i in range(len(fruits)):\n    print(i, fruits[i])\n\n# Both (best)\nfor index, fruit in enumerate(fruits):\n    print(index, fruit)\n```\n\n### Finding Element\n\n```python\nfruits = [\"apple\", \"banana\", \"cherry\"]\nsearch = \"banana\"\n\nif search in fruits:\n    index = fruits.index(search)\n    print(f\"Found at index {index}\")\nelse:\n    print(\"Not found\")\n```\n\n### Filtering List\n\n```python\nnumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n\n# Get even numbers\neven = [n for n in numbers if n % 2 == 0]\n# Or:\neven = list(filter(lambda x: x % 2 == 0, numbers))\n```\n\n### List Operations\n\n```python\nlist1 = [1, 2, 3]\nlist2 = [4, 5, 6]\n\n# Concatenation\ncombined = list1 + list2  # [1, 2, 3, 4, 5, 6]\n\n# Repetition\nrepeated = list1 * 3  # [1, 2, 3, 1, 2, 3, 1, 2, 3]\n\n# Membership\nprint(2 in list1)  # True\n```",
+  "syntax": "# Create list\nmy_list = [item1, item2, item3]\nempty_list = []\nmixed = [1, \"text\", 3.14, True]\n\n# Access\nfirst = my_list[0]\nlast = my_list[-1]\n\n# Slice\nsublist = my_list[start:stop:step]\n\n# Modify\nmy_list[index] = new_value\n\n# Methods\nmy_list.append(item)           # Add to end\nmy_list.insert(index, item)    # Insert at index\nmy_list.extend(other_list)     # Add all items\nmy_list.remove(item)           # Remove first occurrence\nmy_list.pop([index])           # Remove and return\nmy_list.clear()                # Remove all\nmy_list.index(item)            # Find index\nmy_list.count(item)            # Count occurrences\nmy_list.sort()                 # Sort in place\nmy_list.reverse()              # Reverse in place\nmy_list.copy()                 # Create copy\n\n# Functions\nlen(my_list)                   # Length\nmax(my_list)                   # Maximum\nmin(my_list)                   # Minimum\nsum(my_list)                   # Sum (numeric)\nsorted(my_list)                # Return sorted copy\n\n# List comprehension\nnew_list = [expression for item in iterable]\nfiltered = [item for item in iterable if condition]",
+  "examples": [
+    {
+      "code": "# Example 1: Creating and Accessing Lists\nfruits = [\"apple\", \"banana\", \"cherry\", \"date\"]\n\nprint(\"Full list:\", fruits)\nprint(\"First:\", fruits[0])\nprint(\"Last:\", fruits[-1])\nprint(\"Second:\", fruits[1])\nprint(\"Length:\", len(fruits))\n\n# Check membership\nprint(\"'banana' in list?\", \"banana\" in fruits)\nprint(\"'grape' in list?\", \"grape\" in fruits)",
+      "output": "Full list: ['apple', 'banana', 'cherry', 'date']\nFirst: apple\nLast: date\nSecond: banana\nLength: 4\n'banana' in list? True\n'grape' in list? False",
+      "explanation": "Lists use square brackets. Access elements with index (0-based). Negative indices count from end. len() returns number of items. 'in' operator checks if item exists in list."
+    },
+    {
+      "code": "# Example 2: List Mutability\noriginal = [1, 2, 3]\nprint(\"Original:\", original)\n\n# Modify element\noriginal[1] = 20\nprint(\"After change:\", original)\n\n# Assignment creates reference, not copy!\nreference = original\nreference.append(4)\nprint(\"Original:\", original)   # Changed!\nprint(\"Reference:\", reference)\n\n# Create actual copy\ncopy = original.copy()\ncopy.append(5)\nprint(\"Original:\", original)  # Unchanged\nprint(\"Copy:\", copy)",
+      "output": "Original: [1, 2, 3]\nAfter change: [1, 20, 3]\nOriginal: [1, 20, 3, 4]\nReference: [1, 20, 3, 4]\nOriginal: [1, 20, 3, 4]\nCopy: [1, 20, 3, 4, 5]",
+      "explanation": "Lists are MUTABLE - can be changed. Simple assignment (reference = original) creates reference to same list, so changes affect both. Use .copy() or [:] to create independent copy."
+    },
+    {
+      "code": "# Example 3: List Slicing\nnumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n\nprint(\"Full:\", numbers)\nprint(\"[2:5]:\", numbers[2:5])      # Index 2-4\nprint(\"[:5]:\", numbers[:5])        # Start to 4\nprint(\"[5:]:\", numbers[5:])        # 5 to end\nprint(\"[::2]:\", numbers[::2])      # Every 2nd\nprint(\"[1::2]:\", numbers[1::2])    # Odd indices\nprint(\"[::-1]:\", numbers[::-1])    # Reversed",
+      "output": "Full: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n[2:5]: [2, 3, 4]\n[:5]: [0, 1, 2, 3, 4]\n[5:]: [5, 6, 7, 8, 9]\n[::2]: [0, 2, 4, 6, 8]\n[1::2]: [1, 3, 5, 7, 9]\n[::-1]: [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]",
+      "explanation": "Slicing extracts portion: [start:stop:step]. Stop is exclusive. Omitting start defaults to 0, stop to len(). Step determines increment. Negative step reverses."
+    },
+    {
+      "code": "# Example 4: List Methods - Adding\nfruits = [\"apple\", \"banana\"]\nprint(\"Initial:\", fruits)\n\nfruits.append(\"cherry\")  # Add to end\nprint(\"After append:\", fruits)\n\nfruits.insert(1, \"blueberry\")  # Insert at index 1\nprint(\"After insert:\", fruits)\n\nfruits.extend([\"date\", \"elderberry\"])  # Add multiple\nprint(\"After extend:\", fruits)",
+      "output": "Initial: ['apple', 'banana']\nAfter append: ['apple', 'banana', 'cherry']\nAfter insert: ['apple', 'blueberry', 'banana', 'cherry']\nAfter extend: ['apple', 'blueberry', 'banana', 'cherry', 'date', 'elderberry']",
+      "explanation": "append() adds single item to end. insert(index, item) adds at specific position. extend() adds all items from another iterable. All modify original list (in-place)."
+    },
+    {
+      "code": "# Example 5: List Methods - Removing\nnumbers = [1, 2, 3, 2, 4, 5]\nprint(\"Initial:\", numbers)\n\nnumbers.remove(2)  # Remove first 2\nprint(\"After remove(2):\", numbers)\n\npopped = numbers.pop()  # Remove last\nprint(\"Popped:\", popped)\nprint(\"After pop():\", numbers)\n\nfirst = numbers.pop(0)  # Remove first\nprint(\"Popped first:\", first)\nprint(\"After pop(0):\", numbers)",
+      "output": "Initial: [1, 2, 3, 2, 4, 5]\nAfter remove(2): [1, 3, 2, 4, 5]\nPopped: 5\nAfter pop(): [1, 3, 2, 4]\nPopped first: 1\nAfter pop(0): [3, 2, 4]",
+      "explanation": "remove(value) deletes first occurrence of value. pop() removes and returns last item (or item at index if provided). ValueError if value not found for remove()."
+    },
+    {
+      "code": "# Example 6: Sorting and Reversing\nnumbers = [3, 1, 4, 1, 5, 9, 2, 6]\nprint(\"Original:\", numbers)\n\nnumbers.sort()  # Sort in place\nprint(\"Sorted ascending:\", numbers)\n\nnumbers.sort(reverse=True)  # Sort descending\nprint(\"Sorted descending:\", numbers)\n\nnumbers.reverse()  # Reverse in place\nprint(\"Reversed:\", numbers)\n\n# sorted() returns new list\noriginal = [5, 2, 8, 1]\nnew = sorted(original)\nprint(\"Original unchanged:\", original)\nprint(\"New sorted:\", new)",
+      "output": "Original: [3, 1, 4, 1, 5, 9, 2, 6]\nSorted ascending: [1, 1, 2, 3, 4, 5, 6, 9]\nSorted descending: [9, 6, 5, 4, 3, 2, 1, 1]\nReversed: [1, 1, 2, 3, 4, 5, 6, 9]\nOriginal unchanged: [5, 2, 8, 1]\nNew sorted: [1, 2, 5, 8]",
+      "explanation": "sort() and reverse() modify list in-place. sorted() returns new sorted list without changing original. Use reverse=True for descending order."
+    },
+    {
+      "code": "# Example 7: List Comprehension\n# Squares of 0-9\nsquares = [x**2 for x in range(10)]\nprint(\"Squares:\", squares)\n\n# Even numbers from 0-19\nevens = [x for x in range(20) if x % 2 == 0]\nprint(\"Evens:\", evens)\n\n# Uppercase fruits\nfruits = [\"apple\", \"banana\", \"cherry\"]\nupper = [fruit.upper() for fruit in fruits]\nprint(\"Uppercase:\", upper)\n\n# Doubled values\nnumbers = [1, 2, 3, 4, 5]\ndoubled = [x * 2 for x in numbers]\nprint(\"Doubled:\", doubled)",
+      "output": "Squares: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]\nEvens: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]\nUppercase: ['APPLE', 'BANANA', 'CHERRY']\nDoubled: [2, 4, 6, 8, 10]",
+      "explanation": "List comprehension creates lists concisely. Format: [expression for item in iterable if condition]. Replaces loop + append pattern. More Pythonic and often faster."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Confusing copy vs reference (list1 = list2)",
+      "correction": "Use .copy() or [:] to create independent copy",
+      "example": "❌ list2 = list1  # Both point to same list!\n   list2.append(5) # Affects both\n\n✅ list2 = list1.copy()  # Independent copy\n✅ list2 = list1[:]      # Also creates copy"
+    },
+    {
+      "mistake": "IndexError when accessing non-existent index",
+      "correction": "Check length or use try-except",
+      "example": "❌ fruits = ['apple', 'banana']\n   print(fruits[5])  # IndexError!\n\n✅ if len(fruits) > 5:\n       print(fruits[5])\n   else:\n       print(\"Index out of range\")"
+    },
+    {
+      "mistake": "Modifying list while iterating",
+      "correction": "Iterate over copy or create new list",
+      "example": "❌ for item in my_list:\n       my_list.remove(item)  # Causes skips!\n\n✅ for item in my_list[:]:\n       my_list.remove(item)\n\n✅ my_list = [x for x in my_list if condition]"
+    },
+    {
+      "mistake": "Confusing append() and extend()",
+      "correction": "append adds single item, extend adds all items",
+      "example": "list1 = [1, 2]\n❌ list1.append([3, 4])  # [[1, 2, [3, 4]] - list as item\n\nlist2 = [1, 2]\n✅ list2.extend([3, 4])  # [1, 2, 3, 4] - adds items"
+    },
+    {
+      "mistake": "Forgetting that sort() modifies in place, returns None",
+      "correction": "Use sorted() if you need new list",
+      "example": "❌ new_list = my_list.sort()  # new_list is None!\n\n✅ new_list = sorted(my_list)  # Creates new sorted list\n✅ my_list.sort()  # If you want to modify original"
+    }
+  ],
+  "interview_questions": [
+    {
+      "question": "What is the difference between a list and a tuple?",
+      "difficulty": "Easy",
+      "answer": "Lists are mutable (can be changed), use square brackets []. Tuples are immutable (cannot be changed), use parentheses (). Lists: slower, more memory. Tuples: faster, less memory, safer for fixed data."
+    },
+    {
+      "question": "How do you create a copy of a list?",
+      "difficulty": "Easy",
+      "answer": "Three ways: 1) list.copy() method, 2) slicing list[:], 3) list() constructor. All create shallow copies. For deep copy of nested lists, use copy.deepcopy()."
+    },
+    {
+      "question": "What is the difference between append() and extend()?",
+      "difficulty": "Easy",
+      "answer": "append() adds single item to end (even if it's a list). extend() adds all items from iterable to end. Example: [1].append([2,3]) → [1,[2,3]]. [1].extend([2,3]) → [1,2,3]."
+    },
+    {
+      "question": "Explain list slicing with negative indices.",
+      "difficulty": "Medium",
+      "answer": "Negative indices count from end: -1 is last, -2 is second-last. list[-3:] gets last 3 items. list[:-2] gets all except last 2. list[::-1] reverses entire list."
+    },
+    {
+      "question": "What does list[:] do?",
+      "difficulty": "Medium",
+      "answer": "Creates a shallow copy of entire list. Equivalent to list.copy(). Omitting both start and stop means 'all elements'. Useful for iterating over copy while modifying original."
+    },
+    {
+      "question": "How do you remove duplicates from a list?",
+      "difficulty": "Medium",
+      "answer": "Convert to set and back: list(set(my_list)). Note: loses order. To preserve order: [x for i, x in enumerate(my_list) if x not in my_list[:i]] or use dict.fromkeys(my_list)."
+    },
+    {
+      "question": "What is list comprehension?",
+      "difficulty": "Easy",
+      "answer": "Concise way to create lists. Syntax: [expression for item in iterable if condition]. Example: [x**2 for x in range(5)] creates [0,1,4,9,16]. More readable and often faster than loop + append."
+    },
+    {
+      "question": "What's the time complexity of list operations?",
+      "difficulty": "Hard",
+      "answer": "Access/modify by index: O(1). append(): O(1). insert(0)/pop(0): O(n). remove(value): O(n). in operator: O(n). sort(): O(n log n). Knowing these helps choose right data structure."
+    },
+    {
+      "question": "What happens if you do: a = [1,2,3]; b = a; b.append(4)?",
+      "difficulty": "Medium",
+      "answer": "Both a and b become [1,2,3,4]. b = a creates reference, not copy. They point to same list object. Changes through either variable affect the same list. Use b = a.copy() for independent copy."
+    },
+    {
+      "question": "How do you flatten a nested list [[1,2],[3,4]] to [1,2,3,4]?",
+      "difficulty": "Hard",
+      "answer": "Multiple ways: 1) List comprehension: [item for sublist in nested for item in sublist]. 2) itertools.chain.from_iterable(nested). 3) sum(nested, []). Comprehension is most readable."
+    }
+  ],
+  "practice_problems": [
+    {
+      "difficulty": "Beginner",
+      "problem": "Create a list of numbers 1-10, then print every odd number.",
+      "hint": "Use list comprehension or loop with if condition",
+      "solution": "numbers = list(range(1, 11))\n\n# Method 1: Loop\nfor num in numbers:\n    if num % 2 == 1:\n        print(num, end=\" \")\nprint()\n\n# Method 2: List comprehension\nodds = [x for x in numbers if x % 2 == 1]\nprint(odds)"
+    },
+    {
+      "difficulty": "Beginner",
+      "problem": "Create list [10, 20, 30, 40, 50], remove 30, add 60 at end, insert 15 at index 1.",
+      "hint": "Use remove(), append(), insert()",
+      "solution": "my_list = [10, 20, 30, 40, 50]\nprint(\"Initial:\", my_list)\n\nmy_list.remove(30)\nprint(\"After remove(30):\", my_list)\n\nmy_list.append(60)\nprint(\"After append(60):\", my_list)\n\nmy_list.insert(1, 15)\nprint(\"After insert(1, 15):\", my_list)\n# Final: [10, 15, 20, 40, 50, 60]"
+    },
+    {
+      "difficulty": "Intermediate",
+      "problem": "Find the second largest number in a list without using sort().",
+      "hint": "Find max, remove it, find max again",
+      "solution": "numbers = [45, 12, 78, 23, 91, 34, 67]\n\nfirst_max = max(numbers)\nnumbers_copy = numbers.copy()\nnumbers_copy.remove(first_max)\nsecond_max = max(numbers_copy)\n\nprint(f\"Second largest: {second_max}\")\n\n# Or in one line:\nnumbers = [45, 12, 78, 23, 91, 34, 67]\nsecond = sorted(set(numbers))[-2]\nprint(f\"Second largest: {second}\")"
+    },
+    {
+      "difficulty": "Intermediate",
+      "problem": "Create a list of squares of even numbers from 0-20 using list comprehension.",
+      "hint": "[expression for x in range() if condition]",
+      "solution": "squares_of_evens = [x**2 for x in range(21) if x % 2 == 0]\nprint(squares_of_evens)\n# [0, 4, 16, 36, 64, 100, 144, 196, 256, 324, 400]"
+    },
+    {
+      "difficulty": "Advanced",
+      "problem": "Reverse words in a sentence: 'Python is awesome' → 'awesome is Python'",
+      "hint": "Split to list, reverse list, join back",
+      "solution": "sentence = \"Python is awesome\"\n\n# Split into words\nwords = sentence.split()\n\n# Reverse list\nwords.reverse()\n\n# Join back\nreversed_sentence = \" \".join(words)\nprint(reversed_sentence)\n\n# One-liner:\nreversed_sentence = \" \".join(sentence.split()[::-1])\nprint(reversed_sentence)"
+    }
+  ],
+  "real_world_use_cases": [
+    {
+      "scenario": "Shopping Cart",
+      "description": "Manage items in cart with add, remove, calculate total",
+      "code": "cart = []\n\ndef add_item(item, price):\n    cart.append({\"item\": item, \"price\": price})\n    print(f\"Added {item} (${price})\")\n\ndef remove_item(item):\n    for product in cart:\n        if product[\"item\"] == item:\n            cart.remove(product)\n            print(f\"Removed {item}\")\n            return\n    print(f\"{item} not in cart\")\n\ndef show_cart():\n    if not cart:\n        print(\"Cart is empty\")\n        return\n    \n    print(\"\n=== Shopping Cart ===\")\n    total = 0\n    for product in cart:\n        print(f\"{product['item']:15} ${product['price']:6.2f}\")\n        total += product[\"price\"]\n    print(f\"{'Total:':15} ${total:6.2f}\")\n\n# Usage\nadd_item(\"Laptop\", 999.99)\nadd_item(\"Mouse\", 25.50)\nadd_item(\"Keyboard\", 75.00)\nshow_cart()\nremove_item(\"Mouse\")\nshow_cart()"
+    },
+    {
+      "scenario": "Student Grade Manager",
+      "description": "Track and analyze student scores",
+      "code": "students = [\n    {\"name\": \"Alice\", \"scores\": [85, 92, 78, 90]},\n    {\"name\": \"Bob\", \"scores\": [78, 85, 82, 88]},\n    {\"name\": \"Charlie\", \"scores\": [92, 95, 89, 94]}\n]\n\nfor student in students:\n    name = student[\"name\"]\n    scores = student[\"scores\"]\n    \n    average = sum(scores) / len(scores)\n    highest = max(scores)\n    lowest = min(scores)\n    \n    print(f\"\nStudent: {name}\")\n    print(f\"  Scores: {scores}\")\n    print(f\"  Average: {average:.2f}\")\n    print(f\"  Highest: {highest}\")\n    print(f\"  Lowest: {lowest}\")\n    \n    if average >= 90:\n        grade = 'A'\n    elif average >= 80:\n        grade = 'B'\n    elif average >= 70:\n        grade = 'C'\n    else:\n        grade = 'F'\n    \n    print(f\"  Grade: {grade}\")"
+    },
+    {
+      "scenario": "To-Do List Application",
+      "description": "Manage tasks with add, complete, remove",
+      "code": "tasks = []\n\ndef add_task(task):\n    tasks.append({\"task\": task, \"completed\": False})\n    print(f\"Added: {task}\")\n\ndef complete_task(index):\n    if 0 <= index < len(tasks):\n        tasks[index][\"completed\"] = True\n        print(f\"Completed: {tasks[index]['task']}\")\n    else:\n        print(\"Invalid task number\")\n\ndef show_tasks():\n    if not tasks:\n        print(\"No tasks!\")\n        return\n    \n    print(\"\n=== To-Do List ===\")\n    for i, task in enumerate(tasks):\n        status = \"✓\" if task[\"completed\"] else \" \"\n        print(f\"{i+1}. [{status}] {task['task']}\")\n\n# Usage\nadd_task(\"Buy groceries\")\nadd_task(\"Finish homework\")\nadd_task(\"Call dentist\")\nshow_tasks()\ncomplete_task(1)  # Complete \"Finish homework\"\nshow_tasks()"
+    },
+    {
+      "scenario": "Data Filtering and Analysis",
+      "description": "Filter and analyze sales data",
+      "code": "sales = [\n    {\"product\": \"Laptop\", \"price\": 1200, \"quantity\": 5},\n    {\"product\": \"Mouse\", \"price\": 25, \"quantity\": 50},\n    {\"product\": \"Keyboard\", \"price\": 75, \"quantity\": 30},\n    {\"product\": \"Monitor\", \"price\": 300, \"quantity\": 15}\n]\n\n# Calculate revenue for each\nfor sale in sales:\n    sale[\"revenue\"] = sale[\"price\"] * sale[\"quantity\"]\n\n# Filter: products with revenue > $1000\nhigh_revenue = [s for s in sales if s[\"revenue\"] > 1000]\n\nprint(\"High Revenue Products:\")\nfor product in high_revenue:\n    print(f\"{product['product']}: ${product['revenue']}\")\n\n# Total revenue\ntotal = sum(sale[\"revenue\"] for sale in sales)\nprint(f\"\nTotal Revenue: ${total}\")\n\n# Most sold product\nmost_sold = max(sales, key=lambda x: x[\"quantity\"])\nprint(f\"Most Sold: {most_sold['product']} ({most_sold['quantity']} units)\")"
+    }
+  ],
+  "exam_notes": [
+    "List: ordered, mutable collection, allows duplicates",
+    "Created with square brackets: [item1, item2, item3]",
+    "Indexing starts at 0 (0-based indexing)",
+    "Negative indexing: -1 is last, -2 is second-last",
+    "Lists are MUTABLE - can be modified after creation",
+    "Assignment creates reference, not copy: list2 = list1",
+    "Create copy: list.copy() or list[:] or list(original)",
+    "Slicing syntax: list[start:stop:step], stop is exclusive",
+    "append(x): Add item to end, O(1)",
+    "insert(i, x): Insert at index i, O(n)",
+    "extend(iterable): Add all items from iterable",
+    "remove(x): Remove first occurrence of x, O(n)",
+    "pop([i]): Remove and return item at index i (default -1)",
+    "sort(): Sort in place, returns None, O(n log n)",
+    "sorted(list): Return new sorted list, original unchanged",
+    "reverse(): Reverse in place",
+    "index(x): Return index of first x, raises ValueError if not found",
+    "count(x): Return number of occurrences of x",
+    "List comprehension: [expression for item in iterable if condition]",
+    "in operator: Check membership, O(n)"
+  ],
+  "summary": "Lists are Python's most versatile data structure - ordered, mutable collections perfect for storing sequences.\n\n**Key Characteristics:**\n\n✅ **Ordered**: Items maintain position\n✅ **Mutable**: Can be changed after creation  \n✅ **Indexed**: 0-based access\n✅ **Dynamic**: Grow/shrink as needed\n✅ **Heterogeneous**: Mix different types\n\n**Creation:**\n```python\nmy_list = [1, 2, 3, 4, 5]\nempty = []\nmixed = [1, \"text\", 3.14, True]\nnested = [[1, 2], [3, 4]]\n```\n\n**Accessing:**\n```python\nfirst = my_list[0]    # First item\nlast = my_list[-1]    # Last item\nslice = my_list[1:4]  # Items 1-3\n```\n\n**Essential Methods:**\n\n| Method | Action | Return |\n|--------|--------|--------|\n| `append(x)` | Add to end | None |\n| `insert(i, x)` | Insert at index | None |\n| `remove(x)` | Remove first x | None |\n| `pop([i])` | Remove & return | Item |\n| `sort()` | Sort in place | None |\n| `reverse()` | Reverse in place | None |\n| `copy()` | Create copy | New list |\n\n**Slicing:**\n```python\nlist[start:stop:step]\nlist[:5]      # First 5\nlist[5:]      # From index 5\nlist[::2]     # Every 2nd\nlist[::-1]    # Reversed\n```\n\n**List Comprehension:**\n```python\n# Instead of:\nresult = []\nfor x in range(5):\n    result.append(x**2)\n\n# Write:\nresult = [x**2 for x in range(5)]\n\n# With condition:\nevens = [x for x in range(10) if x % 2 == 0]\n```\n\n**Mutability Warning:**\n```python\nlist1 = [1, 2, 3]\nlist2 = list1      # Reference!\nlist2.append(4)    # Both affected\n\n# Create copy:\nlist2 = list1.copy()  # Independent\n```\n\n**Common Operations:**\n```python\nlen(my_list)       # Length\nmax(my_list)       # Maximum\nmin(my_list)       # Minimum\nsum(my_list)       # Sum\nx in my_list       # Membership\nlist1 + list2      # Concatenate\nlist1 * 3          # Repeat\n```\n\n**Remember:**\n- Lists = mutable, brackets []\n- Tuples = immutable, parentheses ()\n- Assignment creates reference, use .copy()\n- Slicing stop is exclusive\n- sort() modifies, sorted() returns new\n\nMaster lists to handle collections efficiently in Python!",
+  "order": 12
+}

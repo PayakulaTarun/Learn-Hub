@@ -8,18 +8,12 @@ module.exports = {
   theme: {
     // Custom breakpoints matching the required strategy
     screens: {
-      // Extra‑small mobile (≤360px)
-      'xs': { 'max': '360px' },
-      // Mobile (361–480px)
-      'sm': { 'min': '361px', 'max': '480px' },
-      // Tablet portrait (481–768px)
-      'md': { 'min': '481px', 'max': '768px' },
-      // Tablet landscape / small laptops (769–1024px)
-      'lg': { 'min': '769px', 'max': '1024px' },
-      // Standard desktops (1025–1440px)
-      'xl': { 'min': '1025px', 'max': '1440px' },
-      // Large & ultra‑wide (1441px+)
-      '2xl': { 'min': '1441px' },
+      'xs': '360px',
+      'sm': '481px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
     },
     extend: {
       colors: {

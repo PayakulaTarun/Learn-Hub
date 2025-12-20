@@ -43,7 +43,7 @@ export const availableSubjects = [
     { slug: 'next-js', label: 'Next.js Framework', category: 'Web Development', icon: 'Zap', order: 5 },
     { slug: 'angular', label: 'Angular Framework', category: 'Web Development', icon: 'ShieldCheck', order: 6 },
     { slug: 'bootstrap', label: 'Bootstrap UI', category: 'Web Development', icon: 'LayoutIcon', order: 7 },
-    { slug: 'backend', label: 'Backend Architecture', category: 'Web Development', icon: 'Database', order: 8 },
+
 
     // Computer Science Core
     { slug: 'data-structures', label: 'Data Structures', category: 'Computer Science', icon: 'Layers', order: 10 },
