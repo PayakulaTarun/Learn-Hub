@@ -47,7 +47,12 @@ export function AIProvider({ children }: { children: ReactNode }) {
         try {
             const token = auth.currentUser ? await auth.currentUser.getIdToken() : '';
             
-            const res = await fetch('/api/ai/chat', {
+            // USE FULL URL TO AVOID LOCALHOST 404s
+            const API_URL = window.location.hostname === 'localhost' 
+                ? 'https://us-central1-student-resource-hub-a758a.cloudfunctions.net/api/ai/chat'
+                : '/api/ai/chat';
+
+            const res = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -91,6 +96,31 @@ export function AIProvider({ children }: { children: ReactNode }) {
                     return newHistory;
                 });
             }
+
+            // --- AI ACTION HANDLER ---
+            setMessages(prev => {
+                const newHistory = [...prev];
+                const last = newHistory[newHistory.length - 1];
+                
+                if (last && last.role === 'assistant') {
+                    const actionRegex = /<<<ACTION:(.*?)>>>/;
+                    const match = last.content.match(actionRegex);
+                    
+                    if (match) {
+                        try {
+                            const action = JSON.parse(match[1]);
+                            // Clean UI
+                            last.content = last.content.replace(match[0], '').trim();
+                            
+                            if (action.type === 'NAVIGATE' && action.url) {
+                                // Execute Navigation
+                                router.push(action.url);
+                            }
+                        } catch (e) { console.error("AI Action Error:", e); }
+                    }
+                }
+                return newHistory;
+            });
 
         } catch (error: any) {
             console.error('AI Stream Error:', error);

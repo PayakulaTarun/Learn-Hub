@@ -61,7 +61,38 @@ STUDENT QUESTION: ${query}
 
 ANSWER (be concise, technical, and helpful):`;
 
-            functions.logger.info("Calling Gemini API");
+            // --- NAVIGATION INJECTION ---
+            const navigationPrompt = `
+IMPORTANT: You have the ability to NAVIGATE the user to specific pages.
+If the user asks to "open", "go to", "show me", or "solve" a specific topic, append a HIDDEN ACTION at the very end of your response.
+
+**PEDAGOGICAL INSTRUCTION:**
+When navigating, do NOT just say "Opening page."
+Act as a LEARNING GUIDE. Explain **why** this topic is the next logical step.
+Example: "Since you mastered Arrays, let's move to **Linked Lists** to understand dynamic memory allocation. Opening Linked Lists..."
+
+Valid URL Patterns:
+1. Topic/Tutorial: /subjects/[subject-slug]/[topic-slug]
+   (Infer from context file paths like 'content/data-structures/binary-search.json' -> '/subjects/data-structures/binary-search')
+2. Practice Hub: /practice
+3. Mock Interview: /practice/mock-interview
+4. Coding Problems: /practice/code-problems
+5. Subject: /subjects/[subject-slug]
+
+FORMAT:
+<<<ACTION:{"type":"NAVIGATE","url":"/exact/path","label":"Opening [Topic Name]..."}>>>
+
+Rules:
+- Only navigate if user EXPLICITLY asks.
+- Do NOT navigate for general "explain" questions.
+- If unsure of the path, do NOT navigate.
+- Put the action block at the VERY END.
+`;
+
+            // Combine prompts
+            const finalPrompt = `${prompt}\n\n${navigationPrompt}`;
+
+            functions.logger.info("Calling Gemini API with Navigation Capability");
 
             const genAI = new GoogleGenerativeAI(API_KEY);
 
@@ -72,9 +103,10 @@ ANSWER (be concise, technical, and helpful):`;
                     temperature: 0.7,
                     maxOutputTokens: 1024,
                 },
+                systemInstruction: "You are a helpful AI tutor that can control the website navigation.",
             });
 
-            const result = await model.generateContentStream(prompt);
+            const result = await model.generateContentStream(finalPrompt);
 
             for await (const chunk of result.stream) {
                 const text = chunk.text();
