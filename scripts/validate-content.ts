@@ -39,9 +39,8 @@ roadmaps.forEach(roadmap => {
     roadmap.stages.forEach(stage => {
         stage.topics.forEach(topic => {
             if (topic.slug && !existingSlugs.has(topic.slug)) {
-                // Warning only for now to act as hardening step, strictness can be elevated
-                // console.error(`❌ Broken Link: Roadmap "${roadmap.title}" -> Topic "${topic.title}" points to missing slug "${topic.slug}"`);
-                // errors++;
+                console.error(`❌ Broken Link: Roadmap "${roadmap.title}" -> Topic "${topic.title}" points to missing slug "${topic.slug}"`);
+                errors++;
             }
         });
     });

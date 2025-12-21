@@ -1,21 +1,32 @@
 import { readdir, readFile } from 'fs/promises';
 import { resolve } from 'path';
 import * as dotenv from 'dotenv';
+import { createHash } from 'crypto';
 dotenv.config({ path: resolve(__dirname, '../.env') });
 
-import { initializeApp, getApps } from 'firebase-admin/app';
+import { initializeApp, getApps, cert } from 'firebase-admin/app';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { helpers, PredictionServiceClient } from '@google-cloud/aiplatform';
 
 // --- PRODUCTION CONFIGURATION ---
 const PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT || 'student-resource-hub-a758a';
 const LOCATION = 'us-central1';
-const BATCH_SIZE = 5; // Low batch size to respect Google Cloud Quotas
+const BATCH_SIZE = 5;
 const RETRY_DELAY = 2000;
 
 // Initialize Firebase
 if (!getApps().length) {
-    initializeApp({ projectId: PROJECT_ID });
+    const options: any = { projectId: PROJECT_ID };
+
+    if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
+        try {
+            options.credential = cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY));
+        } catch (e) {
+            console.warn('⚠️ FIREBASE_SERVICE_ACCOUNT_KEY found but invalid JSON. Falling back to ADC.');
+        }
+    }
+
+    initializeApp(options);
 }
 const db = getFirestore();
 
@@ -29,12 +40,17 @@ interface Chunk {
     content: string;
     heading: string;
     type: 'tutorial' | 'qa';
+    hash: string;
 }
 
 const clientOptions = {
     apiEndpoint: `${LOCATION}-aiplatform.googleapis.com`,
 };
 const predictionClient = new PredictionServiceClient(clientOptions);
+
+function generateHash(content: string): string {
+    return createHash('md5').update(content).digest('hex');
+}
 
 /**
  * Generates embedding with exponential backoff for quota management
@@ -54,7 +70,6 @@ async function generateEmbedding(text: string, attempt = 0): Promise<number[]> {
         const embedding = predictions[0].structValue?.fields?.embeddings?.structValue?.fields?.values?.listValue?.values;
         return embedding!.map(v => v.numberValue!);
     } catch (e: any) {
-        // Handle Quota Exhausted (8) or Rate Limit (429)
         if ((e.code === 8 || e.code === 429) && attempt < 5) {
             const delay = RETRY_DELAY * Math.pow(2, attempt);
             console.log(`\n⏳ Quota hit. Retrying in ${delay}ms...`);
@@ -69,11 +84,26 @@ async function generateEmbedding(text: string, attempt = 0): Promise<number[]> {
 function splitTutorialContent(json: any, filePath: string): Chunk[] {
     const chunks: Chunk[] = [];
     const overview = `Title: ${json.title}\nSubject: ${json.subject}\nLevel: ${json.level}\n\nTheory:\n${json.theory || ''}\n\nSyntax:\n${json.syntax || ''}\n${json.summary || ''}`;
-    chunks.push({ filePath, index: '0', content: overview, heading: json.title, type: 'tutorial' });
+    chunks.push({
+        filePath,
+        index: '0',
+        content: overview,
+        heading: json.title,
+        type: 'tutorial',
+        hash: generateHash(overview)
+    });
 
     if (json.interview_questions?.length) {
         const qaText = json.interview_questions.map((q: any) => `Q: ${q.question}\nA: ${q.answer}`).join('\n\n');
-        chunks.push({ filePath, index: 'iq', content: `Interview Questions on ${json.title}:\n\n${qaText}`, heading: 'Interview Questions', type: 'tutorial' });
+        const content = `Interview Questions on ${json.title}:\n\n${qaText}`;
+        chunks.push({
+            filePath,
+            index: 'iq',
+            content,
+            heading: `Interview: ${json.title}`,
+            type: 'tutorial',
+            hash: generateHash(content)
+        });
     }
     return chunks;
 }
@@ -84,14 +114,18 @@ function splitQaContent(json: any, filePath: string): Chunk[] {
     if (json.parts) {
         json.parts.forEach((part: any) => {
             part.questions.forEach((q: any) => {
-                const variants = q.answer_variants.filter((v: any) => v.style === 'technical' || v.style === 'deep_explanation').map((v: any) => v.answer).join('\n');
-                const content = `Question: ${q.question}\nTopic: ${q.topic}\n\nCore Answer:\n${variants}`;
+                const searchStyles = ['interview', 'technical', 'advanced', 'strict_definition', 'deep_explanation'];
+                const variants = q.answer_variants
+                    .filter((v: any) => searchStyles.includes(v.style))
+                    .map((v: any) => v.answer).join('\n');
+                const content = `Question: ${q.question}\nTopic: ${q.topic}\n\nExpert Answers:\n${variants}`;
                 chunks.push({
                     filePath,
                     index: `q_${q.id}`,
                     content,
                     heading: `Expert QA: ${q.question}`,
-                    type: 'qa'
+                    type: 'qa',
+                    hash: generateHash(content)
                 });
             });
         });
@@ -112,9 +146,9 @@ async function getFiles(dir: string): Promise<string[]> {
 
 async function main() {
     const contentDir = resolve(__dirname, '../content');
-    const qaDir = resolve(__dirname, '../qa_database/json_parts');
+    const qaDir = resolve(__dirname, '../qa_database');
 
-    console.log(`🧠 [PRODUCTION] Syncing AI Brain...`);
+    console.log(`🧠 [PRODUCTION] Syncing AI Brain (Incremental)...`);
 
     const tutorialFiles = await getFiles(contentDir);
     const qaFiles = await getFiles(qaDir);
@@ -125,6 +159,8 @@ async function main() {
     ];
 
     let processedCount = 0;
+    let skipCount = 0;
+
     for (const item of allWork) {
         const isTutorial = item.filePath.includes('content');
         const relativePath = isTutorial
@@ -140,11 +176,15 @@ async function main() {
                 const docId = `${chunk.filePath.replace(/\//g, '_')}_${chunk.index}`.replace(/__/g, '_');
                 const docRef = db.collection('knowledge_vectors').doc(docId);
 
-                // Optimization: Skip if exists
+                // Incremental Lock: Skip if exactly same content hash exists
                 const docSnap = await docRef.get();
                 if (docSnap.exists) {
-                    process.stdout.write('.');
-                    continue;
+                    const existingData = docSnap.data();
+                    if (existingData?.hash === chunk.hash) {
+                        process.stdout.write('.');
+                        skipCount++;
+                        continue;
+                    }
                 }
 
                 const vector = await generateEmbedding(chunk.content);
@@ -154,13 +194,14 @@ async function main() {
                     content: chunk.content,
                     heading: chunk.heading,
                     type: chunk.type,
+                    hash: chunk.hash,
                     embedding: FieldValue.vector(vector),
                     updatedAt: FieldValue.serverTimestamp()
                 });
-                process.stdout.write('✅');
+
+                process.stdout.write(docSnap.exists ? '🆙' : '✅');
                 processedCount++;
 
-                // Throttling for Quota safety
                 if (processedCount % BATCH_SIZE === 0) {
                     await new Promise(r => setTimeout(r, 1000));
                 }
@@ -170,7 +211,11 @@ async function main() {
         }
     }
 
-    console.log(`\n🎉 Processed ${processedCount} new chunks. Brain is PRODUCTION ready.`);
+    console.log(`\n\n🎉 SYNC COMPLETE`);
+    console.log(`--------------------------`);
+    console.log(`✅ New/Updated: ${processedCount}`);
+    console.log(`⏭️  Skipped (No Change): ${skipCount}`);
+    console.log(`🧠 Knowledge Base is ready.`);
 }
 
 main().catch(err => console.error(err));

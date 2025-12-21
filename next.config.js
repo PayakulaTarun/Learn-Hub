@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  trailingSlash: true,
+  output: 'export', // Enable static HTML export for Firebase Hosting
+  trailingSlash: true, // Required for Firebase clean URLs
   images: {
     domains: [], // Add domains if needed
     unoptimized: true // Often safer for standalone if not using Vercel Image Optimization

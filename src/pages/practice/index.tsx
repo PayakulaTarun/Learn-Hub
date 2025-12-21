@@ -55,6 +55,24 @@ const tools = [
     features: ['C Editor', 'React Apps', 'Backend Engines']
   },
   {
+    title: 'Code Problems (LeetCode Style)',
+    description: 'Solve algorithmic challenges with 50+ test cases per problem. Real-time code execution and detailed test results.',
+    icon: Code2,
+    color: 'from-cyan-500 to-blue-600',
+    href: '/practice/code-problems',
+    status: 'New',
+    features: ['50 Test Cases', 'Auto Grading', 'Multiple Languages']
+  },
+  {
+    title: 'Mock Interview Coach',
+    description: 'Prepare for technical interviews with our subject-bound AI coach. 50 questions per session with detailed performance reports.',
+    icon: Cpu,
+    color: 'from-purple-600 to-indigo-700',
+    href: '/practice/mock-interview',
+    status: 'Live',
+    features: ['50 Quests/Session', 'Voice Input', 'Topic Analysis']
+  },
+  {
     title: 'SQL Sandbox',
     description: 'Practice complex queries on a variety of relational databases. Perfect for mastering joins and data analysis.',
     icon: Database,

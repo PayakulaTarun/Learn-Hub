@@ -1,12 +1,15 @@
 import { helpers, PredictionServiceClient } from '@google-cloud/aiplatform';
 import { VertexAI } from '@google-cloud/vertexai';
-import { db } from '@/lib/firebase-admin';
-const similarity = require('compute-cosine-similarity');
-import { LRUCache } from 'lru-cache';
+import { db } from '../lib/firebase-admin';
 
 // --- PRODUCTION CONFIG ---
-const PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT || 'student-resource-hub-a758a';
-const LOCATION = 'us-central1';
+const PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT;
+const LOCATION = process.env.GOOGLE_CLOUD_LOCATION || 'us-central1';
+
+if (!PROJECT_ID) {
+    throw new Error('CRITICAL: GOOGLE_CLOUD_PROJECT environment variable is missing.');
+}
+
 const EMBEDDING_ENDPOINT = `projects/${PROJECT_ID}/locations/${LOCATION}/publishers/google/models/text-embedding-004`;
 
 // Minimum similarity score to consider context "relevant"
@@ -42,11 +45,6 @@ function getGenerativeModel() {
     return generativeModel;
 }
 
-// Memory cache for vector segments to avoid Firestore overhead
-const vectorCache = new LRUCache<string, any[]>({
-    max: 1,
-    ttl: 1000 * 60 * 30, // 30 minute cache
-});
 
 export class AIService {
 
@@ -71,40 +69,46 @@ export class AIService {
     }
 
     /**
-     * Finds the most relevant snippets from the Knowledge Base (JSON parts)
+     * Finds the most relevant snippets from the Knowledge Base (JSON parts) using Firestore Vector Search
      */
     static async getRelevantContext(queryVector: number[]): Promise<{ context: string, highConfidence: boolean }> {
-        let vectors = vectorCache.get('vectors');
+        try {
+            console.log('[AI] Querying Vector Database...');
 
-        if (!vectors) {
-            console.log('[AI] Refreshing Knowledge Cache...');
-            const snapshot = await db.collection('knowledge_vectors').select('embedding', 'content', 'heading', 'type').get();
-            vectors = snapshot.docs.map(doc => ({
+            // Native Firestore Vector Search (O(log N) scale vs O(N) memory)
+            const snapshot = await db.collection('knowledge_vectors')
+                .findNearest({
+                    vectorField: 'embedding',
+                    queryVector: queryVector,
+                    distanceMeasure: 'COSINE',
+                    limit: 5
+                })
+                .get();
+
+            const matches = snapshot.docs.map(doc => ({
                 id: doc.id,
-                ...doc.data(),
-                // @ts-ignore
-                vec: doc.data().embedding.toArray ? doc.data().embedding.toArray() : doc.data().embedding
-            }));
-            vectorCache.set('vectors', vectors);
+                ...doc.data()
+            } as any));
+
+            // Prioritize QA over Tutorial in the context assembly
+            const context = matches
+                .sort((a, b) => {
+                    if (a.type === 'qa' && b.type !== 'qa') return -1;
+                    if (a.type !== 'qa' && b.type === 'qa') return 1;
+                    return 0;
+                })
+                .map((v, i) => `[Source: ${v.heading} (${v.type})]\n${v.content}`)
+                .join('\n\n');
+
+            return {
+                context,
+                highConfidence: matches.length > 0
+            };
+        } catch (error: any) {
+            console.error('[AI] Vector Search Failed:', error.message);
+            // Fallback to empty context
+            return { context: '', highConfidence: false };
         }
-
-        const scored = vectors!.map(v => ({
-            content: v.content,
-            heading: v.heading,
-            type: v.type,
-            score: similarity(queryVector, v.vec) || 0
-        }));
-
-        const matches = scored
-            .filter(v => v.score > RELEVANCE_THRESHOLD)
-            .sort((a, b) => b.score - a.score)
-            .slice(0, 5);
-
-        const context = matches.map((v, i) => `[Source: ${v.heading} (${v.type})]\n${v.content}`).join('\n\n');
-        return {
-            context,
-            highConfidence: matches.length > 0
-        };
     }
 
     /**

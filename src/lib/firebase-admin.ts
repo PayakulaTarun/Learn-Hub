@@ -14,12 +14,11 @@ function initFirebase() {
             app = getApps()[0];
         } else {
             try {
-                app = initializeApp({
-                    projectId: PROJECT_ID,
-                    credential: process.env.FIREBASE_SERVICE_ACCOUNT_KEY
-                        ? cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY))
-                        : undefined
-                });
+                const options: any = { projectId: PROJECT_ID };
+                if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
+                    options.credential = cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY));
+                }
+                app = initializeApp(options);
                 console.log('✅ Firebase Admin Initialized (' + PROJECT_ID + ')');
             } catch (error) {
                 console.error('❌ Firebase Admin Init Failed:', error);
