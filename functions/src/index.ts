@@ -34,21 +34,34 @@ export const api = functions.https.onRequest(async (req, res) => {
 
             const authHeader = req.headers.authorization as string;
             if (!authHeader?.startsWith("Bearer ")) {
-                res.status(401).json({ error: "Unauthorized" });
+                res.status(401).json({ error: "Unauthorized: Missing token" });
                 return;
             }
 
-            const token = authHeader.split("Bearer ")[1];
-            const decoded = await admin.auth().verifyIdToken(token);
-            const uid = decoded.uid;
+            let uid: string;
+            try {
+                const token = authHeader.split("Bearer ")[1];
+                const decoded = await admin.auth().verifyIdToken(token);
+                uid = decoded.uid;
+            } catch (authError: any) {
+                functions.logger.error("Auth Error:", authError.message);
+                res.status(401).json({ error: "Unauthorized: Invalid token" });
+                return;
+            }
 
             // Check quota
             const today = new Date().toISOString().split("T")[0];
             const quotaRef = admin.firestore().collection("user_quotas").doc(`${uid}_${today}`);
-            const quotaDoc = await quotaRef.get();
-            const currentCount = quotaDoc.data()?.count || 0;
 
-            if (currentCount >= 50) {
+            let currentCount = 0;
+            try {
+                const quotaDoc = await quotaRef.get();
+                currentCount = quotaDoc.data()?.count || 0;
+            } catch (dbError: any) {
+                functions.logger.warn("Quota retrieval error (defaulting to 0):", dbError.message);
+            }
+
+            if (currentCount >= 500) {
                 res.status(429).json({ error: "Daily limit reached" });
                 return;
             }
@@ -57,15 +70,22 @@ export const api = functions.https.onRequest(async (req, res) => {
 
             const { messages } = req.body;
             if (!messages || !Array.isArray(messages)) {
-                res.status(400).json({ error: "Invalid format" });
+                res.status(400).json({ error: "Invalid format: messages array required" });
                 return;
             }
 
-            const lastMessage = messages[messages.length - 1].content;
+            const lastMessage = messages[messages.length - 1]?.content;
+            if (!lastMessage) {
+                res.status(400).json({ error: "Message content cannot be empty" });
+                return;
+            }
+
             res.setHeader("Content-Type", "text/event-stream");
             res.setHeader("Cache-Control", "no-cache");
+            res.setHeader("Connection", "keep-alive");
             res.flushHeaders();
 
+            functions.logger.info(`Starting AI stream for user ${uid}`);
             await AIService.streamResponse(lastMessage, res);
         }
         // ========== MOCK INTERVIEW START ==========

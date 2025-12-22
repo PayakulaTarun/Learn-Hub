@@ -29,6 +29,7 @@ if (!getApps().length) {
     initializeApp(options);
 }
 const db = getFirestore();
+db.settings({ ignoreUndefinedProperties: true });
 
 // Vertex AI Config
 const ENDPOINT = `projects/${PROJECT_ID}/locations/${LOCATION}/publishers/google/models/text-embedding-004`;
@@ -83,24 +84,42 @@ async function generateEmbedding(text: string, attempt = 0): Promise<number[]> {
 // Chunker Logic (Tutorial)
 function splitTutorialContent(json: any, filePath: string): Chunk[] {
     const chunks: Chunk[] = [];
-    const overview = `Title: ${json.title}\nSubject: ${json.subject}\nLevel: ${json.level}\n\nTheory:\n${json.theory || ''}\n\nSyntax:\n${json.syntax || ''}\n${json.summary || ''}`;
+
+    // Handle Array format (common in evaluator data)
+    if (Array.isArray(json)) {
+        json.forEach((item, idx) => {
+            const content = JSON.stringify(item, null, 2);
+            chunks.push({
+                filePath,
+                index: idx.toString(),
+                content,
+                heading: item.title || item.name || `Asset ${idx} in ${filePath.split('/').pop()}`,
+                type: 'tutorial',
+                hash: generateHash(content)
+            });
+        });
+        return chunks;
+    }
+
+    // Handle Standard Object format
+    const overview = `Title: ${json.title || 'Untitled'}\nSubject: ${json.subject || 'General'}\nLevel: ${json.level || 'Beginner'}\n\nTheory:\n${json.theory || ''}\n\nSyntax:\n${json.syntax || ''}\n${json.summary || ''}`;
     chunks.push({
         filePath,
         index: '0',
         content: overview,
-        heading: json.title,
+        heading: json.title || 'Untitled Material',
         type: 'tutorial',
         hash: generateHash(overview)
     });
 
     if (json.interview_questions?.length) {
         const qaText = json.interview_questions.map((q: any) => `Q: ${q.question}\nA: ${q.answer}`).join('\n\n');
-        const content = `Interview Questions on ${json.title}:\n\n${qaText}`;
+        const content = `Interview Questions on ${json.title || 'Topic'}:\n\n${qaText}`;
         chunks.push({
             filePath,
             index: 'iq',
             content,
-            heading: `Interview: ${json.title}`,
+            heading: `Interview: ${json.title || 'Topic'}`,
             type: 'tutorial',
             hash: generateHash(content)
         });

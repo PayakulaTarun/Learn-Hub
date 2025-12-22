@@ -39,9 +39,11 @@ export function AIProvider({ children }: { children: ReactNode }) {
 
 // ... (Top of file)
 
-    const sendMessage = async (content: string) => {
+    const sendMessage = async (content: string, isRetry = false) => {
         const userMsg: AIChatMessage = { role: 'user', content };
-        setMessages(prev => [...prev, userMsg]);
+        if (!isRetry) {
+            setMessages(prev => [...prev, userMsg]);
+        }
         setIsTyping(true);
 
         try {
@@ -59,12 +61,18 @@ export function AIProvider({ children }: { children: ReactNode }) {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    messages: [...messages, userMsg],
+                    messages: isRetry ? [...messages] : [...messages, userMsg],
                     context: contextData
                 })
             });
             
             if (!res.ok) {
+                // AUTO RETRY ONCE FOR TRANSIENT ERRORS
+                if (!isRetry && res.status >= 500) {
+                    console.warn("Retrying AI request...");
+                    return sendMessage(content, true);
+                }
+
                 let errorMessage = res.statusText;
                 try {
                     const errorData = await res.json();
@@ -123,13 +131,17 @@ export function AIProvider({ children }: { children: ReactNode }) {
             });
 
         } catch (error: any) {
+             // AUTO-RETRY ON NETWORK ERROR
+            if (!isRetry) {
+                console.warn("Retrying AI request after network failure...");
+                return sendMessage(content, true);
+            }
+
             console.error('AI Stream Error:', error);
             const msg = error.message || 'Unknown Error';
-            // Don't duplicate 'Sorry' message if one was just added
             setMessages(prev => {
                  const last = prev[prev.length - 1];
                  if (last.role === 'assistant' && last.content === '') {
-                     // If we started an empty message, replace it
                      const newHistory = [...prev];
                      newHistory[newHistory.length - 1].content = `⚠️ **Connection Error:** ${msg}. \n\n*Using offline knowledge base where available.*`;
                      return newHistory;

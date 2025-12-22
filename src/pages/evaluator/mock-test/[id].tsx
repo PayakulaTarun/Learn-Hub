@@ -94,7 +94,7 @@ export default function MockTestPage({ exam }: MockTestPageProps) {
                                     <div className="bg-primary/40 border border-ui-border p-6 rounded-3xl">
                                         <Target className="w-6 h-6 text-emerald-400 mb-3" />
                                         <p className="text-[10px] font-bold text-text-muted uppercase mb-1">Total Marks</p>
-                                        <p className="text-xl font-black">100</p>
+                                        <p className="text-xl font-black">{exam.questions.reduce((acc, q) => acc + q.marks, 0)}</p>
                                     </div>
                                     <div className="bg-primary/40 border border-ui-border p-6 rounded-3xl">
                                         <AlertCircle className="w-6 h-6 text-rose-400 mb-3" />
@@ -250,12 +250,12 @@ export default function MockTestPage({ exam }: MockTestPageProps) {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                            <div className="bg-ui-card border border-ui-border p-10 rounded-[2.5rem] text-center shadow-2xl relative overflow-hidden group">
-                                <BarChart className="absolute -top-4 -left-4 w-32 h-32 opacity-5 text-emerald-400" />
-                                <p className="text-[10px] font-black text-text-muted uppercase mb-2 tracking-widest">Final Score</p>
-                                <p className="text-6xl font-black text-emerald-400 mb-2">{calculateScore()}</p>
-                                <p className="text-xs font-bold text-text-muted uppercase">Rank Estimation: ~540</p>
-                            </div>
+                                <div className="bg-ui-card border border-ui-border p-10 rounded-[2.5rem] text-center shadow-2xl relative overflow-hidden group">
+                                    <BarChart className="absolute -top-4 -left-4 w-32 h-32 opacity-5 text-emerald-400" />
+                                    <p className="text-[10px] font-black text-text-muted uppercase mb-2 tracking-widest">Final Score</p>
+                                    <p className="text-6xl font-black text-emerald-400 mb-2">{calculateScore()}</p>
+                                    <p className="text-xs font-bold text-text-muted uppercase">Rank Estimation: ~{Math.max(10, Math.floor(1000 - (calculateScore() / exam.questions.reduce((acc, q) => acc + q.marks, 0)) * 1000))}</p>
+                                </div>
                             <div className="bg-ui-card border border-ui-border p-10 rounded-[2.5rem] text-center shadow-2xl relative overflow-hidden group">
                                 <Zap className="absolute -top-4 -right-4 w-32 h-32 opacity-5 text-orange-400" />
                                 <p className="text-[10px] font-black text-text-muted uppercase mb-2 tracking-widest">Accuracy</p>
@@ -265,7 +265,7 @@ export default function MockTestPage({ exam }: MockTestPageProps) {
                             <div className="bg-ui-card border border-ui-border p-10 rounded-[2.5rem] text-center shadow-2xl relative overflow-hidden group">
                                 <Target className="absolute -bottom-4 -right-4 w-32 h-32 opacity-5 text-rose-400" />
                                 <p className="text-[10px] font-black text-text-muted uppercase mb-2 tracking-widest">Percentile</p>
-                                <p className="text-6xl font-black text-rose-400 mb-2">91.4</p>
+                                <p className="text-6xl font-black text-rose-400 mb-2">{Math.min(99.9, Number(((calculateScore() / Math.max(1, exam.questions.reduce((acc, q) => acc + q.marks, 0))) * 100).toFixed(1)))}</p>
                                 <p className="text-xs font-bold text-text-muted uppercase">Recommended Revision: Algorithms</p>
                             </div>
                         </div>

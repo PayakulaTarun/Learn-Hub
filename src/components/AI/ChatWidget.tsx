@@ -9,9 +9,25 @@ export default function ChatWidget() {
     const [isExpanded, setIsExpanded] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
-    // Auto-scroll to bottom
+    // Smart Auto-scroll
+    const scrollToBottom = () => {
+        if (!messagesEndRef.current) return;
+        
+        // Only scroll if we are already near bottom (or if it's a new user message)
+        const container = messagesEndRef.current.parentElement; // The scroll container
+        if (container) {
+            const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+            if (isNearBottom) {
+                 messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+             // Fallback
+             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        scrollToBottom();
     }, [messages, isOpen]);
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -19,56 +35,59 @@ export default function ChatWidget() {
         if (!input.trim()) return;
         sendMessage(input);
         setInput('');
+        // Force scroll on user send
+        setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
     };
 
     if (!isOpen) {
         return (
             <button 
                 onClick={toggleChat}
-                className="fixed bottom-6 right-6 p-4 bg-gradient-to-r from-rose-500 to-orange-500 rounded-full shadow-glow-rose hover:scale-110 transition-transform z-50 group"
+                className="fixed bottom-6 right-6 p-4 bg-gradient-to-r from-accent to-blue-500 rounded-full shadow-glow hover:scale-110 transition-transform z-50 group"
             >
-                <Bot className="w-8 h-8 text-white animate-pulse-slow" />
-                <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1 bg-ui-card border border-ui-border rounded-lg text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                <Bot className="w-8 h-8 text-primary animate-pulse-slow" />
+                <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1 bg-ui-card border border-ui-border rounded-lg text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity text-text-primary">
                     Ask AI Tutor
                 </span>
             </button>
         );
     }
-
+    
+    // ... (Container styles kept similar but updated to theme) ...
     return (
-        <div className={`fixed bottom-6 right-6 bg-ui-card border border-ui-border shadow-2xl z-50 flex flex-col transition-all duration-300 ${
+        <div className={`fixed bottom-24 md:bottom-6 right-6 bg-ui-card border border-ui-border shadow-2xl z-50 flex flex-col transition-all duration-300 ${
             isExpanded ? 'w-[90vw] h-[80vh] rounded-3xl' : 'w-[380px] h-[600px] rounded-2xl'
         }`}>
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-ui-border bg-ui-dark/50 rounded-t-2xl backdrop-blur-md">
                 <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-br from-rose-500 to-orange-500 rounded-xl">
-                        <Bot className="w-5 h-5 text-white" />
+                    <div className="p-2 bg-gradient-to-br from-accent to-blue-500 rounded-xl shadow-glow">
+                        <Bot className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                        <h3 className="font-bold text-sm">AI Tutor</h3>
+                        <h3 className="font-bold text-sm text-text-primary">AI Tutor</h3>
                         {contextData.problemTitle && (
                             <p className="text-[10px] text-text-muted truncate max-w-[150px]">
-                                Context: {contextData.problemTitle}
+                                Focusing on: {contextData.problemTitle}
                             </p>
                         )}
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <button onClick={clearChat} className="p-2 hover:bg-ui-border rounded-lg text-text-muted hover:text-rose-400 transition-colors" title="Clear Chat">
+                    <button onClick={clearChat} className="p-2 hover:bg-ui-border rounded-lg text-text-muted hover:text-red-400 transition-colors" title="Clear Chat">
                         <Trash2 className="w-4 h-4" />
                     </button>
                     <button onClick={() => setIsExpanded(!isExpanded)} className="p-2 hover:bg-ui-border rounded-lg text-text-muted transition-colors">
                         {isExpanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
                     </button>
-                    <button onClick={toggleChat} className="p-2 hover:bg-rose-500/20 rounded-lg text-text-muted hover:text-rose-500 transition-colors">
+                    <button onClick={toggleChat} className="p-2 hover:bg-accent/20 rounded-lg text-text-muted hover:text-accent transition-colors">
                         <X className="w-4 h-4" />
                     </button>
                 </div>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar scroll-smooth">
                 {messages.map((msg, idx) => (
                     <div key={idx} className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                         {msg.role === 'assistant' && (
@@ -76,21 +95,31 @@ export default function ChatWidget() {
                                 <Bot className="w-4 h-4 text-text-muted" />
                             </div>
                         )}
-                        <div className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${
+                        <div className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed shadow-lg ${
                             msg.role === 'user' 
-                            ? 'bg-primary text-text-primary rounded-tr-none border border-ui-border' 
+                            ? 'bg-gradient-to-r from-accent/20 to-blue-500/20 text-text-primary rounded-tr-none border border-accent/30' 
                             : 'bg-ui-dark text-text-secondary rounded-tl-none border border-ui-border'
                         }`}>
                             <div className="prose prose-invert prose-sm max-w-none">
                                 <ReactMarkdown 
                                     components={{
                                         code({node, inline, className, children, ...props}: any) {
+                                            const match = /language-(\w+)/.exec(className || '');
+                                            const lang = match ? match[1] : '';
+                                            
                                             return !inline ? (
-                                                <div className="bg-black/30 p-2 rounded-lg my-2 border border-ui-border font-mono text-xs overflow-x-auto">
-                                                    {children}
+                                                <div className="relative group my-3">
+                                                    {lang && (
+                                                        <div className="absolute -top-3 right-2 px-2 py-0.5 bg-accent/20 text-accent text-[10px] rounded font-mono font-bold uppercase tracking-wider border border-accent/20">
+                                                            {lang}
+                                                        </div>
+                                                    )}
+                                                    <div className="bg-[#0D1117] p-3 rounded-lg border border-ui-border font-mono text-xs overflow-x-auto">
+                                                        {children}
+                                                    </div>
                                                 </div>
                                             ) : (
-                                                <code className="bg-black/30 px-1 py-0.5 rounded text-rose-300 font-mono text-xs" {...props}>
+                                                <code className="bg-ui-border px-1.5 py-0.5 rounded text-accent font-mono text-xs border border-white/5" {...props}>
                                                     {children}
                                                 </code>
                                             )

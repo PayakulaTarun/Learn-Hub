@@ -1,132 +1,208 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { VertexAI } from "@google-cloud/vertexai";
+import { helpers, PredictionServiceClient } from "@google-cloud/aiplatform";
 
-// Get API key from environment variable (NEVER hardcode!)
-const API_KEY = process.env.GEMINI_API_KEY || "AIzaSyCl2WNSeQgIMLa7tM1Hq990eHKWrsxHFNM";
-
+/**
+ * AI Service: Orchestrates interaction with Gemini for intelligent learning assistance
+ */
 export class AIService {
+    private static predictionClient: PredictionServiceClient | null = null;
+    private static vertexAI: VertexAI | null = null;
+    private static PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT || process.env.GCP_PROJECT || "student-resource-hub-a758a";
+    private static LOCATION = "us-central1";
+    private static EMBEDDING_ENDPOINT = `projects/${this.PROJECT_ID}/locations/${this.LOCATION}/publishers/google/models/text-embedding-004`;
+
+    private static getPredictionClient() {
+        if (!this.predictionClient) {
+            this.predictionClient = new PredictionServiceClient({
+                apiEndpoint: `${this.LOCATION}-aiplatform.googleapis.com`,
+            });
+        }
+        return this.predictionClient;
+    }
+
+    private static getVertexAI() {
+        if (!this.vertexAI) {
+            this.vertexAI = new VertexAI({ project: this.PROJECT_ID, location: this.LOCATION });
+        }
+        return this.vertexAI;
+    }
+
     /**
-     * Retrieve relevant context from Firestore Vector Store
+     * Converts user query into a mathematical vector for semantic search
      */
-    static async getRelevantContext(query: string): Promise<string> {
+    static async getEmbedding(text: string): Promise<number[]> {
+        const client = this.getPredictionClient();
+        const instance = helpers.toValue({ content: text, task_type: "RETRIEVAL_QUERY" });
+        const request = { endpoint: this.EMBEDDING_ENDPOINT, instances: [instance!] };
+
         try {
-            const db = admin.firestore();
+            const [response] = await client.predict(request);
+            const predictions = response.predictions;
+            if (!predictions?.[0]) throw new Error("AI_EMBEDDING_EMPTY");
 
-            const snapshot = await db.collection("knowledge_vectors")
-                .limit(5)
-                .get();
+            // Use helpers.fromValue for robust parsing
+            const prediction = helpers.fromValue(predictions[0] as any) as any;
+            const values = prediction?.embeddings?.values;
 
-            if (snapshot.empty) {
-                functions.logger.info("Knowledge base empty - using general knowledge");
-                // Don't block - allow AI to use general knowledge
-                return "";
+            if (!values || !Array.isArray(values)) {
+                functions.logger.error("[AI] Embedding Format Error. Raw Prediction:", JSON.stringify(prediction));
+                throw new Error("AI_EMBEDDING_FORMAT_ERROR");
             }
 
-            const contextParts = snapshot.docs.map((doc) => {
-                const data = doc.data();
-                const type = data.type || "tutorial";
-                const source = data.source || data.subject || "Unknown";
-                const content = data.content || data.text || "";
-                return `[${type} - ${source}]\n${content.substring(0, 400)}`;
-            });
-
-            functions.logger.info(`Retrieved ${contextParts.length} context snippets`);
-            return contextParts.join("\n\n---\n\n");
+            return values;
         } catch (error: any) {
-            functions.logger.error("Context retrieval error:", error);
-            return ""; // Return empty, not an error message
+            functions.logger.error("[AI] Embedding Error:", error.message);
+            throw new Error(`AI_EMBEDDING_FAILURE: ${error.message}`);
         }
     }
 
     /**
-     * Stream AI response using Gemini
+     * Retrieve relevant context from Firestore Knowledge Base using Vector Search
      */
-    static async streamResponse(query: string, res: any): Promise<void> {
+    static async getRelevantContext(queryVector: number[]): Promise<string> {
         try {
-            const context = await this.getRelevantContext(query);
+            const db = admin.firestore();
 
-            const prompt = context
-                ? `You are an expert coding tutor for Student Resource Hub.
+            functions.logger.info(`Searching for nearest neighbors (vector size: ${queryVector.length})...`);
 
-Use the following CONTEXT when relevant:
-${context}
+            // Native Firestore Vector Search (firebase-admin 13.x signature)
+            // Signature: findNearest(vectorField, queryVector, options)
+            const snapshot = await (db.collection("knowledge_vectors") as any)
+                .findNearest("embedding", admin.firestore.FieldValue.vector(queryVector), {
+                    distanceMeasure: "COSINE",
+                    limit: 5,
+                })
+                .get();
 
-STUDENT QUESTION: ${query}
-
-ANSWER (be concise, technical, and helpful):`
-                : `You are an expert coding tutor for Student Resource Hub.
-
-STUDENT QUESTION: ${query}
-
-ANSWER (be concise, technical, and helpful):`;
-
-            // --- NAVIGATION INJECTION ---
-            const navigationPrompt = `
-IMPORTANT: You have the ability to NAVIGATE the user to specific pages.
-If the user asks to "open", "go to", "show me", or "solve" a specific topic, append a HIDDEN ACTION at the very end of your response.
-
-**PEDAGOGICAL INSTRUCTION:**
-When navigating, do NOT just say "Opening page."
-Act as a LEARNING GUIDE. Explain **why** this topic is the next logical step.
-Example: "Since you mastered Arrays, let's move to **Linked Lists** to understand dynamic memory allocation. Opening Linked Lists..."
-
-Valid URL Patterns:
-1. Topic/Tutorial: /subjects/[subject-slug]/[topic-slug]
-   (Infer from context file paths like 'content/data-structures/binary-search.json' -> '/subjects/data-structures/binary-search')
-2. Practice Hub: /practice
-3. Mock Interview: /practice/mock-interview
-4. Coding Problems: /practice/code-problems
-5. Subject: /subjects/[subject-slug]
-
-FORMAT:
-<<<ACTION:{"type":"NAVIGATE","url":"/exact/path","label":"Opening [Topic Name]..."}>>>
-
-Rules:
-- Only navigate if user EXPLICITLY asks.
-- Do NOT navigate for general "explain" questions.
-- If unsure of the path, do NOT navigate.
-- Put the action block at the VERY END.
-`;
-
-            // Combine prompts
-            const finalPrompt = `${prompt}\n\n${navigationPrompt}`;
-
-            functions.logger.info("Calling Gemini API with Navigation Capability");
-
-            const genAI = new GoogleGenerativeAI(API_KEY);
-
-            // Using gemini-1.5-pro (Pro version - more powerful)
-            const model = genAI.getGenerativeModel({
-                model: "gemini-1.5-pro",
-                generationConfig: {
-                    temperature: 0.7,
-                    maxOutputTokens: 1024,
-                },
-                systemInstruction: "You are a helpful AI tutor that can control the website navigation.",
-            });
-
-            const result = await model.generateContentStream(finalPrompt);
-
-            for await (const chunk of result.stream) {
-                const text = chunk.text();
-                if (text) {
-                    res.write(text);
-                }
+            if (snapshot.empty) {
+                functions.logger.info("No matching context found in vector DB");
+                return "";
             }
 
-            res.end();
-            functions.logger.info("Stream completed");
-        } catch (error: any) {
-            // CRITICAL: Never expose API details to user
-            functions.logger.error("AI Error:", {
-                message: error.message,
-                status: error.status,
+            functions.logger.info(`Found ${snapshot.docs.length} relevant documents`);
+
+            const contextParts = snapshot.docs.map((doc: any) => {
+                const data = doc.data();
+                const source = data.filePath || "Knowledge Base";
+                const content = data.content || "";
+                return `[Context: ${source}]\n${content}`;
             });
 
-            // Generic user-facing message (no API details)
-            res.write("⚠️ AI service temporarily unavailable. Please try again in a moment.");
-            res.end();
+            return contextParts.join("\n\n---\n\n");
+        } catch (error: any) {
+            functions.logger.error("Vector search retrieval error:", error.message);
+            return "";
+        }
+    }
+
+    /**
+     * Streams the response from Gemini with full error handling and auto-fallback
+     */
+    static async streamResponse(query: string, res: any): Promise<void> {
+        let retryCount = 0;
+        const maxRetries = 2;
+        let hasStartedWriting = false;
+
+        try {
+            // 1. Get embedding for the query
+            functions.logger.info(`Getting embedding for query: ${query.substring(0, 50)}...`);
+            const queryVector = await this.getEmbedding(query);
+
+            // 2. Get relevant context using the vector
+            functions.logger.info("Performing vector search...");
+            const context = await this.getRelevantContext(queryVector);
+
+            const systemInstruction = `
+You are the Student Resource Hub AI Tutor (Principal Grade).
+Objective: Provide highly technical, industry-ready explanations.
+Style: Premium, concise, Engineering-first.
+Context: Student Resource Hub platform.
+
+Available KNOWLEDGE BASE Context:
+${context || "No specific local context found. Use internal training data."}
+
+Navigation Capability:
+If the user wants to go to a specific page, include the action in your response:
+Example: "I'll open Python Loops for you... <<<ACTION:{"type":"NAVIGATE", "url":"/subjects/python-logic"}>>>"
+
+Rules:
+1. Always wrap code in triple backticks with language.
+2. Use markdown for structure.
+3. If context is provided, prioritize it.
+4. Be encouraging but rigorous.
+`;
+
+            const attemptGeneration = async (): Promise<void> => {
+                try {
+                    functions.logger.info(`AI Model Call Attempt ${retryCount + 1}`);
+
+                    const vertex = this.getVertexAI();
+                    const model = vertex.getGenerativeModel({
+                        model: "gemini-1.5-pro",
+                        generationConfig: {
+                            temperature: 0.2,
+                            maxOutputTokens: 2048,
+                        },
+                        systemInstruction: {
+                            role: 'system',
+                            parts: [{ text: systemInstruction }]
+                        }
+                    });
+
+                    // Attempt Stream
+                    try {
+                        const result = await model.generateContentStream(query);
+                        for await (const chunk of result.stream) {
+                            const text = chunk.candidates?.[0]?.content?.parts?.[0]?.text;
+                            if (text) {
+                                res.write(text);
+                                hasStartedWriting = true;
+                            }
+                        }
+                        res.end();
+                        return;
+                    } catch (streamError: any) {
+                        functions.logger.warn("Stream failed, falling back to static", { error: streamError.message });
+
+                        if (hasStartedWriting) {
+                            res.write("\n\n[Warning: Stream Interrupted. Attempting Recovery...]\n\n");
+                        }
+
+                        const result = await model.generateContent(query);
+                        const responseText = result.response.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                        if (responseText) {
+                            res.write(hasStartedWriting ? responseText.substring(responseText.length / 2) : responseText);
+                            res.end();
+                        } else {
+                            throw new Error("Empty response candidate");
+                        }
+                    }
+                } catch (error: any) {
+                    functions.logger.error("AI Generation Fatal Error", { error: error.message, retryCount });
+
+                    if (retryCount < maxRetries) {
+                        retryCount++;
+                        await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
+                        return attemptGeneration();
+                    }
+
+                    if (!res.writableEnded) {
+                        res.write("\n\n⚠️ **AI Service Interruption**\nI'm having trouble connecting to my brain right now. Please try again in a moment.");
+                        res.end();
+                    }
+                }
+            };
+
+            await attemptGeneration();
+        } catch (fatalError: any) {
+            functions.logger.error("Fatal AI Flow Error", fatalError);
+            if (!res.writableEnded) {
+                res.write("\n\n⚠️ **Knowledge Retrieval Failed**\nI couldn't access my memory banks. Please check your connection.");
+                res.end();
+            }
         }
     }
 }

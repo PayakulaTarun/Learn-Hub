@@ -1,1 +1,0 @@
-self.__SSG_MANIFEST=new Set(["\u002Fevaluator\u002Fbattlegrounds\u002F[id]","\u002Fevaluator\u002Fbattlegrounds\u002Fsolve\u002F[id]","\u002Fevaluator\u002Fmock-test\u002F[id]","\u002Flearn\u002F[role]\u002F[domain]\u002F[topic]","\u002Fsubjects","\u002Fsubjects\u002F[subject]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
