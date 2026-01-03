@@ -1,4 +1,5 @@
-import * as functions from "firebase-functions";
+import { onRequest } from "firebase-functions/v2/https";
+import * as logger from "firebase-functions/logger";
 import * as admin from "firebase-admin";
 import { AIService } from "./services/AIService";
 import { MockInterviewService } from "./services/MockService";
@@ -10,18 +11,13 @@ admin.initializeApp();
  * Main API Cloud Function
  * Handles /api/ai/chat and /api/ai/mock/* endpoints
  */
-export const api = functions.https.onRequest(async (req, res) => {
-    // Enable CORS
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-    if (req.method === "OPTIONS") {
-        res.status(204).send("");
-        return;
-    }
-
-    // Extract path
+export const api = onRequest({
+    memory: "1GiB",
+    timeoutSeconds: 300,
+    cors: true, // Automatically handles CORS
+    region: "us-central1", // Explicitly set region
+}, async (req, res) => {
+    // Determine path regardless of how it's invoked
     const path = req.path || req.url;
 
     try {
@@ -44,7 +40,7 @@ export const api = functions.https.onRequest(async (req, res) => {
                 const decoded = await admin.auth().verifyIdToken(token);
                 uid = decoded.uid;
             } catch (authError: any) {
-                functions.logger.error("Auth Error:", authError.message);
+                logger.error("Auth Error:", authError.message);
                 res.status(401).json({ error: "Unauthorized: Invalid token" });
                 return;
             }
@@ -58,7 +54,7 @@ export const api = functions.https.onRequest(async (req, res) => {
                 const quotaDoc = await quotaRef.get();
                 currentCount = quotaDoc.data()?.count || 0;
             } catch (dbError: any) {
-                functions.logger.warn("Quota retrieval error (defaulting to 0):", dbError.message);
+                logger.warn("Quota retrieval error (defaulting to 0):", dbError.message);
             }
 
             if (currentCount >= 500) {
@@ -85,7 +81,7 @@ export const api = functions.https.onRequest(async (req, res) => {
             res.setHeader("Connection", "keep-alive");
             res.flushHeaders();
 
-            functions.logger.info(`Starting AI stream for user ${uid}`);
+            logger.info(`Starting AI stream for user ${uid}`);
             await AIService.streamResponse(lastMessage, res);
         }
         // ========== MOCK INTERVIEW START ==========
@@ -111,7 +107,7 @@ export const api = functions.https.onRequest(async (req, res) => {
                 return;
             }
 
-            functions.logger.info(`Starting mock interview for ${subject}`, { uid });
+            logger.info(`Starting mock interview for ${subject}`, { uid });
 
             const questions = await MockInterviewService.getMockQuestions(subject);
 
@@ -255,7 +251,7 @@ export const api = functions.https.onRequest(async (req, res) => {
             res.status(404).json({ error: "Endpoint not found" });
         }
     } catch (error: any) {
-        functions.logger.error("API Error:", error);
+        logger.error("API Error:", error);
         res.status(500).json({ error: error.message || "Internal Server Error" });
     }
 });

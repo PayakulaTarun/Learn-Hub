@@ -37,7 +37,7 @@ export function AIProvider({ children }: { children: ReactNode }) {
     const router = useRouter();
 
 
-// ... (Top of file)
+    // ... (Top of file)
 
     const sendMessage = async (content: string, isRetry = false) => {
         const userMsg: AIChatMessage = { role: 'user', content };
@@ -48,15 +48,24 @@ export function AIProvider({ children }: { children: ReactNode }) {
 
         try {
             const token = auth.currentUser ? await auth.currentUser.getIdToken() : '';
-            
-            // USE FULL URL TO AVOID LOCALHOST 404s
-            const API_URL = window.location.hostname === 'localhost' 
-                ? 'https://us-central1-student-resource-hub-a758a.cloudfunctions.net/api/ai/chat'
-                : '/api/ai/chat';
+
+            // --- MIGRATION CONFIGURATION ---
+            const USE_PYTHON_BRAIN = true; // Toggle this to switch backends
+
+            let API_URL = '';
+            if (USE_PYTHON_BRAIN && window.location.hostname === 'localhost') {
+                API_URL = 'http://localhost:8000/api/v1/chat/';
+            } else if (window.location.hostname === 'localhost') {
+                API_URL = 'https://us-central1-student-resource-hub-a758a.cloudfunctions.net/api/ai/chat';
+            } else {
+                API_URL = USE_PYTHON_BRAIN
+                    ? 'https://cognitive-core-783493453804.us-central1.run.app/api/v1/chat/'
+                    : '/api/ai/chat';
+            }
 
             const res = await fetch(API_URL, {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
@@ -65,61 +74,77 @@ export function AIProvider({ children }: { children: ReactNode }) {
                     context: contextData
                 })
             });
-            
-            if (!res.ok) {
-                // AUTO RETRY ONCE FOR TRANSIENT ERRORS
-                if (!isRetry && res.status >= 500) {
-                    console.warn("Retrying AI request...");
-                    return sendMessage(content, true);
-                }
 
-                let errorMessage = res.statusText;
-                try {
-                    const errorData = await res.json();
-                    errorMessage = errorData.error || res.statusText;
-                } catch (e) { /* ignore */ }
-                throw new Error(errorMessage || `Server Error ${res.status}`);
+            if (!res.ok) {
+                // ... (Keep existing error handling logic or simplify)
+                throw new Error(`Server Error ${res.status}`);
             }
 
-            if (!res.body) throw new Error('No body');
+            // check content type to decide how to parse
+            const contentType = res.headers.get("content-type");
 
             // Initialize empty assistant message
             setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
 
-            const reader = res.body.getReader();
-            const decoder = new TextDecoder();
-            let done = false;
+            if (contentType && contentType.includes("application/json")) {
+                // HANDLE PYTHON BACKEND (JSON)
+                const data = await res.json();
+                const aiText = data.response;
 
-            while (!done) {
-                const { value, done: doneReading } = await reader.read();
-                done = doneReading;
-                const chunkValue = decoder.decode(value);
-                
-                setMessages(prev => {
-                    const newHistory = [...prev];
-                    const last = newHistory[newHistory.length - 1];
-                    if (last.role === 'assistant') {
-                        last.content += chunkValue;
-                    }
-                    return newHistory;
-                });
+                // Simulate typing effect for non-streaming response
+                // This makes the transition feel smoother
+                const words = aiText.split(" ");
+                for (let i = 0; i < words.length; i++) {
+                    await new Promise(r => setTimeout(r, 20)); // typing delay
+                    setMessages(prev => {
+                        const newHistory = [...prev];
+                        const last = newHistory[newHistory.length - 1];
+                        if (last.role === 'assistant') {
+                            last.content = (last.content + " " + words[i]).trim();
+                        }
+                        return newHistory;
+                    });
+                }
+
+            } else {
+                // HANDLE LEGACY NODE BACKEND (STREAM)
+                if (!res.body) throw new Error('No body');
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
+                let done = false;
+
+                while (!done) {
+                    const { value, done: doneReading } = await reader.read();
+                    done = doneReading;
+                    const chunkValue = decoder.decode(value);
+
+                    setMessages(prev => {
+                        const newHistory = [...prev];
+                        const last = newHistory[newHistory.length - 1];
+                        if (last.role === 'assistant') {
+                            last.content += chunkValue;
+                        }
+                        return newHistory;
+                    });
+                }
             }
 
-            // --- AI ACTION HANDLER ---
+            // --- AI ACTION HANDLER --- (Keep existing)
             setMessages(prev => {
                 const newHistory = [...prev];
+
                 const last = newHistory[newHistory.length - 1];
-                
+
                 if (last && last.role === 'assistant') {
                     const actionRegex = /<<<ACTION:(.*?)>>>/;
                     const match = last.content.match(actionRegex);
-                    
+
                     if (match) {
                         try {
                             const action = JSON.parse(match[1]);
                             // Clean UI
                             last.content = last.content.replace(match[0], '').trim();
-                            
+
                             if (action.type === 'NAVIGATE' && action.url) {
                                 // Execute Navigation
                                 router.push(action.url);
@@ -131,7 +156,7 @@ export function AIProvider({ children }: { children: ReactNode }) {
             });
 
         } catch (error: any) {
-             // AUTO-RETRY ON NETWORK ERROR
+            // AUTO-RETRY ON NETWORK ERROR
             if (!isRetry) {
                 console.warn("Retrying AI request after network failure...");
                 return sendMessage(content, true);
@@ -140,13 +165,13 @@ export function AIProvider({ children }: { children: ReactNode }) {
             console.error('AI Stream Error:', error);
             const msg = error.message || 'Unknown Error';
             setMessages(prev => {
-                 const last = prev[prev.length - 1];
-                 if (last.role === 'assistant' && last.content === '') {
-                     const newHistory = [...prev];
-                     newHistory[newHistory.length - 1].content = `⚠️ **Connection Error:** ${msg}. \n\n*Using offline knowledge base where available.*`;
-                     return newHistory;
-                 }
-                 return [...prev, { role: 'assistant', content: `⚠️ **Connection Error:** ${msg}` }];
+                const last = prev[prev.length - 1];
+                if (last.role === 'assistant' && last.content === '') {
+                    const newHistory = [...prev];
+                    newHistory[newHistory.length - 1].content = `⚠️ **Connection Error:** ${msg}. \n\n*Using offline knowledge base where available.*`;
+                    return newHistory;
+                }
+                return [...prev, { role: 'assistant', content: `⚠️ **Connection Error:** ${msg}` }];
             });
         } finally {
             setIsTyping(false);
@@ -154,8 +179,8 @@ export function AIProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <AIContext.Provider value={{ 
-            isOpen, toggleChat, messages, sendMessage, isTyping, contextData, updateContext, clearChat 
+        <AIContext.Provider value={{
+            isOpen, toggleChat, messages, sendMessage, isTyping, contextData, updateContext, clearChat
         }}>
             {children}
         </AIContext.Provider>
